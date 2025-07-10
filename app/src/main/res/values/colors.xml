@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="pink">#E04F7D</color> <!-- 이미지 핑크톤, item_detail_training_button.xml -->
+
 </resources>

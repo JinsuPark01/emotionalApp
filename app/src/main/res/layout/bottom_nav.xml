@@ -2,89 +2,102 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:orientation="horizontal"
-    android:background="#FFFFFF"
-    android:gravity="center">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <!-- 대시 보드 -->
+    <!-- ✅ 위쪽 연한 회색 테두리 선 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD" />
+
+    <!-- ✅ 하단 네비게이션 바 본체 -->
     <LinearLayout
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:gravity="center">
 
-        <ImageView
-            android:src="@drawable/ic_home"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
+        <!-- 대시 보드 -->
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="대시 보드"
-            android:textSize="12sp"/>
+            <ImageView
+                android:src="@drawable/ic_home"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="대시 보드"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <!-- 나의 훈련 -->
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:src="@drawable/ic_heart"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나의 훈련"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <!-- 상담톡 -->
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:src="@drawable/ic_chat"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="상담톡"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <!-- 설정 -->
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:src="@drawable/ic_setting"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="설정"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
     </LinearLayout>
-
-    <!-- 나의 훈련 -->
-    <LinearLayout
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_width="0dp"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:src="@drawable/ic_heart"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="나의 훈련"
-            android:textSize="12sp"/>
-    </LinearLayout>
-
-    <!-- 상담톡 -->
-    <LinearLayout
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_width="0dp"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:src="@drawable/ic_chat"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="상담톡"
-            android:textSize="12sp"/>
-    </LinearLayout>
-
-    <!-- 설정 -->
-    <LinearLayout
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_width="0dp"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:src="@drawable/ic_setting"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="설정"
-            android:textSize="12sp"/>
-    </LinearLayout>
-
 </LinearLayout>

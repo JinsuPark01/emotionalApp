@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/pink"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+    <!-- 텍스트 영역 (타이틀 및 서브타이틀) -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_training_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="대표 훈련 시작하기"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_training_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가장 중요한 훈련을 바로 경험해보세요"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
+<!--            android:visibility="gone"-->
+    </LinearLayout>
+
+    <!-- 오른쪽 화살표 아이콘 -->
+    <ImageView
+        android:id="@+id/img_arrow_indicator"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_forward_arrow"
+        android:contentDescription="@string/view_details_arrow"
+        app:tint="@android:color/white"
+    />
+</LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -67,8 +67,8 @@ class IntroActivity : AppCompatActivity() {
         val sampleDetailData = listOf(
             DetailTrainingItem(
                 id = "intro_detail_001",
-                title = "감정 일기 쓰기",
-                subtitle = "하루의 감정을 기록하고 돌아보기",
+                title = "소개",
+                subtitle = "정서와 훈련에 대한 설명",
                 TrainingType.INTRO,
                 currentProgress = 75,
                 backgroundColorResId = R.color.button_color_intro,

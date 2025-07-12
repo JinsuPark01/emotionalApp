@@ -11,6 +11,7 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.DetailTrainingAdapter
 import com.example.emotionalapp.data.DetailTrainingItem
 import com.example.emotionalapp.data.TrainingType
+import com.example.emotionalapp.ui.intro.IntroTrainingActivity
 
 class IntroActivity : AppCompatActivity() {
 
@@ -71,7 +72,7 @@ class IntroActivity : AppCompatActivity() {
                 TrainingType.INTRO,
                 currentProgress = 75,
                 backgroundColorResId = R.color.button_color_intro,
-                targetActivityClass = IntroActivity::class.java // 실제 액티비티로 변경
+                targetActivityClass = IntroTrainingActivity::class.java // 실제 액티비티로 변경
             )
         )
         detailTrainingItems.clear()

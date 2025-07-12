@@ -107,28 +107,28 @@ class AllTrainingPageActivity : AppCompatActivity() {
             ),
             TrainingItem(
                 "et001",
-                "정서인식 훈련",
+                "1주차 - 정서인식 훈련",
                 "나의 감정을 정확히 알아차리기",
                 TrainingType.EMOTION_TRAINING,
                 R.color.button_color_emotion
             ),
             TrainingItem(
                 "bt001",
-                "신체자각 훈련",
+                "2주차 - 신체자각 훈련",
                 "몸이 보내는 신호에 귀 기울이기",
                 TrainingType.BODY_TRAINING,
                 R.color.button_color_body
             ),
             TrainingItem(
                 "mwt001",
-                "인지재구성 훈련",
+                "3주차 - 인지재구성 훈련",
                 "생각의 틀을 바꾸는 연습",
                 TrainingType.MIND_WATCHING_TRAINING,
                 R.color.button_color_mind
             ),
             TrainingItem(
                 "eat001",
-                "정서표현 및 행동 훈련",
+                "4주차 - 정서표현 및 행동 훈련",
                 "건강하게 감정을 표현하고 행동하기",
                 TrainingType.EXPRESSION_ACTION_TRAINING,
                 R.color.button_color_expression

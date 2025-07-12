@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- 위쪽 연한 회색 테두리 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD" />
+
+    <!-- 네비게이션 바 본체 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical">
+
+        <!-- ◀ 이전 버튼 -->
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/btnPrev"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:paddingHorizontal="12dp"
+                android:gravity="center"
+                android:drawablePadding="4dp"
+                android:text="← 이전"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:backgroundTint="#3CB371"
+                android:background="@drawable/bg_round_green_button" />
+        </LinearLayout>
+
+        <!-- ●● 인디케이터 영역 -->
+        <LinearLayout
+            android:id="@+id/indicatorContainer"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginHorizontal="8dp" />
+
+        <!-- 다음 ▶ 버튼 -->
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:paddingHorizontal="12dp"
+                android:gravity="center"
+                android:drawablePadding="4dp"
+                android:text="다음 →"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:backgroundTint="#3CB371"
+                android:background="@drawable/bg_round_green_button" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -26,14 +26,6 @@ class AllTrainingPageActivity : AppCompatActivity() {
     private lateinit var trainingAdapter: AllTrainingAdapter
     private val trainingItems = mutableListOf<TrainingItem>()
 
-    // 예시 대상 액티비티 클래스 (실제 액티비티로 대체 필요)
-    // 아래 클래스들은 실제 프로젝트에 존재해야 합니다.
-    class RepresentativeTrainingActivity : AppCompatActivity() { /* ... */ }
-    class EmotionAvoidanceActivity : AppCompatActivity() { /* ... */ }
-    class MindWatchingActivity : AppCompatActivity() { /* ... */ }
-    class GenericTrainingDetailActivity : AppCompatActivity() { /* ... */ }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_training_page) // 이 XML에 trainingRecyclerView가 있어야 함
@@ -63,45 +55,27 @@ class AllTrainingPageActivity : AppCompatActivity() {
 
                 // trainingType에 따라 다른 액티비티로 이동
                 when (clickedTrainingItem.trainingType) {
-                    TrainingType.REPRESENTATIVE_TRAINING -> {
-                        //setClass(this@AllTrainingPageActivity, RepresentativeTrainingActivity::class.java)
-                        // 임시로 Log만 출력 (실제 액티비티 연결 필요)
-                        Log.i("Navigation", "대표 훈련 페이지로 이동 준비: ${clickedTrainingItem.title}")
-                        setClass(
-                            this@AllTrainingPageActivity,
-                            RepresentativeTrainingActivity::class.java
-                        ) // 실제 액티비티 연결
+                    TrainingType.INTRO -> {
+                        Log.i("Navigation", "INTRO 페이지로 이동 준비: ${clickedTrainingItem.title}")
+                        intent.setClass(this@AllTrainingPageActivity, IntroActivity::class.java)
                     }
-
-                    TrainingType.EMOTION_AVOIDANCE_TRAINING -> {
-                        //setClass(this@AllTrainingPageActivity, EmotionAvoidanceActivity::class.java)
-                        Log.i("Navigation", "정서회피 훈련 페이지로 이동 준비: ${clickedTrainingItem.title}")
-                        setClass(this@AllTrainingPageActivity, EmotionAvoidanceActivity::class.java)
+                    TrainingType.EMOTION_TRAINING -> {
+                        Log.i("Navigation", "EMOTION_TRAINING 페이지로 이동 준비: ${clickedTrainingItem.title}")
+                        intent.setClass(this@AllTrainingPageActivity, EmotionTrainingActivity::class.java)
                     }
-
+                    TrainingType.BODY_TRAINING -> {
+                        Log.i("Navigation", "BODY_TRAINING 페이지로 이동 준비: ${clickedTrainingItem.title}")
+                        intent.setClass(this@AllTrainingPageActivity, BodyTrainingActivity::class.java)
+                    }
                     TrainingType.MIND_WATCHING_TRAINING -> {
-                        //setClass(this@AllTrainingPageActivity, MindWatchingActivity::class.java)
-                        Log.i("Navigation", "마음보기 훈련 페이지로 이동 준비: ${clickedTrainingItem.title}")
-                        setClass(this@AllTrainingPageActivity, MindWatchingActivity::class.java)
+                        Log.i("Navigation", "MIND_WATCHING_TRAINING 페이지로 이동 준비: ${clickedTrainingItem.title}")
+                        intent.setClass(this@AllTrainingPageActivity, MindWatchingActivity::class.java)
                     }
-
-                    TrainingType.DEFAULT_DETAIL -> {
-                        //setClass(this@AllTrainingPageActivity, GenericTrainingDetailActivity::class.java)
-                        Log.i("Navigation", "일반 상세 페이지로 이동 준비: ${clickedTrainingItem.title}")
-                        setClass(
-                            this@AllTrainingPageActivity,
-                            GenericTrainingDetailActivity::class.java
-                        )
+                    TrainingType.EXPRESSION_ACTION_TRAINING -> {
+                        Log.i("Navigation", "EXPRESSION_ACTION_TRAINING 페이지로 이동 준비: ${clickedTrainingItem.title}")
+                        // ExpressionActionActivity가 실제 존재하고 import 되었다면 아래와 같이 변경
+                        intent.setClass(this@AllTrainingPageActivity, ExpressionActionActivity::class.java)
                     }
-                    // targetActivityClass를 직접 사용하는 경우 (선택적)
-                    // else -> {
-                    //    if (clickedTrainingItem.targetActivityClass != null) {
-                    //        setClass(this@AllTrainingPageActivity, clickedTrainingItem.targetActivityClass)
-                    //    } else {
-                    //        Log.e("Navigation", "Target activity class is null for ${clickedTrainingItem.title}")
-                    //        return@AllTrainingAdapter // 이동할 대상이 없으면 아무것도 안 함
-                    //    }
-                    // }
                 }
             }
             // intent.component가 설정되었는지 확인 후 startActivity 호출
@@ -118,28 +92,47 @@ class AllTrainingPageActivity : AppCompatActivity() {
         trainingRecyclerView.adapter = trainingAdapter
     }
 
+    /**
+     * 각 훈련 항목에 대한 데이터를 로드하는 함수
+     */
     private fun loadTrainingData() {
         // TrainingType 또는 targetActivityClass를 포함하여 데이터 생성
         val sampleData = listOf(
             TrainingItem(
-                "rep001",
-                "대표 훈련 시작하기",
-                "가장 중요한 훈련을 바로 경험해보세요.",
-                TrainingType.REPRESENTATIVE_TRAINING
+                "intro001",
+                "INTRO",
+                "감정의 세계로 떠나는 첫 걸음",
+                TrainingType.INTRO,
+                R.color.button_color_intro
             ),
             TrainingItem(
-                "ea001",
-                "정서회피 알아보기",
-                "정서회피가 무엇인지 이해합니다.",
-                TrainingType.EMOTION_AVOIDANCE_TRAINING
+                "et001",
+                "정서인식 훈련",
+                "나의 감정을 정확히 알아차리기",
+                TrainingType.EMOTION_TRAINING,
+                R.color.button_color_emotion
             ),
             TrainingItem(
-                "mw001",
-                "마음보기 첫걸음",
-                "내 마음을 관찰하는 연습을 시작합니다.",
-                TrainingType.MIND_WATCHING_TRAINING
+                "bt001",
+                "신체자각 훈련",
+                "몸이 보내는 신호에 귀 기울이기",
+                TrainingType.BODY_TRAINING,
+                R.color.button_color_body
             ),
-            TrainingItem("gen001", "일반 훈련 상세", "이것은 일반 훈련 항목입니다.", TrainingType.DEFAULT_DETAIL)
+            TrainingItem(
+                "mwt001",
+                "인지재구성 훈련",
+                "생각의 틀을 바꾸는 연습",
+                TrainingType.MIND_WATCHING_TRAINING,
+                R.color.button_color_mind
+            ),
+            TrainingItem(
+                "eat001",
+                "정서표현 및 행동 훈련",
+                "건강하게 감정을 표현하고 행동하기",
+                TrainingType.EXPRESSION_ACTION_TRAINING,
+                R.color.button_color_expression
+            )
             // 필요하다면 targetActivityClass를 직접 지정하는 아이템도 추가 가능
             // TrainingItem("custom001", "커스텀 액티비티로", "설명", TrainingType.DEFAULT_DETAIL, CustomActivity::class.java)
         )

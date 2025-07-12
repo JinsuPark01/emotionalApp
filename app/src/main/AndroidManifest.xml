@@ -26,6 +26,32 @@
             android:name=".ui.alltraining.AllTrainingPageActivity"
             android:exported="false">
         </activity>
+
+        <activity
+            android:name=".ui.alltraining.IntroActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".ui.alltraining.EmotionTrainingActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".ui.alltraining.BodyTrainingActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".ui.alltraining.MindWatchingActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".ui.alltraining.ExpressionActionActivity"
+            android:exported="false">
+        </activity>
+
     </application>
 
 </manifest>

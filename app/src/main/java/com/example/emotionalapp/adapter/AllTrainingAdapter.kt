@@ -3,7 +3,9 @@ package com.example.emotionalapp.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.data.TrainingItem
@@ -37,6 +39,7 @@ class AllTrainingAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
         private val titleTextView: TextView = itemView.findViewById(R.id.tv_training_title)
         private val subtitleTextView: TextView = itemView.findViewById(R.id.tv_training_subtitle)
+        private val contentLayout: LinearLayout = itemView.findViewById(R.id.content_layout)
         // private val arrowImageView: ImageView = itemView.findViewById(R.id.img_arrow_indicator) // 필요하다면 참조
 
         fun bind(trainingItem: TrainingItem) {
@@ -48,6 +51,18 @@ class AllTrainingAdapter(
                 subtitleTextView.visibility = View.GONE
             } else {
                 subtitleTextView.visibility = View.VISIBLE
+            }
+
+            // 배경색 설정
+            if (trainingItem.backgroundColorResId != null) {
+                contentLayout.setBackgroundColor(
+                    ContextCompat.getColor(itemView.context, trainingItem.backgroundColorResId)
+                )
+            } else {
+                // 기본 배경색 설정 (예: XML에 정의된 기본색 또는 colors.xml의 다른 색)
+                contentLayout.setBackgroundColor(
+                    ContextCompat.getColor(itemView.context, R.color.pink) // 예시 기본색
+                )
             }
 
             itemView.setOnClickListener {

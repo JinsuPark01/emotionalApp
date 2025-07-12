@@ -46,6 +46,11 @@
             android:exported="false">
         </activity>
 
+        <activity
+            android:name=".ui.intro.IntroTrainingActivity"
+            android:exported="true">
+        </activity>
+
     </application>
 
 </manifest>

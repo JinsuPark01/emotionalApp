@@ -92,7 +92,7 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:lineSpacingExtra="4dp"
                 android:textColor="#333333"
-                android:text="정서조절훈련이란?\n\n정서조절은 우리가 정서의 발생과 강도, 표현 및 경험에 영향을 미치는 과정입니다(Gross &amp; Thompson, 2007). 이 과정에서 우리는 종종 부적응적인 정서조절전략을 사용해서 오히려 의도하지 않은 심리적 고통을 겪을 수 있어요. 예를 들어 정서적 느낌을 느끼지 않으려고 회피하거나 혹은 무시해서 오히려 정서경험이 강해지거나 떨쳐내기가 더욱 힘들어지는 것 등입니다. 어떤 것을 회피하려는 것은 타조가 위협을 피해 머리만 숨기는 것과 같이 ‘눈가리고 아웅‘하는 것일 수 있어요. 그래서 <우리앱이름> 에서 하고자 하는 것은 우리가 사용하고 있는 부적응적 정서조절 전략을 살펴보고 이를 적응적으로 바꾸고자 훈련을 하는 것입니다." />
+                android:text="니다." />
         </LinearLayout>
     </ScrollView>
     <!-- 하단 네비게이션 바 (include 방식) -->

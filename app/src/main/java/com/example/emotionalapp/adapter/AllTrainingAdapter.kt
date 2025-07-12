@@ -46,13 +46,6 @@ class AllTrainingAdapter(
             titleTextView.text = trainingItem.title
             subtitleTextView.text = trainingItem.subtitle
 
-            // 서브타이틀이 비어있거나 null이면 숨기기 (선택적 UI 개선)
-            if (trainingItem.subtitle.isNullOrEmpty()) {
-                subtitleTextView.visibility = View.GONE
-            } else {
-                subtitleTextView.visibility = View.VISIBLE
-            }
-
             // 배경색 설정
             if (trainingItem.backgroundColorResId != null) {
                 contentLayout.setBackgroundColor(

@@ -14,12 +14,6 @@ import com.example.emotionalapp.data.TrainingType
 import kotlin.collections.addAll
 import kotlin.text.clear
 
-// 대상 액티비티들을 임포트 (실제 프로젝트의 액티비티로 대체)
-// import com.example.emotionalapp.ui.representative.RepresentativeTrainingActivity
-// import com.example.emotionalapp.ui.emotionavoidance.EmotionAvoidanceActivity
-// import com.example.emotionalapp.ui.mindwatching.MindWatchingActivity
-// import com.example.emotionalapp.ui.detail.GenericTrainingDetailActivity
-
 class AllTrainingPageActivity : AppCompatActivity() {
 
     private lateinit var trainingRecyclerView: RecyclerView
@@ -48,35 +42,17 @@ class AllTrainingPageActivity : AppCompatActivity() {
                 "Clicked: ${clickedTrainingItem.title}, Type: ${clickedTrainingItem.trainingType}"
             )
 
-            val intent = Intent().apply {
-                // 공통적으로 ID를 넘길 수 있습니다.
-                putExtra("TRAINING_ID", clickedTrainingItem.id)
-                putExtra("TRAINING_TITLE", clickedTrainingItem.title) // 필요하다면 제목도 전달
+            val targetClass = when (clickedTrainingItem.trainingType) {
+                TrainingType.INTRO -> IntroActivity::class.java
+                TrainingType.EMOTION_TRAINING -> EmotionTrainingActivity::class.java
+                TrainingType.BODY_TRAINING -> BodyTrainingActivity::class.java
+                TrainingType.MIND_WATCHING_TRAINING -> MindWatchingActivity::class.java
+                TrainingType.EXPRESSION_ACTION_TRAINING -> ExpressionActionActivity::class.java
+            }
 
-                // trainingType에 따라 다른 액티비티로 이동
-                when (clickedTrainingItem.trainingType) {
-                    TrainingType.INTRO -> {
-                        Log.i("Navigation", "INTRO 페이지로 이동 준비: ${clickedTrainingItem.title}")
-                        intent.setClass(this@AllTrainingPageActivity, IntroActivity::class.java)
-                    }
-                    TrainingType.EMOTION_TRAINING -> {
-                        Log.i("Navigation", "EMOTION_TRAINING 페이지로 이동 준비: ${clickedTrainingItem.title}")
-                        intent.setClass(this@AllTrainingPageActivity, EmotionTrainingActivity::class.java)
-                    }
-                    TrainingType.BODY_TRAINING -> {
-                        Log.i("Navigation", "BODY_TRAINING 페이지로 이동 준비: ${clickedTrainingItem.title}")
-                        intent.setClass(this@AllTrainingPageActivity, BodyTrainingActivity::class.java)
-                    }
-                    TrainingType.MIND_WATCHING_TRAINING -> {
-                        Log.i("Navigation", "MIND_WATCHING_TRAINING 페이지로 이동 준비: ${clickedTrainingItem.title}")
-                        intent.setClass(this@AllTrainingPageActivity, MindWatchingActivity::class.java)
-                    }
-                    TrainingType.EXPRESSION_ACTION_TRAINING -> {
-                        Log.i("Navigation", "EXPRESSION_ACTION_TRAINING 페이지로 이동 준비: ${clickedTrainingItem.title}")
-                        // ExpressionActionActivity가 실제 존재하고 import 되었다면 아래와 같이 변경
-                        intent.setClass(this@AllTrainingPageActivity, ExpressionActionActivity::class.java)
-                    }
-                }
+            val intent = Intent(this, targetClass).apply {
+                putExtra("TRAINING_ID", clickedTrainingItem.id)
+                putExtra("TRAINING_TITLE", clickedTrainingItem.title)
             }
             // intent.component가 설정되었는지 확인 후 startActivity 호출
             if (intent.component != null) {

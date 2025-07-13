@@ -3,6 +3,7 @@ package com.example.emotionalapp.ui.alltraining
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,12 @@ class IntroActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail_page)
 
         detailRecyclerView = findViewById(R.id.trainingRecyclerView) // XML에 정의된 ID로 변경
+
+        // 👇 btnBack 처리 추가
+        val btnBack = findViewById<View>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish()
+        }
 
         setupRecyclerView()
         loadDetailTrainingData()

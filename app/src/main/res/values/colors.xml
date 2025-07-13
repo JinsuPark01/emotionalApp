@@ -4,10 +4,10 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="pink">#E04F7D</color> <!-- 이미지 핑크톤, item_detail_training_button.xml -->
-    <color name="button_color_intro">#FFAB91</color>
-    <color name="button_color_emotion">#A5D6A7</color>
-    <color name="button_color_body">#90CAF9</color>
-    <color name="button_color_mind">#CE93D8</color>
-    <color name="button_color_expression">#FFE082</color>
+    <color name="button_color_intro">#E65100</color>
+    <color name="button_color_emotion">#827717</color>
+    <color name="button_color_body">#1B5E20</color>
+    <color name="button_color_mind">#01579B</color>
+    <color name="button_color_expression">#4A148C</color>
 
 </resources>

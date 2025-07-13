@@ -79,7 +79,7 @@ class AllTrainingPageActivity : AppCompatActivity() {
                 "INTRO",
                 "감정의 세계로 떠나는 첫 걸음",
                 TrainingType.INTRO,
-                "65",
+                "1/3",
                 R.color.button_color_intro
             ),
             TrainingItem(

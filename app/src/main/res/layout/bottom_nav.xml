@@ -21,6 +21,7 @@
 
         <!-- 대시 보드 -->
         <LinearLayout
+            android:id="@+id/nav_dashboard"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
@@ -28,11 +29,13 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/iv_dashboard"
                 android:src="@drawable/ic_home"
                 android:layout_width="24dp"
                 android:layout_height="24dp" />
 
             <TextView
+                android:id="@+id/tv_dashboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="대시 보드"
@@ -41,6 +44,7 @@
 
         <!-- 나의 훈련 -->
         <LinearLayout
+            android:id="@+id/nav_my_training"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
@@ -48,11 +52,13 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/iv_my_training"
                 android:src="@drawable/ic_heart"
                 android:layout_width="24dp"
                 android:layout_height="24dp" />
 
             <TextView
+                android:id="@+id/tv_my_training"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="나의 훈련"
@@ -61,6 +67,7 @@
 
         <!-- 상담톡 -->
         <LinearLayout
+            android:id="@+id/nav_chat"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
@@ -68,11 +75,13 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/iv_chat"
                 android:src="@drawable/ic_chat"
                 android:layout_width="24dp"
                 android:layout_height="24dp" />
 
             <TextView
+                android:id="@+id/tv_chat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="상담톡"
@@ -81,6 +90,7 @@
 
         <!-- 설정 -->
         <LinearLayout
+            android:id="@+id/nav_setting"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
@@ -88,11 +98,13 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/iv_setting"
                 android:src="@drawable/ic_setting"
                 android:layout_width="24dp"
                 android:layout_height="24dp" />
 
             <TextView
+                android:id="@+id/tv_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="설정"

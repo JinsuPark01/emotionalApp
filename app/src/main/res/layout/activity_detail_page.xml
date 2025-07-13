@@ -40,19 +40,29 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp">
 
+            <TextView
+                android:id="@+id/tabToday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="금일 훈련"
+                android:textStyle="bold" />
             <!-- 전체 훈련 (선택된 탭 + 검정 밑줄) -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
-                    android:id="@+id/tabToday"
+                    android:id="@+id/tabAll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="금일 훈련"
                     android:padding="12dp"
+                    android:text="전체 훈련"
                     android:textStyle="bold" />
                 <!-- 검정 밑줄 -->
                 <View
@@ -60,15 +70,6 @@
                     android:layout_height="2dp"
                     android:background="#000000" />
             </LinearLayout>
-            <TextView
-                android:id="@+id/tabAll"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="전체 훈련"
-                android:padding="12dp"
-                android:textStyle="bold" />
         </LinearLayout>
         <!-- 밑줄은 양옆 여백 없이 전체 길이로 -->
         <View

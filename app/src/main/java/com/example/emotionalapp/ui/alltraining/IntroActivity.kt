@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,12 +14,15 @@ import com.example.emotionalapp.adapter.DetailTrainingAdapter
 import com.example.emotionalapp.data.DetailTrainingItem
 import com.example.emotionalapp.data.TrainingType
 import com.example.emotionalapp.ui.intro.IntroTrainingActivity
+import com.example.emotionalapp.ui.open.BottomNavActivity
 
-class IntroActivity : AppCompatActivity() {
+class IntroActivity : BottomNavActivity() {
 
     private lateinit var detailRecyclerView: RecyclerView // 변수명 변경 (일관성 및 명확성)
     private lateinit var detailTrainingAdapter: DetailTrainingAdapter
     private val detailTrainingItems = mutableListOf<DetailTrainingItem>() // 변수명 변경
+
+    override val isAllTrainingPage: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +36,8 @@ class IntroActivity : AppCompatActivity() {
             finish()
         }
 
+        setupTabListeners()
+        setupBottomNavigation()
         setupRecyclerView()
         loadDetailTrainingData()
     }
@@ -91,4 +97,23 @@ class IntroActivity : AppCompatActivity() {
             detailTrainingAdapter.updateData(detailTrainingItems)
         }
     }
+
+    private fun setupTabListeners() {
+        val tabAll = findViewById<TextView>(R.id.tabAll)
+        val tabToday = findViewById<TextView>(R.id.tabToday)
+
+        // 현재 페이지: 전체 훈련이므로 클릭 시 아무 동작 없음
+        tabAll.setOnClickListener {
+            Log.d("AllTrainingPage", "전체 훈련 탭 클릭됨 (현재 페이지)")
+            // 필요하면 데이터 새로고침 추가 가능
+        }
+
+        tabToday.setOnClickListener {
+            Log.d("AllTrainingPage", "금일 훈련 탭 클릭됨 - TodayTrainingPageActivity로 이동")
+            val intent = Intent(this, DailyTrainingPageActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
 }

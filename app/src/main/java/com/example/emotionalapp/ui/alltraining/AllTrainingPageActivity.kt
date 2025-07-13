@@ -9,16 +9,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.AllTrainingAdapter
+import com.example.emotionalapp.ui.open.BottomNavActivity
 import com.example.emotionalapp.data.TrainingItem
 import com.example.emotionalapp.data.TrainingType
 import kotlin.collections.addAll
 import kotlin.text.clear
 
-class AllTrainingPageActivity : AppCompatActivity() {
+class AllTrainingPageActivity : BottomNavActivity() {
 
     private lateinit var trainingRecyclerView: RecyclerView
     private lateinit var trainingAdapter: AllTrainingAdapter
     private val trainingItems = mutableListOf<TrainingItem>()
+
+    override val isAllTrainingPage: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +29,7 @@ class AllTrainingPageActivity : AppCompatActivity() {
 
         trainingRecyclerView =
             findViewById(R.id.trainingRecyclerView) // activity_all_training_page.xml 내부의 ID
-
+        setupBottomNavigation()
         setupRecyclerView()
         loadTrainingData() // 데이터 로드
 
@@ -123,25 +126,20 @@ class AllTrainingPageActivity : AppCompatActivity() {
     }
 
     private fun setupTabListeners() {
-        // activity_all_training_page.xml의 TextView ID에 따라 수정
-        val tabAll = findViewById<TextView>(R.id.tabAll) // 예시 ID
-        val tabToday = findViewById<TextView>(R.id.tabToday) // 예시 ID
+        val tabAll = findViewById<TextView>(R.id.tabAll)
+        val tabToday = findViewById<TextView>(R.id.tabToday)
 
+        // 현재 페이지: 전체 훈련이므로 클릭 시 아무 동작 없음
         tabAll.setOnClickListener {
             Log.d("AllTrainingPage", "전체 훈련 탭 클릭됨 (현재 페이지)")
-            // 필요하다면 데이터 새로고침 등
-            // loadTrainingData()
+            // 필요하면 데이터 새로고침 추가 가능
         }
 
         tabToday.setOnClickListener {
-            Log.d("AllTrainingPage", "금일 훈련 탭 클릭됨 - 다른 액티비티로 이동 구현 필요")
-            // 예: val intent = Intent(this, TodayTrainingActivity::class.java)
-            // startActivity(intent)
-            // finish() // 현재 액티비티를 닫고 새 액티비티로만 이동할 경우
+            Log.d("AllTrainingPage", "금일 훈련 탭 클릭됨 - TodayTrainingPageActivity로 이동")
+            val intent = Intent(this, DailyTrainingPageActivity::class.java)
+            startActivity(intent)
+            finish()
         }
-
-        // 하단 네비게이션 리스너 설정도 여기에 추가
-        // 예: val bottomHome = findViewById<View>(R.id.bottom_nav_home_id) // bottom_nav.xml 내의 ID
-        // bottomHome.setOnClickListener { /* 홈으로 이동 로직 */ }
     }
 }

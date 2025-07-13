@@ -47,14 +47,31 @@
     </LinearLayout>
 
     <!-- 오른쪽 화살표 아이콘 -->
-    <ImageView
-        android:id="@+id/img_arrow_indicator"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:src="@drawable/ic_forward_arrow"
-        android:contentDescription="@string/view_details_arrow"
-        app:tint="@android:color/white"
-    />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/item_circular_gauge_bar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:progress="60"
+            app:indicatorColor="@color/white"
+            app:trackColor="@color/material_on_primary_disabled"
+            app:trackThickness="4dp"
+            app:indicatorSize="50dp"
+            app:indicatorDirectionCircular="clockwise" />
+
+        <TextView
+            android:id="@+id/tv_circular_gauge_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="60%"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+    </FrameLayout>
 </LinearLayout>
 </androidx.cardview.widget.CardView>

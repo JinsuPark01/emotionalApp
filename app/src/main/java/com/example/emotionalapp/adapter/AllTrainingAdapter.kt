@@ -40,11 +40,24 @@ class AllTrainingAdapter(
         private val titleTextView: TextView = itemView.findViewById(R.id.tv_training_title)
         private val subtitleTextView: TextView = itemView.findViewById(R.id.tv_training_subtitle)
         private val contentLayout: LinearLayout = itemView.findViewById(R.id.content_layout)
-        // private val arrowImageView: ImageView = itemView.findViewById(R.id.img_arrow_indicator) // 필요하다면 참조
+        private val circularProgressBar: com.google.android.material.progressindicator.CircularProgressIndicator = itemView.findViewById(R.id.item_circular_gauge_bar)
+        private val percentageTextView: TextView = itemView.findViewById(R.id.tv_circular_gauge_percentage)
 
         fun bind(trainingItem: TrainingItem) {
             titleTextView.text = trainingItem.title
             subtitleTextView.text = trainingItem.subtitle
+            // currentProgress가 String 타입이라고 가정
+            val progressValue = trainingItem.currentProgress.toIntOrNull() ?: 0
+            circularProgressBar.progress = progressValue
+
+            // 만약 currentProgress가 "진행중" 같은 텍스트라면 그대로, 숫자라면 숫자% 형태로 표시
+            if (trainingItem.currentProgress.toIntOrNull() != null) {
+                // 숫자 형태의 문자열이면 숫자% 로 표시
+                percentageTextView.text = "${trainingItem.currentProgress}%"
+            } else {
+                // 숫자 형태가 아닌 문자열(예: "진행중", "완료")이면 해당 문자열을 그대로 표시
+                percentageTextView.text = trainingItem.currentProgress
+            }
 
             // 배경색 설정
             if (trainingItem.backgroundColorResId != null) {

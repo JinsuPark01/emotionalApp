@@ -77,7 +77,7 @@ class IntroActivity : AppCompatActivity() {
                 title = "소개",
                 subtitle = "정서와 훈련에 대한 설명",
                 TrainingType.INTRO,
-                currentProgress = 75,
+                currentProgress = "75",
                 backgroundColorResId = R.color.button_color_intro,
                 targetActivityClass = IntroTrainingActivity::class.java // 실제 액티비티로 변경
             )

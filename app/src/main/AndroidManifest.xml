@@ -39,6 +39,12 @@
             android:exported="false">
         </activity>
 
+        <!-- 2주차 전체 몸 스캔 액티비티 등록 -->
+        <activity
+            android:name=".ui.alltraining.WholeBodyScanActivity"
+            android:exported="false">
+        </activity>
+
         <activity
             android:name=".ui.alltraining.MindWatchingActivity"
             android:exported="false">

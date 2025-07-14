@@ -1,7 +1,82 @@
+// BodyTrainingActivity.kt
 package com.example.emotionalapp.ui.alltraining
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.emotionalapp.R
+import com.example.emotionalapp.adapter.DetailTrainingAdapter
+import com.example.emotionalapp.data.DetailTrainingItem
+import com.example.emotionalapp.data.TrainingType
+import com.example.emotionalapp.ui.open.BottomNavActivity
+import com.example.emotionalapp.ui.alltraining.WholeBodyScanActivity
 
-class BodyTrainingActivity : AppCompatActivity() {
 
+class BodyTrainingActivity : BottomNavActivity() {
+
+    override val isAllTrainingPage = true
+    private lateinit var detailRecyclerView: RecyclerView
+    private lateinit var detailAdapter: DetailTrainingAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_detail_page)  // 공통 레이아웃 재사용
+
+        // 타이틀(“2주차 – 신체자각 훈련”) 설정
+        findViewById<TextView>(R.id.tv_page_title).text =
+            intent.getStringExtra("TRAINING_TITLE") ?: "신체자각 훈련"
+
+        // 뒤로가기
+        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
+
+        setupTabListeners()          // 탭(금일/전체) 리스너
+        setupBottomNavigation()      // 하단 네비
+        setupRecyclerView()          // RecyclerView 초기화
+        loadDetailTrainingData()     // 상세 리스트 데이터 로드
+    }
+
+    private fun setupTabListeners() {
+        findViewById<TextView>(R.id.tabAll).setOnClickListener { /* 전체: 현재 */ }
+        findViewById<TextView>(R.id.tabToday).setOnClickListener {
+            startActivity(Intent(this, DailyTrainingPageActivity::class.java))
+            finish()
+        }
+    }
+
+    private fun setupRecyclerView() {
+        detailRecyclerView = findViewById(R.id.trainingRecyclerView)
+        detailAdapter = DetailTrainingAdapter(emptyList()) { item ->
+            // 클릭 시 세부 액티비티가 있다면 이동
+            item.targetActivityClass?.let {
+                startActivity(Intent(this, it)
+                    .putExtra("TRAINING_ID", item.id)
+                    .putExtra("TRAINING_TITLE", item.title))
+            }
+        }
+        detailRecyclerView.layoutManager = LinearLayoutManager(this)
+        detailRecyclerView.adapter = detailAdapter
+    }
+
+    private fun loadDetailTrainingData() {
+        val data = listOf(
+            DetailTrainingItem("bt_detail_001", "전체 몸 스캔 인식하기", "정서와 관련된 신체 감각 찾기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = WholeBodyScanActivity::class.java),
+            DetailTrainingItem("bt_detail_002", "특정 감각 집중하기", "특별한 경험을 기록하기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
+            DetailTrainingItem("bt_detail_003", "감정-신체 연결 인식", "특별한 경험을 기록하기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
+            DetailTrainingItem("bt_detail_004", "바디 스캔", "감각 알아차리기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
+            DetailTrainingItem("bt_detail_005", "바디 스캔", "미세한 감각 변화 알아차리기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
+            DetailTrainingItem("bt_detail_006", "먹기 명상", "음식의 오감 알아차리기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
+            DetailTrainingItem("bt_detail_007", "먹기 명상", "감정과 먹기 연결 알아차리기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
+        )
+        detailAdapter.updateData(data)
+    }
 }

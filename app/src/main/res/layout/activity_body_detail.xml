@@ -24,10 +24,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="소개"
+            android:text="훈련 제목"
             android:textSize="18sp"
             android:textStyle="bold" />
-
     </LinearLayout>
 
     <!-- 2) 탭 메뉴 -->
@@ -113,56 +112,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- 헤딩 -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="신체자각이란?"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp"/>
-
-                <!-- 설명 -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="몸에서 일어나는 감각을 알아차리고,\n판단하지 않고 그대로 느끼는 능력입니다.\n"
-                    android:textSize="14sp"
-                    android:lineSpacingExtra="4dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="신체자각이 중요한 이유"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="감정보다 먼저 나타나는 신호는 몸에 있습니다.\n몸을 잘 느끼면 감정을 더 잘 이해하고 다룰 수 있어요.\n스트레스, 불안, 무기력감ㅇ르 조절하는데 도움이 됩니다.\n"
-                    android:textSize="14sp"
-                    android:lineSpacingExtra="4dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="몸이 보내는 신호를 놓치지 않을 때, \n우리는 자신과 연결됩니다."
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp"/>
-
                 <TextView
                     android:id="@+id/tvPracticeContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:text="연습하기 콘텐츠를 불러오는 중..."
                     android:textSize="14sp"
                     android:lineSpacingExtra="4dp"
-                    android:textColor="@color/black"/>
+                    android:layout_marginTop="8dp"/>
 
+                <Button
+                    android:id="@+id/btnStartPractice"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="시작 →"
+                    android:layout_marginTop="16dp"/>
+
+                <Button
+                    android:id="@+id/btnStopPractice"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="중지 ■"
+                    android:layout_marginTop="8dp"/>
             </LinearLayout>
         </ScrollView>
 
@@ -192,7 +163,6 @@
         </LinearLayout>
     </FrameLayout>
 
-    <!-- 4) 하단 내비 -->
+    <!-- 4) 하단 네비 -->
     <include layout="@layout/bottom_nav" />
-
 </LinearLayout>

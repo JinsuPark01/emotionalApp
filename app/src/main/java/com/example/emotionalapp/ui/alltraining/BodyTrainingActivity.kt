@@ -12,7 +12,6 @@ import com.example.emotionalapp.adapter.DetailTrainingAdapter
 import com.example.emotionalapp.data.DetailTrainingItem
 import com.example.emotionalapp.data.TrainingType
 import com.example.emotionalapp.ui.open.BottomNavActivity
-import com.example.emotionalapp.ui.alltraining.WholeBodyScanActivity
 
 
 class BodyTrainingActivity : BottomNavActivity() {
@@ -62,21 +61,31 @@ class BodyTrainingActivity : BottomNavActivity() {
 
     private fun loadDetailTrainingData() {
         val data = listOf(
-            DetailTrainingItem("bt_detail_001", "전체 몸 스캔 인식하기", "정서와 관련된 신체 감각 찾기",
-                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = WholeBodyScanActivity::class.java),
-            DetailTrainingItem("bt_detail_002", "특정 감각 집중하기", "특별한 경험을 기록하기",
-                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
-            DetailTrainingItem("bt_detail_003", "감정-신체 연결 인식", "특별한 경험을 기록하기",
-                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
-            DetailTrainingItem("bt_detail_004", "바디 스캔", "감각 알아차리기",
-                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
-            DetailTrainingItem("bt_detail_005", "바디 스캔", "미세한 감각 변화 알아차리기",
-                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
-            DetailTrainingItem("bt_detail_006", "먹기 명상", "음식의 오감 알아차리기",
-                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
-            DetailTrainingItem("bt_detail_007", "먹기 명상", "감정과 먹기 연결 알아차리기",
-                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, null),
+            DetailTrainingItem("bt_detail_001", "소개", "신체자각 훈련에 대한 설명",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingIntroActivity::class.java),
+
+            DetailTrainingItem("bt_detail_002", "전체 몸 스캔 인식하기", "정서와 관련된 신체 감각 찾기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
+
+            DetailTrainingItem("bt_detail_003", "특정 감각 집중하기", "특별한 경험을 기록하기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
+
+            DetailTrainingItem("bt_detail_004", "감정-신체 연결 인식", "특별한 경험을 기록하기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
+
+            DetailTrainingItem("bt_detail_005", "바디 스캔", "감각 알아차리기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
+
+            DetailTrainingItem("bt_detail_006", "바디 스캔", "미세한 감각 변화 알아차리기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
+
+            DetailTrainingItem("bt_detail_007", "먹기 명상", "음식의 오감 알아차리기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
+
+            DetailTrainingItem("bt_detail_008", "먹기 명상", "감정과 먹기 연결 알아차리기",
+                TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
         )
         detailAdapter.updateData(data)
     }
+
 }

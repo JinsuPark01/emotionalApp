@@ -41,7 +41,13 @@
 
         <!-- 2주차 전체 몸 스캔 액티비티 등록 -->
         <activity
-            android:name=".ui.alltraining.WholeBodyScanActivity"
+            android:name=".ui.alltraining.BodyTrainingIntroActivity"
+            android:exported="false">
+        </activity>
+
+        <!-- 전체 몸 스캔 인식하기 / 특정 감각 집중하기 등 공통 탭용 액티비티 -->
+        <activity
+            android:name=".ui.alltraining.BodyTrainingDetailActivity"
             android:exported="false">
         </activity>
 

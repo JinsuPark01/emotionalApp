@@ -112,6 +112,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <View
+                    android:id="@+id/viewGrayBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#DDDDDD" />
+
                 <TextView
                     android:id="@+id/tvPracticeContent"
                     android:layout_width="match_parent"

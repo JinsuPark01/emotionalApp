@@ -11,5 +11,6 @@
     <color name="button_color_body">#1B5E20</color>
     <color name="button_color_mind">#01579B</color>
     <color name="button_color_expression">#4A148C</color>
+    <color name="placeholder_gray">#DDDDDD</color>
 
 </resources>

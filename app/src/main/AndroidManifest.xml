@@ -66,6 +66,11 @@
             android:exported="true">
         </activity>
 
+        <!-- 4주차: 정서표현 및 행동 훈련 액티비티 -->
+<!--        <activity-->
+<!--            android:name=".ui.alltraining.ExpressionActionActivity"-->
+<!--            android:exported="false"/>-->
+
     </application>
 
 </manifest>

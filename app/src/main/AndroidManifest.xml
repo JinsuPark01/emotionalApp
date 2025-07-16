@@ -55,6 +55,10 @@
             android:name=".ui.alltraining.ExpressionActionTrainingActivity"
             android:exported="false" />
 
+        <activity android:name=".ui.emotion.EmotionAvoidanceActivity" android:exported="false" />
+        <activity android:name=".ui.emotion.TopicDetailActivity" android:exported="false" />
+
     </application>
+
 
 </manifest>

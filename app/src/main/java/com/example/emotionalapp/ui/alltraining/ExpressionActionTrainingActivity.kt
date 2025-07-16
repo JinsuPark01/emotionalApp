@@ -43,16 +43,16 @@ class ExpressionActionTrainingActivity : AppCompatActivity() {
                 iconResId = R.drawable.outline_person_24,
                 title = "정서회피 훈련",
                 subtitle = "정서와 관련된 신체 감각 찾기",
-                progressText = "", // 텍스트 제거
+                progressText = "",
                 backgroundColorResId = R.color.purple_700,
-                targetActivityClass = EmotionTrainingActivity::class.java
+                targetActivityClass = com.example.emotionalapp.ui.emotion.EmotionAvoidanceActivity::class.java
             ),
             ActionTrainingItem(
                 id = "driven_action_training",
                 iconResId = R.drawable.ic_chat,
                 title = "정서-주도 행동 훈련",
                 subtitle = "특별한 경험을 기록하기",
-                progressText = "", // 텍스트 제거
+                progressText = "",
                 backgroundColorResId = R.color.purple_500,
                 targetActivityClass = ExpressionActionActivity::class.java
             )

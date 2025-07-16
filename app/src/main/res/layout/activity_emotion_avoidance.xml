@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <!-- 상단 바 (뒤로가기, 제목) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:id="@+id/tv_page_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="정서회피 훈련"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="12dp"/>
+    </LinearLayout>
+
+    <!-- 콘텐츠 영역 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- 각 주제에 대한 버튼들 -->
+            <TextView
+                android:id="@+id/btn_topic1"
+                style="@style/TopicTextViewStyle"
+                android:text="정서 회피란?" />
+
+            <TextView
+                android:id="@+id/btn_topic2"
+                style="@style/TopicTextViewStyle"
+                android:text="회피해도 괜찮은 정서 vs 회피하면 안 되는 정서" />
+
+            <TextView
+                android:id="@+id/btn_topic3"
+                style="@style/TopicTextViewStyle"
+                android:text="정서 회피의 단기적 효과" />
+
+            <TextView
+                android:id="@+id/btn_topic4"
+                style="@style/TopicTextViewStyle"
+                android:text="정서 회피의 장기적 결과" />
+
+            <!-- '정리' 버튼을 삭제했습니다. -->
+
+            <TextView
+                android:id="@+id/btn_topic6"
+                style="@style/TopicTextViewStyle"
+                android:text="퀴즈" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

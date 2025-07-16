@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmotionalApp"
         tools:targetApi="31">
+
+        <!-- 여기에 모든 Activity가 함께 있어야 합니다. -->
         <activity
             android:name=".ui.alltraining.AllTrainingPageActivity"
             android:exported="true">
@@ -22,49 +24,36 @@
         </activity>
         <activity
             android:name=".ui.alltraining.DailyTrainingPageActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".ui.alltraining.IntroActivity"
-            android:exported="false">
-        </activity>
-
+            android:exported="false" />
         <activity
             android:name=".ui.alltraining.EmotionTrainingActivity"
-            android:exported="false">
-        </activity>
-
+            android:exported="false" />
         <activity
             android:name=".ui.alltraining.BodyTrainingActivity"
-            android:exported="false">
-        </activity>
-
-        <!-- 2주차 전체 몸 스캔 액티비티 등록 -->
+            android:exported="false" />
         <activity
             android:name=".ui.alltraining.BodyTrainingIntroActivity"
-            android:exported="false">
-        </activity>
-
-        <!-- 전체 몸 스캔 인식하기 / 특정 감각 집중하기 등 공통 탭용 액티비티 -->
+            android:exported="false" />
         <activity
             android:name=".ui.alltraining.BodyTrainingDetailActivity"
-            android:exported="false">
-        </activity>
-
+            android:exported="false" />
         <activity
             android:name=".ui.alltraining.MindWatchingActivity"
-            android:exported="false">
-        </activity>
-
+            android:exported="false" />
         <activity
             android:name=".ui.alltraining.ExpressionActionActivity"
-            android:exported="false">
-        </activity>
-
+            android:exported="false" />
         <activity
             android:name=".ui.intro.IntroTrainingActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
+
+        <!-- 올바른 위치로 옮겼습니다. -->
+        <activity
+            android:name=".ui.alltraining.ExpressionActionTrainingActivity"
+            android:exported="false" />
 
     </application>
 

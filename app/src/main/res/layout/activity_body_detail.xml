@@ -132,15 +132,9 @@
                     android:id="@+id/btnStartPractice"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:text="시작 →"
+                    android:text="Training Start"
                     android:layout_marginTop="16dp"/>
 
-                <Button
-                    android:id="@+id/btnStopPractice"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:text="중지 ■"
-                    android:layout_marginTop="8dp"/>
             </LinearLayout>
         </ScrollView>
 

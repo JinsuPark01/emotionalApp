@@ -1,5 +1,6 @@
 package com.example.emotionalapp.ui.alltraining
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -44,7 +45,6 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
         layoutRecord      = findViewById(R.id.layoutRecord)
         practiceContent   = findViewById(R.id.tvPracticeContent)
         btnStartPractice  = findViewById(R.id.btnStartPractice)
-        btnStopPractice   = findViewById(R.id.btnStopPractice)
         recordRecycler    = findViewById(R.id.rvRecords)
 
         // 4) Practice 콘텐츠 분기
@@ -174,7 +174,16 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
         }
         practiceContent.text = practiceText
 
-        // 5) Record 데이터 분기
+        // 5) 연습 시작 버튼 클릭 시 PracticeActivity로 이동
+        btnStartPractice.setOnClickListener {
+            val intent = Intent(this, BodyTrainingPracticeActivity::class.java).apply {
+                putExtra("TRAINING_ID", trainingId)
+                putExtra("TRAINING_TITLE", trainingTitle)
+            }
+            startActivity(intent)
+        }
+
+        // 6) Record 데이터 분기
         recordRecycler.layoutManager = LinearLayoutManager(this)
         val recordList = when (trainingId) {
             "bt_detail_002" -> listOf("2025-06-29: 스캔 1회 완료", "2025-06-30: 스캔 1회 완료")

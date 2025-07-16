@@ -141,7 +141,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="감정보다 먼저 나타나는 신호는 몸에 있습니다.\n몸을 잘 느끼면 감정을 더 잘 이해하고 다룰 수 있어요.\n스트레스, 불안, 무기력감ㅇ르 조절하는데 도움이 됩니다.\n"
+                    android:text="감정보다 먼저 나타나는 신호는 몸에 있습니다.\n몸을 잘 느끼면 감정을 더 잘 이해하고 다룰 수 있어요.\n스트레스, 불안, 무기력감을 조절하는데 도움이 됩니다.\n"
                     android:textSize="14sp"
                     android:lineSpacingExtra="4dp"/>
 
@@ -153,15 +153,15 @@
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp"/>
 
-                <TextView
-                    android:id="@+id/tvPracticeContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="연습하기 콘텐츠를 불러오는 중..."
-                    android:textSize="14sp"
-                    android:lineSpacingExtra="4dp"
-                    android:textColor="@color/black"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/tvPracticeContent"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:text="연습하기 콘텐츠를 불러오는 중..."-->
+<!--                    android:textSize="14sp"-->
+<!--                    android:lineSpacingExtra="4dp"-->
+<!--                    android:textColor="@color/black"/>-->
 
             </LinearLayout>
         </ScrollView>

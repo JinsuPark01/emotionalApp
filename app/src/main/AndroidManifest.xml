@@ -66,6 +66,10 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".ui.alltraining.ExpressionActionTrainingActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

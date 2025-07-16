@@ -12,4 +12,7 @@
     <color name="button_color_mind">#01579B</color>
     <color name="button_color_expression">#4A148C</color>
 
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+
 </resources>

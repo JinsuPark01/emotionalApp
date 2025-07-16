@@ -33,6 +33,12 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    // --- 여기를 추가했습니다 ---
+    buildFeatures {
+        viewBinding = true
+    }
+    // -----------------------
 }
 
 dependencies {

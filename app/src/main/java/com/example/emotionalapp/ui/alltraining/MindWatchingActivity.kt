@@ -79,17 +79,17 @@ class MindWatchingActivity : BottomNavActivity() {
         val sampleDetailData = listOf(
             DetailTrainingItem(
                 id = "mind_detail_001",
-                title = "정서회피 교육",
-                subtitle = "정서 회피 훈련에 대한 교육을 진행합니다.",
+                title = "인지적 평가",
+                subtitle = "인지적 평가 교육 및 모호한 그림 해석을 진행합니다.",
                 TrainingType.MIND_WATCHING_TRAINING,
-                currentProgress = "75",
+                currentProgress = "1/2",
                 backgroundColorResId = R.color.button_color_mind,
                 targetActivityClass = MindWatchingActivity::class.java // 실제 액티비티로 변경
             ),
             DetailTrainingItem(
                 id = "mind_detail_002",
-                title = "회피 일지 작성 및 감정 머무르기",
-                subtitle = "정서 회피 훈련을 진행해 봅니다.",
+                title = "생각의 덫",
+                subtitle = "생각의 덫을 파악하고 풀어내봅시다.",
                 TrainingType.MIND_WATCHING_TRAINING,
                 currentProgress = "1/3",
                 backgroundColorResId = R.color.button_color_mind,
@@ -97,19 +97,10 @@ class MindWatchingActivity : BottomNavActivity() {
             ),
             DetailTrainingItem(
                 id = "mind_detail_003",
-                title = "정서 주도 행동 교육",
-                subtitle = "정서 주도 행동에 대한 교육을 진행합니다.",
+                title = "자동적 평가",
+                subtitle = "3주차 훈련을 돌아보는 시간",
                 TrainingType.MIND_WATCHING_TRAINING,
-                currentProgress = "잠김",
-                backgroundColorResId = R.color.button_color_mind,
-                targetActivityClass = MindWatchingActivity::class.java // 실제 액티비티로 변경
-            ),
-            DetailTrainingItem(
-                id = "mind_detail_004",
-                title = "반대 행동하기 및 대안행동 찾기",
-                subtitle = "실제 훈련을 진행해 봅니다.",
-                TrainingType.MIND_WATCHING_TRAINING,
-                currentProgress = "박진수",
+                currentProgress = "0/2",
                 backgroundColorResId = R.color.button_color_mind,
                 targetActivityClass = MindWatchingActivity::class.java // 실제 액티비티로 변경
             )

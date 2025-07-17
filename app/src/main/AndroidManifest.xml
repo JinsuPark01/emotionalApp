@@ -61,6 +61,7 @@
         <activity android:name=".ui.emotion.EmotionAvoidanceActivity" android:exported="false" />
         <activity android:name=".ui.emotion.TopicDetailActivity" android:exported="false" />
 
+        <activity android:name=".ui.mindwatching.TrapActivity" android:exported="false" />
     </application>
 
 

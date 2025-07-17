@@ -13,6 +13,7 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.DetailTrainingAdapter
 import com.example.emotionalapp.data.DetailTrainingItem
 import com.example.emotionalapp.data.TrainingType
+import com.example.emotionalapp.ui.mindwatching.TrapActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
 
 class MindWatchingActivity : BottomNavActivity() {
@@ -93,7 +94,7 @@ class MindWatchingActivity : BottomNavActivity() {
                 TrainingType.MIND_WATCHING_TRAINING,
                 currentProgress = "1/3",
                 backgroundColorResId = R.color.button_color_mind,
-                targetActivityClass = MindWatchingActivity::class.java // 실제 액티비티로 변경
+                targetActivityClass = TrapActivity::class.java // 실제 액티비티로 변경
             ),
             DetailTrainingItem(
                 id = "mind_detail_003",

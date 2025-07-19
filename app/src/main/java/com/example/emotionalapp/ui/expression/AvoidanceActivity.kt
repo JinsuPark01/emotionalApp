@@ -1,19 +1,19 @@
-package com.example.emotionalapp.ui.emotion
+package com.example.emotionalapp.ui.expression
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
-import com.example.emotionalapp.databinding.ActivityEmotionAvoidanceBinding
+import com.example.emotionalapp.databinding.ActivityExpressionAvoidanceBinding
 
-class EmotionAvoidanceActivity : AppCompatActivity(), View.OnClickListener {
+class AvoidanceActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var binding: ActivityEmotionAvoidanceBinding
+    private lateinit var binding: ActivityExpressionAvoidanceBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEmotionAvoidanceBinding.inflate(layoutInflater)
+        binding = ActivityExpressionAvoidanceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnBack.setOnClickListener { finish() }

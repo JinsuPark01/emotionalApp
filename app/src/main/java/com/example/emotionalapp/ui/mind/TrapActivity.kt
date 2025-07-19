@@ -1,4 +1,4 @@
-package com.example.emotionalapp.ui.mindwatching
+package com.example.emotionalapp.ui.mind
 
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -10,8 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -40,7 +38,7 @@ class TrapActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_trap_training_page)
+        setContentView(R.layout.activity_mind_trap_training)
 
         btnPrev = findViewById(R.id.btnPrev)
         btnNext = findViewById(R.id.btnNext)
@@ -118,10 +116,10 @@ class TrapActivity : AppCompatActivity() {
         
         // 현재 페이지에 맞는 레이아웃 inflate
         val pageView = when (currentPage) {
-            0 -> inflater.inflate(R.layout.page_0_trap, pageContainer, false)
-            1 -> inflater.inflate(R.layout.page_1_trap, pageContainer, false)
-            2 -> inflater.inflate(R.layout.page_2_trap, pageContainer, false)
-            else -> inflater.inflate(R.layout.page_0_trap, pageContainer, false)
+            0 -> inflater.inflate(R.layout.fragment_mind_trap_training_0, pageContainer, false)
+            1 -> inflater.inflate(R.layout.fragment_mind_trap_training_1, pageContainer, false)
+            2 -> inflater.inflate(R.layout.fragment_mind_trap_training_2, pageContainer, false)
+            else -> inflater.inflate(R.layout.fragment_mind_trap_training_0, pageContainer, false)
         }
 
         pageContainer.addView(pageView)

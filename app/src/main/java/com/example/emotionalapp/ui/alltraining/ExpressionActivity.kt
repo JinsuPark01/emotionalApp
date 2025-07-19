@@ -9,7 +9,7 @@ import com.example.emotionalapp.adapter.ActionTrainingAdapter
 import com.example.emotionalapp.data.ActionTrainingItem
 import com.example.emotionalapp.databinding.ActivityExpressionActionTrainingBinding
 
-class ExpressionActionTrainingActivity : AppCompatActivity() {
+class ExpressionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityExpressionActionTrainingBinding
     private lateinit var adapter: ActionTrainingAdapter
@@ -45,7 +45,7 @@ class ExpressionActionTrainingActivity : AppCompatActivity() {
                 subtitle = "정서와 관련된 신체 감각 찾기",
                 progressText = "",
                 backgroundColorResId = R.color.purple_700,
-                targetActivityClass = com.example.emotionalapp.ui.emotion.EmotionAvoidanceActivity::class.java
+                targetActivityClass = com.example.emotionalapp.ui.expression.AvoidanceActivity::class.java
             ),
             ActionTrainingItem(
                 id = "driven_action_training",
@@ -54,7 +54,7 @@ class ExpressionActionTrainingActivity : AppCompatActivity() {
                 subtitle = "특별한 경험을 기록하기",
                 progressText = "",
                 backgroundColorResId = R.color.purple_500,
-                targetActivityClass = ExpressionActionActivity::class.java
+                targetActivityClass = com.example.emotionalapp.ui.expression.TopicDetailActivity::class.java
             )
         )
         adapter.submitList(trainingList)

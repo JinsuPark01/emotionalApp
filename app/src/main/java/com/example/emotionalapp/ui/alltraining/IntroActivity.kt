@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
@@ -26,7 +25,7 @@ class IntroActivity : BottomNavActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_page)
+        setContentView(R.layout.activity_detail_training)
 
         detailRecyclerView = findViewById(R.id.trainingRecyclerView) // XML에 정의된 ID로 변경
 

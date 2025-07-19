@@ -1,4 +1,4 @@
-package com.example.emotionalapp.ui.alltraining
+package com.example.emotionalapp.ui.body
 
 import android.content.Intent
 import android.os.Bundle

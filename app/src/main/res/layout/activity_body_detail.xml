@@ -165,5 +165,5 @@
     </FrameLayout>
 
     <!-- 4) 하단 네비 -->
-    <include layout="@layout/bottom_nav" />
+    <include layout="@layout/nav_bottom" />
 </LinearLayout>

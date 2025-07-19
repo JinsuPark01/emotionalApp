@@ -17,7 +17,7 @@ class DailyTrainingPageActivity : BottomNavActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_daily_training_page)
+        setContentView(R.layout.activity_daily_training)
 
         trainingRecyclerView = findViewById(R.id.trainingRecyclerView)
 

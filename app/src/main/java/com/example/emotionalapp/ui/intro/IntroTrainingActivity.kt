@@ -27,7 +27,7 @@ class IntroTrainingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_intro_training_page)
+        setContentView(R.layout.activity_intro_training)
 
         textView = findViewById(R.id.textContent)
         btnPrev = findViewById(R.id.btnPrev)

@@ -29,39 +29,36 @@
             android:name=".ui.alltraining.IntroActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.alltraining.EmotionTrainingActivity"
+            android:name=".ui.alltraining.EmotionActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.alltraining.BodyTrainingActivity"
+            android:name=".ui.alltraining.BodyActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.alltraining.BodyTrainingIntroActivity"
+            android:name=".ui.body.BodyTrainingIntroActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.alltraining.BodyTrainingDetailActivity"
+            android:name=".ui.body.BodyTrainingDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.alltraining.MindWatchingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.alltraining.ExpressionActionActivity"
+            android:name=".ui.alltraining.MindActivity"
             android:exported="false" />
         <activity
             android:name=".ui.intro.IntroTrainingActivity"
             android:exported="true" />
 
-        <activity android:name=".ui.alltraining.BodyTrainingPracticeActivity"
+        <activity android:name=".ui.body.BodyTrainingPracticeActivity"
             android:exported="false" />
 
         <!-- 올바른 위치로 옮겼습니다. -->
         <activity
-            android:name=".ui.alltraining.ExpressionActionTrainingActivity"
+            android:name=".ui.alltraining.ExpressionActivity"
             android:exported="false" />
 
-        <activity android:name=".ui.emotion.EmotionAvoidanceActivity" android:exported="false" />
-        <activity android:name=".ui.emotion.TopicDetailActivity" android:exported="false" />
+        <activity android:name=".ui.expression.AvoidanceActivity" android:exported="false" />
+        <activity android:name=".ui.expression.TopicDetailActivity" android:exported="false" />
 
-        <activity android:name=".ui.mindwatching.TrapActivity" android:exported="false" />
+        <activity android:name=".ui.mind.TrapActivity" android:exported="false" />
     </application>
 
 

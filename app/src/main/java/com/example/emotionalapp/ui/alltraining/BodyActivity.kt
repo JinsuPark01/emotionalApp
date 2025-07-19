@@ -11,10 +11,12 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.DetailTrainingAdapter
 import com.example.emotionalapp.data.DetailTrainingItem
 import com.example.emotionalapp.data.TrainingType
+import com.example.emotionalapp.ui.body.BodyTrainingDetailActivity
+import com.example.emotionalapp.ui.body.BodyTrainingIntroActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
 
 
-class BodyTrainingActivity : BottomNavActivity() {
+class BodyActivity : BottomNavActivity() {
 
     override val isAllTrainingPage = true
     private lateinit var detailRecyclerView: RecyclerView
@@ -22,7 +24,7 @@ class BodyTrainingActivity : BottomNavActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_page)  // 공통 레이아웃 재사용
+        setContentView(R.layout.activity_detail_training)  // 공통 레이아웃 재사용
 
         // 타이틀(“2주차 – 신체자각 훈련”) 설정
         findViewById<TextView>(R.id.tv_page_title).text =

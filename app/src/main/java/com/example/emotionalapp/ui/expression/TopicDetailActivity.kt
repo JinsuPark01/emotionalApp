@@ -1,16 +1,16 @@
-package com.example.emotionalapp.ui.emotion
+package com.example.emotionalapp.ui.expression
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.emotionalapp.databinding.ActivityTopicDetailBinding
+import com.example.emotionalapp.databinding.ActivityExpressionTopicDetailBinding
 
 class TopicDetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTopicDetailBinding
+    private lateinit var binding: ActivityExpressionTopicDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTopicDetailBinding.inflate(layoutInflater)
+        binding = ActivityExpressionTopicDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Intent로부터 토픽 제목과 내용 리소스 ID 받기

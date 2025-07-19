@@ -6,17 +6,15 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.DetailTrainingAdapter
 import com.example.emotionalapp.data.DetailTrainingItem
 import com.example.emotionalapp.data.TrainingType
-import com.example.emotionalapp.ui.mindwatching.TrapActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
 
-class MindWatchingActivity : BottomNavActivity() {
+class EmotionActivity : BottomNavActivity() {
 
     private lateinit var detailRecyclerView: RecyclerView // 변수명 변경 (일관성 및 명확성)
     private lateinit var detailTrainingAdapter: DetailTrainingAdapter
@@ -26,7 +24,7 @@ class MindWatchingActivity : BottomNavActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_page)
+        setContentView(R.layout.activity_detail_training)
 
         detailRecyclerView = findViewById(R.id.trainingRecyclerView) // XML에 정의된 ID로 변경
 
@@ -45,7 +43,7 @@ class MindWatchingActivity : BottomNavActivity() {
     private fun setupRecyclerView() {
         detailTrainingAdapter = DetailTrainingAdapter(detailTrainingItems) { clickedDetailItem ->
             Log.d(
-                "MindWatchingActivity",
+                "EmotionTrainingActivity",
                 "Clicked: ${clickedDetailItem.title}, Target: ${clickedDetailItem.targetActivityClass?.simpleName}"
             )
 
@@ -58,7 +56,7 @@ class MindWatchingActivity : BottomNavActivity() {
                 startActivity(intent)
             } else {
                 Log.w(
-                    "MindWatchingActivity",
+                    "EmotionTrainingActivity",
                     "No target activity defined for ${clickedDetailItem.title}"
                 )
                 Toast.makeText(
@@ -73,37 +71,37 @@ class MindWatchingActivity : BottomNavActivity() {
     }
 
     /**
-     * MindWatchingActivity에 표시될 각 세부 훈련 항목에 대한 데이터를 로드하는 함수
+     * EmotionTrainingActivity에 표시될 각 세부 훈련 항목에 대한 데이터를 로드하는 함수
      */
     private fun loadDetailTrainingData() {
         // 실제 데이터는 ViewModel, Repository, DB 등에서 가져옵니다.
         val sampleDetailData = listOf(
             DetailTrainingItem(
-                id = "mind_detail_001",
-                title = "인지적 평가",
-                subtitle = "인지적 평가 교육 및 모호한 그림 해석을 진행합니다.",
-                TrainingType.MIND_WATCHING_TRAINING,
-                currentProgress = "1/2",
-                backgroundColorResId = R.color.button_color_mind,
-                targetActivityClass = MindWatchingActivity::class.java // 실제 액티비티로 변경
+                id = "emotion_detail_001",
+                title = "정서 선택하기",
+                subtitle = "정서와 관련된 신체 감각 찾기",
+                TrainingType.EMOTION_TRAINING,
+                currentProgress = "75",
+                backgroundColorResId = R.color.button_color_emotion,
+                targetActivityClass = EmotionActivity::class.java // 실제 액티비티로 변경
             ),
             DetailTrainingItem(
-                id = "mind_detail_002",
-                title = "생각의 덫",
-                subtitle = "생각의 덫을 파악하고 풀어내봅시다.",
-                TrainingType.MIND_WATCHING_TRAINING,
-                currentProgress = "1/3",
-                backgroundColorResId = R.color.button_color_mind,
-                targetActivityClass = TrapActivity::class.java // 실제 액티비티로 변경
+                id = "emotion_detail_002",
+                title = "현재에 닻 내리기",
+                subtitle = "특별한 경험을 기록하기",
+                TrainingType.EMOTION_TRAINING,
+                currentProgress = "75",
+                backgroundColorResId = R.color.button_color_emotion,
+                targetActivityClass = EmotionActivity::class.java // 실제 액티비티로 변경
             ),
             DetailTrainingItem(
-                id = "mind_detail_003",
-                title = "자동적 평가",
-                subtitle = "3주차 훈련을 돌아보는 시간",
-                TrainingType.MIND_WATCHING_TRAINING,
-                currentProgress = "0/2",
-                backgroundColorResId = R.color.button_color_mind,
-                targetActivityClass = MindWatchingActivity::class.java // 실제 액티비티로 변경
+                id = "emotion_detail_003",
+                title = "ARC 정서 경험 기록",
+                subtitle = "특별한 경험을 기록하기",
+                TrainingType.EMOTION_TRAINING,
+                currentProgress = "75",
+                backgroundColorResId = R.color.button_color_emotion,
+                targetActivityClass = EmotionActivity::class.java // 실제 액티비티로 변경
             )
         )
         detailTrainingItems.clear()

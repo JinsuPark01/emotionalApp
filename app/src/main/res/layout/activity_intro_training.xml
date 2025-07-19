@@ -98,7 +98,7 @@
         </LinearLayout>
     </ScrollView>
     <!-- 하단 네비게이션 바 (include 방식) -->
-    <include layout="@layout/page_nav" />
+    <include layout="@layout/nav_page" />
 
 
 </LinearLayout>

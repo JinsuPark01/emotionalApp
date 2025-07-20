@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/btnGoBackTrap5"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginBottom="24dp"
+        android:text="다른 질문들도 살펴볼까요?"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/gray"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btnContinueTrap5"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="마지막 질문을 해볼까요?"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/button_color_mind"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

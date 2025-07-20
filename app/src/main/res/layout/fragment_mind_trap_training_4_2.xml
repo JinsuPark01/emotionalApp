@@ -1,0 +1,85 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 질문 1 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. 지금 내가 이렇게 느끼고 생각하는 데에 영향을 준 여러 가지 요소들이 있다면, 어떤 것들이고 각각이 차지하는 비중은 어느 정도일까요?
+            \n예) ‘오늘 친구 표정이 좋지 않았어. 나 때문이야.’
+            \n- 내가 최근 대인관계에 예민해져 있었음-40%
+            \n- 내가 친구에게 말했던 표현이 약간 직설적이었음-30%
+            \n- 친구가 오늘 원래 피곤해 보였음-30%"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/answer1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="답변을 입력하세요"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 질문 2 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. 만약 친구가 여러분과 같은 생각을 하고 있다면, 나는 친구에게 뭐라고 말해줄까요?"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/answer2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="답변을 입력하세요"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 질문 3 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. 만약 그 일이 발생한다면, 좋은 점도 있을까요?"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/answer3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="답변을 입력하세요"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 저장 버튼 -->
+        <Button
+            android:id="@+id/btnSaveAnswers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="저장"
+            android:backgroundTint="@color/button_color_mind"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:paddingVertical="12dp" />
+
+    </LinearLayout>
+</ScrollView>

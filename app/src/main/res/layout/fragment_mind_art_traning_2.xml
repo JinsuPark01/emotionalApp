@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <!-- 제목 -->
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이미지 선택"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_marginBottom="12dp" />
+
+    <!-- 2x2 이미지 그리드 -->
+    <GridLayout
+        android:id="@+id/imageGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:alignmentMode="alignMargins"
+        android:columnOrderPreserved="false"
+        android:layout_gravity="center"
+        android:useDefaultMargins="true">
+
+        <!-- 이미지 아이템 1 -->
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_columnWeight="1"
+            android:scaleType="centerCrop"
+            android:background="@drawable/image_selector_background"
+            android:src="@drawable/art1" />
+
+        <!-- 이미지 아이템 2 -->
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_columnWeight="1"
+            android:scaleType="centerCrop"
+            android:background="@drawable/image_selector_background"
+            android:src="@drawable/art2" />
+
+        <!-- 이미지 아이템 3 -->
+        <ImageView
+            android:id="@+id/image3"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_columnWeight="1"
+            android:scaleType="centerCrop"
+            android:background="@drawable/image_selector_background"
+            android:src="@drawable/art3" />
+
+        <!-- 이미지 아이템 4 -->
+        <ImageView
+            android:id="@+id/image4"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_columnWeight="1"
+            android:scaleType="centerCrop"
+            android:background="@drawable/image_selector_background"
+            android:src="@drawable/art4" />
+
+    </GridLayout>
+
+</LinearLayout>

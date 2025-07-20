@@ -12,6 +12,7 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.DetailTrainingAdapter
 import com.example.emotionalapp.data.DetailTrainingItem
 import com.example.emotionalapp.data.TrainingType
+import com.example.emotionalapp.ui.emotion.AnchorActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
 
 class EmotionActivity : BottomNavActivity() {
@@ -92,7 +93,7 @@ class EmotionActivity : BottomNavActivity() {
                 TrainingType.EMOTION_TRAINING,
                 currentProgress = "75",
                 backgroundColorResId = R.color.button_color_emotion,
-                targetActivityClass = EmotionActivity::class.java // 실제 액티비티로 변경
+                targetActivityClass = AnchorActivity::class.java // 실제 액티비티로 변경
             ),
             DetailTrainingItem(
                 id = "emotion_detail_003",

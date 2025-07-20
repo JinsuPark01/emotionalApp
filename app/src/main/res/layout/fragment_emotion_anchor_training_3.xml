@@ -1,0 +1,55 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 첫 번째 질문 -->
+        <TextView
+            android:id="@+id/textQuestion1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. 단서가 현재에 집중할 수 있게 효과적이었습니까?"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="12dp" />
+
+        <LinearLayout
+            android:id="@+id/optionContainerQ1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 두 번째 질문 -->
+        <TextView
+            android:id="@+id/textQuestion2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. 활동 후 어떻게 변화했나요?"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="12dp" />
+
+        <LinearLayout
+            android:id="@+id/optionContainerQ2"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 저장 버튼 -->
+        <Button
+            android:id="@+id/btnSaveDoubleQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="저장"
+            android:backgroundTint="@color/button_color_mind"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+    </LinearLayout>
+</ScrollView>

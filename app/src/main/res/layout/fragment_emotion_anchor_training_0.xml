@@ -1,0 +1,91 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 제목 -->
+        <TextView
+            android:id="@+id/textTitleAnchor0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="정서 훈련 소개"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 설명 -->
+        <TextView
+            android:id="@+id/textDescriptionAnchor0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명."
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 제목 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이렇게 진행돼요"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="6dp" />
+
+        <!-- 제목 -->
+        <TextView
+            android:id="@+id/textTitleAnchor1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="정서 훈련 소개"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 설명 -->
+        <TextView
+            android:id="@+id/textDescriptionAnchor1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명."
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 제목 -->
+        <TextView
+            android:id="@+id/textTitleAnchor2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="정서 훈련 소개"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 설명 -->
+        <TextView
+            android:id="@+id/textDescriptionAnchor2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명 추가 설명."
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="8dp" />
+
+
+    </LinearLayout>
+</ScrollView>

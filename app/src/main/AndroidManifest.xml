@@ -66,6 +66,9 @@
         <activity android:name=".ui.emotion.ArcActivity" android:exported="false" />
 
         <activity android:name=".ui.emotion.EmotionAvoidanceQuizActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.EmotionSelectionActivity" android:exported="false" />
+        <activity android:name=".ui.expression.EmotionTimerActivity" android:exported="false" />
     </application>
 
 

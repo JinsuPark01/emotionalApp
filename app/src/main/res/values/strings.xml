@@ -64,4 +64,77 @@
     <!-- Quiz Feedbacks for Q3 -->
     <string name="quiz_q3_correct_feedback">정확해요! 감정을 다루는 데에는 타이밍도 중요하답니다.</string>
     <string name="quiz_q3_wrong_feedback">감정이 너무 클 땐 바로 마주하기 어려울 수 있어요. 그럴 땐 잠깐 쉬는 것도 괜찮아요. 단, 꼭 나중에 돌아보고 정리하는 게 중요해요!</string>
+
+    <!-- Driven Action Training Contents -->
+    <string name="topic_content_what_is_driven_action">
+    감정이 너무 세서, 나도 모르게 툭 튀어나온 행동이에요.\n
+    생각은 안 하고, 감정이 시키는 대로 해버리는 거예요.\n\n
+    <b>예시</b>\n
+    - 화가 나서 갑자기 친구한테 짜증내기\n
+    - 불안해서 아예 공부 안 해버리기\n
+    - 창피해서 “그냥 안 해!” 하고 포기해버리기\n\n
+    “감정에 끌려서 하는 행동은 나한테 도움이 안 되는 경우가 많아요.\n
+    화난 건 괜찮지만, 화내는 방식이 문제일 수 있죠”
+</string>
+
+    <string name="topic_content_adaptive_actions">
+    감정을 느낀 뒤, 나에게 도움이 되는 방식으로 행동하는 것이에요.\n\n
+    <b>예시</b>\n
+    - 외롭다고 느껴서 친구에게 먼저 연락함\n
+    - 화가 나서 조용히 “지금 좀 힘들어” 말함\n
+    - 불안해서 시험공부 계획 세움\n\n
+    “이런 행동은 감정과 잘 연결된 행동이에요.\n
+    감정이 줄어들고, 관계도 더 좋아질 수 있어요.”
+</string>
+
+    <string name="topic_content_maladaptive_actions">
+    감정을 느낀 뒤, 감정을 무시하거나, 지나치게 반응하거나, 더 나쁘게 만드는 행동\n\n
+    <b>예시</b>\n
+    - 외로워서 SNS만 들여다보다가 더 외로움\n
+    - 화나서 친구한테 욕하고 관계 끊김\n
+    - 불안해서 공부 아예 포기함\n\n
+    “이런 행동은 감정이 더 커지게 만들어요.”
+</string>
+
+    <string name="topic_content_driven_action_summary">
+    “감정은 신호등이에요.\n
+    나한테 지금 필요한 행동이 뭔지 힌트를 주는 거예요. 이제 감정이 나를 끌고 가지 않도록 그 행동들을 알아차리고, 멈추고, 다르게 해보는 연습을 해볼 거예요.\n
+    감정은 ‘신호’일 뿐, 운전자는 나니까요!”
+</string>
+
+    <!-- Driven Action Quiz Questions -->
+    <string name="quiz_driven_q1_question">정서-주도 행동은 감정을 느낄 때마다 의도적으로 선택해서 행동하는 것을 말한다.</string>
+    <string name="quiz_driven_q2_question">짜증이 날 때 물건을 던지거나 소리를 지르는 건 정서-주도 행동일 수 있다.</string>
+    <string name="quiz_driven_q3_question">정서-주도 행동은 모두 나쁘기만 하고, 고쳐야 할 행동이다.</string>
+
+    <!-- Driven Action Quiz Feedbacks for Q1 -->
+    <string name="quiz_driven_q1_correct_feedback">맞아요! 정서-주도 행동은 ‘감정에 끌려서 무의식적으로’ 나오는 행동이에요. 의도적인 선택은 ‘적응적 행동’에 가까워요!</string>
+    <string name="quiz_driven_q1_wrong_feedback">정서-주도 행동은 ‘감정에 끌려서 무의식적으로’ 나오는 행동이에요. 의도적인 선택은 ‘적응적 행동’에 가깝답니다!</string>
+
+    <!-- Driven Action Quiz Feedbacks for Q2 -->
+    <string name="quiz_driven_q2_correct_feedback">정답! 감정이 행동으로 바로 튀어나올 때 그게 바로 정서-주도 행동이죠.</string>
+    <string name="quiz_driven_q2_wrong_feedback">감정을 바로 행동으로 표현하는 건 흔한 정서-주도 행동이에요. 나중엔 후회할 수 있어서, 적응적인 방식으로 바꿔보는 연습이 필요해요!</string>
+
+    <!-- Driven Action Quiz Feedbacks for Q3 -->
+    <string name="quiz_driven_q3_correct_feedback">정확해요! 정서-주도 행동이 무조건 나쁜 건 아니에요. 감정에 민감하다는 뜻이기도 하니까, 그걸 ‘도움 되는 행동’으로 바꾸는 연습이 필요한 거예요!</string>
+    <string name="quiz_driven_q3_wrong_feedback">정서-주도 행동이 무조건 나쁜 건 아니에요. 감정에 민감하다는 뜻이기도 하니까, 그걸 ‘도움 되는 행동’으로 바꾸는 연습이 필요한 거예요!</string>
+
+    <!-- Opposite Action Training Contents -->
+    <string name="opposite_action_guide_text">
+    화나면 소리 지르고 싶고, 불안하면 도망치고 싶고, 우울하면 그냥 누워 있고 싶죠?\n\n
+    그런데 가끔은, 감정이 하라는 대로 하지 말고 \'반대로 움직여\' 보는 게 도움이 될 때가 있어요!\n\n
+    지금부터는 감정을 돌아보고, 그 감정이 시키는 행동이 아니라, 그 반대 방향으로 작게 한 걸음 움직여볼 거예요.
+</string>
+    <string name="opposite_action_final_text">
+    오늘 당신은 감정이 끌고 가는 대로 가지 않고,
+        스스로 행동을 선택한 멋진 사람이에요!\n\n
+    계속 이렇게 연습해봐요
+</string>
+    <!-- Alternative Action Training Contents -->
+    <string name="alternative_action_guide_text">
+    감정은 누구나 느껴요. 중요한 건, 그 감정을 느낄 때 어떻게 행동하느냐예요.\n\n
+    지금부터 당신은 감정에 끌려가기보단, 직접 선택한 대안 행동을 해보고, 그 결과가 어땠는지 돌아볼 시간을 가질거예요.\n\n
+    감정을 \'없애는\'게 아니라, 감정을 다루는 당신만의 방법을 만들어보는 시간이에요.
+</string>
+
 </resources>

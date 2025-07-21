@@ -68,6 +68,7 @@
                 android:id="@+id/btnSaveFeedback"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:backgroundTint="@color/button_color_body"
                 android:text="기록 저장" />
         </LinearLayout>
     </ScrollView>

@@ -67,6 +67,21 @@
         <activity android:name=".ui.emotion.ArcActivity" android:exported="false" />
 
         <activity android:name=".ui.emotion.EmotionAvoidanceQuizActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.EmotionSelectionActivity" android:exported="false" />
+        <activity android:name=".ui.expression.EmotionTimerActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.EmotionReflectionActivity" android:exported="false" />
+        <activity android:name=".ui.expression.EmotionFeedbackActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.DrivenActionActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.DrivenActionQuizActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.OppositeActionActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.AlternativeActionActivity" android:exported="false" />
+
     </application>
 
 

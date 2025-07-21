@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <TextView android:text="1. 지금 느끼는 감정" style="@style/FormLabelStyle"/>
+    <EditText android:id="@+id/edit_feeling" style="@style/FormInputStyle" android:hint="예: 화남, 짜증, 외로움, 불안, 슬픔 등"/>
+    <TextView android:text="2. 감정이 시키는 행동" style="@style/FormLabelStyle"/>
+    <EditText android:id="@+id/edit_impulsive_action" style="@style/FormInputStyle" android:hint="예: 소리 지르기, 도망가기, 자버리기 등"/>
+    <TextView android:text="3. 반대로 행동한다면?" style="@style/FormLabelStyle"/>
+    <EditText android:id="@+id/edit_opposite_action" style="@style/FormInputStyle" android:hint="예: 조용히 말하기, 1분 산책, 친구한테 말 걸기 등"/>
+</LinearLayout>

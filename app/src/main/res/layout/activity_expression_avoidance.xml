@@ -44,7 +44,7 @@
             android:paddingHorizontal="8dp"
             android:paddingVertical="16dp">
 
-            <!-- 각 주제에 대한 버튼들 (CardView) -->
+            <!-- 1. 정서 회피란? -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_topic1"
                 android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="23dp"
+                    android:padding="16dp"
                     android:background="@color/purple_700">
                     <ImageView
                         android:layout_width="40dp"
@@ -78,6 +78,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- 2. 회피해도 괜찮은 정서 vs ... -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_topic2"
                 android:layout_width="match_parent"
@@ -93,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="23dp"
+                    android:padding="16dp"
                     android:background="@color/purple_700">
                     <ImageView
                         android:layout_width="40dp"
@@ -111,6 +112,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- 3. 단기적 효과 -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_topic3"
                 android:layout_width="match_parent"
@@ -126,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="23dp"
+                    android:padding="16dp"
                     android:background="@color/purple_700">
                     <ImageView
                         android:layout_width="40dp"
@@ -144,6 +146,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- 4. 장기적 결과 -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_topic4"
                 android:layout_width="match_parent"
@@ -159,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="23dp"
+                    android:padding="16dp"
                     android:background="@color/purple_700">
                     <ImageView
                         android:layout_width="40dp"
@@ -177,6 +180,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- 5. 퀴즈 (위치 변경됨) -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_topic6"
                 android:layout_width="match_parent"
@@ -192,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="23dp"
+                    android:padding="16dp"
                     android:background="@color/purple_700">
                     <ImageView
                         android:layout_width="40dp"
@@ -210,7 +214,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 회피 일지 작성하기 버튼이 아래로 이동했습니다. -->
+            <!-- 6. 회피 일지 작성하기 (위치 및 색상 변경됨) -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_write_diary"
                 android:layout_width="match_parent"
@@ -226,8 +230,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="23dp"
-                    android:background="@color/purple_500">
+                    android:padding="16dp"
+                    android:background="@color/purple_700">
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -241,6 +245,40 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:text="회피 일지 작성하기"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 7. 정서 머무르기 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_emotion_timer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="16dp"
+                    android:background="@color/purple_700">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_chat"
+                        app:tint="@android:color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="정서 머무르기"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

@@ -12,6 +12,7 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.DetailTrainingAdapter
 import com.example.emotionalapp.data.DetailTrainingItem
 import com.example.emotionalapp.data.TrainingType
+import com.example.emotionalapp.ui.mind.ArtActivity
 import com.example.emotionalapp.ui.mind.TrapActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
 
@@ -84,7 +85,7 @@ class MindActivity : BottomNavActivity() {
                 TrainingType.MIND_WATCHING_TRAINING,
                 currentProgress = "1/2",
                 backgroundColorResId = R.color.button_color_mind,
-                targetActivityClass = MindActivity::class.java // 실제 액티비티로 변경
+                targetActivityClass = ArtActivity::class.java // 실제 액티비티로 변경
             ),
             DetailTrainingItem(
                 id = "mind_detail_002",

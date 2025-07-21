@@ -41,7 +41,7 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
                 .putString(key, feedbackText)
                 .apply()  // feedback_bt_detail_002 형태로 저장
 
-            // TODO: 서버/DB 연동 로직 추가
+            // 서버/DB 연동 로직 추가
 
             Toast.makeText(this, "소감이 저장되었습니다.", Toast.LENGTH_SHORT).show()
             finish()

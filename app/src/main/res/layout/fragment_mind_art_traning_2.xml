@@ -36,7 +36,7 @@
             android:layout_columnWeight="1"
             android:scaleType="centerCrop"
             android:background="@drawable/image_selector_background"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/image1" />
 
         <!-- 이미지 아이템 2 -->
         <ImageView
@@ -46,7 +46,7 @@
             android:layout_columnWeight="1"
             android:scaleType="centerCrop"
             android:background="@drawable/image_selector_background"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/image2" />
 
         <!-- 이미지 아이템 3 -->
         <ImageView
@@ -56,7 +56,7 @@
             android:layout_columnWeight="1"
             android:scaleType="centerCrop"
             android:background="@drawable/image_selector_background"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/image3" />
 
         <!-- 이미지 아이템 4 -->
         <ImageView
@@ -66,7 +66,7 @@
             android:layout_columnWeight="1"
             android:scaleType="centerCrop"
             android:background="@drawable/image_selector_background"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/image4" />
 
     </GridLayout>
 

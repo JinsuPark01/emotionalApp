@@ -69,6 +69,10 @@
 
         <activity android:name=".ui.expression.EmotionSelectionActivity" android:exported="false" />
         <activity android:name=".ui.expression.EmotionTimerActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.EmotionReflectionActivity" android:exported="false" />
+        <activity android:name=".ui.expression.EmotionFeedbackActivity" android:exported="false" />
+
     </application>
 
 

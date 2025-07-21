@@ -36,6 +36,7 @@ class ExpressionActivity : AppCompatActivity() {
         binding.actionTrainingRecyclerView.adapter = adapter
     }
 
+    // In ExpressionActivity.kt
     private fun loadTrainingData() {
         val trainingList = listOf(
             ActionTrainingItem(
@@ -54,7 +55,8 @@ class ExpressionActivity : AppCompatActivity() {
                 subtitle = "특별한 경험을 기록하기",
                 progressText = "",
                 backgroundColorResId = R.color.purple_500,
-                targetActivityClass = com.example.emotionalapp.ui.expression.TopicDetailActivity::class.java
+                // --- 여기가 핵심 수정 부분입니다 ---
+                targetActivityClass = com.example.emotionalapp.ui.expression.DrivenActionActivity::class.java
             )
         )
         adapter.submitList(trainingList)

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white">
 
-    <!-- 상단 바 (뒤로가기, 제목) -->
+    <!-- 상단 바 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -40,35 +41,208 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="16dp">
 
-            <!-- 각 주제에 대한 버튼들 -->
-            <TextView
+            <!-- 각 주제에 대한 버튼들 (CardView) -->
+            <androidx.cardview.widget.CardView
                 android:id="@+id/btn_topic1"
-                style="@style/TopicTextViewStyle"
-                android:text="정서 회피란?" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="23dp"
+                    android:background="@color/purple_700">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_chat"
+                        app:tint="@android:color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="정서 회피란?"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <TextView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/btn_topic2"
-                style="@style/TopicTextViewStyle"
-                android:text="회피해도 괜찮은 정서 vs 회피하면 안 되는 정서" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="23dp"
+                    android:background="@color/purple_700">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_chat"
+                        app:tint="@android:color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="회피해도 괜찮은 정서 vs 회피하면 안 되는 정서"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <TextView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/btn_topic3"
-                style="@style/TopicTextViewStyle"
-                android:text="정서 회피의 단기적 효과" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="23dp"
+                    android:background="@color/purple_700">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_chat"
+                        app:tint="@android:color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="정서 회피의 단기적 효과"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <TextView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/btn_topic4"
-                style="@style/TopicTextViewStyle"
-                android:text="정서 회피의 장기적 결과" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="23dp"
+                    android:background="@color/purple_700">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_chat"
+                        app:tint="@android:color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="정서 회피의 장기적 결과"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <!-- '정리' 버튼을 삭제했습니다. -->
-
-            <TextView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/btn_topic6"
-                style="@style/TopicTextViewStyle"
-                android:text="퀴즈" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="23dp"
+                    android:background="@color/purple_700">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_chat"
+                        app:tint="@android:color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="퀴즈"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 회피 일지 작성하기 버튼이 아래로 이동했습니다. -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_write_diary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="23dp"
+                    android:background="@color/purple_500">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_chat"
+                        app:tint="@android:color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="회피 일지 작성하기"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </ScrollView>

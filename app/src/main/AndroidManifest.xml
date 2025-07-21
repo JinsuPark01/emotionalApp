@@ -13,6 +13,8 @@
         android:theme="@style/Theme.EmotionalApp"
         tools:targetApi="31">
 
+        <activity android:name=".ui.expression.AvoidanceChecklistActivity" android:exported="false" />
+        <activity android:name=".ui.expression.AvoidanceDiaryFormActivity" android:exported="false" />
         <!-- 여기에 모든 Activity가 함께 있어야 합니다. -->
         <activity
             android:name=".ui.alltraining.AllTrainingPageActivity"

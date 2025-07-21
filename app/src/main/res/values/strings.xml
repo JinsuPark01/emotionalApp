@@ -47,4 +47,21 @@
     감정을 피하고 싶을 땐, “지금은 잠깐 쉬자. 하지만 나중엔 꼭 다시 돌아보자.”\n
     이렇게 자신에게 말해줘도 좋아요.”
 </string>
+
+    <!-- Quiz Questions -->
+    <string name="quiz_q1_question">정서 회피는 감정을 느끼지 않으려는 행동으로, 모두 나쁜 행동이다.</string>
+    <string name="quiz_q2_question">감정은 피하면 자연스럽게 사라진다.</string>
+    <string name="quiz_q3_question">강한 감정이 들 때, 잠깐 피했다가 나중에 다시 돌아보는 건 괜찮은 방법이다.</string>
+
+    <!-- Quiz Feedbacks for Q1 -->
+    <string name="quiz_q1_correct_feedback">맞았어요! 회피도 감정을 다루는 방법 중 하나입니다. 잘 구분했어요!</string>
+    <string name="quiz_q1_wrong_feedback">회피는 무조건 나쁜 게 아니에요! 감정이 너무 클 때 잠깐 피하는 건 나를 보호해주는 정서조절 전략이 될 수 있어요.</string>
+
+    <!-- Quiz Feedbacks for Q2 -->
+    <string name="quiz_q2_correct_feedback">굿! 감정은 피한다고 사라지지 않죠. 잘 알고 있어요!</string>
+    <string name="quiz_q2_wrong_feedback">감정은 억지로 없애는 게 아니라, 알아차리고 받아들이는 게 중요해요. 피하면 잠시 잊을 수 있지만, 나중에 더 커질 수도 있어요!</string>
+
+    <!-- Quiz Feedbacks for Q3 -->
+    <string name="quiz_q3_correct_feedback">정확해요! 감정을 다루는 데에는 타이밍도 중요하답니다.</string>
+    <string name="quiz_q3_wrong_feedback">감정이 너무 클 땐 바로 마주하기 어려울 수 있어요. 그럴 땐 잠깐 쉬는 것도 괜찮아요. 단, 꼭 나중에 돌아보고 정리하는 게 중요해요!</string>
 </resources>

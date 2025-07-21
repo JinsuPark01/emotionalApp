@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow" />
+        <TextView
+            android:id="@+id/tv_page_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="나의 회피 행동 체크하기"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="최근 내가 자주 사용하는 회피 행동을 체크해보세요."
+                android:layout_marginBottom="24dp"
+                android:textSize="16sp"/>
+            <CheckBox android:id="@+id/cb_avoid1" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="폰을 계속 만지작거리거나 SNS, 유튜브를 계속 본다." android:layout_marginBottom="8dp"/>
+            <CheckBox android:id="@+id/cb_avoid2" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="갑자기 먹을 것을 찾거나 음식을 계속 먹는다." android:layout_marginBottom="8dp"/>
+            <CheckBox android:id="@+id/cb_avoid3" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="아무 이유 없이 계속 잔다." android:layout_marginBottom="8dp"/>
+            <CheckBox android:id="@+id/cb_avoid4" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="과제나 할 일을 미루고 딴짓을 한다." android:layout_marginBottom="8dp"/>
+            <CheckBox android:id="@+id/cb_avoid5" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="일부러 웃고 떠들면서 감정을 숨긴다." android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/btn_start_diary"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
+        android:text="일지 작성하러 가기" />
+</LinearLayout>

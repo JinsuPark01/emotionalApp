@@ -63,6 +63,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="48dp"
+            android:backgroundTint="@color/button_color_body"
             android:text="시작" />
 
         <Button
@@ -72,6 +73,7 @@
             android:layout_height="48dp"
             android:text="정지"
             android:layout_marginStart="8dp"
+            android:backgroundTint="@color/button_color_body"
             android:layout_marginEnd="8dp"/>
 
         <Button
@@ -79,6 +81,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="48dp"
+            android:backgroundTint="@color/button_color_body"
             android:text="기록" />
     </LinearLayout>
 

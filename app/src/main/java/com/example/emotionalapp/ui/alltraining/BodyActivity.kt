@@ -69,19 +69,19 @@ class BodyActivity : BottomNavActivity() {
             DetailTrainingItem("bt_detail_002", "전체 몸 스캔 인식하기", "정서와 관련된 신체 감각 찾기",
                 TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
 
-            DetailTrainingItem("bt_detail_003", "특정 감각 집중하기", "특별한 경험을 기록하기",
+            DetailTrainingItem("bt_detail_003", "먹기 명상", "음식의 오감 알아차리기",
                 TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
 
             DetailTrainingItem("bt_detail_004", "감정-신체 연결 인식", "특별한 경험을 기록하기",
                 TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
 
-            DetailTrainingItem("bt_detail_005", "바디 스캔", "감각 알아차리기",
+            DetailTrainingItem("bt_detail_005", "특정 감각 집중하기", "특별한 감각 집중하기ㅇ",
                 TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
 
-            DetailTrainingItem("bt_detail_006", "바디 스캔", "미세한 감각 변화 알아차리기",
+            DetailTrainingItem("bt_detail_006", "바디 스캔", "감각 알아차리기",
                 TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
 
-            DetailTrainingItem("bt_detail_007", "먹기 명상", "음식의 오감 알아차리기",
+            DetailTrainingItem("bt_detail_007", "바디 스캔", "미세한 감각 변화 알아차리기",
                 TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = BodyTrainingDetailActivity::class.java),
 
             DetailTrainingItem("bt_detail_008", "먹기 명상", "감정과 먹기 연결 알아차리기",

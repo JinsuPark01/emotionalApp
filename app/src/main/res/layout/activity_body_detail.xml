@@ -133,6 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:text="Training Start"
+                    android:backgroundTint="@color/button_color_body"
                     android:layout_marginTop="16dp"/>
 
             </LinearLayout>

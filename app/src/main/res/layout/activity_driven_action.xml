@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:id="@+id/tv_page_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="정서-주도 행동 훈련"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="12dp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="16dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_topic1"
+                style="@style/TrainingCardViewStyle">
+                <LinearLayout style="@style/TrainingCardLinearLayout">
+                    <ImageView style="@style/TrainingCardIcon"/>
+                    <TextView style="@style/TrainingCardText" android:text="정서-주도 행동이란?"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_topic2"
+                style="@style/TrainingCardViewStyle">
+                <LinearLayout style="@style/TrainingCardLinearLayout">
+                    <ImageView style="@style/TrainingCardIcon"/>
+                    <TextView style="@style/TrainingCardText" android:text="적응적 행동"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_topic3"
+                style="@style/TrainingCardViewStyle">
+                <LinearLayout style="@style/TrainingCardLinearLayout">
+                    <ImageView style="@style/TrainingCardIcon"/>
+                    <TextView style="@style/TrainingCardText" android:text="부적응적 행동"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_topic4"
+                style="@style/TrainingCardViewStyle">
+                <LinearLayout style="@style/TrainingCardLinearLayout">
+                    <ImageView style="@style/TrainingCardIcon"/>
+                    <TextView style="@style/TrainingCardText" android:text="정리"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_quiz"
+                style="@style/TrainingCardViewStyle">
+                <LinearLayout style="@style/TrainingCardLinearLayout">
+                    <ImageView style="@style/TrainingCardIcon"/>
+                    <TextView style="@style/TrainingCardText" android:text="퀴즈"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- "반대 행동 하기" 버튼 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_opposite_action"
+                style="@style/TrainingCardViewStyle">
+                <LinearLayout style="@style/TrainingCardLinearLayout">
+                    <ImageView style="@style/TrainingCardIcon"/>
+                    <TextView style="@style/TrainingCardText" android:text="반대 행동 하기"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

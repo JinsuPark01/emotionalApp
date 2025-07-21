@@ -130,5 +130,11 @@
         스스로 행동을 선택한 멋진 사람이에요!\n\n
     계속 이렇게 연습해봐요
 </string>
+    <!-- Alternative Action Training Contents -->
+    <string name="alternative_action_guide_text">
+    감정은 누구나 느껴요. 중요한 건, 그 감정을 느낄 때 어떻게 행동하느냐예요.\n\n
+    지금부터 당신은 감정에 끌려가기보단, 직접 선택한 대안 행동을 해보고, 그 결과가 어땠는지 돌아볼 시간을 가질거예요.\n\n
+    감정을 \'없애는\'게 아니라, 감정을 다루는 당신만의 방법을 만들어보는 시간이에요.
+</string>
 
 </resources>

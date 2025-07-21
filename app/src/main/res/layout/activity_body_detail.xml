@@ -157,12 +157,15 @@
                 android:layout_marginBottom="12dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvRecords"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingBottom="16dp" />
+            android:id="@+id/rvRecords"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp" />
 
+
+            <!-- 실제 사용에서 없앨거임 -->
             <Button
                 android:id="@+id/btnDeleteRecord"
                 android:layout_width="match_parent"
@@ -173,6 +176,6 @@
         </LinearLayout>
     </FrameLayout>
 
-    <!-- 4) 하단 네비 -->
+    <!-- 하단 네비 -->
     <include layout="@layout/nav_bottom" />
 </LinearLayout>

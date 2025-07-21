@@ -112,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <!-- 연습 설명 등 기존 UI 그대로 -->
                 <View
                     android:id="@+id/viewGrayBox"
                     android:layout_width="match_parent"
@@ -148,34 +149,70 @@
             android:padding="16dp"
             android:visibility="gone">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="기록"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp"/>
+            <!-- empty / content 모두 이 FrameLayout 안에서 토글됩니다 -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
-            <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRecords"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clipToPadding="false"
-            android:paddingBottom="16dp" />
+                <!-- 기록 없을 때 -->
+                <TextView
+                    android:id="@+id/tvEmptyRecord"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="훈련을 마치고 소감을 작성해주세요."
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:visibility="gone"/>
 
+                <!-- 기록 있을 때 -->
+                <ScrollView
+                    android:id="@+id/scrollRecordContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
 
-            <!-- 실제 사용에서 없앨거임 -->
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvRecordTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="USER님의 소감입니다."
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/black"
+                            android:layout_marginBottom="12dp"/>
+
+                        <TextView
+                        android:id="@+id/tvRecordContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="16dp"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:layout_marginBottom="16dp"/>
+                    </LinearLayout>
+                </ScrollView>
+            </FrameLayout>
+
+            <!-- 항상 보이는 삭제 버튼 -->
             <Button
                 android:id="@+id/btnDeleteRecord"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_margin="16dp"
+                android:layout_marginTop="8dp"
                 android:text="기록 삭제"
-                android:backgroundTint="@color/button_color_body"/>
+                android:backgroundTint="@color/button_color_body"
+                android:textColor="@android:color/white"/>
         </LinearLayout>
     </FrameLayout>
 
-    <!-- 하단 네비 -->
+    <!-- 하단 네비게이션 -->
     <include layout="@layout/nav_bottom" />
+
 </LinearLayout>

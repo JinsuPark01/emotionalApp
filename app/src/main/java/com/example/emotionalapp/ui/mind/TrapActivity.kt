@@ -341,6 +341,5 @@ class TrapActivity : AppCompatActivity() {
         )
         underlinePractice.visibility = if (practice) View.VISIBLE else View.GONE
         underlineRecord.visibility = if (practice) View.GONE    else View.VISIBLE
-
     }
 }

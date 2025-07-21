@@ -73,6 +73,12 @@
         <activity android:name=".ui.expression.EmotionReflectionActivity" android:exported="false" />
         <activity android:name=".ui.expression.EmotionFeedbackActivity" android:exported="false" />
 
+        <activity android:name=".ui.expression.DrivenActionActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.DrivenActionQuizActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.OppositeActionActivity" android:exported="false" />
+
     </application>
 
 

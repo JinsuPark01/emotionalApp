@@ -1,10 +1,13 @@
 package com.example.emotionalapp.ui.body
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +15,10 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.BodyScanRecordAdapter
 
 class BodyTrainingDetailActivity : AppCompatActivity() {
+
+    private lateinit var trainingId: String
+    private lateinit var prefs: SharedPreferences
+    private lateinit var adapter: BodyScanRecordAdapter
 
     private lateinit var tabPractice: TextView
     private lateinit var tabRecord: TextView
@@ -21,33 +28,35 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
     private lateinit var layoutRecord: View
     private lateinit var practiceContent: TextView
     private lateinit var btnStartPractice: Button
-    private lateinit var btnStopPractice: Button
     private lateinit var recordRecycler: RecyclerView
+    private lateinit var btnDelete: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_body_detail)
 
-        // 1) Intent 로부터 ID/제목 받기
-        val trainingId    = intent.getStringExtra("TRAINING_ID")    ?: ""
-        val trainingTitle = intent.getStringExtra("TRAINING_TITLE") ?: "훈련"
+        // 1) Intent 및 SharedPreferences 초기화
+        trainingId = intent.getStringExtra("TRAINING_ID") ?: ""
+        prefs = getSharedPreferences("body_training_records", Context.MODE_PRIVATE)
 
         // 2) 상단 바 설정
-        findViewById<TextView>(R.id.tv_page_title).text = trainingTitle
+        findViewById<TextView>(R.id.tv_page_title).text =
+            intent.getStringExtra("TRAINING_TITLE") ?: "훈련"
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
         // 3) 뷰 바인딩
-        tabPractice       = findViewById(R.id.tabPractice)
-        tabRecord         = findViewById(R.id.tabRecord)
+        tabPractice = findViewById(R.id.tabPractice)
+        tabRecord = findViewById(R.id.tabRecord)
         underlinePractice = findViewById(R.id.underlinePractice)
-        underlineRecord   = findViewById(R.id.underlineRecord)
-        layoutPractice    = findViewById(R.id.layoutPractice)
-        layoutRecord      = findViewById(R.id.layoutRecord)
-        practiceContent   = findViewById(R.id.tvPracticeContent)
-        btnStartPractice  = findViewById(R.id.btnStartPractice)
-        recordRecycler    = findViewById(R.id.rvRecords)
+        underlineRecord = findViewById(R.id.underlineRecord)
+        layoutPractice = findViewById(R.id.layoutPractice)
+        layoutRecord = findViewById(R.id.layoutRecord)
+        practiceContent = findViewById(R.id.tvPracticeContent)
+        btnStartPractice = findViewById(R.id.btnStartPractice)
+        recordRecycler = findViewById(R.id.rvRecords)
+        btnDelete = findViewById(R.id.btnDeleteRecord)
 
-        // 4) Practice 콘텐츠 분기
+        // 4) Practice 콘텐츠 설정
         val practiceText = when (trainingId) {
             "bt_detail_002" -> """
                 DAY 1 - 내 몸에 귀기울이기
@@ -86,7 +95,7 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
                 * 먹기 명상에 피해야할 음식
                 국물음식, 너무 맵거나 짠 음식, 비빔밥, 잡채 같은 복합음식
             """.trimIndent()
-                
+
 
             "bt_detail_004" -> """
                 DAY 3 - 감정과 몸 연결하기
@@ -175,33 +184,45 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
         }
         practiceContent.text = practiceText
 
-        // 5) 연습 시작 버튼 클릭 시 PracticeActivity로 이동
+        // 5) 연습 시작 버튼 리스너
         btnStartPractice.setOnClickListener {
             val intent = Intent(this, BodyTrainingPracticeActivity::class.java).apply {
                 putExtra("TRAINING_ID", trainingId)
-                putExtra("TRAINING_TITLE", trainingTitle)
+                putExtra(
+                    "TRAINING_TITLE",
+                    findViewById<TextView>(R.id.tv_page_title).text.toString()
+                )
             }
             startActivity(intent)
         }
 
-        // 6) Record 데이터 분기
+        // 6) RecyclerView 초기화
         recordRecycler.layoutManager = LinearLayoutManager(this)
-        val recordList = when (trainingId) {
-            "bt_detail_002" -> listOf("2025-06-29: 스캔 1회 완료", "2025-06-30: 스캔 1회 완료")
-            "bt_detail_003" -> listOf("2025-06-29: 감각 집중 1회", "2025-06-30: 감각 집중 1회")
-            "bt_detail_004" -> listOf("2025-06-29: 분노→가슴 답답함", "2025-06-30: 불안→배 조임")
-            "bt_detail_005" -> listOf("2025-06-29: 전신 스캔 완료", "2025-06-30: 감각 변화 관찰")
-            "bt_detail_006" -> listOf("2025-06-29: 어깨 긴장↓", "2025-06-30: 목 이완↑")
-            "bt_detail_007" -> listOf("2025-06-29: 건포도 명상 1회", "2025-06-30: 초콜릿 명상 1회")
-            "bt_detail_008" -> listOf("2025-06-29: 긴장→평온 관찰", "2025-06-30: 불안→이완 관찰")
-            else            -> emptyList()
-        }
-        recordRecycler.adapter = BodyScanRecordAdapter(recordList)
+        adapter = BodyScanRecordAdapter(emptyList())
+        recordRecycler.adapter = adapter
 
-        // 6) 탭 리스너 & 초기 탭
+        // 7) 삭제 버튼 리스너
+        btnDelete.setOnClickListener {
+            prefs.edit().remove("feedback_$trainingId").apply()
+            Toast.makeText(this, "기록이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+            adapter.updateData(emptyList())
+        }
+
+        // 8) 탭 리스너 및 초기 탭 설정
         tabPractice.setOnClickListener { selectTab(true) }
-        tabRecord  .setOnClickListener { selectTab(false) }
+        tabRecord.setOnClickListener { selectTab(false) }
         selectTab(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadRecord()
+    }
+
+    private fun loadRecord() {
+        val saved = prefs.getString("feedback_$trainingId", null)
+        val list = saved?.let { listOf(it) } ?: emptyList()
+        adapter.updateData(list)
     }
 
     private fun selectTab(practice: Boolean) {
@@ -212,8 +233,8 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
             resources.getColor(if (practice) R.color.gray else R.color.black, null)
         )
         underlinePractice.visibility = if (practice) View.VISIBLE else View.GONE
-        underlineRecord  .visibility = if (practice) View.GONE    else View.VISIBLE
+        underlineRecord.visibility = if (practice) View.GONE else View.VISIBLE
         layoutPractice.visibility = if (practice) View.VISIBLE else View.GONE
-        layoutRecord  .visibility  = if (practice) View.GONE    else View.VISIBLE
+        layoutRecord.visibility = if (practice) View.GONE else View.VISIBLE
     }
 }

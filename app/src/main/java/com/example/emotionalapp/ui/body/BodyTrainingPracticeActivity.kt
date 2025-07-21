@@ -11,14 +11,17 @@ import com.example.emotionalapp.R
 
 class BodyTrainingPracticeActivity : AppCompatActivity() {
 
+    // ‘멈춤’ 버튼을 나중에 사용하기 위해 멤버 변수로 선언
+    private lateinit var btnStopPractice: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_body_practice)
 
-        // 뒤로 가기 버튼
+        // 1) 뒤로가기 버튼
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
-        // Intent로부터 ID/제목 받기
+        // 2) Intent로부터 ID/제목 받기
         val trainingId    = intent.getStringExtra("TRAINING_ID") ?: ""
         val trainingTitle = intent.getStringExtra("TRAINING_TITLE") ?: "연습"
 
@@ -38,29 +41,25 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.tv_practice_detail).text = detailText
 
+        // 4) 버튼 바인딩
         val btnStart  = findViewById<Button>(R.id.btnStart)
-        val btnStop   = findViewById<Button>(R.id.btnStop)
+        btnStopPractice = findViewById<Button>(R.id.btnStopPractice)
         val btnRecord = findViewById<Button>(R.id.btnRecord)
 
-        // --- 클릭 리스너 등록 ---
+        // 5) 클릭 리스너 등록
         btnStart.setOnClickListener {
             Toast.makeText(this, "연습을 시작합니다.", Toast.LENGTH_SHORT).show()
             // TODO: 실제 타이머 시작 로직 추가
-            }
-        btnStop.setOnClickListener {
+        }
+        btnStopPractice.setOnClickListener {
             Toast.makeText(this, "연습을 중단했습니다.", Toast.LENGTH_SHORT).show()
             // TODO: 타이머 중단 로직 추가
-            }
+        }
         btnRecord.setOnClickListener {
             Toast.makeText(this, "연습 기록이 저장되었습니다.", Toast.LENGTH_SHORT).show()
-            // TODO: 기록 저장 로직 추가
-            }
-        btnRecord.setOnClickListener {
-            Intent(this, BodyTrainingRecordActivity::class.java).also { intent ->
-                intent.putExtra("TRAINING_ID", trainingId)
-                startActivity(intent)
-                }
-            }
-
+            Intent(this, BodyTrainingRecordActivity::class.java).apply {
+                putExtra("TRAINING_ID", trainingId)
+            }.also { startActivity(it) }
+        }
     }
 }

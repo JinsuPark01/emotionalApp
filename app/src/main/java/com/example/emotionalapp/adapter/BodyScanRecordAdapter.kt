@@ -9,7 +9,7 @@ import com.example.emotionalapp.R
 
 
 class BodyScanRecordAdapter(
-    private val dates: List<String>
+    private var dates: List<String>
 ) : RecyclerView.Adapter<BodyScanRecordAdapter.VH>() {
 
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,5 +29,9 @@ class BodyScanRecordAdapter(
         holder.btnCheck.setOnClickListener {
             //기록 상세 보기 기능
         }
+    }
+    fun updateData(newDates: List<String>) {
+        dates = newDates
+        notifyDataSetChanged()
     }
 }

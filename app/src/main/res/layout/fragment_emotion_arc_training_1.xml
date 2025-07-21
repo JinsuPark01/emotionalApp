@@ -1,0 +1,56 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 단계 제목 -->
+        <TextView
+            android:id="@+id/textTitleArcA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A: 선행 상황 혹은 사건"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/button_color_emotion"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 설명 -->
+        <TextView
+            android:id="@+id/textDescriptionArcA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="나에게 강렬한 정서경험을 일으키는 것은 방금 막 발생했거나 혹은 과거에 발생했거나, 아니면 아직 일어나지 않은 미래일 수도 있습니다. 어떤 상황이나 사건이 나에게 정서를 불러일으키는지 알아봅시다."
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- 사용자 입력 -->
+        <EditText
+            android:id="@+id/editSituationArcA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="정서 경험을 유발한 상황이나 사건을 입력하세요"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 저장 버튼 -->
+        <Button
+            android:id="@+id/btnSaveArcA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="저장"
+            android:backgroundTint="@color/button_color_emotion"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</ScrollView>

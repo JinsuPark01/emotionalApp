@@ -1,0 +1,52 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textTitleArcR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R: 내 신체와 감정의 반응"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/button_color_emotion"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:id="@+id/textDescriptionArcR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="정서경험에 대한 반응은 생각, 느낌이나 몸의 반응 그리고 행동하는 나의 모든 반응입니다. 상황이나 사건으로 인하여 정서를 느낄 때 나의 반응은 어땠나요?"
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="20dp" />
+
+        <EditText
+            android:id="@+id/editReactionArcR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="감정과 신체반응을 입력하세요"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSaveArcR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="저장"
+            android:backgroundTint="@color/button_color_emotion"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</ScrollView>

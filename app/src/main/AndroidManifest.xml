@@ -61,6 +61,7 @@
         <activity android:name=".ui.mind.ArtActivity" android:exported="false" />
         <activity android:name=".ui.mind.TrapActivity" android:exported="false" />
         <activity android:name=".ui.emotion.AnchorActivity" android:exported="false" />
+        <activity android:name=".ui.emotion.ArcActivity" android:exported="false" />
     </application>
 
 

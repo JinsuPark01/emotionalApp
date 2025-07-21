@@ -1,0 +1,98 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 제목 -->
+        <TextView
+            android:id="@+id/textTitleArcIntro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ARC 정서경험 기록이란?"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 개요 설명 -->
+        <TextView
+            android:id="@+id/textOverviewArcIntro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이것은 우리가 정서를 느낄 때의 경험 A(antecedents), 반응 R(responses), 결과 C(consequences)를 순서대로 정리하는 활동이에요. 모든 정서경험은 어떤 사건이나 상황으로 시작되고, 우리는 그 상황에 반응하게 됩니다. 그리고 그 반응은 지금 당장의 결과를 만들기도 하고, 시간이 지나면서 생기는 더 큰 변화로 이어지기도 해요.
+            \n\n이 활동의 목적은 감정이 왜 일어났고, 내가 어떤 반응을 했으며, 그 반응이 어떤 결과를 가져왔는지를 이해하는 것입니다.
+            \n이를 통해 나의 감정과 행동을 더 객관적으로 바라보고, 비슷한 상황에서 다른 선택이나 더 도움이 되는 반응을 찾아볼 수 있어요.
+            \n\n또한 이 활동은, 감정을 피하려고 했던 행동도 함께 돌아보는 과정이에요.
+            \n그 행동이 잘못된 건 아니에요. 오히려 그 순간에는 감정을 줄이는 데 도움이 되었을 수 있어요. 다만, 그 행동이 장기적으로 나에게 도움이 되는지를 함께 고민해 보는 것이 중요해요."
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 단계 설명 -->
+        <TextView
+            android:id="@+id/textStepA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A: 감정을 유발한 상황은 무엇이었나요?"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/button_color_emotion"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:id="@+id/textStepADescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="예: 많은 사람들 앞에서 발표해야 함
+            \n예: 혼자 있는 것이 힘듦"
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/textStepR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R: 그 상황에서 어떤 감정, 신체 반응, 행동을 했나요?"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/button_color_emotion"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:id="@+id/textStepRDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="예: 무기력함, 소화가 잘 안됨
+            \n예: 하루 종일 침대 안에만 있었음"
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/textStepC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C: 그 반응의 단기적/장기적 결과는 무엇이었나요?"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/button_color_emotion"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:id="@+id/textStepCDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="예: 단기적 결과 - 불안을 피하고 마음이 편해짐
+            \n예: 장기적 결과 - 자신감이 점점 줄어듦"
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:layout_marginBottom="16dp" />
+    </LinearLayout>
+</ScrollView>

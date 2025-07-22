@@ -51,12 +51,52 @@ class AllTrainingPageActivity : BottomNavActivity() {
     private fun loadTrainingData() {
         // 각 아이템에 이동할 Activity 클래스를 직접 지정
         val sampleData = listOf(
-            TrainingItem("intro001", "INTRO", "감정의 세계로 떠나는 첫 걸음", TrainingType.INTRO, "1/3", R.color.button_color_intro, IntroActivity::class.java),
-            TrainingItem("et001", "1주차 - 정서인식 훈련", "나의 감정을 정확히 알아차리기", TrainingType.EMOTION_TRAINING, "100%", R.color.button_color_emotion, EmotionActivity::class.java),
-            TrainingItem("bt001", "2주차 - 신체자각 훈련", "몸이 보내는 신호에 귀 기울이기", TrainingType.BODY_TRAINING, "잠김", R.color.button_color_body, BodyActivity::class.java),
-            TrainingItem("mwt001", "3주차 - 인지재구성 훈련", "생각의 틀을 바꾸는 연습", TrainingType.MIND_WATCHING_TRAINING, "잠김", R.color.button_color_mind, MindActivity::class.java),
+            TrainingItem(
+                "intro001",
+                "INTRO",
+                "감정의 세계로 떠나는 첫 걸음",
+                TrainingType.INTRO,
+                "1/3",
+                R.color.button_color_intro,
+                IntroActivity::class.java
+            ),
+            TrainingItem(
+                "et001",
+                "1주차 - 정서인식 훈련",
+                "나의 감정을 정확히 알아차리기",
+                TrainingType.EMOTION_TRAINING,
+                "100%",
+                R.color.button_color_emotion,
+                EmotionActivity::class.java
+            ),
+            TrainingItem(
+                "bt001",
+                "2주차 - 신체자각 훈련",
+                "몸이 보내는 신호에 귀 기울이기",
+                TrainingType.BODY_TRAINING,
+                "잠김",
+                R.color.button_color_body,
+                BodyActivity::class.java
+            ),
+            TrainingItem(
+                "mwt001",
+                "3주차 - 인지재구성 훈련",
+                "생각의 틀을 바꾸는 연습",
+                TrainingType.MIND_WATCHING_TRAINING,
+                "잠김",
+                R.color.button_color_mind,
+                MindActivity::class.java
+            ),
             // --- 여기가 핵심 수정 부분입니다 ---
-            TrainingItem("eat001", "4주차 - 정서표현 및 행동 훈련", "건강하게 감정을 표현하고 행동하기", TrainingType.EXPRESSION_ACTION_TRAINING, "잠김", R.color.button_color_expression, ExpressionActivity::class.java)
+            TrainingItem(
+                "eat001",
+                "4주차 - 정서표현 및 행동 훈련",
+                "건강하게 감정을 표현하고 행동하기",
+                TrainingType.EXPRESSION_ACTION_TRAINING,
+                "잠김",
+                R.color.button_color_expression,
+                ExpressionActivity::class.java
+            )
         )
         trainingAdapter.updateData(sampleData)
     }

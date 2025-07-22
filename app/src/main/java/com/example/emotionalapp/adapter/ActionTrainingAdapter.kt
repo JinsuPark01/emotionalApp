@@ -49,7 +49,6 @@ class ActionTrainingAdapter(
             contentLayout.setBackgroundColor(ContextCompat.getColor(itemView.context, trainingItem.backgroundColorResId))
             itemView.setOnClickListener { onItemClick(trainingItem) }
 
-            // --- 프로그레스 바를 제어하는 로직 추가 ---
             val progress = trainingItem.progressText.toIntOrNull()
             if (progress != null) {
                 circularProgressBar.progress = progress

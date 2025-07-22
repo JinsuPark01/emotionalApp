@@ -15,13 +15,11 @@
 
         <activity android:name=".ui.expression.AvoidanceChecklistActivity" android:exported="false" />
         <activity android:name=".ui.expression.AvoidanceDiaryFormActivity" android:exported="false" />
-        <!-- 여기에 모든 Activity가 함께 있어야 합니다. -->
 
-        <!-- 로그인 화면 -->
-        <!-- AllTrainingPageActivity 에 달려 있던 MAIN/LAUNCHER intent‐filter 제거 -->
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

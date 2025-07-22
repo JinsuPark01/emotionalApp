@@ -22,7 +22,6 @@ class AllTrainingAdapter(
             .inflate(R.layout.item_representative_training_button, parent, false)
         return TrainingViewHolder(view, onItemClick)
     }
-
     override fun onBindViewHolder(holder: TrainingViewHolder, position: Int) {
         val trainingItem = trainingList[position]
         holder.bind(trainingItem)

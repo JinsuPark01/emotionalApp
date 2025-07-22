@@ -58,6 +58,19 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
         btnStartPractice  = findViewById(R.id.btnStartPractice)
         btnDelete         = findViewById(R.id.btnDeleteRecord)
 
+
+        // 연습 시작 버튼 클릭 리스너
+        btnStartPractice.setOnClickListener {
+            // Intent로 TRAINING_ID 전달 후 Practice 화면으로 이동
+            Intent(this, BodyTrainingPracticeActivity::class.java).apply {
+                putExtra("TRAINING_ID", trainingId)       // 이미 초기화한 trainingId 사용
+                putExtra("TRAINING_TITLE",
+                    findViewById<TextView>(R.id.tv_page_title).text.toString()
+                )
+            }.also { startActivity(it) }
+        }
+
+
         tvEmpty   = findViewById(R.id.tvEmptyRecord)
         scrollRec = findViewById(R.id.scrollRecordContent)
         tvTitle   = findViewById(R.id.tvRecordTitle)
@@ -169,7 +182,7 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
             """.trimIndent()
 
             "bt_detail_008" -> """
-                DAY 7 - 먹기명상(감정과 먹기 연결 알아차림)
+                DAY 7 - 먹기명상(먹기명상을 통한 감정과 신체 연결 알아차림)
                 
                 목표: 감정이 먹는 행동에 어떤 영향을 주는지 알아차리고,
                      반응 관찰하기

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/rootPractice"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white"
     android:padding="16dp">
 
-    <!-- 상단 바 -->
+    <!-- 1) 상단 바 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -29,13 +30,15 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+    <!-- 2) 구분선 -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#DDDDDD"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp" />
 
-    <!-- 연습 상세 콘텐츠 -->
+    <!-- 3) 연습 상세 콘텐츠 -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -50,6 +53,44 @@
             android:lineSpacingExtra="4dp" />
     </ScrollView>
 
+    <!-- 4) 오디오 진행도 표시 -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:indeterminate="false"
+        android:progress="0"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvCurrentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0:00"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvTotalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0:00"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- 5) 시작 / 정지 / 기록 버튼 -->
     <LinearLayout
         android:id="@+id/buttonContainer"
         android:layout_width="match_parent"
@@ -71,10 +112,10 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="48dp"
-            android:text="정지"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:backgroundTint="@color/button_color_body"
-            android:layout_marginEnd="8dp"/>
+            android:text="정지" />
 
         <Button
             android:id="@+id/btnRecord"

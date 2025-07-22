@@ -1,13 +1,13 @@
 package com.example.emotionalapp.ui.expression
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.AlternativeActionAdapter
 import com.example.emotionalapp.data.AlternativeActionItem
@@ -17,10 +17,13 @@ class AlternativeActionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAlternativeActionBinding
     private var currentPage = 0
-    private val totalPages = 3 // 1: 상황 기록, 2: 대안 선택, 3: 결과 확인
+    private val totalPages = 3 // 기록, 선택, 결과 총 3페이지
 
-    private lateinit var alternativeAdapter: AlternativeActionAdapter
-    private val alternativeActionItems = mutableListOf<AlternativeActionItem>()
+    // 사용자가 입력한 데이터를 저장할 변수
+    private var situation: String = ""
+    private var feeling: String = ""
+    private var actionTaken: String = ""
+    private var selectedAlternative: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,50 +31,62 @@ class AlternativeActionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         updatePage()
-        setupListeners()
-    }
 
-    private fun setupListeners() {
         binding.btnBack.setOnClickListener { finish() }
 
-        // 다음 버튼
         binding.navPage.btnNext.setOnClickListener {
-            when (currentPage) {
-                0 -> { // 상황 기록 페이지
-                    // 필수 필드가 입력되었는지 확인
-                    val situation = findViewById<android.widget.EditText>(R.id.edit_situation).text.toString().trim()
-                    val feeling = findViewById<android.widget.EditText>(R.id.edit_feeling).text.toString().trim()
-                    val action = findViewById<android.widget.EditText>(R.id.edit_impulsive_action).text.toString().trim()
+            if (!handleNextButtonClick()) return@setOnClickListener
 
-                    if (situation.isEmpty() || feeling.isEmpty() || action.isEmpty()) {
-                        Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
-                        return@setOnClickListener
-                    }
-                    currentPage++
-                    updatePage()
-                }
-                1 -> { // 대안 선택 페이지
-                    // 선택이 되었는지 확인 (이 로직은 어댑터에서 처리해야 함)
-                    // TODO: 어댑터에서 선택된 아이템이 있는지 확인하는 로직 추가
-                    // 임시로 바로 다음 페이지로 넘어가도록 설정
-                    currentPage++
-                    updatePage()
-                }
-                2 -> { // 결과 페이지
-                    // TODO: 입력된 결과 내용을 저장하는 로직 추가
-                    Toast.makeText(this, "훈련이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
+            if (currentPage < totalPages - 1) {
+                currentPage++
+                updatePage()
+            } else {
+                // 마지막 페이지에서 '완료' 버튼을 눌렀을 때
+                // TODO: 기록된 모든 내용을 데이터베이스에 저장하는 로직 추가
+                Toast.makeText(this, "훈련이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                finish()
             }
         }
 
-        // 이전 버튼
         binding.navPage.btnPrev.setOnClickListener {
             if (currentPage > 0) {
                 currentPage--
                 updatePage()
             }
         }
+    }
+
+    private fun handleNextButtonClick(): Boolean {
+        when (currentPage) {
+            0 -> { // 1페이지 (기록)
+                val situationInput = findViewById<EditText>(R.id.edit_situation)?.text.toString().trim()
+                val feelingInput = findViewById<EditText>(R.id.edit_feeling)?.text.toString().trim()
+                val actionTakenInput = findViewById<EditText>(R.id.edit_action_taken)?.text.toString().trim()
+
+                if (situationInput.isBlank() || feelingInput.isBlank() || actionTakenInput.isBlank()) {
+                    Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    return false
+                }
+                // 다음 페이지로 넘어가기 전에 데이터 저장
+                situation = situationInput
+                feeling = feelingInput
+                actionTaken = actionTakenInput
+            }
+            1 -> { // 2페이지 (선택)
+                if (selectedAlternative.isBlank()) {
+                    Toast.makeText(this, "대안 행동을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                    return false
+                }
+            }
+            2 -> { // 3페이지 (결과)
+                val resultInput = findViewById<EditText>(R.id.edit_result)?.text.toString().trim()
+                if (resultInput.isBlank()) {
+                    Toast.makeText(this, "결과를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    return false
+                }
+            }
+        }
+        return true
     }
 
     private fun updatePage() {
@@ -82,7 +97,7 @@ class AlternativeActionActivity : AppCompatActivity() {
             0 -> inflater.inflate(R.layout.page_alternative_action_1_record, binding.pageContainer, false)
             1 -> {
                 val view = inflater.inflate(R.layout.page_alternative_action_2_select, binding.pageContainer, false)
-                setupAlternativeList(view) // 대안 목록 설정
+                setupAlternativeSelectionPage(view)
                 view
             }
             2 -> inflater.inflate(R.layout.page_alternative_action_3_result, binding.pageContainer, false)
@@ -92,28 +107,46 @@ class AlternativeActionActivity : AppCompatActivity() {
         updateNavButtons()
     }
 
-    private fun setupAlternativeList(view: View) {
-        // 예시 대안 목록 (나중에 서버나 DB에서 불러올 수 있습니다.)
-        val alternatives = listOf(
-            "가벼운 산책하기",
-            "친구에게 먼저 연락하기",
-            "좋아하는 노래 듣기",
-            "명상하기",
-            "심호흡 5번 하기"
-        ).map { AlternativeActionItem(it) }
+    private fun setupAlternativeSelectionPage(view: android.view.View) {
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_alternatives)
+        val titleView = view.findViewById<TextView>(R.id.tv_selection_title)
 
-        alternativeAdapter = AlternativeActionAdapter(alternatives) { selectedItem ->
-            // TODO: 여기서 선택된 대안 행동을 저장하거나 다음 단계에 활용하는 로직 추가
-            Toast.makeText(this, "${selectedItem.actionText} 선택됨", Toast.LENGTH_SHORT).show()
+        titleView.text = "'$feeling'을 느낄 때, 이런 행동은 어때요?"
+
+        // TODO: 실제로는 사용자가 입력한 감정에 따라 다른 목록을 DB나 다른 곳에서 가져와야 함
+        val alternatives = when {
+            feeling.contains("화") || feeling.contains("짜증") -> listOf(
+                AlternativeActionItem("잠시 그 자리를 벗어나기"),
+                AlternativeActionItem("숫자를 10까지 천천히 세기"),
+                AlternativeActionItem("차가운 물로 손 씻기")
+            )
+            feeling.contains("불안") -> listOf(
+                AlternativeActionItem("좋아하는 노래 듣기"),
+                AlternativeActionItem("가벼운 스트레칭 하기"),
+                AlternativeActionItem("친한 친구와 통화하기")
+            )
+            else -> listOf(
+                AlternativeActionItem("따뜻한 차 마시기"),
+                AlternativeActionItem("5분 산책하기"),
+                AlternativeActionItem("좋아하는 책 읽기")
+            )
         }
-        view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recycler_view_alternatives).apply {
-            layoutManager = LinearLayoutManager(this@AlternativeActionActivity)
-            adapter = alternativeAdapter
+
+        val adapter = AlternativeActionAdapter(alternatives) { item ->
+            selectedAlternative = item.actionText
+            Toast.makeText(this, "'${item.actionText}' 선택됨", Toast.LENGTH_SHORT).show()
+            // TODO: 선택된 아이템 UI에 표시 (예: 배경색 변경)
         }
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
     }
 
     private fun updateNavButtons() {
         binding.navPage.btnPrev.isEnabled = currentPage > 0
-        binding.navPage.btnNext.text = if (currentPage == totalPages - 1) "완료" else "다음 →"
+        if (currentPage == totalPages - 1) {
+            binding.navPage.btnNext.text = "완료"
+        } else {
+            binding.navPage.btnNext.text = "다음 →"
+        }
     }
 }

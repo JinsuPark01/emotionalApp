@@ -34,7 +34,10 @@ class DrivenActionActivity : AppCompatActivity() {
         binding.btnOppositeAction.setOnClickListener {
             startActivity(Intent(this, OppositeActionActivity::class.java))
         }
-    }
+        binding.btnAlternativeAction.setOnClickListener {
+            startActivity(Intent(this, AlternativeActionActivity::class.java))
+        }
+    } // Remove this extra closing brace
 
     private fun navigateToDetail(topicTitle: String, contentResId: Int) {
         val intent = Intent(this, TopicDetailActivity::class.java).apply {

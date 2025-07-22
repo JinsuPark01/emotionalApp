@@ -96,6 +96,15 @@
                     <TextView style="@style/TrainingCardText" android:text="반대 행동 하기"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+            <!-- In activity_driven_action.xml -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_alternative_action"
+                style="@style/TrainingCardViewStyle">
+                <LinearLayout style="@style/TrainingCardLinearLayout">
+                    <ImageView style="@style/TrainingCardIcon"/>
+                    <TextView style="@style/TrainingCardText" android:text="대안 행동 찾기"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </ScrollView>

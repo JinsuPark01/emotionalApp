@@ -34,6 +34,13 @@ class WeeklyActivity : AppCompatActivity() {
     private lateinit var phq9ButtonGroups: List<List<LinearLayout>>
     private var phq9Selections = IntArray(9) { -1 } // 9개의 질문, 초기값 -1 (미선택)
     private var phq9Sum = 0
+    private lateinit var gad7ButtonGroups: List<List<LinearLayout>>
+    private var gad7Selections = IntArray(7) { -1 } // 9개의 질문, 초기값 -1 (미선택)
+    private var gad7Sum = 0
+    private lateinit var panasButtonGroups: List<List<LinearLayout>>
+    private var panasSelections = IntArray(20) { -1 } // 20개의 질문, 초기값 -1 (미선택)
+    private var panasNegativeSum = 0
+    private var panasPositiveSum = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,6 +85,35 @@ class WeeklyActivity : AppCompatActivity() {
                 phq9Sum = phq9Selections.sum()
                 Log.d("PHQ-9", "PHQ-9 Sum: $phq9Sum")
             }
+
+            // 페이지 1: GAD-7 설문 유효성 검사
+            if (currentPage == 1) {
+                val unanswered = gad7Selections.indexOfFirst { it == -1 }
+                if (unanswered != -1) {
+                    Toast.makeText(this, "${unanswered + 1}번 질문에 답해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                gad7Sum = gad7Selections.sum()
+                Log.d("GAD-7", "GAD-7 Sum: $gad7Sum")
+            }
+
+            // 페이지 2: PANAS 설문 유효성 검사
+            if (currentPage == 2) {
+                val unanswered = panasSelections.indexOfFirst { it == -1 }
+                if (unanswered != -1) {
+                    Toast.makeText(this, "${unanswered + 1}번 질문에 답해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                val positiveIndices = listOf(0, 3, 4, 7, 8, 11, 13, 16, 17, 18)
+                val negativeIndices = listOf(1, 2, 5, 6, 9, 10, 12, 14, 15, 19)
+                panasPositiveSum = positiveIndices.sumOf { panasSelections[it] + 1 }
+                panasNegativeSum = negativeIndices.sumOf { panasSelections[it] + 1 }
+                Log.d("PANAS", "Positive Sum: $panasPositiveSum")
+                Log.d("PANAS", "Negative Sum: $panasNegativeSum")
+            }
+
 
             if (currentPage < totalPages - 1) {
                 currentPage++
@@ -126,8 +162,9 @@ class WeeklyActivity : AppCompatActivity() {
         // 현재 페이지에 맞는 레이아웃 inflate
         val pageView = when (currentPage) {
             0 -> inflater.inflate(R.layout.fragment_phq9_training, pageContainer, false)
-//            1 -> inflater.inflate(R.layout.fragment_gad7_training, pageContainer, false)
-//            2 -> inflater.inflate(R.layout.fragment_panas_training, pageContainer, false)
+            1 -> inflater.inflate(R.layout.fragment_gad7_training, pageContainer, false)
+            2 -> inflater.inflate(R.layout.fragment_panas_training, pageContainer, false)
+            3 -> inflater.inflate(R.layout.fragment_weekly_result, pageContainer, false)
             else -> inflater.inflate(R.layout.fragment_phq9_training, pageContainer, false)
         }
 
@@ -152,9 +189,54 @@ class WeeklyActivity : AppCompatActivity() {
                     }
                 }
             }
+        } else if (currentPage == 1) {
+            // GAD-7 버튼 그룹 수집
+            gad7ButtonGroups = List(7) { questionIndex ->
+                List(4) { optionIndex ->
+                    val resId = resources.getIdentifier("btnG${questionIndex}_${optionIndex}", "id", packageName)
+                    pageView.findViewById<LinearLayout>(resId)
+                }
+            }
+
+            // 클릭 리스너 설정
+            gad7ButtonGroups.forEachIndexed { questionIndex, buttonGroup ->
+                buttonGroup.forEachIndexed { optionIndex, button ->
+                    button.setOnClickListener {
+                        gad7Selections[questionIndex] = optionIndex
+                        updateGAD7ButtonStates(questionIndex)
+                    }
+                }
+            }
+        } else if (currentPage == 2) {
+            // PANAS 버튼 그룹 수집
+            panasButtonGroups = List(20) { questionIndex ->
+                List(5) { optionIndex ->
+                    val resId = resources.getIdentifier("btnP${questionIndex}_${optionIndex}", "id", packageName)
+                    pageView.findViewById<LinearLayout>(resId)
+                }
+            }
+
+            // 클릭 리스너 설정
+            panasButtonGroups.forEachIndexed { questionIndex, buttonGroup ->
+                buttonGroup.forEachIndexed { optionIndex, button ->
+                    button.setOnClickListener {
+                        panasSelections[questionIndex] = optionIndex
+                        updatePanasButtonStates(questionIndex)
+                    }
+                }
+            }
+        } else if (currentPage == 3) {
+            findViewById<TextView>(R.id.phq9Score).text = "점수: ${phq9Sum}점"
+            findViewById<TextView>(R.id.phq9Interpretation).text = interpretPhq9(phq9Sum)
+
+            findViewById<TextView>(R.id.gad7Score).text = "점수: ${gad7Sum}점"
+            findViewById<TextView>(R.id.gad7Interpretation).text = interpretGad7(gad7Sum)
+
+            findViewById<TextView>(R.id.panasPositiveScore).text = "긍정 점수: ${panasPositiveSum} (평균: 29 ~ 34)"
+            findViewById<TextView>(R.id.panasNegativeScore).text = "부정 점수: ${panasNegativeSum} (평균: 26 ~ 30)"
+            findViewById<TextView>(R.id.panasInterpretation).text = interpretPanas(panasPositiveSum, panasNegativeSum)
+
         }
-
-
 
         // 이전 버튼 상태
         btnPrev.isEnabled = currentPage != 0
@@ -182,6 +264,40 @@ class WeeklyActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateGAD7ButtonStates(questionIndex: Int) {
+        val selected = gad7Selections[questionIndex]
+        gad7ButtonGroups[questionIndex].forEachIndexed { index, btn ->
+            btn.alpha = if (index == selected) 1.0f else 0.3f
+        }
+    }
+
+    private fun updatePanasButtonStates(questionIndex: Int) {
+        val selected = panasSelections[questionIndex]
+        panasButtonGroups[questionIndex].forEachIndexed { index, btn ->
+            btn.alpha = if (index == selected) 1.0f else 0.3f
+        }
+    }
+
+    fun interpretPhq9(score: Int): String = when {
+        score <= 4 -> "정상입니다. 적응 상 어려움을 초래할만한 우울관련 증상을 거의 보고하지 않았습니다."
+        score <= 9 -> "경미한 수준입니다. 약간의 우울감이 있으나 일상생활에 지장을 줄 정도는 아닙니다."
+        score <= 14 -> "중간 수준의 우울감입니다. 2주 연속 지속될 경우 일상생활(직업적, 사회적)에 다소 영향을 미칠 수 있어 관심이 필요합니다."
+        score <= 19 -> "약간 심한 수준의 우울감입니다. 2주 연속 지속되며 일상생활(직업적, 사회적)에 영향을 미칠 경우, 정신건강전문가의 도움을 받아보세요."
+        else -> "심한 수준의 우울감입니다. 2주 연속 지속되며 일상생활(직업적, 사회적)의 다양한 영역에서 어려움을 겪을 경우, 추가적인 평가나 정신건강전문가의 도움을 받아보시기 바랍니다."
+    }
+
+    fun interpretGad7(score: Int): String = when {
+        score <= 4 -> "정상입니다. 주의가 필요할 정도의 불안을 보고하지 않았습니다."
+        score <= 9 -> "다소 경미한 수준의 걱정과 불안을 경험하는 것으로 보입니다."
+        score <= 14 -> "주의가 필요한 수준의 과도한 걱정과 불안을 보고하였습니다. 2주 연속 지속될 경우 정신건강전문가의 도움을 받아보세요."
+        else -> "과도하고 심한 걱정과 불안을 보고하였습니다. 2주 연속 지속되며 일상생활에서 어려움을 겪을 경우, 추가적인 평가나 정신건강전문가의 도움을 받아보시기 바랍니다."
+    }
+
+    fun interpretPanas(pa: Int, na: Int): String = when {
+        pa > na -> "긍정 감정 우세"
+        pa < na -> "부정 감정 우세"
+        else -> "긍·부정 감정 균형"
+    }
 
     // 선택된 탭에 따른 동작 여기에 작성해야함
     private fun selectTab(practice: Boolean) {

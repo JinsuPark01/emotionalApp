@@ -15,6 +15,7 @@ import com.example.emotionalapp.data.TrainingType
 import com.example.emotionalapp.ui.mind.ArtActivity
 import com.example.emotionalapp.ui.mind.TrapActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
+import com.example.emotionalapp.ui.weekly.WeeklyActivity
 
 class MindActivity : BottomNavActivity() {
 
@@ -78,6 +79,15 @@ class MindActivity : BottomNavActivity() {
     private fun loadDetailTrainingData() {
         // 실제 데이터는 ViewModel, Repository, DB 등에서 가져옵니다.
         val sampleDetailData = listOf(
+            DetailTrainingItem(
+                id = "mind_detail_000",
+                title = "주차별 점검",
+                subtitle = "질문지를 통한 마음 돌아보기",
+                TrainingType.MIND_WATCHING_TRAINING,
+                currentProgress = "1/2",
+                backgroundColorResId = R.color.button_color_mind,
+                targetActivityClass = WeeklyActivity::class.java // 실제 액티비티로 변경
+            ),
             DetailTrainingItem(
                 id = "mind_detail_001",
                 title = "인지적 평가",

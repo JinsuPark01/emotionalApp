@@ -93,6 +93,7 @@
         <activity android:name=".ui.expression.OppositeActionActivity" android:exported="false" />
 
         <activity android:name=".ui.expression.AlternativeActionActivity" android:exported="false" />
+        <activity android:name=".ui.weekly.WeeklyActivity" android:exported="false" />
 
     </application>
 </manifest>

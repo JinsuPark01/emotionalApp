@@ -4,11 +4,13 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
@@ -26,8 +28,13 @@ class WeeklyActivity : AppCompatActivity() {
     private lateinit var underlinePractice: View
     private lateinit var underlineRecord: View
 
-    private val totalPages = 8
+    private val totalPages = 4
     private var currentPage = 0
+
+    private lateinit var phq9ButtonGroups: List<List<LinearLayout>>
+    private var phq9Selections = IntArray(9) { -1 } // 9개의 질문, 초기값 -1 (미선택)
+    private var phq9Sum = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +66,19 @@ class WeeklyActivity : AppCompatActivity() {
         }
 
         btnNext.setOnClickListener {
+
+            // 페이지 0: PHQ-9 설문 유효성 검사
+            if (currentPage == 0) {
+                val unanswered = phq9Selections.indexOfFirst { it == -1 }
+                if (unanswered != -1) {
+                    Toast.makeText(this, "${unanswered + 1}번 질문에 답해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                phq9Sum = phq9Selections.sum()
+                Log.d("PHQ-9", "PHQ-9 Sum: $phq9Sum")
+            }
+
             if (currentPage < totalPages - 1) {
                 currentPage++
                 updatePage()
@@ -99,6 +119,7 @@ class WeeklyActivity : AppCompatActivity() {
             0 -> "PHQ-9"
             1 -> "GAD-7"
             2 -> "PANAS"
+            3 -> "결과"
             else -> "사전 테스트"
         }
 
@@ -113,7 +134,26 @@ class WeeklyActivity : AppCompatActivity() {
         pageContainer.addView(pageView)
 
         // 페이지별 동작 처리 - 여기서 작성
-        if (currentPage == 0) { }
+        if (currentPage == 0) {
+            // 1. 버튼 그룹 수집
+            phq9ButtonGroups = List(9) { questionIndex ->
+                List(4) { optionIndex ->
+                    val resId = resources.getIdentifier("btn${questionIndex}_${optionIndex}", "id", packageName)
+                    pageView.findViewById<LinearLayout>(resId)
+                }
+            }
+
+            // 2. 클릭 리스너 연결
+            phq9ButtonGroups.forEachIndexed { questionIndex, buttonGroup ->
+                buttonGroup.forEachIndexed { optionIndex, button ->
+                    button.setOnClickListener {
+                        phq9Selections[questionIndex] = optionIndex
+                        updatePHQ9ButtonStates(questionIndex)
+                    }
+                }
+            }
+        }
+
 
 
         // 이전 버튼 상태
@@ -134,6 +174,14 @@ class WeeklyActivity : AppCompatActivity() {
             )
         }
     }
+
+    private fun updatePHQ9ButtonStates(questionIndex: Int) {
+        val selected = phq9Selections[questionIndex]
+        phq9ButtonGroups[questionIndex].forEachIndexed { index, btn ->
+            btn.alpha = if (index == selected) 1.0f else 0.3f
+        }
+    }
+
 
     // 선택된 탭에 따른 동작 여기에 작성해야함
     private fun selectTab(practice: Boolean) {

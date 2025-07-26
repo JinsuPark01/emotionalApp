@@ -1,0 +1,42 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:id="@+id/optionContainerTrap2Wrapper"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 질문 -->
+        <TextView
+            android:id="@+id/textQuestionTrap2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. 생각의 덫을 찾아냈나요? 어떤 덫인가요?"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 옵션 리스트를 추가할 컨테이너 -->
+        <LinearLayout
+            android:id="@+id/optionContainerTrap2"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- 저장 버튼도 LinearLayout 안에 포함 -->
+        <Button
+            android:id="@+id/btnSaveTrap2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="저장"
+            android:backgroundTint="@color/button_color_mind"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginTop="24dp" />
+
+    </LinearLayout>
+</ScrollView>

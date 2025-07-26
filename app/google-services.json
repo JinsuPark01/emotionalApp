@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "10094883735",
+    "project_id": "emotionapp-4b7b1",
+    "storage_bucket": "emotionapp-4b7b1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10094883735:android:86b8b0274c800bf782cad2",
+        "android_client_info": {
+          "package_name": "com.example.emotionalapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZXUKqzUQxVkYlZlaA-NPsHH1nsSm7Z-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

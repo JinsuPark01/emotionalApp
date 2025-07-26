@@ -2,6 +2,7 @@ package com.example.emotionalapp.ui.emotion
 
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.emotionalapp.R
@@ -22,6 +23,16 @@ class EmotionAvoidanceQuizActivity : AppCompatActivity() {
         loadQuizData()
         setupListeners()
         displayQuestion()
+        setupTabs()
+    }
+
+    private fun setupTabs() {
+        binding.tabRecord.visibility = View.GONE
+        binding.underlineRecord.visibility = View.GONE
+        binding.tabPracticeContainer.layoutParams = (binding.tabPracticeContainer.layoutParams as LinearLayout.LayoutParams).apply {
+            width = 0
+            weight = 2f
+        }
     }
 
     private fun loadQuizData() {
@@ -34,15 +45,8 @@ class EmotionAvoidanceQuizActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnBack.setOnClickListener { finish() }
-
-        binding.btnO.setOnClickListener {
-            checkAnswer(true)
-        }
-
-        binding.btnX.setOnClickListener {
-            checkAnswer(false)
-        }
-
+        binding.btnO.setOnClickListener { checkAnswer(true) }
+        binding.btnX.setOnClickListener { checkAnswer(false) }
         binding.btnNextQuestion.setOnClickListener {
             currentQuestionIndex++
             if (currentQuestionIndex < quizItems.size) {
@@ -62,18 +66,15 @@ class EmotionAvoidanceQuizActivity : AppCompatActivity() {
     private fun checkAnswer(selectedAnswer: Boolean) {
         val currentQuestion = quizItems[currentQuestionIndex]
         val isCorrect = selectedAnswer == currentQuestion.correctAnswer
-
         binding.btnO.isEnabled = false
         binding.btnX.isEnabled = false
-
         showFeedback(isCorrect)
     }
 
     private fun showFeedback(isCorrect: Boolean) {
         val currentQuestion = quizItems[currentQuestionIndex]
-
         binding.cardFeedback.visibility = View.VISIBLE
-        binding.btnNextQuestion.visibility = View.VISIBLE
+        binding.navContainer.visibility = View.VISIBLE
 
         if (isCorrect) {
             binding.tvFeedbackTitle.text = "정답입니다!"
@@ -94,8 +95,7 @@ class EmotionAvoidanceQuizActivity : AppCompatActivity() {
 
     private fun resetUiForNewQuestion() {
         binding.cardFeedback.visibility = View.GONE
-        binding.btnNextQuestion.visibility = View.GONE
-
+        binding.navContainer.visibility = View.GONE
         binding.btnO.isEnabled = true
         binding.btnX.isEnabled = true
     }

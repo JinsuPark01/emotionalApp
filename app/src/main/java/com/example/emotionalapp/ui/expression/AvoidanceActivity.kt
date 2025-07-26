@@ -37,6 +37,10 @@ class AvoidanceActivity : AppCompatActivity() {
         binding.btnTopic6.setOnClickListener {
             startActivity(Intent(this, EmotionAvoidanceQuizActivity::class.java))
         }
+
+        binding.btnEmotionTimer.setOnClickListener {
+            startActivity(Intent(this, EmotionTimerActivity::class.java))
+        }
     }
 
     private fun navigateToDetail(topicTitle: String, contentResId: Int) {

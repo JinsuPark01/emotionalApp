@@ -8,6 +8,7 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.ActionTrainingAdapter
 import com.example.emotionalapp.data.ActionTrainingItem
 import com.example.emotionalapp.databinding.ActivityExpressionActionTrainingBinding
+import com.example.emotionalapp.ui.weekly.WeeklyActivity
 
 class ExpressionActivity : AppCompatActivity() {
 
@@ -39,6 +40,15 @@ class ExpressionActivity : AppCompatActivity() {
     // In ExpressionActivity.kt
     private fun loadTrainingData() {
         val trainingList = listOf(
+            ActionTrainingItem(
+                id = "expression_000",
+                iconResId = R.drawable.outline_person_24,
+                title = "주차별 점검",
+                subtitle = "질문지를 통한 마음 돌아보기",
+                progressText = "",
+                backgroundColorResId = R.color.purple_700,
+                targetActivityClass = WeeklyActivity::class.java
+            ),
             ActionTrainingItem(
                 id = "avoidance_training",
                 iconResId = R.drawable.outline_person_24,

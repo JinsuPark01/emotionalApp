@@ -16,6 +16,7 @@ import com.example.emotionalapp.ui.emotion.AnchorActivity
 import com.example.emotionalapp.ui.emotion.ArcActivity
 import com.example.emotionalapp.ui.emotion.SelectActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
+import com.example.emotionalapp.ui.weekly.WeeklyActivity
 
 class EmotionActivity : BottomNavActivity() {
 
@@ -79,6 +80,15 @@ class EmotionActivity : BottomNavActivity() {
     private fun loadDetailTrainingData() {
         // 실제 데이터는 ViewModel, Repository, DB 등에서 가져옵니다.
         val sampleDetailData = listOf(
+            DetailTrainingItem(
+                id = "emotion_detail_000",
+                title = "주차별 점검",
+                subtitle = "질문지를 통한 마음 돌아보기",
+                TrainingType.EMOTION_TRAINING,
+                currentProgress = "75",
+                backgroundColorResId = R.color.button_color_emotion,
+                targetActivityClass = WeeklyActivity::class.java // 실제 액티비티로 변경
+            ),
             DetailTrainingItem(
                 id = "emotion_detail_001",
                 title = "정서 선택하기",

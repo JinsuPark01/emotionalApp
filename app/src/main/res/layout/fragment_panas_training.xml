@@ -1,0 +1,2691 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 질문 1 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="1. 흥미로웠다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP0_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP0_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP0_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP0_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP0_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 2 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="2. 짜증스러웠다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP1_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP1_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP1_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP1_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP1_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 3 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="3. 괴로웠다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP2_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP2_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP2_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP2_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP2_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 4 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="4. 맑은 정신이었다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP3_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP3_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP3_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP3_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP3_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 5 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="5. 신이 났다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP4_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP4_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP4_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP4_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP4_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 6 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="6. 부끄러웠다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP5_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP5_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP5_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP5_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP5_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 7 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="7. 화가 났다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP6_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP6_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP6_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP6_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP6_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 8 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="8. 영감을 받았다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP7_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP7_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP7_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP7_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP7_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 9 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="9. 강인했다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP8_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP8_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP8_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP8_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP8_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 10 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="10. 긴장했다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP9_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP9_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP9_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP9_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP9_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 11 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="11. 죄책감이 들었다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP10_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP10_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP10_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP10_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP10_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 12 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="12. 확고했다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP11_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP11_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP11_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP11_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP11_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 13 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="13. 겁이 났다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP12_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP12_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP12_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP12_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP12_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 14 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="14. 주의 깊었다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP13_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP13_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP13_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP13_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP13_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 15 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="15. 적대적이었다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP14_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP14_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP14_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP14_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP14_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 16 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="16. 초조했다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP15_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP15_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP15_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP15_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP15_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 17 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="17. 열정적이었다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP16_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP16_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP16_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP16_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP16_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 18 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="18. 활기찼다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP17_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP17_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP17_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP17_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP17_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 19 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="19. 자랑스러웠다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP18_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP18_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP18_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP18_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP18_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 20 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="20. 두려웠다"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group19"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <!-- 전혀 그렇지 않다 -->
+            <LinearLayout
+                android:id="@+id/btnP19_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전혀 그렇지 않다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 약간 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP19_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약간 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 보통 정도로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP19_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보통 정도로 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP19_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="많이 그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 매우 많이 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btnP19_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매우 많이\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

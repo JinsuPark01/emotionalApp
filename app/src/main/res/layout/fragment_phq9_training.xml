@@ -1,0 +1,983 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 질문 1 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="1. 매사에 흥미나 즐거움이 거의 없다."
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <!-- 좀처럼 아니다 -->
+            <LinearLayout
+                android:id="@+id/btn0_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좀처럼 아니다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 때때로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn0_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="때때로 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 자주 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn0_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자주 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 거의 언제나 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn0_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거의 언제나\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 2 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="2. 기분이 가라앉거나 우울하거나 희망이 없다고 느낀다."
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <!-- 좀처럼 아니다 -->
+            <LinearLayout
+                android:id="@+id/btn1_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좀처럼 아니다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 때때로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn1_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="때때로 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 자주 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn1_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자주 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 거의 언제나 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn1_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거의 언제나\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 3 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="3. 잠들기 어렵거나 자주 깬다. 혹은 잠을 너무 잔다."
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <!-- 좀처럼 아니다 -->
+            <LinearLayout
+                android:id="@+id/btn2_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좀처럼 아니다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 때때로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn2_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="때때로 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 자주 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn2_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자주 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 거의 언제나 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn2_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거의 언제나\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 4 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="4. 피곤하다고 느끼거나 기운이 거의 없다."
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <!-- 좀처럼 아니다 -->
+            <LinearLayout
+                android:id="@+id/btn3_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좀처럼 아니다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 때때로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn3_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="때때로 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 자주 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn3_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자주 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 거의 언제나 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn3_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거의 언제나\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 5 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="5. 식욕이 줄었다. 혹은 너무 많이 먹는다."
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <!-- 좀처럼 아니다 -->
+            <LinearLayout
+                android:id="@+id/btn4_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좀처럼 아니다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 때때로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn4_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="때때로 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 자주 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn4_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자주 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 거의 언제나 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn4_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거의 언제나\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 6 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="6. 나 자신이 실패자로 여겨지거나 자신과 가족을 실망시켰다
+고 느낀다."
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <!-- 좀처럼 아니다 -->
+            <LinearLayout
+                android:id="@+id/btn5_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좀처럼 아니다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 때때로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn5_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="때때로 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 자주 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn5_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자주 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 거의 언제나 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn5_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거의 언제나\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 7 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="7. 신문을 읽거나 TV를 보는 것과 같은 일상적인 일에 집중하기 어렵다."
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <!-- 좀처럼 아니다 -->
+            <LinearLayout
+                android:id="@+id/btn6_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좀처럼 아니다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 때때로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn6_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="때때로 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 자주 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn6_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자주 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 거의 언제나 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn6_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거의 언제나\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 8 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="8. 다른 사람들이 눈치챌 정도로 평소보다 말과 행동이 느리다. 혹은 너무 안절부절못해서 가만히 앉아 있을 수 없다."
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <!-- 좀처럼 아니다 -->
+            <LinearLayout
+                android:id="@+id/btn7_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좀처럼 아니다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 때때로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn7_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="때때로 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 자주 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn7_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자주 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 거의 언제나 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn7_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거의 언제나\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 질문 9 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="9. 차라리 죽는 것이 낫겠다고 생각하거나 어떻게든 자해를 하려고 생각한다."
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 선택 버튼 -->
+        <LinearLayout
+            android:id="@+id/group8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <!-- 좀처럼 아니다 -->
+            <LinearLayout
+                android:id="@+id/btn8_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좀처럼 아니다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 때때로 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn8_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="때때로 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 자주 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn8_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자주 그렇다"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 거의 언제나 그렇다 -->
+            <LinearLayout
+                android:id="@+id/btn8_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_weekly" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거의 언제나\n그렇다"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

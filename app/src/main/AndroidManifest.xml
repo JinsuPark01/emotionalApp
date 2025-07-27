@@ -96,5 +96,7 @@
         <activity android:name=".ui.expression.AlternativeActionActivity" android:exported="false" />
         <activity android:name=".ui.weekly.WeeklyActivity" android:exported="false" />
 
+        <activity android:name=".ui.alltraining.FireTest" android:exported="true" />
+
     </application>
 </manifest>

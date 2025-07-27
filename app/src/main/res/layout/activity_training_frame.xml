@@ -92,8 +92,10 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="16dp" />
-    <!-- 하단 네비게이션 바 (include 방식) -->
-    <include layout="@layout/nav_page" />
 
+    <!-- 하단 네비게이션 바 (include 방식) -->
+    <include
+        android:id="@+id/navPage"
+        layout="@layout/nav_page" />
 
 </LinearLayout>

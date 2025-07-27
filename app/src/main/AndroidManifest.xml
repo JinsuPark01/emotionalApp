@@ -82,10 +82,6 @@
         <activity android:name=".ui.emotion.EmotionAvoidanceQuizActivity" android:exported="false" />
 
         <activity android:name=".ui.expression.EmotionSelectionActivity" android:exported="false" />
-        <activity android:name=".ui.expression.EmotionTimerActivity" android:exported="false" />
-
-        <activity android:name=".ui.expression.EmotionReflectionActivity" android:exported="false" />
-        <activity android:name=".ui.expression.EmotionFeedbackActivity" android:exported="false" />
 
         <activity android:name=".ui.expression.DrivenActionActivity" android:exported="false" />
 
@@ -95,6 +91,15 @@
 
         <activity android:name=".ui.expression.AlternativeActionActivity" android:exported="false" />
         <activity android:name=".ui.weekly.WeeklyActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.EmotionTimerActivity" android:exported="false" />
+        <activity android:name=".ui.expression.EmotionReflectionActivity" android:exported="false" />
+        <activity android:name=".ui.expression.EmotionFeedbackActivity" android:exported="false" />
+
+        <activity android:name=".ui.emotion.EmotionReportActivity" android:exported="false" />
+        <activity android:name=".ui.body.BodyReportActivity" android:exported="false" />
+        <activity android:name=".ui.mind.MindReportActivity" android:exported="false" />
+        <activity android:name=".ui.expression.ExpressionReportActivity" android:exported="false" />
 
         <activity android:name=".ui.alltraining.FireTest" android:exported="true" />
 

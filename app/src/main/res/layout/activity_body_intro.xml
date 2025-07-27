@@ -94,6 +94,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <include layout="@layout/nav_bottom"/>
+
 
 </LinearLayout>

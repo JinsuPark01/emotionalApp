@@ -25,8 +25,9 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
     private lateinit var layoutPractice: View
     private lateinit var layoutRecord: View
     private lateinit var practiceContent: TextView
-    private lateinit var btnStartPractice: Button
+    private lateinit var btnStartPractice: TextView
     private lateinit var btnDelete: Button
+    private lateinit var layoutStartPracticeBar: View
 
     // 기록보기 전용 뷰
     private lateinit var tvEmpty: TextView
@@ -55,8 +56,9 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
         layoutPractice    = findViewById(R.id.layoutPractice)
         layoutRecord      = findViewById(R.id.layoutRecord)
         practiceContent   = findViewById(R.id.tvPracticeContent)
-        btnStartPractice  = findViewById(R.id.btnStartPractice)
+        btnStartPractice  = findViewById<TextView>(R.id.btnStartPractice)
         btnDelete         = findViewById(R.id.btnDeleteRecord)
+        layoutStartPracticeBar = findViewById(R.id.layoutStartPracticeBar)
 
 
         // 연습 시작 버튼 클릭 리스너
@@ -264,5 +266,6 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
         underlineRecord.visibility   = if (practice) View.GONE else View.VISIBLE
         layoutPractice.visibility    = if (practice) View.VISIBLE else View.GONE
         layoutRecord.visibility      = if (practice) View.GONE else View.VISIBLE
+        layoutStartPracticeBar.visibility = if (practice) View.VISIBLE else View.GONE
     }
 }

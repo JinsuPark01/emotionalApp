@@ -107,11 +107,11 @@ class AllTrainingPageActivity : BottomNavActivity() {
             Log.d("AllTrainingPage", "전체 훈련 탭 클릭됨 (현재 페이지)")
         }
 
-        binding.tabToday.setOnClickListener {
-            Log.d("AllTrainingPage", "금일 훈련 탭 클릭됨 - DailyTrainingPageActivity로 이동")
-            val intent = Intent(this, DailyTrainingPageActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+//        binding.tabToday.setOnClickListener {
+//            Log.d("AllTrainingPage", "금일 훈련 탭 클릭됨 - DailyTrainingPageActivity로 이동")
+//            val intent = Intent(this, DailyTrainingPageActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
     }
 }

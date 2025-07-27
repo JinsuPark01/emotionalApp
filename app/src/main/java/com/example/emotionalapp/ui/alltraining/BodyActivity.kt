@@ -13,6 +13,7 @@ import com.example.emotionalapp.data.DetailTrainingItem
 import com.example.emotionalapp.data.TrainingType
 import com.example.emotionalapp.ui.body.BodyTrainingDetailActivity
 import com.example.emotionalapp.ui.body.BodyTrainingIntroActivity
+import com.example.emotionalapp.ui.body.BodyReportActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
 import com.example.emotionalapp.ui.weekly.WeeklyActivity
 
@@ -43,7 +44,7 @@ class BodyActivity : BottomNavActivity() {
     private fun setupTabListeners() {
         findViewById<TextView>(R.id.tabAll).setOnClickListener { /* 전체: 현재 */ }
         findViewById<TextView>(R.id.tabToday).setOnClickListener {
-            startActivity(Intent(this, DailyTrainingPageActivity::class.java))
+            startActivity(Intent(this, BodyReportActivity::class.java))
             finish()
         }
     }

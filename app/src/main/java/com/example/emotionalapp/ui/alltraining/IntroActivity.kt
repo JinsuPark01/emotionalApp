@@ -106,13 +106,13 @@ class IntroActivity : BottomNavActivity() {
             Log.d("AllTrainingPage", "전체 훈련 탭 클릭됨 (현재 페이지)")
             // 필요하면 데이터 새로고침 추가 가능
         }
-
-        tabToday.setOnClickListener {
-            Log.d("AllTrainingPage", "금일 훈련 탭 클릭됨 - TodayTrainingPageActivity로 이동")
-            val intent = Intent(this, DailyTrainingPageActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+//
+//        tabToday.setOnClickListener {
+//            Log.d("AllTrainingPage", "금일 훈련 탭 클릭됨 - TodayTrainingPageActivity로 이동")
+//            val intent = Intent(this, DailyTrainingPageActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
     }
 
 }

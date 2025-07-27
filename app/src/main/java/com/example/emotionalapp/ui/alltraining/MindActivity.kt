@@ -14,6 +14,7 @@ import com.example.emotionalapp.data.DetailTrainingItem
 import com.example.emotionalapp.data.TrainingType
 import com.example.emotionalapp.ui.mind.ArtActivity
 import com.example.emotionalapp.ui.mind.AutoActivity
+import com.example.emotionalapp.ui.mind.MindReportActivity
 import com.example.emotionalapp.ui.mind.TrapActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
 import com.example.emotionalapp.ui.weekly.WeeklyActivity
@@ -138,8 +139,8 @@ class MindActivity : BottomNavActivity() {
         }
 
         tabToday.setOnClickListener {
-            Log.d("AllTrainingPage", "금일 훈련 탭 클릭됨 - TodayTrainingPageActivity로 이동")
-            val intent = Intent(this, DailyTrainingPageActivity::class.java)
+            Log.d("AllTrainingPage", "금일 훈련 탭 클릭됨 - MindReportActivity 이동")
+            val intent = Intent(this, MindReportActivity::class.java)
             startActivity(intent)
             finish()
         }

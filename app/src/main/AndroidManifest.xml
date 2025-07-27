@@ -96,5 +96,10 @@
         <activity android:name=".ui.expression.EmotionReflectionActivity" android:exported="false" />
         <activity android:name=".ui.expression.EmotionFeedbackActivity" android:exported="false" />
 
+        <activity android:name=".ui.emotion.EmotionReportActivity" android:exported="false" />
+        <activity android:name=".ui.body.BodyReportActivity" android:exported="false" />
+        <activity android:name=".ui.mind.MindReportActivity" android:exported="false" />
+        <activity android:name=".ui.expression.ExpressionReportActivity" android:exported="false" />
+
     </application>
 </manifest>

@@ -121,7 +121,8 @@ class WeeklyActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).format(Date())
+                val today =
+                    SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).format(Date())
                 val data = hashMapOf(
                     "type" to "weekly3",
                     "date" to Timestamp.now(),
@@ -148,23 +149,28 @@ class WeeklyActivity : AppCompatActivity() {
                     .set(data)
                     .addOnSuccessListener {
                         Log.d("Firestore", "데이터 저장 성공")
-                        // 저장 후 이동 로직 여기에 작성
+                        moveToNextPage()
                     }
                     .addOnFailureListener { e ->
                         Log.w("Firestore", "저장 실패", e)
+                        Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        return@addOnFailureListener
                     }
-            }
-
-
-            if (currentPage < totalPages - 1) {
-                currentPage++
-                updatePage()
             } else {
-                // 마지막 페이지에서 완료 시 다른 액티비티 이동
-                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                startActivity(intent)
-                finish()
+                moveToNextPage()
             }
+        }
+    }
+
+    private fun moveToNextPage() {
+        if (currentPage < totalPages - 1) {
+            currentPage++
+            updatePage()
+        } else {
+            // 마지막 페이지에서 완료 시 다른 액티비티 이동
+            val intent = Intent(this, AllTrainingPageActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -211,7 +217,11 @@ class WeeklyActivity : AppCompatActivity() {
             // 1. 버튼 그룹 수집
             phq9ButtonGroups = List(9) { questionIndex ->
                 List(4) { optionIndex ->
-                    val resId = resources.getIdentifier("btn${questionIndex}_${optionIndex}", "id", packageName)
+                    val resId = resources.getIdentifier(
+                        "btn${questionIndex}_${optionIndex}",
+                        "id",
+                        packageName
+                    )
                     pageView.findViewById<LinearLayout>(resId)
                 }
             }
@@ -229,7 +239,11 @@ class WeeklyActivity : AppCompatActivity() {
             // GAD-7 버튼 그룹 수집
             gad7ButtonGroups = List(7) { questionIndex ->
                 List(4) { optionIndex ->
-                    val resId = resources.getIdentifier("btnG${questionIndex}_${optionIndex}", "id", packageName)
+                    val resId = resources.getIdentifier(
+                        "btnG${questionIndex}_${optionIndex}",
+                        "id",
+                        packageName
+                    )
                     pageView.findViewById<LinearLayout>(resId)
                 }
             }
@@ -247,7 +261,11 @@ class WeeklyActivity : AppCompatActivity() {
             // PANAS 버튼 그룹 수집
             panasButtonGroups = List(20) { questionIndex ->
                 List(5) { optionIndex ->
-                    val resId = resources.getIdentifier("btnP${questionIndex}_${optionIndex}", "id", packageName)
+                    val resId = resources.getIdentifier(
+                        "btnP${questionIndex}_${optionIndex}",
+                        "id",
+                        packageName
+                    )
                     pageView.findViewById<LinearLayout>(resId)
                 }
             }
@@ -268,9 +286,12 @@ class WeeklyActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.gad7Score).text = "점수: ${gad7Sum}점"
             findViewById<TextView>(R.id.gad7Interpretation).text = interpretGad7(gad7Sum)
 
-            findViewById<TextView>(R.id.panasPositiveScore).text = "긍정 점수: ${panasPositiveSum} (평균: 29 ~ 34)"
-            findViewById<TextView>(R.id.panasNegativeScore).text = "부정 점수: ${panasNegativeSum} (평균: 26 ~ 30)"
-            findViewById<TextView>(R.id.panasInterpretation).text = interpretPanas(panasPositiveSum, panasNegativeSum)
+            findViewById<TextView>(R.id.panasPositiveScore).text =
+                "긍정 점수: ${panasPositiveSum} (평균: 29 ~ 34)"
+            findViewById<TextView>(R.id.panasNegativeScore).text =
+                "부정 점수: ${panasNegativeSum} (평균: 26 ~ 30)"
+            findViewById<TextView>(R.id.panasInterpretation).text =
+                interpretPanas(panasPositiveSum, panasNegativeSum)
 
         }
 

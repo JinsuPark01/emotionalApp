@@ -26,11 +26,6 @@ class AnchorActivity : AppCompatActivity() {
     private lateinit var pageContainer: FrameLayout
     private lateinit var titleText: TextView // 상단 타이틀 TextView
 
-    private lateinit var tabPractice: TextView
-    private lateinit var tabRecord: TextView
-    private lateinit var underlinePractice: View
-    private lateinit var underlineRecord: View
-
     private val totalPages = 4
     private var currentPage = 0
 
@@ -43,11 +38,6 @@ class AnchorActivity : AppCompatActivity() {
         indicatorContainer = findViewById(R.id.indicatorContainer)
         pageContainer = findViewById(R.id.pageContainer)
         titleText = findViewById(R.id.titleText)
-
-        tabPractice       = findViewById(R.id.tabPractice)
-        tabRecord         = findViewById(R.id.tabRecord)
-        underlinePractice = findViewById(R.id.underlinePractice)
-        underlineRecord   = findViewById(R.id.underlineRecord)
 
 
         val btnBack = findViewById<View>(R.id.btnBack)
@@ -75,10 +65,6 @@ class AnchorActivity : AppCompatActivity() {
             }
         }
 
-        // 탭 리스너 & 초기 탭
-        tabPractice.setOnClickListener { selectTab(true) }
-        tabRecord  .setOnClickListener { selectTab(false) }
-        selectTab(true)
     }
 
     private fun setupIndicators(count: Int) {
@@ -326,18 +312,5 @@ class AnchorActivity : AppCompatActivity() {
                 if (i == currentPage) R.drawable.ic_dot_circle_black else R.drawable.ic_dot_circle_gray
             )
         }
-    }
-
-    // 선택된 탭에 따른 동작 여기에 작성해야함
-    private fun selectTab(practice: Boolean) {
-        tabPractice.setTextColor(
-            resources.getColor(if (practice) R.color.black else R.color.gray, null)
-        )
-        tabRecord.setTextColor(
-            resources.getColor(if (practice) R.color.gray else R.color.black, null)
-        )
-        underlinePractice.visibility = if (practice) View.VISIBLE else View.GONE
-        underlineRecord.visibility = if (practice) View.GONE    else View.VISIBLE
-
     }
 }

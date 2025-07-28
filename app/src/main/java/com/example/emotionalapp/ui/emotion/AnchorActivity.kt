@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -28,6 +29,14 @@ class AnchorActivity : AppCompatActivity() {
 
     private val totalPages = 4
     private var currentPage = 0
+
+    private var selectedCueIndex: Int = -1
+    private var customCueInput: String = ""
+    private var selectedCue: String = ""
+    private var page2Answer1: String = ""
+    private var page2Answer2: String = ""
+    private var page2Answer3: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +63,29 @@ class AnchorActivity : AppCompatActivity() {
         }
 
         btnNext.setOnClickListener {
+            if (currentPage == 1) {
+                val inputText = findViewById<EditText>(R.id.editCustomAnswer)?.text?.toString()?.trim() ?: ""
+                customCueInput = inputText
+
+                if (selectedCueIndex in 0..2) {
+                    val cueList = listOf(
+                        "숨소리에 집중하기",
+                        "심장 박동 8번 느껴보기",
+                        "'음~'소리를 5초간 내어보기"
+                    )
+                    selectedCue = cueList[selectedCueIndex]
+                    Log.d("AnchorActivity", "선택한 단서: $selectedCue")
+                } else if (customCueInput.isNotEmpty()) {
+                    selectedCue = customCueInput
+                    Log.d("AnchorActivity", "선택한 단서: $selectedCue")
+                } else {
+                    Toast.makeText(this, "단서를 선택하거나 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            }
+
+
+            // 페이지 이동 처리
             if (currentPage < totalPages - 1) {
                 currentPage++
                 updatePage()
@@ -140,16 +172,12 @@ class AnchorActivity : AppCompatActivity() {
         } else if (currentPage == 1) {
             val optionContainer = pageView.findViewById<LinearLayout>(R.id.optionContainerCustom)
             val editCustomAnswer = pageView.findViewById<EditText>(R.id.editCustomAnswer)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveCustom)
 
             val options = listOf(
                 "숨소리에 집중하기",
                 "심장 박동 8번 느껴보기",
                 "'음~'소리를 5초간 내어보기"
             )
-
-            var selectedIndex = -1
-            var customInput = ""
 
             // 옵션 카드 생성
             options.forEachIndexed { index, text ->
@@ -162,17 +190,17 @@ class AnchorActivity : AppCompatActivity() {
                 textView.text = text
 
                 card.setOnClickListener {
-                    // 선택한 카드 강조
+                    // 카드 배경 초기화
                     for (i in 0 until optionContainer.childCount) {
                         val childCard = optionContainer.getChildAt(i) as CardView
                         childCard.setCardBackgroundColor(Color.WHITE)
                     }
-                    editCustomAnswer.text.clear() // EditText 내용 초기화
+                    editCustomAnswer.text.clear() // 입력창 초기화
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
-                    selectedIndex = index
-                    customInput = ""
-                }
 
+                    selectedCueIndex = index
+                    customCueInput = ""
+                }
                 optionContainer.addView(card)
             }
 
@@ -183,25 +211,10 @@ class AnchorActivity : AppCompatActivity() {
                         val childCard = optionContainer.getChildAt(i) as CardView
                         childCard.setCardBackgroundColor(Color.WHITE)
                     }
-                    selectedIndex = -1
+                    selectedCueIndex = -1
                 }
             }
 
-            // 저장 버튼 클릭 시
-            btnSave.setOnClickListener {
-                customInput = editCustomAnswer.text.toString().trim()
-
-                if (selectedIndex != -1) {
-                    val selectedText = options[selectedIndex]
-                    Toast.makeText(this, "선택한 답변: $selectedText", Toast.LENGTH_SHORT).show()
-                    // 👉 여기에 저장 로직 추가 (DB or 서버 전송)
-                } else if (customInput.isNotEmpty()) {
-                    Toast.makeText(this, "입력한 답변: $customInput", Toast.LENGTH_SHORT).show()
-                    // 👉 여기에 저장 로직 추가 (DB or 서버 전송)
-                } else {
-                    Toast.makeText(this, "옵션을 선택하거나 답변을 입력하세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
         } else if (currentPage == 2) {
             val answer1 = pageView.findViewById<EditText>(R.id.answer1)
             val answer2 = pageView.findViewById<EditText>(R.id.answer2)

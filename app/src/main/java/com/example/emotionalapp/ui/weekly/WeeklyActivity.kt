@@ -14,6 +14,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class WeeklyActivity : AppCompatActivity() {
 
@@ -112,6 +118,49 @@ class WeeklyActivity : AppCompatActivity() {
                 panasNegativeSum = negativeIndices.sumOf { panasSelections[it] + 1 }
                 Log.d("PANAS", "Positive Sum: $panasPositiveSum")
                 Log.d("PANAS", "Negative Sum: $panasNegativeSum")
+
+                // Firestore에 저장
+                val user = FirebaseAuth.getInstance().currentUser
+                val db = FirebaseFirestore.getInstance()
+
+                user?.let {
+                    val userEmail = it.email
+                    val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).format(Date())
+
+                    val data = hashMapOf(
+                        "type" to "weekly3",
+                        "date" to Timestamp.now(),
+                        "phq9" to hashMapOf(
+                            "answers" to phq9Selections.toList(),
+                            "sum" to phq9Sum
+                        ),
+                        "gad7" to hashMapOf(
+                            "answers" to gad7Selections.toList(),
+                            "sum" to gad7Sum
+                        ),
+                        "panas" to hashMapOf(
+                            "answers" to panasSelections.toList(),
+                            "positiveSum" to panasPositiveSum,
+                            "negativeSum" to panasNegativeSum
+                        )
+                    )
+
+                    if (userEmail != null) {
+                        db.collection("user")
+                            .document(userEmail)
+                            .collection("weekly3")
+                            .document(today) // 날짜 기준으로 문서 ID
+                            .set(data) // 덮어쓰기 저장
+                            .addOnSuccessListener {
+                                Log.d("Firestore", "데이터 저장 성공")
+                                // 저장 후 이동
+
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("Firestore", "저장 실패", e)
+                            }
+                    }
+                }
             }
 
 

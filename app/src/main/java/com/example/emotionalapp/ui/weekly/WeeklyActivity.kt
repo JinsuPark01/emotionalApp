@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.example.emotionalapp.ui.login.LoginActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -121,46 +122,47 @@ class WeeklyActivity : AppCompatActivity() {
 
                 // Firestore에 저장
                 val user = FirebaseAuth.getInstance().currentUser
-                val db = FirebaseFirestore.getInstance()
+                val userEmail = user?.email
 
-                user?.let {
-                    val userEmail = it.email
-                    val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).format(Date())
-
-                    val data = hashMapOf(
-                        "type" to "weekly3",
-                        "date" to Timestamp.now(),
-                        "phq9" to hashMapOf(
-                            "answers" to phq9Selections.toList(),
-                            "sum" to phq9Sum
-                        ),
-                        "gad7" to hashMapOf(
-                            "answers" to gad7Selections.toList(),
-                            "sum" to gad7Sum
-                        ),
-                        "panas" to hashMapOf(
-                            "answers" to panasSelections.toList(),
-                            "positiveSum" to panasPositiveSum,
-                            "negativeSum" to panasNegativeSum
-                        )
-                    )
-
-                    if (userEmail != null) {
-                        db.collection("user")
-                            .document(userEmail)
-                            .collection("weekly3")
-                            .document(today) // 날짜 기준으로 문서 ID
-                            .set(data) // 덮어쓰기 저장
-                            .addOnSuccessListener {
-                                Log.d("Firestore", "데이터 저장 성공")
-                                // 저장 후 이동
-
-                            }
-                            .addOnFailureListener { e ->
-                                Log.w("Firestore", "저장 실패", e)
-                            }
-                    }
+                if (user == null || userEmail == null) {
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    return@setOnClickListener
                 }
+
+                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).format(Date())
+                val data = hashMapOf(
+                    "type" to "weekly3",
+                    "date" to Timestamp.now(),
+                    "phq9" to hashMapOf(
+                        "answers" to phq9Selections.toList(),
+                        "sum" to phq9Sum
+                    ),
+                    "gad7" to hashMapOf(
+                        "answers" to gad7Selections.toList(),
+                        "sum" to gad7Sum
+                    ),
+                    "panas" to hashMapOf(
+                        "answers" to panasSelections.toList(),
+                        "positiveSum" to panasPositiveSum,
+                        "negativeSum" to panasNegativeSum
+                    )
+                )
+
+                val db = FirebaseFirestore.getInstance()
+                db.collection("user")
+                    .document(userEmail)
+                    .collection("weekly3")
+                    .document(today)
+                    .set(data)
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "데이터 저장 성공")
+                        // 저장 후 이동 로직 여기에 작성
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "저장 실패", e)
+                    }
             }
 
 
@@ -288,11 +290,13 @@ class WeeklyActivity : AppCompatActivity() {
         }
 
         // 이전 버튼 상태
-        btnPrev.isEnabled = currentPage != 0
-        btnPrev.backgroundTintList = if (currentPage == 0)
-            ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
-        else
-            ColorStateList.valueOf(Color.parseColor("#3CB371"))
+        btnPrev.isEnabled = false
+        btnPrev.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
+//        btnPrev.isEnabled = currentPage != 0
+//        btnPrev.backgroundTintList = if (currentPage == 0)
+//            ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
+//        else
+//            ColorStateList.valueOf(Color.parseColor("#3CB371"))
 
         // 다음 버튼 텍스트
         btnNext.text = if (currentPage == totalPages - 1) "완료 →" else "다음 →"

@@ -1,104 +1,68 @@
 package com.example.emotionalapp.ui.emotion
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SelectActivity : AppCompatActivity() {
 
     private lateinit var btnBack: ImageView
-    private lateinit var tabPractice: TextView
-    private lateinit var tabRecord: TextView
-    private lateinit var underlinePractice: View
-    private lateinit var underlineRecord: View
-    private lateinit var contentView1: View
-    private lateinit var contentView2: View
+    private lateinit var btnSelect: TextView
 
     private lateinit var mindButtons: List<LinearLayout>
     private lateinit var bodyButtons: List<LinearLayout>
     private var selectedMind = -1
     private var selectedBody = -1
 
-    private lateinit var btnSelect: TextView
-    private lateinit var lineChartMind: LineChart
-    private lateinit var lineChartBody: LineChart
+    private lateinit var accordionWhatIs: LinearLayout
+    private lateinit var tvWhatIsDesc: TextView
+    private lateinit var iconArrow: ImageView
+
+    private lateinit var accordionHowTo: LinearLayout
+    private lateinit var layoutHowToDesc: LinearLayout
+    private lateinit var iconArrowHowTo: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_emotion_select)
 
-        // 상단 탭 및 뒤로가기
         btnBack = findViewById(R.id.btnBack)
-        tabPractice = findViewById(R.id.tabPractice)
-        tabRecord = findViewById(R.id.tabRecord)
-        underlinePractice = findViewById(R.id.underlinePractice)
-        underlineRecord = findViewById(R.id.underlineRecord)
-        contentView1 = findViewById(R.id.contentView1)
-        contentView2 = findViewById(R.id.contentView2)
+        btnSelect = findViewById(R.id.btnSelect)
 
         btnBack.setOnClickListener { finish() }
 
-        tabPractice.setOnClickListener {
-            selectTab(true)
-        }
-        tabRecord.setOnClickListener {
-            selectTab(false)
-            drawCharts() // 탭 전환 시 그래프 표시
-        }
-
-        // 감정 선택 버튼
         mindButtons = listOf(
             findViewById(R.id.btnMind1),
             findViewById(R.id.btnMind2),
             findViewById(R.id.btnMind3),
             findViewById(R.id.btnMind4),
-            findViewById(R.id.btnMind5)
+            findViewById(R.id.btnMind5),
         )
         bodyButtons = listOf(
             findViewById(R.id.btnBody1),
             findViewById(R.id.btnBody2),
             findViewById(R.id.btnBody3),
             findViewById(R.id.btnBody4),
-            findViewById(R.id.btnBody5)
+            findViewById(R.id.btnBody5),
         )
 
         setupFeelingButtons()
 
-        btnSelect = findViewById(R.id.btnSelect)
         btnSelect.setOnClickListener {
             if (selectedMind == -1 || selectedBody == -1) {
                 Toast.makeText(this, "마음과 몸의 감정을 선택해주세요", Toast.LENGTH_SHORT).show()
             } else {
                 saveEmotionData()
-                Toast.makeText(this, "감정이 기록되었습니다", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // 그래프 뷰
-        lineChartMind = findViewById(R.id.lineChartMind)
-        lineChartBody = findViewById(R.id.lineChartBody)
-
-        // 초기화
-        selectTab(true)
-    }
-
-    private fun selectTab(isPractice: Boolean) {
-        underlinePractice.visibility = if (isPractice) View.VISIBLE else View.GONE
-        underlineRecord.visibility = if (!isPractice) View.VISIBLE else View.GONE
-
-        contentView1.visibility = if (isPractice) View.VISIBLE else View.GONE
-        contentView2.visibility = if (!isPractice) View.VISIBLE else View.GONE
-
-        tabPractice.setTextColor(getColor(if (isPractice) R.color.black else R.color.gray))
-        tabRecord.setTextColor(getColor(if (!isPractice) R.color.black else R.color.gray))
+        setupAccordionViews()
     }
 
     private fun setupFeelingButtons() {
@@ -122,63 +86,66 @@ class SelectActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupAccordionViews() {
+        accordionWhatIs = findViewById(R.id.accordionWhatIS)
+        tvWhatIsDesc = findViewById(R.id.tvWhatIsDesc)
+        iconArrow = findViewById(R.id.iconArrow)
+
+        accordionHowTo = findViewById(R.id.accordionHowTo)
+        layoutHowToDesc = findViewById(R.id.layoutHowToDesc)
+        iconArrowHowTo = findViewById(R.id.iconArrowHowTo)
+
+        accordionWhatIs.setOnClickListener {
+            toggleAccordion(tvWhatIsDesc, iconArrow)
+        }
+
+        accordionHowTo.setOnClickListener {
+            toggleAccordion(layoutHowToDesc, iconArrowHowTo)
+        }
+    }
+
+    private fun toggleAccordion(description: View, icon: ImageView) {
+        val isVisible = description.visibility == View.VISIBLE
+        description.visibility = if (isVisible) View.GONE else View.VISIBLE
+    }
+
     private fun saveEmotionData() {
-        // 여기에 로컬 DB 또는 ViewModel 저장 로직을 넣을 수 있음
-        // selectedMind, selectedBody 값은 각각 0~4
-    }
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
 
-    private fun drawCharts() {
-        val days = listOf("월", "화", "수", "목", "금", "토", "일")
+        if (user != null) {
+            val email = user.email ?: return
+            val db = FirebaseFirestore.getInstance()
 
-        // 샘플 데이터: (마음) 11시 / 19시
-        val mind11 = listOf(2f, 3f, 1f, 4f, 2f, 3f, 4f)
-        val mind19 = listOf(3f, 2f, 2f, 5f, 3f, 2f, 4f)
+            val mindStates = listOf("매우 안 좋음", "안 좋음", "보통", "좋음", "매우 좋음")
+            val bodyStates = listOf("매우 이완됨", "이완됨", "보통", "각성", "매우 각성됨")
 
-        val body11 = listOf(1f, 2f, 3f, 3f, 2f, 4f, 3f)
-        val body19 = listOf(2f, 3f, 4f, 4f, 3f, 5f, 4f)
+            val mind = mindStates.getOrNull(selectedMind) ?: "알 수 없음"
+            val body = bodyStates.getOrNull(selectedBody) ?: "알 수 없음"
 
-        drawLineChart(lineChartMind, days, mind11, mind19, "11시", "19시")
-        drawLineChart(lineChartBody, days, body11, body19, "11시", "19시")
-    }
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+            val timestamp = dateFormat.format(Date())
 
-    private fun drawLineChart(
-        chart: LineChart,
-        xLabels: List<String>,
-        data1: List<Float>,
-        data2: List<Float>,
-        label1: String,
-        label2: String
-    ) {
-        val entries1 = data1.mapIndexed { index, value -> Entry(index.toFloat(), value) }
-        val entries2 = data2.mapIndexed { index, value -> Entry(index.toFloat(), value) }
+            val data = hashMapOf(
+                "mind" to mind,
+                "body" to body,
+                "timestamp" to timestamp
+            )
 
-        val dataSet1 = LineDataSet(entries1, label1).apply {
-            color = Color.BLUE
-            valueTextColor = Color.BLACK
-            lineWidth = 2f
-            circleRadius = 3f
+            db.collection("user")
+                .document(email)
+                .collection("emotionSelect")
+                .document(timestamp)
+                .set(data)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "감정이 기록되었습니다.", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            Toast.makeText(this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
         }
-
-        val dataSet2 = LineDataSet(entries2, label2).apply {
-            color = Color.RED
-            valueTextColor = Color.BLACK
-            lineWidth = 2f
-            circleRadius = 3f
-        }
-
-        val lineData = LineData(dataSet1, dataSet2)
-        chart.data = lineData
-
-        chart.xAxis.apply {
-            valueFormatter = IndexAxisValueFormatter(xLabels)
-            position = XAxis.XAxisPosition.BOTTOM
-            setDrawGridLines(false)
-            granularity = 1f
-        }
-
-        chart.axisRight.isEnabled = false
-        chart.description.isEnabled = false
-        chart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        chart.invalidate()
     }
 }

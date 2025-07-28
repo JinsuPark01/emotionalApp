@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class WeeklyActivity : AppCompatActivity() {
 
@@ -121,11 +122,15 @@ class WeeklyActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                val today =
-                    SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).format(Date())
+                val nowTimestamp = Timestamp.now()
+                val nowDate = nowTimestamp.toDate()
+                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(nowDate)
+
                 val data = hashMapOf(
                     "type" to "weekly3",
-                    "date" to Timestamp.now(),
+                    "date" to nowTimestamp,
                     "phq9" to hashMapOf(
                         "answers" to phq9Selections.toList(),
                         "sum" to phq9Sum

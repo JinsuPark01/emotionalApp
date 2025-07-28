@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class AnchorActivity : AppCompatActivity() {
 
@@ -147,11 +148,15 @@ class AnchorActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                val today =
-                    SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).format(Date())
+                val nowTimestamp = Timestamp.now()
+                val nowDate = nowTimestamp.toDate()
+                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(nowDate)
+
                 val data = hashMapOf(
                     "type" to "emotionAnchor",
-                    "date" to Timestamp.now(),
+                    "date" to nowTimestamp,
                     "selectedCue" to selectedCue,
                     "elements" to hashMapOf(
                         "thought" to page2Answer1,

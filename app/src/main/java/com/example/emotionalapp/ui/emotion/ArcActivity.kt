@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class ArcActivity : AppCompatActivity() {
 
@@ -125,11 +126,15 @@ class ArcActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                val today =
-                    SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).format(Date())
+                val nowTimestamp = Timestamp.now()
+                val nowDate = nowTimestamp.toDate()
+                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(nowDate)
+
                 val data = hashMapOf(
                     "type" to "emotionArc",
-                    "date" to Timestamp.now(),
+                    "date" to nowTimestamp,
                     "antecedent" to userAntecedent,
                     "response" to userResponse,
                     "consequences" to hashMapOf(

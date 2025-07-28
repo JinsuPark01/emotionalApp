@@ -17,6 +17,13 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.example.emotionalapp.ui.login.LoginActivity
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AnchorActivity : AppCompatActivity() {
 
@@ -129,17 +136,57 @@ class AnchorActivity : AppCompatActivity() {
                 page3Answer2 = answerQ2
                 Log.d("AnchorActivity", "선택한 단서: $page3Answer1, $page3Answer2")
 
+                // Firestore에 저장
+                val user = FirebaseAuth.getInstance().currentUser
+                val userEmail = user?.email
+
+                if (user == null || userEmail == null) {
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    return@setOnClickListener
+                }
+
+                val today =
+                    SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).format(Date())
+                val data = hashMapOf(
+                    "type" to "emotionAnchor",
+                    "date" to Timestamp.now(),
+                    "selectedCue" to selectedCue,
+                    "elements" to hashMapOf(
+                        "thought" to page2Answer1,
+                        "sensation" to page2Answer2,
+                        "behavior" to page2Answer3
+                    ),
+                    "evaluation" to hashMapOf(
+                        "effect" to page3Answer1,
+                        "change" to page3Answer2
+                    )
+                )
+
+                val db = FirebaseFirestore.getInstance()
+                db.collection("user")
+                    .document(userEmail)
+                    .collection("emotionAnchor")
+                    .document(today)
+                    .set(data)
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "데이터 저장 성공")
+                        val intent = Intent(this, AllTrainingPageActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "저장 실패", e)
+                        Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        return@addOnFailureListener
+                    }
             }
 
             // 페이지 이동 처리
             if (currentPage < totalPages - 1) {
                 currentPage++
                 updatePage()
-            } else {
-                // 마지막 페이지에서 완료 시 다른 액티비티 이동
-                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                startActivity(intent)
-                finish()
             }
         }
 

@@ -82,8 +82,25 @@ class AnchorActivity : AppCompatActivity() {
                     Toast.makeText(this, "단서를 선택하거나 입력해주세요.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
-            }
+            } else if (currentPage == 2) {
+                // pageContainer 내부 현재 페이지 뷰 찾기
+                val pageView = pageContainer.getChildAt(0)
+                val answer1 = pageView.findViewById<EditText>(R.id.answer1)
+                val answer2 = pageView.findViewById<EditText>(R.id.answer2)
+                val answer3 = pageView.findViewById<EditText>(R.id.answer3)
 
+                // 전역변수에 저장
+                page2Answer1 = answer1.text.toString().trim()
+                page2Answer2 = answer2.text.toString().trim()
+                page2Answer3 = answer3.text.toString().trim()
+                Log.d("AnchorActivity", "선택한 단서: $page2Answer1, $page2Answer2, $page2Answer3")
+
+                // 입력 체크 (원하면)
+                if (page2Answer1.isEmpty() || page2Answer2.isEmpty() || page2Answer3.isEmpty()) {
+                    Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener // 저장 안 하고 넘어가지 않음
+                }
+            }
 
             // 페이지 이동 처리
             if (currentPage < totalPages - 1) {
@@ -219,20 +236,10 @@ class AnchorActivity : AppCompatActivity() {
             val answer1 = pageView.findViewById<EditText>(R.id.answer1)
             val answer2 = pageView.findViewById<EditText>(R.id.answer2)
             val answer3 = pageView.findViewById<EditText>(R.id.answer3)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveAnswers)
 
-            btnSave.setOnClickListener {
-                val response1 = answer1.text.toString().trim()
-                val response2 = answer2.text.toString().trim()
-                val response3 = answer3.text.toString().trim()
-
-                if (response1.isNotEmpty() && response2.isNotEmpty() && response3.isNotEmpty()) {
-                    // 👉 답변 저장 로직 (예: 로컬 DB, 서버 전송) 작성 여기에 할 것
-                    Toast.makeText(this, "답변이 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
+            answer1.setText(page2Answer1)
+            answer2.setText(page2Answer2)
+            answer3.setText(page2Answer3)
         } else if (currentPage == 3) {
             val optionContainerQ1 = pageView.findViewById<LinearLayout>(R.id.optionContainerQ1)
             val optionContainerQ2 = pageView.findViewById<LinearLayout>(R.id.optionContainerQ2)

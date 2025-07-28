@@ -5,15 +5,18 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.emotionalapp.R
-import com.example.emotionalapp.adapter.ActionTrainingAdapter
-import com.example.emotionalapp.data.ActionTrainingItem
+import com.example.emotionalapp.adapter.DetailTrainingAdapter
+import com.example.emotionalapp.data.DetailTrainingItem
+import com.example.emotionalapp.data.TrainingType
 import com.example.emotionalapp.databinding.ActivityExpressionActionTrainingBinding
+import com.example.emotionalapp.ui.expression.AvoidanceActivity
+import com.example.emotionalapp.ui.expression.DrivenActionActivity
 import com.example.emotionalapp.ui.weekly.WeeklyActivity
 
 class ExpressionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityExpressionActionTrainingBinding
-    private lateinit var adapter: ActionTrainingAdapter
+    private lateinit var adapter: DetailTrainingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,46 +32,46 @@ class ExpressionActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = ActionTrainingAdapter { item ->
-            val intent = Intent(this, item.targetActivityClass)
-            startActivity(intent)
+        adapter = DetailTrainingAdapter(emptyList()) { item ->
+            item.targetActivityClass?.let { targetClass ->
+                val intent = Intent(this, targetClass)
+                startActivity(intent)
+            }
         }
         binding.actionTrainingRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.actionTrainingRecyclerView.adapter = adapter
     }
 
-    // In ExpressionActivity.kt
     private fun loadTrainingData() {
         val trainingList = listOf(
-            ActionTrainingItem(
+            DetailTrainingItem(
                 id = "expression_000",
-                iconResId = R.drawable.outline_person_24,
                 title = "주차별 점검",
                 subtitle = "질문지를 통한 마음 돌아보기",
-                progressText = "",
+                trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
+                currentProgress = "진행하기",
                 backgroundColorResId = R.color.purple_700,
                 targetActivityClass = WeeklyActivity::class.java
             ),
-            ActionTrainingItem(
+            DetailTrainingItem(
                 id = "avoidance_training",
-                iconResId = R.drawable.outline_person_24,
                 title = "정서회피 훈련",
                 subtitle = "정서와 관련된 신체 감각 찾기",
-                progressText = "",
+                trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
+                currentProgress = "0/3",
                 backgroundColorResId = R.color.purple_700,
-                targetActivityClass = com.example.emotionalapp.ui.expression.AvoidanceActivity::class.java
+                targetActivityClass = AvoidanceActivity::class.java
             ),
-            ActionTrainingItem(
+            DetailTrainingItem(
                 id = "driven_action_training",
-                iconResId = R.drawable.ic_chat,
                 title = "정서-주도 행동 훈련",
                 subtitle = "특별한 경험을 기록하기",
-                progressText = "",
+                trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
+                currentProgress = "50",
                 backgroundColorResId = R.color.purple_500,
-                // --- 여기가 핵심 수정 부분입니다 ---
-                targetActivityClass = com.example.emotionalapp.ui.expression.DrivenActionActivity::class.java
+                targetActivityClass = DrivenActionActivity::class.java
             )
         )
-        adapter.submitList(trainingList)
+        adapter.updateData(trainingList)
     }
 }

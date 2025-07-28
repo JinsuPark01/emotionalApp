@@ -43,10 +43,31 @@
             <EditText android:id="@+id/et_result" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="그 행동을 한 뒤 기분이나 상황이 어땠나요?" android:minHeight="48dp" android:background="@drawable/edit_text_background" android:padding="12dp" android:layout_marginBottom="16dp"/>
         </LinearLayout>
     </ScrollView>
-    <Button
-        android:id="@+id/btn_save_diary"
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD" />
+
+    <!-- 하단 버튼 바 -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_margin="16dp"
-        android:text="기록 저장하기" />
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:id="@+id/btn_save_diary"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:text="기록 저장하기"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_round_green_button" />
+    </LinearLayout>
 </LinearLayout>

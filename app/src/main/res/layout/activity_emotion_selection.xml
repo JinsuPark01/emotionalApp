@@ -65,11 +65,31 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/btn_start_timer"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD" />
+
+    <!-- 하단 버튼 바 -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_margin="16dp"
-        android:text="선택 완료하고 시작하기"
-        android:enabled="false"/>
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:id="@+id/btn_start_timer"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:text="선택 완료하고 시작하기"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:enabled="false"
+            android:background="@drawable/bg_round_green_button" />
+    </LinearLayout>
 </LinearLayout>

@@ -7,25 +7,36 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
-import com.example.emotionalapp.databinding.ActivityTrainingFrameBinding
+import com.example.emotionalapp.databinding.ActivityEmotionReflectionBinding // 바인딩 클래스 이름 변경
 
 class EmotionReflectionActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTrainingFrameBinding
+    private lateinit var binding: ActivityEmotionReflectionBinding
+    private val totalPages = 3 // 타이머, 기록, 피드백 총 3단계
+    private val currentPage = 1 // 이 화면은 2번째 페이지
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTrainingFrameBinding.inflate(layoutInflater)
+        binding = ActivityEmotionReflectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupUI()
+        setupClickListeners()
+    }
 
+    private fun setupUI() {
+        // 하단 네비게이션 바 설정
+        binding.navPage.btnNext.text = "완료"
+        setupIndicators()
+        updateIndicators()
+    }
+
+    private fun setupClickListeners() {
         binding.btnBack.setOnClickListener { finish() }
 
         binding.navPage.btnNext.setOnClickListener {
-            // contentBinding을 통해 입력값에 접근합니다.
-            val clarifiedEmotion = binding.pageContainer.findViewById<android.widget.EditText>(R.id.edit_text_emotion_clarified).text.toString().trim()
-            val moodChanged = binding.pageContainer.findViewById<android.widget.EditText>(R.id.edit_text_mood_changed).text.toString().trim()
+            val clarifiedEmotion = binding.editTextEmotionClarified.text.toString().trim()
+            val moodChanged = binding.editTextMoodChanged.text.toString().trim()
 
             if (clarifiedEmotion.isBlank() || moodChanged.isBlank()){
                 Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
@@ -41,25 +52,32 @@ class EmotionReflectionActivity : AppCompatActivity() {
         }
 
         binding.navPage.btnPrev.setOnClickListener {
-            finish()
+            finish() // 이전 화면으로 돌아감 (타이머 액티비티)
         }
     }
 
-    private fun setupUI() {
-        // 상단 바 설정
-        binding.titleText.text = "감정 기록하기"
-        binding.tabRecord.visibility = View.GONE
-        binding.underlineRecord.visibility = View.GONE
-        binding.tabPracticeContainer.layoutParams = (binding.tabPracticeContainer.layoutParams as LinearLayout.LayoutParams).apply {
-            width = 0
-            weight = 2f
+    private fun setupIndicators() {
+        val indicatorContainer = binding.navPage.indicatorContainer
+        indicatorContainer.removeAllViews()
+        for (i in 0 until totalPages) {
+            val dot = View(this).apply {
+                layoutParams = LinearLayout.LayoutParams(20, 20).apply {
+                    setMargins(8, 0, 8, 0)
+                }
+                setBackgroundResource(R.drawable.ic_dot_circle_gray)
+            }
+            indicatorContainer.addView(dot)
         }
+    }
 
-        // 하단 네비게이션 바 설정
-        binding.navPage.indicatorContainer.visibility = View.GONE
-        binding.navPage.btnNext.text = "완료"
-
-        // 기록 페이지 레이아웃을 pageContainer에 추가
-        layoutInflater.inflate(R.layout.content_emotion_reflection, binding.pageContainer, true)
+    private fun updateIndicators() {
+        val indicatorContainer = binding.navPage.indicatorContainer
+        for (i in 0 until indicatorContainer.childCount) {
+            val dot = indicatorContainer.getChildAt(i)
+            dot.setBackgroundResource(
+                if (i == currentPage) R.drawable.ic_dot_circle_black
+                else R.drawable.ic_dot_circle_gray
+            )
+        }
     }
 }

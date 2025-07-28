@@ -46,10 +46,31 @@
             <CheckBox android:id="@+id/cb_avoid5" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="일부러 웃고 떠들면서 감정을 숨긴다." android:layout_marginBottom="8dp"/>
         </LinearLayout>
     </ScrollView>
-    <Button
-        android:id="@+id/btn_start_diary"
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD" />
+
+    <!-- 하단 버튼 바 -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_margin="16dp"
-        android:text="일지 작성하러 가기" />
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:id="@+id/btn_start_diary"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:text="일지 작성하러 가기"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_round_green_button" />
+    </LinearLayout>
 </LinearLayout>

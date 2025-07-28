@@ -2,7 +2,9 @@ package com.example.emotionalapp.ui.expression
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +32,8 @@ class AlternativeActionActivity : AppCompatActivity() {
         binding = ActivityAlternativeActionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // --- 1. 인디케이터 점들을 생성합니다 ---
+        setupIndicators()
         updatePage()
 
         binding.btnBack.setOnClickListener { finish() }
@@ -56,30 +60,46 @@ class AlternativeActionActivity : AppCompatActivity() {
         }
     }
 
+    // --- 2. 페이지 수만큼 회색 점을 만드는 함수 ---
+    private fun setupIndicators() {
+        val indicatorContainer = binding.navPage.indicatorContainer
+        indicatorContainer.removeAllViews()
+        for (i in 0 until totalPages) {
+            val dot = View(this).apply {
+                layoutParams = LinearLayout.LayoutParams(20, 20).apply {
+                    setMargins(8, 0, 8, 0)
+                }
+                setBackgroundResource(R.drawable.ic_dot_circle_gray)
+            }
+            indicatorContainer.addView(dot)
+        }
+    }
+
     private fun handleNextButtonClick(): Boolean {
         when (currentPage) {
-            0 -> { // 1페이지 (기록)
-                val situationInput = findViewById<EditText>(R.id.edit_situation)?.text.toString().trim()
-                val feelingInput = findViewById<EditText>(R.id.edit_feeling)?.text.toString().trim()
-                val actionTakenInput = findViewById<EditText>(R.id.edit_action_taken)?.text.toString().trim()
+            0 -> {
+                val pageView = binding.pageContainer.getChildAt(0)
+                val situationInput = pageView.findViewById<EditText>(R.id.edit_situation)?.text.toString().trim()
+                val feelingInput = pageView.findViewById<EditText>(R.id.edit_feeling)?.text.toString().trim()
+                val actionTakenInput = pageView.findViewById<EditText>(R.id.edit_action_taken)?.text.toString().trim()
 
                 if (situationInput.isBlank() || feelingInput.isBlank() || actionTakenInput.isBlank()) {
                     Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
                     return false
                 }
-                // 다음 페이지로 넘어가기 전에 데이터 저장
                 situation = situationInput
                 feeling = feelingInput
                 actionTaken = actionTakenInput
             }
-            1 -> { // 2페이지 (선택)
+            1 -> {
                 if (selectedAlternative.isBlank()) {
                     Toast.makeText(this, "대안 행동을 선택해주세요.", Toast.LENGTH_SHORT).show()
                     return false
                 }
             }
-            2 -> { // 3페이지 (결과)
-                val resultInput = findViewById<EditText>(R.id.edit_result)?.text.toString().trim()
+            2 -> {
+                val pageView = binding.pageContainer.getChildAt(0)
+                val resultInput = pageView.findViewById<EditText>(R.id.edit_result)?.text.toString().trim()
                 if (resultInput.isBlank()) {
                     Toast.makeText(this, "결과를 입력해주세요.", Toast.LENGTH_SHORT).show()
                     return false
@@ -105,6 +125,19 @@ class AlternativeActionActivity : AppCompatActivity() {
         }
         binding.pageContainer.addView(pageView)
         updateNavButtons()
+        updateIndicators() // --- 3. 페이지가 바뀔 때마다 인디케이터 색을 업데이트합니다 ---
+    }
+
+    // --- 4. 현재 페이지에 맞는 점만 검은색으로 바꾸는 함수 ---
+    private fun updateIndicators() {
+        val indicatorContainer = binding.navPage.indicatorContainer
+        for (i in 0 until indicatorContainer.childCount) {
+            val dot = indicatorContainer.getChildAt(i)
+            dot.setBackgroundResource(
+                if (i == currentPage) R.drawable.ic_dot_circle_black
+                else R.drawable.ic_dot_circle_gray
+            )
+        }
     }
 
     private fun setupAlternativeSelectionPage(view: android.view.View) {
@@ -113,7 +146,6 @@ class AlternativeActionActivity : AppCompatActivity() {
 
         titleView.text = "'$feeling'을 느낄 때, 이런 행동은 어때요?"
 
-        // TODO: 실제로는 사용자가 입력한 감정에 따라 다른 목록을 DB나 다른 곳에서 가져와야 함
         val alternatives = when {
             feeling.contains("화") || feeling.contains("짜증") -> listOf(
                 AlternativeActionItem("잠시 그 자리를 벗어나기"),

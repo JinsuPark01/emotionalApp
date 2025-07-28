@@ -85,12 +85,8 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- 완료 버튼 -->
-    <Button
-        android:id="@+id/btn_complete"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_margin="16dp"
-        android:text="완료"/>
+    <include
+        android:id="@+id/navPage"
+        layout="@layout/nav_page" />
 
 </LinearLayout>

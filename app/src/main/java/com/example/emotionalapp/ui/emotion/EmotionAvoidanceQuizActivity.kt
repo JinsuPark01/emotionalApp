@@ -2,7 +2,6 @@ package com.example.emotionalapp.ui.emotion
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.emotionalapp.R
@@ -23,17 +22,10 @@ class EmotionAvoidanceQuizActivity : AppCompatActivity() {
         loadQuizData()
         setupListeners()
         displayQuestion()
-        setupTabs()
+        // setupTabs() 호출 삭제
     }
 
-    private fun setupTabs() {
-        binding.tabRecord.visibility = View.GONE
-        binding.underlineRecord.visibility = View.GONE
-        binding.tabPracticeContainer.layoutParams = (binding.tabPracticeContainer.layoutParams as LinearLayout.LayoutParams).apply {
-            width = 0
-            weight = 2f
-        }
-    }
+    // setupTabs() 함수 전체 삭제
 
     private fun loadQuizData() {
         quizItems = listOf(

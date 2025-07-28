@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -36,6 +35,10 @@ class AnchorActivity : AppCompatActivity() {
     private var page2Answer1: String = ""
     private var page2Answer2: String = ""
     private var page2Answer3: String = ""
+    private var selectedQ1Index: Int = -1
+    private var selectedQ2Index: Int = -1
+    private var page3Answer1: String = ""
+    private var page3Answer2: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,6 +103,32 @@ class AnchorActivity : AppCompatActivity() {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener // 저장 안 하고 넘어가지 않음
                 }
+            } else if (currentPage == 3) {
+                if (selectedQ1Index == -1 || selectedQ2Index == -1) {
+                    Toast.makeText(this, "두 질문 모두 답변해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                // 첫 번째 질문 옵션
+                val optionsQ1 = listOf(
+                    "현재에 집중할 수 있었어요",
+                    "다른 단서를 찾아봐야 할 것 같아요"
+                )
+
+                // 두 번째 질문 옵션
+                val optionsQ2 = listOf(
+                    "전보다 나아졌어요",
+                    "비슷한 거 같아요",
+                    "더 안 좋아졌어요"
+                )
+
+                val answerQ1 = optionsQ1[selectedQ1Index]
+                val answerQ2 = optionsQ2[selectedQ2Index]
+
+                // 전역 변수에 저장
+                page3Answer1 = answerQ1
+                page3Answer2 = answerQ2
+                Log.d("AnchorActivity", "선택한 단서: $page3Answer1, $page3Answer2")
+
             }
 
             // 페이지 이동 처리
@@ -243,7 +272,6 @@ class AnchorActivity : AppCompatActivity() {
         } else if (currentPage == 3) {
             val optionContainerQ1 = pageView.findViewById<LinearLayout>(R.id.optionContainerQ1)
             val optionContainerQ2 = pageView.findViewById<LinearLayout>(R.id.optionContainerQ2)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveDoubleQuestion)
 
             // 첫 번째 질문 옵션
             val optionsQ1 = listOf(
@@ -258,10 +286,12 @@ class AnchorActivity : AppCompatActivity() {
                 "더 안 좋아졌어요"
             )
 
-            var selectedQ1Index = -1
-            var selectedQ2Index = -1
+            selectedQ1Index = -1
+            selectedQ2Index = -1
 
-            // 첫 번째 질문 카드 생성
+            optionContainerQ1.removeAllViews()
+            optionContainerQ2.removeAllViews()
+
             optionsQ1.forEachIndexed { index, text ->
                 val card = layoutInflater.inflate(R.layout.item_option_card, optionContainerQ1, false) as CardView
                 val textView = card.findViewById<TextView>(R.id.textOption)
@@ -269,8 +299,8 @@ class AnchorActivity : AppCompatActivity() {
 
                 card.setOnClickListener {
                     for (i in 0 until optionContainerQ1.childCount) {
-                        val childCard = optionContainerQ1.getChildAt(i) as CardView
-                        childCard.setCardBackgroundColor(Color.WHITE)
+                        val child = optionContainerQ1.getChildAt(i) as CardView
+                        child.setCardBackgroundColor(Color.WHITE)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
                     selectedQ1Index = index
@@ -279,7 +309,6 @@ class AnchorActivity : AppCompatActivity() {
                 optionContainerQ1.addView(card)
             }
 
-            // 두 번째 질문 카드 생성
             optionsQ2.forEachIndexed { index, text ->
                 val card = layoutInflater.inflate(R.layout.item_option_card, optionContainerQ2, false) as CardView
                 val textView = card.findViewById<TextView>(R.id.textOption)
@@ -287,8 +316,8 @@ class AnchorActivity : AppCompatActivity() {
 
                 card.setOnClickListener {
                     for (i in 0 until optionContainerQ2.childCount) {
-                        val childCard = optionContainerQ2.getChildAt(i) as CardView
-                        childCard.setCardBackgroundColor(Color.WHITE)
+                        val child = optionContainerQ2.getChildAt(i) as CardView
+                        child.setCardBackgroundColor(Color.WHITE)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
                     selectedQ2Index = index
@@ -296,31 +325,15 @@ class AnchorActivity : AppCompatActivity() {
 
                 optionContainerQ2.addView(card)
             }
-
-            // 저장 버튼 클릭 시 선택한 값만 저장
-            btnSave.setOnClickListener {
-                if (selectedQ1Index != -1 && selectedQ2Index != -1) {
-                    val answerQ1 = optionsQ1[selectedQ1Index]
-                    val answerQ2 = optionsQ2[selectedQ2Index]
-                    Toast.makeText(
-                        this,
-                        "답변 저장됨\nQ1: $answerQ1\nQ2: $answerQ2",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    // 👉 답변 저장 처리 (DB, 서버 등)
-                } else {
-                    Toast.makeText(this, "두 질문 모두 답변해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
 
 
         // 이전 버튼 상태
-        btnPrev.isEnabled = currentPage != 0
-        btnPrev.backgroundTintList = if (currentPage == 0)
-            ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
+        btnPrev.isEnabled = !(currentPage == 0 || currentPage == 2)
+        btnPrev.backgroundTintList = if (currentPage == 0 || currentPage == 2)
+            ColorStateList.valueOf(Color.parseColor("#D9D9D9")) // 비활성화 색상
         else
-            ColorStateList.valueOf(Color.parseColor("#3CB371"))
+            ColorStateList.valueOf(Color.parseColor("#3CB371")) // 활성화 색상
 
         // 다음 버튼 텍스트
         btnNext.text = if (currentPage == totalPages - 1) "완료 →" else "다음 →"

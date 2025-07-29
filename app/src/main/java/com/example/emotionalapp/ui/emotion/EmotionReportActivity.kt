@@ -3,6 +3,7 @@ package com.example.emotionalapp.ui.emotion
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -122,5 +123,7 @@ class EmotionReportActivity : BottomNavActivity() {
         tabToday.setOnClickListener {
             Log.d("TodayTrainingPage", "금일 훈련 탭 클릭됨 (현재 페이지)")
         }
+
+        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
     }
 }

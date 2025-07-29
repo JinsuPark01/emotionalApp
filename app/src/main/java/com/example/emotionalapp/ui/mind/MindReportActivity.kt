@@ -3,6 +3,7 @@ package com.example.emotionalapp.ui.mind
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -60,6 +61,8 @@ class MindReportActivity : BottomNavActivity() {
     private fun setupTabListeners() {
         val tabAll = findViewById<TextView>(R.id.tabAll)
         val tabToday = findViewById<TextView>(R.id.tabToday)
+
+        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
         // 전체 훈련 탭 클릭 시 이동
         tabAll.setOnClickListener {

@@ -164,6 +164,7 @@ class TrapActivity : AppCompatActivity() {
                         responsePage4TwoAnswers[2] = a3
                         Log.d("TrapActivity", "저장된 답변: $responsePage4TwoAnswers")
                     }
+                    else -> { Log.d("TrapActivity", "selectedTrapIndex가 올바르지 않습니다.") }
                 }
 
             } else if (currentPage == 6) {
@@ -230,27 +231,29 @@ class TrapActivity : AppCompatActivity() {
                     .set(data)
                     .addOnSuccessListener {
                         Log.d("Firestore", "데이터 저장 성공")
+                        moveToNextPageOrFinish()
                     }
                     .addOnFailureListener { e ->
                         Log.w("Firestore", "저장 실패", e)
                         Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                        return@addOnFailureListener
                     }
-
+                return@setOnClickListener
             }
-
-
-            if (currentPage < totalPages - 1) {
-                currentPage++
-                updatePage()
-            } else {
-                // 마지막 페이지에서 완료 시 다른 액티비티 이동
-                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
+            moveToNextPageOrFinish()
         }
 
+    }
+
+    private fun moveToNextPageOrFinish() {
+        if (currentPage < totalPages - 1) {
+            currentPage++
+            updatePage()
+        } else {
+            // 마지막 페이지에서 완료 시 다른 액티비티 이동
+            val intent = Intent(this, AllTrainingPageActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun setupIndicators(count: Int) {

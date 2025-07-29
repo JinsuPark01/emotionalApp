@@ -4,19 +4,25 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.example.emotionalapp.ui.login_signup.LoginActivity
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 class ArcActivity : AppCompatActivity() {
 
@@ -26,13 +32,13 @@ class ArcActivity : AppCompatActivity() {
     private lateinit var pageContainer: FrameLayout
     private lateinit var titleText: TextView // 상단 타이틀 TextView
 
-    private lateinit var tabPractice: TextView
-    private lateinit var tabRecord: TextView
-    private lateinit var underlinePractice: View
-    private lateinit var underlineRecord: View
-
     private val totalPages = 4
     private var currentPage = 0
+
+    private var userAntecedent: String = ""
+    private var userResponse: String = ""
+    private var userShortConsequence: String = ""
+    private var userLongConsequence: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +49,6 @@ class ArcActivity : AppCompatActivity() {
         indicatorContainer = findViewById(R.id.indicatorContainer)
         pageContainer = findViewById(R.id.pageContainer)
         titleText = findViewById(R.id.titleText)
-
-        tabPractice       = findViewById(R.id.tabPractice)
-        tabRecord         = findViewById(R.id.tabRecord)
-        underlinePractice = findViewById(R.id.underlinePractice)
-        underlineRecord   = findViewById(R.id.underlineRecord)
 
 
         val btnBack = findViewById<View>(R.id.btnBack)
@@ -64,21 +65,104 @@ class ArcActivity : AppCompatActivity() {
         }
 
         btnNext.setOnClickListener {
+            if (currentPage == 1) {
+                // pageContainer 내부 현재 페이지 뷰 찾기
+                val pageView = pageContainer.getChildAt(0)
+                val answer1 = pageView.findViewById<EditText>(R.id.editSituationArcA)
+
+                // 전역변수에 저장
+                userAntecedent = answer1.text.toString().trim()
+                Log.d("ArcActivity", "A: $userAntecedent")
+
+                // 입력 체크
+                if (userAntecedent.isEmpty()) {
+                    Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener // 저장 안 하고 넘어가지 않음
+                }
+            } else if (currentPage == 2) {
+                // pageContainer 내부 현재 페이지 뷰 찾기
+                val pageView = pageContainer.getChildAt(0)
+                val answer2 = pageView.findViewById<EditText>(R.id.editReactionArcR)
+
+                // 전역변수에 저장
+                userResponse = answer2.text.toString().trim()
+                Log.d("ArcActivity", "R: $userResponse")
+
+                // 입력 체크
+                if (userResponse.isEmpty()) {
+                    Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener // 저장 안 하고 넘어가지 않음
+                }
+            } else if (currentPage == 3) {
+                // pageContainer 내부 현재 페이지 뷰 찾기
+                val pageView = pageContainer.getChildAt(0)
+                val answer3 = pageView.findViewById<EditText>(R.id.editShortTermArcC)
+                val answer4 = pageView.findViewById<EditText>(R.id.editLongTermArcC)
+
+                // 전역변수에 저장
+                userShortConsequence = answer3.text.toString().trim()
+                userLongConsequence = answer4.text.toString().trim()
+                Log.d("ArcActivity", "C: $userShortConsequence, $userLongConsequence")
+
+                // 입력 체크
+                if (userShortConsequence.isEmpty() || userLongConsequence.isEmpty()) {
+                    Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener // 저장 안 하고 넘어가지 않음
+                }
+            }
+
             if (currentPage < totalPages - 1) {
                 currentPage++
                 updatePage()
             } else {
-                // 마지막 페이지에서 완료 시 다른 액티비티 이동
-                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                startActivity(intent)
-                finish()
+                // Firestore에 저장
+                val user = FirebaseAuth.getInstance().currentUser
+                val userEmail = user?.email
+
+                if (user == null || userEmail == null) {
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    return@setOnClickListener
+                }
+
+                val nowTimestamp = Timestamp.now()
+                val nowDate = nowTimestamp.toDate()
+                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(nowDate)
+
+                val data = hashMapOf(
+                    "type" to "emotionArc",
+                    "date" to nowTimestamp,
+                    "antecedent" to userAntecedent,
+                    "response" to userResponse,
+                    "consequences" to hashMapOf(
+                        "short" to userShortConsequence,
+                        "long" to userLongConsequence
+                    )
+                )
+
+                val db = FirebaseFirestore.getInstance()
+                db.collection("user")
+                    .document(userEmail)
+                    .collection("emotionArc")
+                    .document(today)
+                    .set(data)
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "데이터 저장 성공")
+                        val intent = Intent(this, AllTrainingPageActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "저장 실패", e)
+                        Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        return@addOnFailureListener
+                    }
             }
         }
 
-        // 탭 리스너 & 초기 탭
-        tabPractice.setOnClickListener { selectTab(true) }
-        tabRecord  .setOnClickListener { selectTab(false) }
-        selectTab(true)
     }
 
     private fun setupIndicators(count: Int) {
@@ -122,51 +206,15 @@ class ArcActivity : AppCompatActivity() {
         // 페이지별 동작 처리 - 여기서 작성
         if (currentPage == 1) {
             val editSituation = pageView.findViewById<EditText>(R.id.editSituationArcA)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveArcA)
-
-            btnSave.setOnClickListener {
-                val situationText = editSituation.text.toString().trim()
-
-                if (situationText.isNotEmpty()) {
-                    // 👉 입력값 저장 로직 (예: 로컬DB, 서버 전송)
-                    Toast.makeText(this, "상황이 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                    btnNext.performClick()
-                } else {
-                    Toast.makeText(this, "상황을 입력해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
+            editSituation.setText(userAntecedent)
         } else if (currentPage == 2) {
             val editReaction = pageView.findViewById<EditText>(R.id.editReactionArcR)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveArcR)
-
-            btnSave.setOnClickListener {
-                val reactionText = editReaction.text.toString().trim()
-
-                if (reactionText.isNotEmpty()) {
-                    // 👉 입력값 저장 로직
-                    Toast.makeText(this, "반응이 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                    btnNext.performClick()
-                } else {
-                    Toast.makeText(this, "반응을 입력해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
+            editReaction.setText(userResponse)
         } else if (currentPage == 3) {
             val editShortTerm = pageView.findViewById<EditText>(R.id.editShortTermArcC)
             val editLongTerm = pageView.findViewById<EditText>(R.id.editLongTermArcC)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveArcC)
-
-            btnSave.setOnClickListener {
-                val shortTermText = editShortTerm.text.toString().trim()
-                val longTermText = editLongTerm.text.toString().trim()
-
-                if (shortTermText.isNotEmpty() && longTermText.isNotEmpty()) {
-                    // 👉 입력값 저장 로직
-                    Toast.makeText(this, "결과가 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                    btnNext.performClick()
-                } else {
-                    Toast.makeText(this, "모든 결과를 입력해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
+            editShortTerm.setText(userShortConsequence)
+            editLongTerm.setText(userLongConsequence)
         }
 
 
@@ -189,16 +237,4 @@ class ArcActivity : AppCompatActivity() {
         }
     }
 
-    // 선택된 탭에 따른 동작 여기에 작성해야함
-    private fun selectTab(practice: Boolean) {
-        tabPractice.setTextColor(
-            resources.getColor(if (practice) R.color.black else R.color.gray, null)
-        )
-        tabRecord.setTextColor(
-            resources.getColor(if (practice) R.color.gray else R.color.black, null)
-        )
-        underlinePractice.visibility = if (practice) View.VISIBLE else View.GONE
-        underlineRecord.visibility = if (practice) View.GONE    else View.VISIBLE
-
-    }
 }

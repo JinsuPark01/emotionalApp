@@ -14,13 +14,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
-import com.example.emotionalapp.ui.login.LoginActivity
+import com.example.emotionalapp.ui.login_signup.LoginActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class WeeklyActivity : AppCompatActivity() {
 
@@ -29,11 +30,6 @@ class WeeklyActivity : AppCompatActivity() {
     private lateinit var indicatorContainer: LinearLayout
     private lateinit var pageContainer: FrameLayout
     private lateinit var titleText: TextView // 상단 타이틀 TextView
-
-    private lateinit var tabPractice: TextView
-    private lateinit var tabRecord: TextView
-    private lateinit var underlinePractice: View
-    private lateinit var underlineRecord: View
 
     private val totalPages = 4
     private var currentPage = 0
@@ -59,11 +55,6 @@ class WeeklyActivity : AppCompatActivity() {
         indicatorContainer = findViewById(R.id.indicatorContainer)
         pageContainer = findViewById(R.id.pageContainer)
         titleText = findViewById(R.id.titleText)
-
-        tabPractice       = findViewById(R.id.tabPractice)
-        tabRecord         = findViewById(R.id.tabRecord)
-        underlinePractice = findViewById(R.id.underlinePractice)
-        underlineRecord   = findViewById(R.id.underlineRecord)
 
 
         val btnBack = findViewById<View>(R.id.btnBack)
@@ -131,10 +122,15 @@ class WeeklyActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).format(Date())
+                val nowTimestamp = Timestamp.now()
+                val nowDate = nowTimestamp.toDate()
+                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(nowDate)
+
                 val data = hashMapOf(
                     "type" to "weekly3",
-                    "date" to Timestamp.now(),
+                    "date" to nowTimestamp,
                     "phq9" to hashMapOf(
                         "answers" to phq9Selections.toList(),
                         "sum" to phq9Sum
@@ -158,29 +154,29 @@ class WeeklyActivity : AppCompatActivity() {
                     .set(data)
                     .addOnSuccessListener {
                         Log.d("Firestore", "데이터 저장 성공")
-                        // 저장 후 이동 로직 여기에 작성
+                        moveToNextPage()
                     }
                     .addOnFailureListener { e ->
                         Log.w("Firestore", "저장 실패", e)
+                        Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        return@addOnFailureListener
                     }
-            }
-
-
-            if (currentPage < totalPages - 1) {
-                currentPage++
-                updatePage()
             } else {
-                // 마지막 페이지에서 완료 시 다른 액티비티 이동
-                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                startActivity(intent)
-                finish()
+                moveToNextPage()
             }
         }
+    }
 
-        // 탭 리스너 & 초기 탭
-        tabPractice.setOnClickListener { selectTab(true) }
-        tabRecord  .setOnClickListener { selectTab(false) }
-        selectTab(true)
+    private fun moveToNextPage() {
+        if (currentPage < totalPages - 1) {
+            currentPage++
+            updatePage()
+        } else {
+            // 마지막 페이지에서 완료 시 다른 액티비티 이동
+            val intent = Intent(this, AllTrainingPageActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun setupIndicators(count: Int) {
@@ -226,7 +222,11 @@ class WeeklyActivity : AppCompatActivity() {
             // 1. 버튼 그룹 수집
             phq9ButtonGroups = List(9) { questionIndex ->
                 List(4) { optionIndex ->
-                    val resId = resources.getIdentifier("btn${questionIndex}_${optionIndex}", "id", packageName)
+                    val resId = resources.getIdentifier(
+                        "btn${questionIndex}_${optionIndex}",
+                        "id",
+                        packageName
+                    )
                     pageView.findViewById<LinearLayout>(resId)
                 }
             }
@@ -244,7 +244,11 @@ class WeeklyActivity : AppCompatActivity() {
             // GAD-7 버튼 그룹 수집
             gad7ButtonGroups = List(7) { questionIndex ->
                 List(4) { optionIndex ->
-                    val resId = resources.getIdentifier("btnG${questionIndex}_${optionIndex}", "id", packageName)
+                    val resId = resources.getIdentifier(
+                        "btnG${questionIndex}_${optionIndex}",
+                        "id",
+                        packageName
+                    )
                     pageView.findViewById<LinearLayout>(resId)
                 }
             }
@@ -262,7 +266,11 @@ class WeeklyActivity : AppCompatActivity() {
             // PANAS 버튼 그룹 수집
             panasButtonGroups = List(20) { questionIndex ->
                 List(5) { optionIndex ->
-                    val resId = resources.getIdentifier("btnP${questionIndex}_${optionIndex}", "id", packageName)
+                    val resId = resources.getIdentifier(
+                        "btnP${questionIndex}_${optionIndex}",
+                        "id",
+                        packageName
+                    )
                     pageView.findViewById<LinearLayout>(resId)
                 }
             }
@@ -283,9 +291,12 @@ class WeeklyActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.gad7Score).text = "점수: ${gad7Sum}점"
             findViewById<TextView>(R.id.gad7Interpretation).text = interpretGad7(gad7Sum)
 
-            findViewById<TextView>(R.id.panasPositiveScore).text = "긍정 점수: ${panasPositiveSum} (평균: 29 ~ 34)"
-            findViewById<TextView>(R.id.panasNegativeScore).text = "부정 점수: ${panasNegativeSum} (평균: 26 ~ 30)"
-            findViewById<TextView>(R.id.panasInterpretation).text = interpretPanas(panasPositiveSum, panasNegativeSum)
+            findViewById<TextView>(R.id.panasPositiveScore).text =
+                "긍정 점수: ${panasPositiveSum} (평균: 29 ~ 34)"
+            findViewById<TextView>(R.id.panasNegativeScore).text =
+                "부정 점수: ${panasNegativeSum} (평균: 26 ~ 30)"
+            findViewById<TextView>(R.id.panasInterpretation).text =
+                interpretPanas(panasPositiveSum, panasNegativeSum)
 
         }
 
@@ -331,7 +342,7 @@ class WeeklyActivity : AppCompatActivity() {
         }
     }
 
-    fun interpretPhq9(score: Int): String = when {
+    private fun interpretPhq9(score: Int): String = when {
         score <= 4 -> "정상입니다. 적응 상 어려움을 초래할만한 우울관련 증상을 거의 보고하지 않았습니다."
         score <= 9 -> "경미한 수준입니다. 약간의 우울감이 있으나 일상생활에 지장을 줄 정도는 아닙니다."
         score <= 14 -> "중간 수준의 우울감입니다. 2주 연속 지속될 경우 일상생활(직업적, 사회적)에 다소 영향을 미칠 수 있어 관심이 필요합니다."
@@ -339,28 +350,16 @@ class WeeklyActivity : AppCompatActivity() {
         else -> "심한 수준의 우울감입니다. 2주 연속 지속되며 일상생활(직업적, 사회적)의 다양한 영역에서 어려움을 겪을 경우, 추가적인 평가나 정신건강전문가의 도움을 받아보시기 바랍니다."
     }
 
-    fun interpretGad7(score: Int): String = when {
+    private fun interpretGad7(score: Int): String = when {
         score <= 4 -> "정상입니다. 주의가 필요할 정도의 불안을 보고하지 않았습니다."
         score <= 9 -> "다소 경미한 수준의 걱정과 불안을 경험하는 것으로 보입니다."
         score <= 14 -> "주의가 필요한 수준의 과도한 걱정과 불안을 보고하였습니다. 2주 연속 지속될 경우 정신건강전문가의 도움을 받아보세요."
         else -> "과도하고 심한 걱정과 불안을 보고하였습니다. 2주 연속 지속되며 일상생활에서 어려움을 겪을 경우, 추가적인 평가나 정신건강전문가의 도움을 받아보시기 바랍니다."
     }
 
-    fun interpretPanas(pa: Int, na: Int): String = when {
+    private fun interpretPanas(pa: Int, na: Int): String = when {
         pa > na -> "긍정 감정 우세"
         pa < na -> "부정 감정 우세"
         else -> "긍·부정 감정 균형"
-    }
-
-    // 선택된 탭에 따른 동작 여기에 작성해야함
-    private fun selectTab(practice: Boolean) {
-        tabPractice.setTextColor(
-            resources.getColor(if (practice) R.color.black else R.color.gray, null)
-        )
-        tabRecord.setTextColor(
-            resources.getColor(if (practice) R.color.gray else R.color.black, null)
-        )
-        underlinePractice.visibility = if (practice) View.VISIBLE else View.GONE
-        underlineRecord.visibility = if (practice) View.GONE    else View.VISIBLE
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -17,6 +18,13 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.example.emotionalapp.ui.login_signup.LoginActivity
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
 class TrapActivity : AppCompatActivity() {
 
@@ -26,12 +34,19 @@ class TrapActivity : AppCompatActivity() {
     private lateinit var pageContainer: FrameLayout
     private lateinit var titleText: TextView // 상단 타이틀 TextView
 
-    private lateinit var tabPractice: TextView
-    private lateinit var tabRecord: TextView
-    private lateinit var underlinePractice: View
-    private lateinit var underlineRecord: View
+    private var responsePage1Answer1: String = ""
+    private var responsePage1Answer2: String = ""
 
-    private var selectedTrapIndex = -1 // 3페이지 선택값 저장
+    private var selectedPage2Index: Int = -1
+    private var responsePage2Text: String = ""
+
+    private var selectedTrapIndex: Int = -1 // 3페이지 선택값 저장
+
+    private var responsePage4ZeroAnswers: Array<String> = Array(4) { "" }
+    private var responsePage4OneAnswers: Array<String> = Array(4) { "" }
+    private var responsePage4TwoAnswers: Array<String> = Array(3) { "" }
+
+    private var responsePage6Text: String = ""
 
     private val totalPages = 8
     private var currentPage = 0
@@ -45,12 +60,6 @@ class TrapActivity : AppCompatActivity() {
         indicatorContainer = findViewById(R.id.indicatorContainer)
         pageContainer = findViewById(R.id.pageContainer)
         titleText = findViewById(R.id.titleText)
-
-        tabPractice       = findViewById(R.id.tabPractice)
-        tabRecord         = findViewById(R.id.tabRecord)
-        underlinePractice = findViewById(R.id.underlinePractice)
-        underlineRecord   = findViewById(R.id.underlineRecord)
-
 
         val btnBack = findViewById<View>(R.id.btnBack)
         btnBack.setOnClickListener { finish() }
@@ -66,21 +75,185 @@ class TrapActivity : AppCompatActivity() {
         }
 
         btnNext.setOnClickListener {
-            if (currentPage < totalPages - 1) {
-                currentPage++
-                updatePage()
-            } else {
-                // 마지막 페이지에서 완료 시 다른 액티비티 이동
-                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                startActivity(intent)
-                finish()
+            if (currentPage == 1) {
+                // pageContainer 내부 현재 페이지 뷰 찾기
+                val pageView = pageContainer.getChildAt(0)
+                val answer1 = pageView.findViewById<EditText>(R.id.answer1)
+                val answer2 = pageView.findViewById<EditText>(R.id.answer2)
+
+                // 전역변수에 저장
+                val r1 = answer1.text.toString().trim()
+                val r2 = answer2.text.toString().trim()
+
+                if (r1.isEmpty() || r2.isEmpty()) {
+                    Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                responsePage1Answer1 = r1
+                responsePage1Answer2 = r2
+                Log.d("TrapActivity", "저장된 답변: $responsePage1Answer1, $responsePage1Answer2")
+
+            } else if (currentPage == 2) {
+                if (selectedPage2Index in 0..9) {
+                    val page2List = listOf(
+                        "성급하게 결론짓기\n -이 비행기가 추락할 확률은 90%야. (실제 확률은 0.000013%)",
+                        "최악을 생각하기\n -부모님이 집에 늦게 들어오시네. 사고를 당한 것 같아.",
+                        "긍정적인 면 무시하기\n -시험문제가 우연히 쉬워서 좋은 점수를 받았을 뿐이야.",
+                        "흑백사고\n -시험에서 100점을 받지 못한다면 나는 실패자야.",
+                        "점쟁이 사고 (지레짐작하기)\n -연주회를 망칠 거야, 공연을 하지 않겠어.",
+                        "독심술\n -한 번도 대화를 나누지는 않았지만, 쟤는 나를 좋아하지 않아.",
+                        "정서적 추리\n -애인이 일 때문에 늦는다고 했지만, 그게 아닌 것 같아. 직감이 와. 나를 속이는 게 틀림없어.",
+                        "꼬리표 붙이기\n -나는 멍청해.",
+                        "“해야만 한다“는 진술문\n -사람들은 모두 정직해야해. 거짓말을 하는 건 있을 수 없는 일이야.",
+                        "마술적 사고\n -내가 아버지에게 전화를 걸면 아버지는 사고를 피할 수 있을 거야."
+                    )
+                    responsePage2Text = page2List[selectedPage2Index]
+                    Log.d("TrapActivity", "선택한 단서: $responsePage2Text")
+                } else {
+                    Toast.makeText(this, "덫을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            } else if (currentPage == 3) {
+                if (selectedTrapIndex != -1) {
+                    Log.d("TrapActivity", "선택한 덫 번호: $selectedTrapIndex")
+                } else {
+                    Toast.makeText(this, "질문을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            } else if (currentPage == 4) {
+                // pageContainer 내부 현재 페이지 뷰 찾기
+                val pageView = pageContainer.getChildAt(0)
+                val answer1 = pageView.findViewById<EditText>(R.id.answer1)
+                val answer2 = pageView.findViewById<EditText>(R.id.answer2)
+                val answer3 = pageView.findViewById<EditText>(R.id.answer3)
+                val answer4 = pageView.findViewById<EditText?>(R.id.answer4)
+
+                val a1 = answer1.text.toString().trim()
+                val a2 = answer2.text.toString().trim()
+                val a3 = answer3.text.toString().trim()
+                val a4 = answer4?.text?.toString()?.trim() ?: ""
+
+                // 공란 체크
+                val inputs = listOf(a1, a2, a3) + if (selectedTrapIndex != 2) listOf(a4) else emptyList()
+                if (inputs.any { it.isEmpty() }) {
+                    Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener  // 저장 없이 리턴
+                }
+
+                // 전역 변수에 저장
+                when (selectedTrapIndex) {
+                    0 -> {
+                        responsePage4ZeroAnswers[0] = a1
+                        responsePage4ZeroAnswers[1] = a2
+                        responsePage4ZeroAnswers[2] = a3
+                        responsePage4ZeroAnswers[3] = a4
+                        Log.d("TrapActivity", "저장된 답변: $responsePage4ZeroAnswers")
+
+                    }
+                    1 -> {
+                        responsePage4OneAnswers[0] = a1
+                        responsePage4OneAnswers[1] = a2
+                        responsePage4OneAnswers[2] = a3
+                        responsePage4OneAnswers[3] = a4
+                        Log.d("TrapActivity", "저장된 답변: $responsePage4OneAnswers")
+                    }
+                    2 -> {
+                        responsePage4TwoAnswers[0] = a1
+                        responsePage4TwoAnswers[1] = a2
+                        responsePage4TwoAnswers[2] = a3
+                        Log.d("TrapActivity", "저장된 답변: $responsePage4TwoAnswers")
+                    }
+                    else -> { Log.d("TrapActivity", "selectedTrapIndex가 올바르지 않습니다.") }
+                }
+
+            } else if (currentPage == 6) {
+                // pageContainer 내부 현재 페이지 뷰 찾기
+                val pageView = pageContainer.getChildAt(0)
+                val answer1 = pageView.findViewById<EditText>(R.id.answer1)
+
+                responsePage6Text = answer1.text.toString().trim()
+                Log.d("TrapActivity", "저장된 답변: $responsePage6Text")
+
+                if (responsePage6Text.isEmpty()) {
+                    Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener  // 저장 없이 리턴
+                }
+
+                // Firestore에 저장
+                val user = FirebaseAuth.getInstance().currentUser
+                val userEmail = user?.email
+
+                if (user == null || userEmail == null) {
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    return@setOnClickListener
+                }
+
+                val nowTimestamp = Timestamp.now()
+                val nowDate = nowTimestamp.toDate()
+                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(nowDate)
+
+                val data = hashMapOf(
+                    "type" to "mindTrap",
+                    "date" to nowTimestamp,
+                    "situation" to responsePage1Answer1,
+                    "thought" to responsePage1Answer2,
+                    "trap" to responsePage2Text,
+                    "validity" to hashMapOf(
+                        "answer1" to responsePage4ZeroAnswers[0],
+                        "answer2" to responsePage4ZeroAnswers[1],
+                        "answer3" to responsePage4ZeroAnswers[2],
+                        "answer4" to responsePage4ZeroAnswers[3]
+                    ),
+                    "assumption" to hashMapOf(
+                        "answer1" to responsePage4OneAnswers[0],
+                        "answer2" to responsePage4OneAnswers[1],
+                        "answer3" to responsePage4OneAnswers[2],
+                        "answer4" to responsePage4OneAnswers[3]
+                    ),
+                    "perspective" to hashMapOf(
+                        "answer1" to responsePage4TwoAnswers[0],
+                        "answer2" to responsePage4TwoAnswers[1],
+                        "answer3" to responsePage4TwoAnswers[2]
+                    ),
+                    "alternative" to responsePage6Text
+                )
+
+                val db = FirebaseFirestore.getInstance()
+                db.collection("user")
+                    .document(userEmail)
+                    .collection("mindTrap")
+                    .document(today)
+                    .set(data)
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "데이터 저장 성공")
+                        moveToNextPageOrFinish()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "저장 실패", e)
+                        Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                return@setOnClickListener
             }
+            moveToNextPageOrFinish()
         }
 
-        // 탭 리스너 & 초기 탭
-        tabPractice.setOnClickListener { selectTab(true) }
-        tabRecord  .setOnClickListener { selectTab(false) }
-        selectTab(true)
+    }
+
+    private fun moveToNextPageOrFinish() {
+        if (currentPage < totalPages - 1) {
+            currentPage++
+            updatePage()
+        } else {
+            // 마지막 페이지에서 완료 시 다른 액티비티 이동
+            val intent = Intent(this, AllTrainingPageActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun setupIndicators(count: Int) {
@@ -155,22 +328,11 @@ class TrapActivity : AppCompatActivity() {
         } else if (currentPage == 1) {
             val answer1 = pageView.findViewById<EditText>(R.id.answer1)
             val answer2 = pageView.findViewById<EditText>(R.id.answer2)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveAnswers)
 
-            btnSave.setOnClickListener {
-                val response1 = answer1.text.toString().trim()
-                val response2 = answer2.text.toString().trim()
-
-                if (response1.isNotEmpty() && response2.isNotEmpty()) {
-                    // 👉 답변 저장 로직 (예: 로컬 DB, 서버 전송) 작성 여기에 할 것
-                    Toast.makeText(this, "답변이 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
+            answer1.setText(responsePage1Answer1)
+            answer2.setText(responsePage1Answer2)
         } else if (currentPage == 2) {
             val optionContainer = pageView.findViewById<LinearLayout>(R.id.optionContainerTrap2)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveTrap2)
 
             val options = listOf(
                 "성급하게 결론짓기\n -이 비행기가 추락할 확률은 90%야. (실제 확률은 0.000013%)",
@@ -185,12 +347,17 @@ class TrapActivity : AppCompatActivity() {
                 "마술적 사고\n -내가 아버지에게 전화를 걸면 아버지는 사고를 피할 수 있을 거야."
             )
 
-            var selectedIndex = -1
 
             options.forEachIndexed { index, text ->
                 val card = layoutInflater.inflate(R.layout.item_option_card, optionContainer, false) as CardView
                 val textView = card.findViewById<TextView>(R.id.textOption)
                 textView.text = text
+
+                if (index == selectedPage2Index) {
+                    card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                } else {
+                    card.setCardBackgroundColor(Color.WHITE)
+                }
 
                 card.setOnClickListener {
                     // 선택한 카드 강조
@@ -199,23 +366,13 @@ class TrapActivity : AppCompatActivity() {
                         childCard.setCardBackgroundColor(Color.WHITE)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
-                    selectedIndex = index
+                    selectedPage2Index = index
                 }
 
                 optionContainer.addView(card)
             }
-
-            btnSave.setOnClickListener {
-                if (selectedIndex != -1) {
-                    val selectedText = options[selectedIndex]
-                    Toast.makeText(this, "선택한 답변: $selectedText", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "하나를 선택해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
         } else if (currentPage == 3) {
             val optionContainer = pageView.findViewById<LinearLayout>(R.id.optionContainerTrap2)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveTrap2)
 
             val options = listOf(
                 "그 생각이 확실할까요?\n - 생각의 타당성 점검하기",
@@ -223,12 +380,16 @@ class TrapActivity : AppCompatActivity() {
                 "객관적으로 살펴볼까요?\n -관점을 다르게 해보기"
             )
 
-            var selectedIndex = -1
-
             options.forEachIndexed { index, text ->
                 val card = layoutInflater.inflate(R.layout.item_option_card, optionContainer, false) as CardView
                 val textView = card.findViewById<TextView>(R.id.textOption)
                 textView.text = text
+
+                if (index == selectedTrapIndex) {
+                    card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                } else {
+                    card.setCardBackgroundColor(Color.WHITE)
+                }
 
                 card.setOnClickListener {
                     // 선택한 카드 강조
@@ -237,20 +398,10 @@ class TrapActivity : AppCompatActivity() {
                         childCard.setCardBackgroundColor(Color.WHITE)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
-                    selectedIndex = index
+                    selectedTrapIndex = index
                 }
 
                 optionContainer.addView(card)
-            }
-
-            btnSave.setOnClickListener {
-                if (selectedIndex != -1) {
-                    val selectedText = options[selectedIndex]
-                    Toast.makeText(this, "선택한 답변: $selectedText", Toast.LENGTH_SHORT).show()
-                    selectedTrapIndex = selectedIndex
-                } else {
-                    Toast.makeText(this, "하나를 선택해주세요.", Toast.LENGTH_SHORT).show()
-                }
             }
         } else if (currentPage == 4) {
             val answer1 = pageView.findViewById<EditText>(R.id.answer1)
@@ -258,23 +409,26 @@ class TrapActivity : AppCompatActivity() {
             val answer3 = pageView.findViewById<EditText>(R.id.answer3)
             val answer4 = pageView.findViewById<EditText?>(R.id.answer4)
 
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveAnswers)
-
-            btnSave.setOnClickListener {
-                val response1 = answer1.text.toString().trim()
-                val response2 = answer2.text.toString().trim()
-                val response3 = answer3.text.toString().trim()
-                val response4 = answer4?.text?.toString()?.trim() ?: ""
-
-                val isResponse4Needed = selectedTrapIndex == 1 || selectedTrapIndex == 2
-
-                if (response1.isNotEmpty() && response2.isNotEmpty() && response3.isNotEmpty() && (!isResponse4Needed || response4.isNotEmpty())) {
-                    // 👉 답변 저장 로직 (예: 로컬 DB, 서버 전송) 작성 여기에 할 것
-                    Toast.makeText(this, "답변이 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
+            when (selectedTrapIndex) {
+                0 -> {
+                    answer1.setText(responsePage4ZeroAnswers[0])
+                    answer2.setText(responsePage4ZeroAnswers[1])
+                    answer3.setText(responsePage4ZeroAnswers[2])
+                    answer4.setText(responsePage4ZeroAnswers[3])
+                }
+                1 -> {
+                    answer1.setText(responsePage4OneAnswers[0])
+                    answer2.setText(responsePage4OneAnswers[1])
+                    answer3.setText(responsePage4OneAnswers[2])
+                    answer4.setText(responsePage4OneAnswers[3])
+                }
+                2 -> {
+                    answer1.setText(responsePage4TwoAnswers[0])
+                    answer2.setText(responsePage4TwoAnswers[1])
+                    answer3.setText(responsePage4TwoAnswers[2])
                 }
             }
+
         } else if (currentPage == 5) {
             val btnGoBack = pageView.findViewById<Button>(R.id.btnGoBackTrap5)
             val btnContinue = pageView.findViewById<Button>(R.id.btnContinueTrap5)
@@ -290,18 +444,8 @@ class TrapActivity : AppCompatActivity() {
             }
         } else if (currentPage == 6) {
             val answer1 = pageView.findViewById<EditText>(R.id.answer1)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveAnswers)
 
-            btnSave.setOnClickListener {
-                val response1 = answer1.text.toString().trim()
-
-                if (response1.isNotEmpty()) {
-                    // 👉 답변 저장 로직 (예: 로컬 DB, 서버 전송) 작성 여기에 할 것
-                    Toast.makeText(this, "답변이 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
+            answer1.setText(responsePage6Text)
         } else if (currentPage == 7) {
             val titleText = pageView.findViewById<TextView>(R.id.textTitleTrap0)
             val descriptionText = pageView.findViewById<TextView>(R.id.textDescriptionTrap0)
@@ -313,11 +457,18 @@ class TrapActivity : AppCompatActivity() {
 
 
         // 이전 버튼 상태
-        btnPrev.isEnabled = currentPage != 0
-        btnPrev.backgroundTintList = if (currentPage == 0)
+        btnPrev.isEnabled = !(currentPage == 0 || currentPage == 5)
+        btnPrev.backgroundTintList = if (currentPage == 0 || currentPage == 5)
             ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
         else
             ColorStateList.valueOf(Color.parseColor("#3CB371"))
+
+        btnNext.isEnabled = currentPage != 5
+        btnNext.backgroundTintList = if (currentPage == 5)
+            ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
+        else
+            ColorStateList.valueOf(Color.parseColor("#3CB371"))
+
 
         // 다음 버튼 텍스트
         btnNext.text = if (currentPage == totalPages - 1) "완료 →" else "다음 →"
@@ -329,17 +480,5 @@ class TrapActivity : AppCompatActivity() {
                 if (i == currentPage) R.drawable.ic_dot_circle_black else R.drawable.ic_dot_circle_gray
             )
         }
-    }
-
-    // 선택된 탭에 따른 동작 여기에 작성해야함
-    private fun selectTab(practice: Boolean) {
-        tabPractice.setTextColor(
-            resources.getColor(if (practice) R.color.black else R.color.gray, null)
-        )
-        tabRecord.setTextColor(
-            resources.getColor(if (practice) R.color.gray else R.color.black, null)
-        )
-        underlinePractice.visibility = if (practice) View.VISIBLE else View.GONE
-        underlineRecord.visibility = if (practice) View.GONE    else View.VISIBLE
     }
 }

@@ -3,7 +3,9 @@ package com.example.emotionalapp.ui.emotion
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
@@ -11,7 +13,16 @@ import com.example.emotionalapp.adapter.ReportAdapter
 import com.example.emotionalapp.data.ReportItem
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.example.emotionalapp.ui.alltraining.EmotionActivity
+import com.example.emotionalapp.ui.login_signup.LoginActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
+import com.example.emotionalapp.ui.weekly.WeeklyReportActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class EmotionReportActivity : BottomNavActivity() {
 
@@ -30,6 +41,7 @@ class EmotionReportActivity : BottomNavActivity() {
         setupBottomNavigation()
         setupTabListeners()
         setupRecyclerView()
+        loadReportsWithCoroutines() // 데이터 불러오기 및 화면 갱신
     }
 
     private fun setupRecyclerView() {
@@ -37,23 +49,63 @@ class EmotionReportActivity : BottomNavActivity() {
 
         adapter = ReportAdapter(reportList) { reportItem ->
             val intent = when (reportItem.name) {
-                // 기록 아이템 name에 따라 다른 액티비티로 이동하게끔 구현해놨음
-                "PHQ-9 결과 보기" -> Intent(this, AllTrainingPageActivity::class.java)
-                "GAD-7 결과 보기" -> Intent(this, AllTrainingPageActivity::class.java)
-                "PANAS 결과 보기" -> Intent(this, AllTrainingPageActivity::class.java)
+                "닻 내리기 기록 보기" -> Intent(this, AnchorReportActivity::class.java)
+                "ARC 정서 경험 기록 보기" -> Intent(this, ArcReportActivity::class.java)
+                "주간 점검 기록 보기" -> Intent(this, WeeklyReportActivity::class.java)
                 else -> null
+            }
+            reportItem.timeStamp?.let {
+                intent?.putExtra("reportDateMillis", it.toDate().time)
             }
             intent?.let { startActivity(it) }
         }
 
         trainingRecyclerView.adapter = adapter
-
-        // 예시 데이터 추가
-        reportList.add(ReportItem("2025-07-27", "PHQ-9 결과 보기"))
-        reportList.add(ReportItem("2025-07-26", "GAD-7 결과 보기"))
-        reportList.add(ReportItem("2025-07-25", "PANAS 결과 보기"))
-
+        reportList.clear()
         adapter.notifyDataSetChanged()
+    }
+
+
+    private fun loadReportsWithCoroutines() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+
+        if (user == null || userEmail == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
+        val db = FirebaseFirestore.getInstance()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                reportList.clear()
+
+                // weekly3 컬렉션에서 가장 오래된 1개 문서만 가져오기
+                val weekly3Docs = db.collection("user").document(userEmail).collection("weekly3").orderBy("date", Query.Direction.ASCENDING).limit(1).get().await()
+                val emotionArcDocs = db.collection("user").document(userEmail).collection("emotionArc").get().await()
+                val emotionAnchorDocs = db.collection("user").document(userEmail).collection("emotionAnchor").get().await()
+
+                if (!weekly3Docs.isEmpty) {
+                    val oldestDoc = weekly3Docs.documents[0]
+                    reportList.add(ReportItem(oldestDoc.id.substringBefore('_'), "주간 점검 기록 보기", oldestDoc.getTimestamp("date")))
+                }
+                emotionArcDocs.documents.forEach { doc ->
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "ARC 정서 경험 기록 보기", doc.getTimestamp("date")))
+                }
+                emotionAnchorDocs.documents.forEach { doc ->
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "닻 내리기 기록 보기", doc.getTimestamp("date")))
+                }
+
+                // 최신 날짜가 위로 오게 정렬
+                reportList.sortBy { it.date }
+                adapter.notifyDataSetChanged()
+
+            } catch (e: Exception) {
+                Log.e("Firestore", "데이터 불러오기 실패", e)
+            }
+        }
     }
 
     private fun setupTabListeners() {
@@ -71,5 +123,7 @@ class EmotionReportActivity : BottomNavActivity() {
         tabToday.setOnClickListener {
             Log.d("TodayTrainingPage", "금일 훈련 탭 클릭됨 (현재 페이지)")
         }
+
+        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
     }
 }

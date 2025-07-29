@@ -42,14 +42,5 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp" />
 
-        <!-- 저장 버튼 -->
-        <Button
-            android:id="@+id/btnSaveDoubleQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="저장"
-            android:backgroundTint="@color/button_color_mind"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp" />
     </LinearLayout>
 </ScrollView>

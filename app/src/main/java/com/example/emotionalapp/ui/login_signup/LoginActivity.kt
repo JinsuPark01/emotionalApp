@@ -1,4 +1,4 @@
-package com.example.emotionalapp.ui.login
+package com.example.emotionalapp.ui.login_signup
 
 import android.content.Intent
 import android.os.Bundle

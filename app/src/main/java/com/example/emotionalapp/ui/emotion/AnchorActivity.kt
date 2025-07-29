@@ -4,9 +4,9 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -17,6 +17,14 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.example.emotionalapp.ui.login_signup.LoginActivity
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 class AnchorActivity : AppCompatActivity() {
 
@@ -26,13 +34,20 @@ class AnchorActivity : AppCompatActivity() {
     private lateinit var pageContainer: FrameLayout
     private lateinit var titleText: TextView // 상단 타이틀 TextView
 
-    private lateinit var tabPractice: TextView
-    private lateinit var tabRecord: TextView
-    private lateinit var underlinePractice: View
-    private lateinit var underlineRecord: View
-
     private val totalPages = 4
     private var currentPage = 0
+
+    private var selectedCueIndex: Int = -1
+    private var customCueInput: String = ""
+    private var selectedCue: String = ""
+    private var page2Answer1: String = ""
+    private var page2Answer2: String = ""
+    private var page2Answer3: String = ""
+    private var selectedQ1Index: Int = -1
+    private var selectedQ2Index: Int = -1
+    private var page3Answer1: String = ""
+    private var page3Answer2: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +58,6 @@ class AnchorActivity : AppCompatActivity() {
         indicatorContainer = findViewById(R.id.indicatorContainer)
         pageContainer = findViewById(R.id.pageContainer)
         titleText = findViewById(R.id.titleText)
-
-        tabPractice       = findViewById(R.id.tabPractice)
-        tabRecord         = findViewById(R.id.tabRecord)
-        underlinePractice = findViewById(R.id.underlinePractice)
-        underlineRecord   = findViewById(R.id.underlineRecord)
 
 
         val btnBack = findViewById<View>(R.id.btnBack)
@@ -64,21 +74,127 @@ class AnchorActivity : AppCompatActivity() {
         }
 
         btnNext.setOnClickListener {
+            if (currentPage == 1) {
+                val inputText = findViewById<EditText>(R.id.editCustomAnswer)?.text?.toString()?.trim() ?: ""
+                customCueInput = inputText
+
+                if (selectedCueIndex in 0..2) {
+                    val cueList = listOf(
+                        "숨소리에 집중하기",
+                        "심장 박동 8번 느껴보기",
+                        "'음~'소리를 5초간 내어보기"
+                    )
+                    selectedCue = cueList[selectedCueIndex]
+                    Log.d("AnchorActivity", "선택한 단서: $selectedCue")
+                } else if (customCueInput.isNotEmpty()) {
+                    selectedCue = customCueInput
+                    Log.d("AnchorActivity", "선택한 단서: $selectedCue")
+                } else {
+                    Toast.makeText(this, "단서를 선택하거나 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            } else if (currentPage == 2) {
+                // pageContainer 내부 현재 페이지 뷰 찾기
+                val pageView = pageContainer.getChildAt(0)
+                val answer1 = pageView.findViewById<EditText>(R.id.answer1)
+                val answer2 = pageView.findViewById<EditText>(R.id.answer2)
+                val answer3 = pageView.findViewById<EditText>(R.id.answer3)
+
+                // 전역변수에 저장
+                page2Answer1 = answer1.text.toString().trim()
+                page2Answer2 = answer2.text.toString().trim()
+                page2Answer3 = answer3.text.toString().trim()
+                Log.d("AnchorActivity", "선택한 단서: $page2Answer1, $page2Answer2, $page2Answer3")
+
+                // 입력 체크 (원하면)
+                if (page2Answer1.isEmpty() || page2Answer2.isEmpty() || page2Answer3.isEmpty()) {
+                    Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener // 저장 안 하고 넘어가지 않음
+                }
+            } else if (currentPage == 3) {
+                if (selectedQ1Index == -1 || selectedQ2Index == -1) {
+                    Toast.makeText(this, "두 질문 모두 답변해주세요.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                // 첫 번째 질문 옵션
+                val optionsQ1 = listOf(
+                    "현재에 집중할 수 있었어요",
+                    "다른 단서를 찾아봐야 할 것 같아요"
+                )
+
+                // 두 번째 질문 옵션
+                val optionsQ2 = listOf(
+                    "전보다 나아졌어요",
+                    "비슷한 거 같아요",
+                    "더 안 좋아졌어요"
+                )
+
+                val answerQ1 = optionsQ1[selectedQ1Index]
+                val answerQ2 = optionsQ2[selectedQ2Index]
+
+                // 전역 변수에 저장
+                page3Answer1 = answerQ1
+                page3Answer2 = answerQ2
+                Log.d("AnchorActivity", "선택한 단서: $page3Answer1, $page3Answer2")
+
+                // Firestore에 저장
+                val user = FirebaseAuth.getInstance().currentUser
+                val userEmail = user?.email
+
+                if (user == null || userEmail == null) {
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    return@setOnClickListener
+                }
+
+                val nowTimestamp = Timestamp.now()
+                val nowDate = nowTimestamp.toDate()
+                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(nowDate)
+
+                val data = hashMapOf(
+                    "type" to "emotionAnchor",
+                    "date" to nowTimestamp,
+                    "selectedCue" to selectedCue,
+                    "elements" to hashMapOf(
+                        "thought" to page2Answer1,
+                        "sensation" to page2Answer2,
+                        "behavior" to page2Answer3
+                    ),
+                    "evaluation" to hashMapOf(
+                        "effect" to page3Answer1,
+                        "change" to page3Answer2
+                    )
+                )
+
+                val db = FirebaseFirestore.getInstance()
+                db.collection("user")
+                    .document(userEmail)
+                    .collection("emotionAnchor")
+                    .document(today)
+                    .set(data)
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "데이터 저장 성공")
+                        val intent = Intent(this, AllTrainingPageActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "저장 실패", e)
+                        Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        return@addOnFailureListener
+                    }
+            }
+
+            // 페이지 이동 처리
             if (currentPage < totalPages - 1) {
                 currentPage++
                 updatePage()
-            } else {
-                // 마지막 페이지에서 완료 시 다른 액티비티 이동
-                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                startActivity(intent)
-                finish()
             }
         }
 
-        // 탭 리스너 & 초기 탭
-        tabPractice.setOnClickListener { selectTab(true) }
-        tabRecord  .setOnClickListener { selectTab(false) }
-        selectTab(true)
     }
 
     private fun setupIndicators(count: Int) {
@@ -154,16 +270,14 @@ class AnchorActivity : AppCompatActivity() {
         } else if (currentPage == 1) {
             val optionContainer = pageView.findViewById<LinearLayout>(R.id.optionContainerCustom)
             val editCustomAnswer = pageView.findViewById<EditText>(R.id.editCustomAnswer)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveCustom)
+
+            editCustomAnswer.setText(customCueInput)
 
             val options = listOf(
                 "숨소리에 집중하기",
                 "심장 박동 8번 느껴보기",
                 "'음~'소리를 5초간 내어보기"
             )
-
-            var selectedIndex = -1
-            var customInput = ""
 
             // 옵션 카드 생성
             options.forEachIndexed { index, text ->
@@ -175,18 +289,24 @@ class AnchorActivity : AppCompatActivity() {
                 val textView = card.findViewById<TextView>(R.id.textOption)
                 textView.text = text
 
+                if (index == selectedCueIndex) {
+                    card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                } else {
+                    card.setCardBackgroundColor(Color.WHITE)
+                }
+
                 card.setOnClickListener {
-                    // 선택한 카드 강조
+                    // 카드 배경 초기화
                     for (i in 0 until optionContainer.childCount) {
                         val childCard = optionContainer.getChildAt(i) as CardView
                         childCard.setCardBackgroundColor(Color.WHITE)
                     }
-                    editCustomAnswer.text.clear() // EditText 내용 초기화
+                    editCustomAnswer.text.clear() // 입력창 초기화
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
-                    selectedIndex = index
-                    customInput = ""
-                }
 
+                    selectedCueIndex = index
+                    customCueInput = ""
+                }
                 optionContainer.addView(card)
             }
 
@@ -197,47 +317,21 @@ class AnchorActivity : AppCompatActivity() {
                         val childCard = optionContainer.getChildAt(i) as CardView
                         childCard.setCardBackgroundColor(Color.WHITE)
                     }
-                    selectedIndex = -1
+                    selectedCueIndex = -1
                 }
             }
 
-            // 저장 버튼 클릭 시
-            btnSave.setOnClickListener {
-                customInput = editCustomAnswer.text.toString().trim()
-
-                if (selectedIndex != -1) {
-                    val selectedText = options[selectedIndex]
-                    Toast.makeText(this, "선택한 답변: $selectedText", Toast.LENGTH_SHORT).show()
-                    // 👉 여기에 저장 로직 추가 (DB or 서버 전송)
-                } else if (customInput.isNotEmpty()) {
-                    Toast.makeText(this, "입력한 답변: $customInput", Toast.LENGTH_SHORT).show()
-                    // 👉 여기에 저장 로직 추가 (DB or 서버 전송)
-                } else {
-                    Toast.makeText(this, "옵션을 선택하거나 답변을 입력하세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
         } else if (currentPage == 2) {
             val answer1 = pageView.findViewById<EditText>(R.id.answer1)
             val answer2 = pageView.findViewById<EditText>(R.id.answer2)
             val answer3 = pageView.findViewById<EditText>(R.id.answer3)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveAnswers)
 
-            btnSave.setOnClickListener {
-                val response1 = answer1.text.toString().trim()
-                val response2 = answer2.text.toString().trim()
-                val response3 = answer3.text.toString().trim()
-
-                if (response1.isNotEmpty() && response2.isNotEmpty() && response3.isNotEmpty()) {
-                    // 👉 답변 저장 로직 (예: 로컬 DB, 서버 전송) 작성 여기에 할 것
-                    Toast.makeText(this, "답변이 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
+            answer1.setText(page2Answer1)
+            answer2.setText(page2Answer2)
+            answer3.setText(page2Answer3)
         } else if (currentPage == 3) {
             val optionContainerQ1 = pageView.findViewById<LinearLayout>(R.id.optionContainerQ1)
             val optionContainerQ2 = pageView.findViewById<LinearLayout>(R.id.optionContainerQ2)
-            val btnSave = pageView.findViewById<Button>(R.id.btnSaveDoubleQuestion)
 
             // 첫 번째 질문 옵션
             val optionsQ1 = listOf(
@@ -252,10 +346,12 @@ class AnchorActivity : AppCompatActivity() {
                 "더 안 좋아졌어요"
             )
 
-            var selectedQ1Index = -1
-            var selectedQ2Index = -1
+            selectedQ1Index = -1
+            selectedQ2Index = -1
 
-            // 첫 번째 질문 카드 생성
+            optionContainerQ1.removeAllViews()
+            optionContainerQ2.removeAllViews()
+
             optionsQ1.forEachIndexed { index, text ->
                 val card = layoutInflater.inflate(R.layout.item_option_card, optionContainerQ1, false) as CardView
                 val textView = card.findViewById<TextView>(R.id.textOption)
@@ -263,8 +359,8 @@ class AnchorActivity : AppCompatActivity() {
 
                 card.setOnClickListener {
                     for (i in 0 until optionContainerQ1.childCount) {
-                        val childCard = optionContainerQ1.getChildAt(i) as CardView
-                        childCard.setCardBackgroundColor(Color.WHITE)
+                        val child = optionContainerQ1.getChildAt(i) as CardView
+                        child.setCardBackgroundColor(Color.WHITE)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
                     selectedQ1Index = index
@@ -273,7 +369,6 @@ class AnchorActivity : AppCompatActivity() {
                 optionContainerQ1.addView(card)
             }
 
-            // 두 번째 질문 카드 생성
             optionsQ2.forEachIndexed { index, text ->
                 val card = layoutInflater.inflate(R.layout.item_option_card, optionContainerQ2, false) as CardView
                 val textView = card.findViewById<TextView>(R.id.textOption)
@@ -281,8 +376,8 @@ class AnchorActivity : AppCompatActivity() {
 
                 card.setOnClickListener {
                     for (i in 0 until optionContainerQ2.childCount) {
-                        val childCard = optionContainerQ2.getChildAt(i) as CardView
-                        childCard.setCardBackgroundColor(Color.WHITE)
+                        val child = optionContainerQ2.getChildAt(i) as CardView
+                        child.setCardBackgroundColor(Color.WHITE)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
                     selectedQ2Index = index
@@ -290,31 +385,15 @@ class AnchorActivity : AppCompatActivity() {
 
                 optionContainerQ2.addView(card)
             }
-
-            // 저장 버튼 클릭 시 선택한 값만 저장
-            btnSave.setOnClickListener {
-                if (selectedQ1Index != -1 && selectedQ2Index != -1) {
-                    val answerQ1 = optionsQ1[selectedQ1Index]
-                    val answerQ2 = optionsQ2[selectedQ2Index]
-                    Toast.makeText(
-                        this,
-                        "답변 저장됨\nQ1: $answerQ1\nQ2: $answerQ2",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    // 👉 답변 저장 처리 (DB, 서버 등)
-                } else {
-                    Toast.makeText(this, "두 질문 모두 답변해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
 
 
         // 이전 버튼 상태
         btnPrev.isEnabled = currentPage != 0
         btnPrev.backgroundTintList = if (currentPage == 0)
-            ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
+            ColorStateList.valueOf(Color.parseColor("#D9D9D9")) // 비활성화 색상
         else
-            ColorStateList.valueOf(Color.parseColor("#3CB371"))
+            ColorStateList.valueOf(Color.parseColor("#3CB371")) // 활성화 색상
 
         // 다음 버튼 텍스트
         btnNext.text = if (currentPage == totalPages - 1) "완료 →" else "다음 →"
@@ -326,18 +405,5 @@ class AnchorActivity : AppCompatActivity() {
                 if (i == currentPage) R.drawable.ic_dot_circle_black else R.drawable.ic_dot_circle_gray
             )
         }
-    }
-
-    // 선택된 탭에 따른 동작 여기에 작성해야함
-    private fun selectTab(practice: Boolean) {
-        tabPractice.setTextColor(
-            resources.getColor(if (practice) R.color.black else R.color.gray, null)
-        )
-        tabRecord.setTextColor(
-            resources.getColor(if (practice) R.color.gray else R.color.black, null)
-        )
-        underlinePractice.visibility = if (practice) View.VISIBLE else View.GONE
-        underlineRecord.visibility = if (practice) View.GONE    else View.VISIBLE
-
     }
 }

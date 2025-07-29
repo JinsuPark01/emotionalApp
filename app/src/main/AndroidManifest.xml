@@ -17,7 +17,7 @@
         <activity android:name=".ui.expression.AvoidanceDiaryFormActivity" android:exported="false" />
 
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".ui.login_signup.LoginActivity"
             android:exported="true">
 
             <intent-filter>
@@ -28,7 +28,7 @@
 
         <!-- 회원가입 화면 -->
         <activity
-            android:name=".ui.login.SignUpActivity"
+            android:name=".ui.login_signup.SignUpActivity"
             android:exported="false" />
 
         <!-- 나의 훈련 목록 화면 -->
@@ -78,6 +78,9 @@
         <activity android:name=".ui.emotion.SelectActivity" android:exported="false" />
         <activity android:name=".ui.emotion.AnchorActivity" android:exported="false" />
         <activity android:name=".ui.emotion.ArcActivity" android:exported="false" />
+        <activity android:name=".ui.emotion.ArcReportActivity" android:exported="false" />
+        <activity android:name=".ui.emotion.AnchorReportActivity" android:exported="false" />
+        <activity android:name=".ui.weekly.WeeklyReportActivity" android:exported="false" />
 
         <activity android:name=".ui.emotion.EmotionAvoidanceQuizActivity" android:exported="false" />
 

@@ -66,4 +66,7 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")  // 최신 버전일 수 있음
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+
 }

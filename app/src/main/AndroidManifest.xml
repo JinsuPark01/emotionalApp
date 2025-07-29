@@ -63,6 +63,7 @@
 
 
         <activity android:name=".ui.weekly.WeeklyReportActivity" android:exported="false" />
+        <activity android:name=".ui.mind.TrapReportActivity" android:exported="false" />
 
         <activity android:name=".ui.emotion.EmotionAvoidanceQuizActivity" android:exported="false" />
 

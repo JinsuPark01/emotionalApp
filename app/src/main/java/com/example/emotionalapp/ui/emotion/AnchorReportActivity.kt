@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class AnchorReportActivity : AppCompatActivity() {
 
@@ -49,7 +50,9 @@ class AnchorReportActivity : AppCompatActivity() {
 
                 val timestamp: Timestamp = doc.getTimestamp("date") ?: return@addOnSuccessListener
                 val date = timestamp.toDate()
-                val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+                val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(date)
 
                 val selectedCue = doc.get("selectedCue") as? String ?: ""
 

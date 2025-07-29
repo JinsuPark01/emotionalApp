@@ -13,11 +13,25 @@ import com.example.emotionalapp.data.ReportItem
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.example.emotionalapp.ui.alltraining.EmotionActivity
 import com.example.emotionalapp.ui.alltraining.MindActivity
+import com.example.emotionalapp.ui.emotion.AnchorReportActivity
+import com.example.emotionalapp.ui.emotion.ArcReportActivity
+import com.example.emotionalapp.ui.login_signup.LoginActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
+import com.example.emotionalapp.ui.weekly.WeeklyReportActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class MindReportActivity : BottomNavActivity() {
 
     override val isAllTrainingPage: Boolean = true // 하단 네비게이션 비활성화 유지
+
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance() // db 연결
 
     private lateinit var trainingRecyclerView: RecyclerView
     private lateinit var adapter: ReportAdapter
@@ -32,6 +46,7 @@ class MindReportActivity : BottomNavActivity() {
         setupBottomNavigation()
         setupTabListeners()
         setupRecyclerView()
+        loadReportsWithCoroutines() // 데이터 불러오기 및 화면 갱신
     }
 
     private fun setupRecyclerView() {
@@ -39,23 +54,55 @@ class MindReportActivity : BottomNavActivity() {
 
         adapter = ReportAdapter(reportList) { reportItem ->
             val intent = when (reportItem.name) {
-                // 기록 아이템 name에 따라 다른 액티비티로 이동하게끔 구현해놨음
-                "PHQ-9 결과 보기" -> Intent(this, AllTrainingPageActivity::class.java)
-                "GAD-7 결과 보기" -> Intent(this, AllTrainingPageActivity::class.java)
-                "PANAS 결과 보기" -> Intent(this, AllTrainingPageActivity::class.java)
+                "주간 점검 기록 보기" -> Intent(this, WeeklyReportActivity::class.java)
+                "생각의 덫 기록 보기" -> Intent(this, TrapReportActivity::class.java)
                 else -> null
+            }
+            reportItem.timeStamp?.let {
+                intent?.putExtra("reportDateMillis", it.toDate().time)
             }
             intent?.let { startActivity(it) }
         }
 
         trainingRecyclerView.adapter = adapter
-
-        // 예시 데이터 추가
-        reportList.add(ReportItem("2025-07-27", "PHQ-9 결과 보기"))
-        reportList.add(ReportItem("2025-07-26", "GAD-7 결과 보기"))
-        reportList.add(ReportItem("2025-07-25", "PANAS 결과 보기"))
-
+        reportList.clear()
         adapter.notifyDataSetChanged()
+    }
+
+    private fun loadReportsWithCoroutines() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+
+        if (user == null || userEmail == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                reportList.clear()
+
+                // weekly3 컬렉션에서 가장 오래된 2번째 문서만 가져오기
+                val nthDoc = getNthOldestDoc(userEmail = userEmail, collectionName = "weekly3", n = 2)
+                val mindTrapDocs = db.collection("user").document(userEmail).collection("mindTrap").get().await()
+
+
+                nthDoc?.let {
+                    reportList.add(ReportItem(it.id.substringBefore('_'), "주간 점검 기록 보기", it.getTimestamp("date")))
+                }
+                mindTrapDocs.documents.forEach { doc ->
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "생각의 덫 기록 보기", doc.getTimestamp("date")))
+                }
+
+                // 최신 날짜가 위로 오게 정렬
+                reportList.sortBy { it.date }
+                adapter.notifyDataSetChanged()
+
+            } catch (e: Exception) {
+                Log.e("Firestore", "데이터 불러오기 실패", e)
+            }
+        }
     }
 
     private fun setupTabListeners() {
@@ -75,5 +122,37 @@ class MindReportActivity : BottomNavActivity() {
         tabToday.setOnClickListener {
             Log.d("TodayTrainingPage", "금일 훈련 탭 클릭됨 (현재 페이지)")
         }
+    }
+
+    suspend fun getNthOldestDoc(userEmail: String, collectionName: String, n: Int): DocumentSnapshot? {
+        if (n < 1) return null // 1부터 시작하는 인덱스
+
+        var lastDoc: DocumentSnapshot? = null
+
+        // (n - 1)번 반복해서 앞 문서를 순차적으로 탐색
+        for (i in 1 until n) {
+            val query = db.collection("user")
+                .document(userEmail)
+                .collection(collectionName)
+                .orderBy("date", Query.Direction.ASCENDING)
+                .let { if (lastDoc != null) it.startAfter(lastDoc) else it }
+                .limit(1)
+                .get()
+                .await()
+
+            lastDoc = query.documents.firstOrNull() ?: return null // 앞 문서가 없다면 n번째는 없음
+        }
+
+        // n번째 문서
+        val nthQuery = db.collection("user")
+            .document(userEmail)
+            .collection(collectionName)
+            .orderBy("date", Query.Direction.ASCENDING)
+            .let { if (lastDoc != null) it.startAfter(lastDoc) else it }
+            .limit(1)
+            .get()
+            .await()
+
+        return nthQuery.documents.firstOrNull()
     }
 }

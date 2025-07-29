@@ -45,25 +45,23 @@ class ArcReportActivity : AppCompatActivity() {
         db.collection("user").document(userEmail).collection("emotionArc")
             .whereEqualTo("date", reportTimestamp).get()
             .addOnSuccessListener { snapshot ->
-                if (!snapshot.isEmpty) {
-                    val doc = snapshot.documents[0]
-                    val timestamp: Timestamp = doc.getTimestamp("date") ?: return@addOnSuccessListener
-                    val date = timestamp.toDate()
-                    val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+                val doc = snapshot.documents.firstOrNull() ?: return@addOnSuccessListener
+                val timestamp: Timestamp = doc.getTimestamp("date") ?: return@addOnSuccessListener
+                val date = timestamp.toDate()
+                val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
 
-                    val consequences = doc.get("consequences") as? Map<*, *>
-                    val shortConsequence = consequences?.get("short") as? String ?: ""
-                    val longConsequence = consequences?.get("long") as? String ?: ""
+                val consequences = doc.get("consequences") as? Map<*, *>
+                val shortConsequence = consequences?.get("short") as? String ?: ""
+                val longConsequence = consequences?.get("long") as? String ?: ""
 
-                    val response = doc.get("response") as? String ?: ""
-                    val antecedent = doc.get("antecedent") as? String ?: ""
+                val response = doc.get("response") as? String ?: ""
+                val antecedent = doc.get("antecedent") as? String ?: ""
 
-                    findViewById<TextView>(R.id.arcReportTitleText).text = dateString
-                    findViewById<TextView>(R.id.reportTextA).text = antecedent
-                    findViewById<TextView>(R.id.reportTextR).text = response
-                    findViewById<TextView>(R.id.reportTextSC).text = shortConsequence
-                    findViewById<TextView>(R.id.reportTextLC).text = longConsequence
-                }
+                findViewById<TextView>(R.id.arcReportTitleText).text = dateString
+                findViewById<TextView>(R.id.reportTextA).text = antecedent
+                findViewById<TextView>(R.id.reportTextR).text = response
+                findViewById<TextView>(R.id.reportTextSC).text = shortConsequence
+                findViewById<TextView>(R.id.reportTextLC).text = longConsequence
             }
             .addOnFailureListener { e ->
                 Log.e("FirestoreError", "가져오기 실패: ${e.message}")

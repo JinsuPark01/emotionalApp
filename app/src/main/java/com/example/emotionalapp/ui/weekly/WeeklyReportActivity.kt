@@ -44,36 +44,36 @@ class WeeklyReportActivity : AppCompatActivity() {
         db.collection("user").document(userEmail).collection("weekly3")
             .whereEqualTo("date", reportTimestamp).get()
             .addOnSuccessListener { snapshot ->
-                if (!snapshot.isEmpty) {
-                    val doc = snapshot.documents[0]
-                    val timestamp: Timestamp = doc.getTimestamp("date") ?: return@addOnSuccessListener
-                    val date = timestamp.toDate()
-                    val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+                val doc = snapshot.documents.firstOrNull() ?: return@addOnSuccessListener
 
-                    val gad7Map = doc.get("gad7") as? Map<*, *>
-                    val gad7Sum = (gad7Map?.get("sum") as? Number)?.toInt() ?: 0
+                val timestamp: Timestamp = doc.getTimestamp("date") ?: return@addOnSuccessListener
+                val date = timestamp.toDate()
+                val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
 
-                    val panasMap = doc.get("panas") as? Map<*, *>
-                    val positiveSum = (panasMap?.get("positiveSum") as? Number)?.toInt() ?: 0
-                    val negativeSum = (panasMap?.get("negativeSum") as? Number)?.toInt() ?: 0
+                val gad7Map = doc.get("gad7") as? Map<*, *>
+                val gad7Sum = (gad7Map?.get("sum") as? Number)?.toInt() ?: 0
 
-                    val phq9Map = doc.get("phq9") as? Map<*, *>
-                    val phq9Sum = (phq9Map?.get("sum") as? Number)?.toInt() ?: 0
+                val panasMap = doc.get("panas") as? Map<*, *>
+                val positiveSum = (panasMap?.get("positiveSum") as? Number)?.toInt() ?: 0
+                val negativeSum = (panasMap?.get("negativeSum") as? Number)?.toInt() ?: 0
 
-                    findViewById<TextView>(R.id.weeklyReportTitleText).text = dateString
-                    findViewById<TextView>(R.id.phq9Score).text = "점수: ${phq9Sum}점"
-                    findViewById<TextView>(R.id.phq9Interpretation).text = interpretPhq9(phq9Sum)
+                val phq9Map = doc.get("phq9") as? Map<*, *>
+                val phq9Sum = (phq9Map?.get("sum") as? Number)?.toInt() ?: 0
 
-                    findViewById<TextView>(R.id.gad7Score).text = "점수: ${gad7Sum}점"
-                    findViewById<TextView>(R.id.gad7Interpretation).text = interpretGad7(gad7Sum)
+                findViewById<TextView>(R.id.weeklyReportTitleText).text = dateString
+                findViewById<TextView>(R.id.phq9Score).text = "점수: ${phq9Sum}점"
+                findViewById<TextView>(R.id.phq9Interpretation).text = interpretPhq9(phq9Sum)
 
-                    findViewById<TextView>(R.id.panasPositiveScore).text =
-                        "긍정 점수: ${positiveSum} (평균: 29 ~ 34)"
-                    findViewById<TextView>(R.id.panasNegativeScore).text =
-                        "부정 점수: ${negativeSum} (평균: 26 ~ 30)"
-                    findViewById<TextView>(R.id.panasInterpretation).text =
-                        interpretPanas(positiveSum, negativeSum)
-                }
+                findViewById<TextView>(R.id.gad7Score).text = "점수: ${gad7Sum}점"
+                findViewById<TextView>(R.id.gad7Interpretation).text = interpretGad7(gad7Sum)
+
+                findViewById<TextView>(R.id.panasPositiveScore).text =
+                    "긍정 점수: ${positiveSum} (평균: 29 ~ 34)"
+                findViewById<TextView>(R.id.panasNegativeScore).text =
+                    "부정 점수: ${negativeSum} (평균: 26 ~ 30)"
+                findViewById<TextView>(R.id.panasInterpretation).text =
+                    interpretPanas(positiveSum, negativeSum)
+
             }
             .addOnFailureListener { e ->
                 Log.e("FirestoreError", "가져오기 실패: ${e.message}")

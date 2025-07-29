@@ -27,16 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!-- 저장 버튼도 LinearLayout 안에 포함 -->
-        <Button
-            android:id="@+id/btnSaveTrap2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="저장"
-            android:backgroundTint="@color/button_color_mind"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:layout_marginTop="24dp" />
 
     </LinearLayout>
 </ScrollView>

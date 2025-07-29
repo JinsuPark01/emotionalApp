@@ -271,6 +271,8 @@ class AnchorActivity : AppCompatActivity() {
             val optionContainer = pageView.findViewById<LinearLayout>(R.id.optionContainerCustom)
             val editCustomAnswer = pageView.findViewById<EditText>(R.id.editCustomAnswer)
 
+            editCustomAnswer.setText(customCueInput)
+
             val options = listOf(
                 "숨소리에 집중하기",
                 "심장 박동 8번 느껴보기",
@@ -286,6 +288,12 @@ class AnchorActivity : AppCompatActivity() {
                 ) as CardView
                 val textView = card.findViewById<TextView>(R.id.textOption)
                 textView.text = text
+
+                if (index == selectedCueIndex) {
+                    card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                } else {
+                    card.setCardBackgroundColor(Color.WHITE)
+                }
 
                 card.setOnClickListener {
                     // 카드 배경 초기화
@@ -381,8 +389,8 @@ class AnchorActivity : AppCompatActivity() {
 
 
         // 이전 버튼 상태
-        btnPrev.isEnabled = !(currentPage == 0 || currentPage == 2)
-        btnPrev.backgroundTintList = if (currentPage == 0 || currentPage == 2)
+        btnPrev.isEnabled = currentPage != 0
+        btnPrev.backgroundTintList = if (currentPage == 0)
             ColorStateList.valueOf(Color.parseColor("#D9D9D9")) // 비활성화 색상
         else
             ColorStateList.valueOf(Color.parseColor("#3CB371")) // 활성화 색상

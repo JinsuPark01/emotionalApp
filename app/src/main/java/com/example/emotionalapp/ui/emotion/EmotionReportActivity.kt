@@ -53,7 +53,9 @@ class EmotionReportActivity : BottomNavActivity() {
                 "주간 점검 기록 보기" -> Intent(this, WeeklyReportActivity::class.java)
                 else -> null
             }
-            intent?.putExtra("reportDate", reportItem.timeStamp)
+            reportItem.timeStamp?.let {
+                intent?.putExtra("reportDateMillis", it.toDate().time)
+            }
             intent?.let { startActivity(it) }
         }
 

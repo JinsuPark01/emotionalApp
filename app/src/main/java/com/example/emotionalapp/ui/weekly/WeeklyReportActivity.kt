@@ -13,8 +13,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 class WeeklyReportActivity : AppCompatActivity() {
 
@@ -22,10 +21,15 @@ class WeeklyReportActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weekly_report)
 
-        val btnBack = findViewById<View>(R.id.btnBack)
-        btnBack.setOnClickListener { finish() }
+        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
-        val reportDate = intent.getStringExtra("reportDate") ?: return
+        val reportMillis = intent?.getLongExtra("reportDateMillis", -1L) ?: -1L
+        if (reportMillis == -1L) {
+            Toast.makeText(this, "잘못된 보고서 정보입니다.", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+        val reportTimestamp = Timestamp(Date(reportMillis))
 
         val user = FirebaseAuth.getInstance().currentUser
         val userEmail = user?.email
@@ -38,23 +42,23 @@ class WeeklyReportActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
         db.collection("user").document(userEmail).collection("weekly3")
-            .whereEqualTo("date", reportDate).get()
+            .whereEqualTo("date", reportTimestamp).get()
             .addOnSuccessListener { snapshot ->
                 if (!snapshot.isEmpty) {
                     val doc = snapshot.documents[0]
                     val timestamp: Timestamp = doc.getTimestamp("date") ?: return@addOnSuccessListener
-                    val date: Date = timestamp.toDate()
+                    val date = timestamp.toDate()
                     val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
 
-                    val gad7Map = doc.get("gad7") as? Map<String, Any>
-                    val gad7Sum = (gad7Map?.get("sum") as? Long)?.toInt() ?: 0
+                    val gad7Map = doc.get("gad7") as? Map<*, *>
+                    val gad7Sum = (gad7Map?.get("sum") as? Number)?.toInt() ?: 0
 
-                    val panasMap = doc.get("panas") as? Map<String, Any>
-                    val positiveSum = (panasMap?.get("positiveSum") as? Long)?.toInt() ?: 0
-                    val negativeSum = (panasMap?.get("negativeSum") as? Long)?.toInt() ?: 0
+                    val panasMap = doc.get("panas") as? Map<*, *>
+                    val positiveSum = (panasMap?.get("positiveSum") as? Number)?.toInt() ?: 0
+                    val negativeSum = (panasMap?.get("negativeSum") as? Number)?.toInt() ?: 0
 
-                    val phq9Map = doc.get("phq9") as? Map<String, Any>
-                    val phq9Sum = (phq9Map?.get("sum") as? Long)?.toInt() ?: 0
+                    val phq9Map = doc.get("phq9") as? Map<*, *>
+                    val phq9Sum = (phq9Map?.get("sum") as? Number)?.toInt() ?: 0
 
                     findViewById<TextView>(R.id.weeklyReportTitleText).text = dateString
                     findViewById<TextView>(R.id.phq9Score).text = "점수: ${phq9Sum}점"

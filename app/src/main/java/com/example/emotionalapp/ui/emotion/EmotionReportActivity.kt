@@ -48,8 +48,8 @@ class EmotionReportActivity : BottomNavActivity() {
 
         adapter = ReportAdapter(reportList) { reportItem ->
             val intent = when (reportItem.name) {
-                "닻 내리기 기록 보기" -> Intent(this, ArcReportActivity::class.java)
-                "ARC 정서 경험 기록 보기" -> Intent(this, AnchorReportActivity::class.java)
+                "닻 내리기 기록 보기" -> Intent(this, AnchorReportActivity::class.java)
+                "ARC 정서 경험 기록 보기" -> Intent(this, ArcReportActivity::class.java)
                 "주간 점검 기록 보기" -> Intent(this, WeeklyReportActivity::class.java)
                 else -> null
             }

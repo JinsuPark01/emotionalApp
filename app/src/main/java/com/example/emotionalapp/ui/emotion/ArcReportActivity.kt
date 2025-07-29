@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class ArcReportActivity : AppCompatActivity() {
 
@@ -48,7 +49,9 @@ class ArcReportActivity : AppCompatActivity() {
                 val doc = snapshot.documents.firstOrNull() ?: return@addOnSuccessListener
                 val timestamp: Timestamp = doc.getTimestamp("date") ?: return@addOnSuccessListener
                 val date = timestamp.toDate()
-                val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+                val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(date)
 
                 val consequences = doc.get("consequences") as? Map<*, *>
                 val shortConsequence = consequences?.get("short") as? String ?: ""

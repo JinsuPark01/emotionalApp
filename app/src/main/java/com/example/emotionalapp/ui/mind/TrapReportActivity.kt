@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class TrapReportActivity : AppCompatActivity() {
 
@@ -49,17 +50,15 @@ class TrapReportActivity : AppCompatActivity() {
 
                 val timestamp: Timestamp = doc.getTimestamp("date") ?: return@addOnSuccessListener
                 val date = timestamp.toDate()
-                val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+                val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(date)
 
                 val situation = doc.get("situation") as? String ?: ""
                 val thought = doc.get("thought") as? String ?: ""
                 val trap = doc.get("trap") as? String ?: ""
 
                 val validityMap = doc.get("validity") as? Map<*, *>
-                val validityAnswer1 = validityMap?.get("answer1") as? String ?: ""
-                val validityAnswer2 = validityMap?.get("answer2") as? String ?: ""
-                val validityAnswer3 = validityMap?.get("answer3") as? String ?: ""
-                val validityAnswer4 = validityMap?.get("answer4") as? String ?: ""
 
                 val assumptions = doc.get("assumption") as? Map<*, *>
                 val assumptionAnswer1 = assumptions?.get("answer1") as? String ?: ""
@@ -78,10 +77,23 @@ class TrapReportActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.reportSituation).text = situation
                 findViewById<TextView>(R.id.reportThought).text = thought
                 findViewById<TextView>(R.id.reportTrap).text = trap
-                findViewById<TextView>(R.id.validityAnswer1).text = validityAnswer1
-                findViewById<TextView>(R.id.validityAnswer2).text = validityAnswer2
-                findViewById<TextView>(R.id.validityAnswer3).text = validityAnswer3
-                findViewById<TextView>(R.id.validityAnswer4).text = validityAnswer4
+
+
+                val validityContainer = findViewById<View>(R.id.validityContainer)
+                if (!isSectionEmpty(validityMap)) {
+                    validityContainer.visibility = View.VISIBLE
+
+                    findViewById<TextView>(R.id.validityAnswer1).text =
+                        validityMap?.get("answer1") as? String ?: ""
+                    findViewById<TextView>(R.id.validityAnswer2).text =
+                        validityMap?.get("answer2") as? String ?: ""
+                    findViewById<TextView>(R.id.validityAnswer3).text =
+                        validityMap?.get("answer3") as? String ?: ""
+                    findViewById<TextView>(R.id.validityAnswer4).text =
+                        validityMap?.get("answer4") as? String ?: ""
+                } else {
+                    validityContainer.visibility = View.GONE
+                }
                 findViewById<TextView>(R.id.assumptionAnswer1).text = assumptionAnswer1
                 findViewById<TextView>(R.id.assumptionAnswer2).text = assumptionAnswer2
                 findViewById<TextView>(R.id.assumptionAnswer3).text = assumptionAnswer3
@@ -95,5 +107,9 @@ class TrapReportActivity : AppCompatActivity() {
                 Log.e("FirestoreError", "가져오기 실패: ${e.message}")
                 Toast.makeText(this, "데이터를 불러오는 데 실패했어요.", Toast.LENGTH_SHORT).show()
             }
+    }
+    private fun isSectionEmpty(section: Map<*, *>?): Boolean {
+        if (section == null) return true
+        return section.values.all { (it as? String)?.isBlank() != false }
     }
 }

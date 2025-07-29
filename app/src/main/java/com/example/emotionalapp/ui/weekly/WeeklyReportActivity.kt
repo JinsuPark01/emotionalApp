@@ -48,7 +48,9 @@ class WeeklyReportActivity : AppCompatActivity() {
 
                 val timestamp: Timestamp = doc.getTimestamp("date") ?: return@addOnSuccessListener
                 val date = timestamp.toDate()
-                val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+                val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(date)
 
                 val gad7Map = doc.get("gad7") as? Map<*, *>
                 val gad7Sum = (gad7Map?.get("sum") as? Number)?.toInt() ?: 0

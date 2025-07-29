@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
@@ -30,7 +29,7 @@ class EmotionReportActivity : BottomNavActivity() {
 
     private lateinit var trainingRecyclerView: RecyclerView
     private lateinit var adapter: ReportAdapter
-    private val reportList = mutableListOf<ReportItem>() // 더미 데이터용 리스트
+    private val reportList = mutableListOf<ReportItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +40,7 @@ class EmotionReportActivity : BottomNavActivity() {
         setupBottomNavigation()
         setupTabListeners()
         setupRecyclerView()
-        loadReportsWithCoroutines() // 데이터 불러오기 및 화면 갱신
+        loadReportsWithCoroutines()
     }
 
     private fun setupRecyclerView() {
@@ -49,11 +48,13 @@ class EmotionReportActivity : BottomNavActivity() {
 
         adapter = ReportAdapter(reportList) { reportItem ->
             val intent = when (reportItem.name) {
+                "감정 기록 보기" -> Intent(this, SelectReportActivity::class.java)
                 "닻 내리기 기록 보기" -> Intent(this, AnchorReportActivity::class.java)
                 "ARC 정서 경험 기록 보기" -> Intent(this, ArcReportActivity::class.java)
                 "주간 점검 기록 보기" -> Intent(this, WeeklyReportActivity::class.java)
                 else -> null
             }
+
             reportItem.timeStamp?.let {
                 intent?.putExtra("reportDateMillis", it.toDate().time)
             }
@@ -61,10 +62,7 @@ class EmotionReportActivity : BottomNavActivity() {
         }
 
         trainingRecyclerView.adapter = adapter
-        reportList.clear()
-        adapter.notifyDataSetChanged()
     }
-
 
     private fun loadReportsWithCoroutines() {
         val user = FirebaseAuth.getInstance().currentUser
@@ -82,24 +80,59 @@ class EmotionReportActivity : BottomNavActivity() {
             try {
                 reportList.clear()
 
+                // 감정 기록을 가장 위에 추가
+                reportList.add(
+                    0,
+                    ReportItem("감정 기록", "감정 기록 보기", null)
+                )
+
+                val tempList = mutableListOf<ReportItem>()
+
                 // weekly3 컬렉션에서 가장 오래된 1개 문서만 가져오기
-                val weekly3Docs = db.collection("user").document(userEmail).collection("weekly3").orderBy("date", Query.Direction.ASCENDING).limit(1).get().await()
-                val emotionArcDocs = db.collection("user").document(userEmail).collection("emotionArc").get().await()
-                val emotionAnchorDocs = db.collection("user").document(userEmail).collection("emotionAnchor").get().await()
+                val weekly3Docs = db.collection("user").document(userEmail)
+                    .collection("weekly3").orderBy("date", Query.Direction.ASCENDING).limit(1).get().await()
+
+                val emotionArcDocs = db.collection("user").document(userEmail)
+                    .collection("emotionArc").get().await()
+
+                val emotionAnchorDocs = db.collection("user").document(userEmail)
+                    .collection("emotionAnchor").get().await()
 
                 if (!weekly3Docs.isEmpty) {
                     val oldestDoc = weekly3Docs.documents[0]
-                    reportList.add(ReportItem(oldestDoc.id.substringBefore('_'), "주간 점검 기록 보기", oldestDoc.getTimestamp("date")))
-                }
-                emotionArcDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "ARC 정서 경험 기록 보기", doc.getTimestamp("date")))
-                }
-                emotionAnchorDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "닻 내리기 기록 보기", doc.getTimestamp("date")))
+                    tempList.add(
+                        ReportItem(
+                            oldestDoc.id.substringBefore('_'),
+                            "주간 점검 기록 보기",
+                            oldestDoc.getTimestamp("date")
+                        )
+                    )
                 }
 
-                // 최신 날짜가 위로 오게 정렬
-                reportList.sortBy { it.date }
+                emotionArcDocs.documents.forEach { doc ->
+                    tempList.add(
+                        ReportItem(
+                            doc.id.substringBefore('_'),
+                            "ARC 정서 경험 기록 보기",
+                            doc.getTimestamp("date")
+                        )
+                    )
+                }
+
+                emotionAnchorDocs.documents.forEach { doc ->
+                    tempList.add(
+                        ReportItem(
+                            doc.id.substringBefore('_'),
+                            "닻 내리기 기록 보기",
+                            doc.getTimestamp("date")
+                        )
+                    )
+                }
+
+                // 날짜 기준 오름차순 정렬 후 reportList에 추가
+                tempList.sortBy { it.date }
+                reportList.addAll(tempList)
+
                 adapter.notifyDataSetChanged()
 
             } catch (e: Exception) {

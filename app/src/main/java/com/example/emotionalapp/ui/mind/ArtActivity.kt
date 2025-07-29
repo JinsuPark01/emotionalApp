@@ -17,6 +17,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Locale
+import java.util.TimeZone
 
 class ArtActivity : AppCompatActivity() {
 
@@ -338,14 +339,14 @@ class ArtActivity : AppCompatActivity() {
         val firstImageName = getImageNameByResId(selectedImageResourceIds.getOrNull(0) ?: 0)
         val secondImageName = getImageNameByResId(selectedImageResourceIds.getOrNull(1) ?: 0)
 
-        // ▶ 문서 ID를 "yyyy-MM-dd_HH:mm:ss.SSS" 형식으로 설정
         val sdf = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault())
+        sdf.timeZone = TimeZone.getTimeZone("Asia/Seoul")
         val docId = sdf.format(timestamp.toDate())
 
         val data = hashMapOf<String, Any>(
             "firstImage" to firstImageName,
             "secondImage" to secondImageName,
-            "timestamp" to timestamp
+            "date" to timestamp
         )
 
         // ▶ 첫 번째 이미지 질문 답변 저장 (1art_1 ~ 1art_3)

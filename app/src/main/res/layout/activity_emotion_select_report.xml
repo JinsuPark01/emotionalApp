@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- 제목 영역 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="상태 기록"
+            android:textSize="18sp"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- 두 번째 콘텐츠 영역 -->
+    <ScrollView
+        android:id="@+id/scrollContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 마음의 느낌 그래프 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="마음의 느낌 변화"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChartMind"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- 몸의 느낌 그래프 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="몸의 느낌 변화"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChartBody"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

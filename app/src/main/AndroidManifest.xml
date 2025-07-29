@@ -32,66 +32,44 @@
             android:exported="false" />
 
         <!-- 나의 훈련 목록 화면 -->
-        <activity
-            android:name=".ui.alltraining.AllTrainingPageActivity"
-            android:exported="false" />
+        <activity android:name=".ui.alltraining.AllTrainingPageActivity" android:exported="false" />
+        <activity android:name=".ui.alltraining.DailyTrainingPageActivity" android:exported="false" />
+        <activity android:name=".ui.alltraining.IntroActivity" android:exported="false" />
+        <activity android:name=".ui.alltraining.EmotionActivity" android:exported="false" />
+        <activity android:name=".ui.alltraining.BodyActivity" android:exported="false" />
+        <activity android:name=".ui.alltraining.MindActivity" android:exported="false" />
+        <activity android:name=".ui.alltraining.ExpressionActivity" android:exported="false" />
 
-        <activity
-            android:name=".ui.alltraining.DailyTrainingPageActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.alltraining.IntroActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.alltraining.EmotionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.alltraining.BodyActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.body.BodyTrainingIntroActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.body.BodyTrainingDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.alltraining.MindActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.intro.IntroTrainingActivity"
-            android:exported="true" />
+        <activity android:name=".ui.intro.IntroTrainingActivity" android:exported="true" />
 
-        <activity android:name=".ui.body.BodyTrainingPracticeActivity"
-            android:exported="false" />
-
-        <activity android:name=".ui.body.BodyTrainingRecordActivity" />
-
-        <activity
-            android:name=".ui.alltraining.ExpressionActivity"
-            android:exported="false" />
-
-        <activity android:name=".ui.expression.AvoidanceActivity" android:exported="false" />
-        <activity android:name=".ui.expression.TopicDetailActivity" android:exported="false" />
-        <activity android:name=".ui.mind.ArtActivity" android:exported="false" />
-        <activity android:name=".ui.mind.TrapActivity" android:exported="false" />
-        <activity android:name=".ui.mind.AutoActivity" android:exported="false" />
         <activity android:name=".ui.emotion.SelectActivity" android:exported="false" />
         <activity android:name=".ui.emotion.AnchorActivity" android:exported="false" />
         <activity android:name=".ui.emotion.ArcActivity" android:exported="false" />
+        <activity android:name=".ui.emotion.SelectReportActivity" android:exported="false" />
         <activity android:name=".ui.emotion.ArcReportActivity" android:exported="false" />
         <activity android:name=".ui.emotion.AnchorReportActivity" android:exported="false" />
+
+        <activity android:name=".ui.body.BodyTrainingIntroActivity" android:exported="false" />
+        <activity android:name=".ui.body.BodyTrainingDetailActivity" android:exported="false" />
+        <activity android:name=".ui.body.BodyTrainingPracticeActivity" android:exported="false" />
+        <activity android:name=".ui.body.BodyTrainingRecordActivity" android:exported="false"/>
+
+        <activity android:name=".ui.mind.ArtActivity" android:exported="false" />
+        <activity android:name=".ui.mind.TrapActivity" android:exported="false" />
+        <activity android:name=".ui.mind.AutoActivity" android:exported="false" />
+
+        <activity android:name=".ui.expression.AvoidanceActivity" android:exported="false" />
+        <activity android:name=".ui.expression.TopicDetailActivity" android:exported="false" />
+
+
         <activity android:name=".ui.weekly.WeeklyReportActivity" android:exported="false" />
 
         <activity android:name=".ui.emotion.EmotionAvoidanceQuizActivity" android:exported="false" />
 
         <activity android:name=".ui.expression.EmotionSelectionActivity" android:exported="false" />
-
         <activity android:name=".ui.expression.DrivenActionActivity" android:exported="false" />
-
         <activity android:name=".ui.expression.DrivenActionQuizActivity" android:exported="false" />
-
         <activity android:name=".ui.expression.OppositeActionActivity" android:exported="false" />
-
         <activity android:name=".ui.expression.AlternativeActionActivity" android:exported="false" />
         <activity android:name=".ui.weekly.WeeklyActivity" android:exported="false" />
 

@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -123,19 +124,25 @@ class SelectActivity : AppCompatActivity() {
             val mind = mindStates.getOrNull(selectedMind) ?: "알 수 없음"
             val body = bodyStates.getOrNull(selectedBody) ?: "알 수 없음"
 
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-            val timestamp = dateFormat.format(Date())
+            // Timestamp 값
+            val timestamp = Timestamp.now()
 
+            // 문서 ID용 문자열 (정렬 및 구분 위해 그대로 사용 가능)
+            val idFormat = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault())
+            idFormat.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+            val timestampStr = idFormat.format(timestamp.toDate())
+
+            // 저장할 데이터
             val data = hashMapOf(
                 "mind" to mind,
                 "body" to body,
-                "timestamp" to timestamp
+                "date" to timestamp  // 🔥 Firestore Timestamp 타입으로 저장됨
             )
 
             db.collection("user")
                 .document(email)
                 .collection("emotionSelect")
-                .document(timestamp)
+                .document(timestampStr) // 문자열 기반 ID (문서명으로 사용)
                 .set(data)
                 .addOnSuccessListener {
                     Toast.makeText(this, "감정이 기록되었습니다.", Toast.LENGTH_SHORT).show()
@@ -144,8 +151,10 @@ class SelectActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
+
         } else {
             Toast.makeText(this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
         }
     }
+
 }

@@ -23,16 +23,19 @@
         <!-- 이미지 추가 -->
         <ImageView
             android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
             android:scaleType="centerCrop"
-            android:layout_marginBottom="16dp" />
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center"/>
+
         <!-- 질문 1 -->
         <TextView
             android:id="@+id/question1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1. 여러분들이 평가하고 싶은 상황을 되돌아봅시다. 무슨 일이 일어났나요? (예: 발표 중에 실수를 했다.)"
+            android:text="1. 그림의 장면이 어떤 상황처럼 느껴지나요?"
             android:textSize="16sp"
             android:textColor="#000000"
             android:layout_marginTop="8dp"
@@ -53,7 +56,7 @@
             android:id="@+id/question2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2. 그때 어떤 생각을 했나요? (예: 나는 정말 바보 같다.)"
+            android:text="1-1. 이 상황에서 어떤 감정이 느껴지나요?"
             android:textSize="16sp"
             android:textColor="#000000"
             android:layout_marginBottom="4dp" />

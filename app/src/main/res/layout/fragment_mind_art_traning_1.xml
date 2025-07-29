@@ -1,36 +1,43 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:fillViewport="true">
 
-    <!-- 제목 -->
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="정서 훈련 소개"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:layout_marginBottom="12dp" />
-
-    <!-- 이미지 추가 -->
-    <ImageView
-        android:id="@+id/imageEX"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/image_ex"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="16dp" />
-
-    <!-- 설명 -->
-    <TextView
-        android:id="@+id/textDescription"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="이 페이지에서는 정서 훈련에 대한 개요와 설명을 제공합니다. 단계별로 진행되는 훈련을 통해 스스로의 감정을 이해하고 관리하는 방법을 배우게 됩니다."
-        android:textSize="16sp"
-        android:textColor="#555555"
-        android:lineSpacingExtra="6dp" />
-</LinearLayout>
+        android:padding="24dp">
+
+        <!-- 제목 -->
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="모호한 그림이란?"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="12dp" />
+
+        <ImageView
+            android:id="@+id/art0"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/art0"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center" />
+
+        <!-- 설명 -->
+        <TextView
+            android:id="@+id/textDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="우리가 느끼는 감정은, 단지 상황 때문에 일어나는 것이 아니에요. 같은 상황도 내가 어떤 기분인지, 어떤 생각을 하는지에 따라 전혀 다르게 느껴질 수 있습니다.\n\n다음 그림을 살펴봅시다. 같은 그림을 봐도 기분이 우울할 때에는 ‘서로 다투어 냉담한 연인의 모습’처럼 보일 수 있지만, 기분이 좋을 때는 ‘노을지는 풍경을 함께 바라보는 평온한 연인의 모습’처럼 보일 수 있어요. 같은 장면이라도 우리의 감정 상태에 따라 전혀 다른 해석이 가능합니다.\n\n이렇게 우리의 감정과 사고는 서로 상호작용하며 변화할 수 있어요. 이번 훈련에서는 이러한 관계를 살펴보며, 다양한 해석을 연습해볼 것입니다."
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:lineSpacingExtra="6dp" />
+    </LinearLayout>
+</ScrollView>

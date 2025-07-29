@@ -9,7 +9,7 @@
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="정서 훈련 소개"
+        android:text="소개"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="#000000"
@@ -20,7 +20,7 @@
         android:id="@+id/textDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="이 페이지에서는 정서 훈련에 대한 개요와 설명을 제공합니다. 단계별로 진행되는 훈련을 통해 스스로의 감정을 이해하고 관리하는 방법을 배우게 됩니다."
+        android:text="우리가 느끼는 감정은, 상황 자체보다 ‘그 상황을 어떻게 해석했는가’에 따라 달라져요. 예를 들어, 물이 반쯤 찬 컵을 보고 ‘아직 반이나 남았네’라고 생각하면 기분이 좋아지지만, ‘벌써 반이나 줄었어’라고 생각하면 아쉬워지죠. 이처럼 감정은 ‘생각’에서 출발할 수 있습니다.\n\n우리는 모두 자신만의 방식으로 세상을 해석하며 살아갑니다. 이러한 해석은 오랜 시간 반복되어 왔기에 자동적으로 떠오르는 생각이 될 수 있어요. 이번 훈련에서는 익숙한 해석을 고치려는 것이 아니라, 다른 관점도 가능하다는 점을 함께 알아보기 위한 연습을 해볼 것입니다. 여러분이 상황을 어떻게 해석하는지 돌아보고, 그 해석이 감정에 어떤 영향을 미치는지도 함께 살펴봅시다."
         android:textSize="16sp"
         android:textColor="#555555"
         android:lineSpacingExtra="6dp" />

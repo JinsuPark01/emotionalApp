@@ -1,15 +1,22 @@
 package com.example.emotionalapp.ui.mind
 
+import android.app.Dialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import java.text.SimpleDateFormat
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Locale
 
 class ArtActivity : AppCompatActivity() {
 
@@ -19,34 +26,24 @@ class ArtActivity : AppCompatActivity() {
     private lateinit var pageContainer: FrameLayout
     private lateinit var titleText: TextView
 
-    private lateinit var tabPractice: TextView
-    private lateinit var tabRecord: TextView
-    private lateinit var underlinePractice: View
-    private lateinit var underlineRecord: View
-
     private val totalPages = 9
     private var currentPage = 0
 
-    // 이미지 선택 인덱스 리스트 (UI용)
     private var selectedImages = mutableListOf<Int>()
-
-    // 확정된 선택 이미지 인덱스 저장 (DB 저장용)
     private var selectedImageIndices = mutableListOf<Int>()
-
-    // 확정된 선택 이미지 리소스 ID 저장 (DB 저장용)
     private var selectedImageResourceIds = mutableListOf<Int>()
 
-    // 이미지 리소스 ID 배열 (선택 페이지 4개 이미지에 매칭)
     private val imageResIds = arrayOf(
-        R.drawable.image1,
-        R.drawable.image2,
-        R.drawable.image3,
-        R.drawable.image4
+        R.drawable.art1, R.drawable.art2, R.drawable.art3,
+        R.drawable.art4, R.drawable.art5, R.drawable.art6,
+        R.drawable.art7, R.drawable.art8, R.drawable.art9,
+        R.drawable.art10, R.drawable.art11, R.drawable.art12
     )
 
+
     private val userAnswers = arrayOf(
-        mutableListOf<String>(), // 첫 번째 이미지
-        mutableListOf<String>()  // 두 번째 이미지
+        MutableList(5) { "" }, // 첫 번째 이미지의 5문항
+        MutableList(5) { "" }  // 두 번째 이미지의 5문항
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,13 +56,7 @@ class ArtActivity : AppCompatActivity() {
         pageContainer = findViewById(R.id.pageContainer)
         titleText = findViewById(R.id.titleText)
 
-        tabPractice = findViewById(R.id.tabPractice)
-        tabRecord = findViewById(R.id.tabRecord)
-        underlinePractice = findViewById(R.id.underlinePractice)
-        underlineRecord = findViewById(R.id.underlineRecord)
-
-        val btnBack = findViewById<View>(R.id.btnBack)
-        btnBack.setOnClickListener { finish() }
+        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
         setupIndicators(totalPages)
         updatePage()
@@ -78,17 +69,13 @@ class ArtActivity : AppCompatActivity() {
         }
 
         btnNext.setOnClickListener {
-            // 2페이지에서 이미지 2개 선택 확인 + 확정 저장
             if (currentPage == 2) {
                 if (selectedImages.size < 2) {
                     Toast.makeText(this, "이미지를 2개 선택해야 합니다.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
-                // 선택 확정: UI용 selectedImages -> 저장용 리스트로 복사
                 selectedImageIndices.clear()
                 selectedImageIndices.addAll(selectedImages)
-
-                // 선택된 이미지 인덱스를 이용해 리소스 ID도 저장
                 selectedImageResourceIds.clear()
                 selectedImageIndices.forEach { index ->
                     if (index in imageResIds.indices) {
@@ -97,7 +84,6 @@ class ArtActivity : AppCompatActivity() {
                 }
             }
 
-            // 3~8페이지 질문 답변 유효성 검사 및 저장
             if (currentPage in 3..8) {
                 val pageView = pageContainer.getChildAt(0)
                 val answer1 = pageView.findViewById<EditText>(R.id.answer1)
@@ -115,30 +101,30 @@ class ArtActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                // 임시 저장
+                val imageIndex = if (currentPage in 3..5) 0 else 1
+                val pageIndex = (currentPage - 3) % 3
+                val startIndex = pageIndex * 2
                 val answers = mutableListOf<String>()
                 answers.add(answer1.text.toString())
                 if (!isSingleAnswerPage) answers.add(answer2.text.toString())
 
-                val imageIndex = if (currentPage in 3..5) 0 else 1
-                userAnswers[imageIndex].addAll(answers)
+                while (userAnswers[imageIndex].size < startIndex + answers.size) {
+                    userAnswers[imageIndex].add("")
+                }
+                for (i in answers.indices) {
+                    userAnswers[imageIndex][startIndex + i] = answers[i]
+                }
             }
 
-            // 다음 페이지 이동 or 완료 처리
             if (currentPage < totalPages - 1) {
                 currentPage++
                 updatePage()
             } else {
                 saveToDatabase()
-                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, AllTrainingPageActivity::class.java))
                 finish()
             }
         }
-
-        tabPractice.setOnClickListener { selectTab(true) }
-        tabRecord.setOnClickListener { selectTab(false) }
-        selectTab(true)
     }
 
     private fun setupIndicators(count: Int) {
@@ -159,64 +145,61 @@ class ArtActivity : AppCompatActivity() {
         val inflater = LayoutInflater.from(this)
         pageContainer.removeAllViews()
 
-        titleText.text = when (currentPage) {
-            0 -> "인지적 평가"
-            else -> "모호한 그림 연습하기"
-        }
+        titleText.text = if (currentPage == 0) "인지적 평가" else "모호한 그림 연습하기"
 
         val pageView = when (currentPage) {
-            0 -> inflater.inflate(R.layout.fragment_mind_art_traning_0, pageContainer, false) //소개
-            1 -> inflater.inflate(R.layout.fragment_mind_art_traning_1, pageContainer, false) //설명
-            2 -> inflater.inflate(R.layout.fragment_mind_art_traning_2, pageContainer, false) // 선택
-            in 3..5 -> inflater.inflate(R.layout.fragment_mind_art_traning_3, pageContainer, false) //작성
-            in 6..8 -> inflater.inflate(R.layout.fragment_mind_art_traning_3, pageContainer, false) //작성 두번째 이미지 질문 페이지
+            0 -> inflater.inflate(R.layout.fragment_mind_art_traning_0, pageContainer, false)
+            1 -> inflater.inflate(R.layout.fragment_mind_art_traning_1, pageContainer, false)
+            2 -> inflater.inflate(R.layout.fragment_mind_art_traning_2, pageContainer, false)
+            in 3..8 -> inflater.inflate(R.layout.fragment_mind_art_traning_3, pageContainer, false)
             else -> inflater.inflate(R.layout.fragment_mind_art_traning_0, pageContainer, false)
         }
 
         pageContainer.addView(pageView)
 
         when (currentPage) {
-            0 -> {
-                val title = pageView.findViewById<TextView>(R.id.textTitle)
-                val description = pageView.findViewById<TextView>(R.id.textDescription)
-                title.text = "소개"
-                description.text = """
-                    우리가 느끼는 감정은, 상황 자체보다 ‘그 상황을 어떻게 해석했는가’에 따라 달라져요. 예를 들어, 물이 반쯤 찬 컵을 보고 ‘아직 반이나 남았네’라고 생각하면 기분이 좋아지지만, ‘벌써 반이나 줄었어’라고 생각하면 아쉬워지죠. 이처럼 감정은 ‘생각’에서 출발할 수 있습니다.
-
-                    우리는 모두 자신만의 방식으로 세상을 해석하며 살아갑니다. 이러한 해석은 오랜 시간 반복되어 왔기에 자동적으로 떠오르는 생각이 될 수 있어요. 이번 훈련에서는 익숙한 해석을 고치려는 것이 아니라, 다른 관점도 가능하다는 점을 함께 알아보기 위한 연습을 해볼 것입니다. 여러분이 상황을 어떻게 해석하는지 돌아보고, 그 해석이 감정에 어떤 영향을 미치는지도 함께 살펴봅시다.
-                """.trimIndent()
-            }
             1 -> {
-                val title = pageView.findViewById<TextView>(R.id.textTitle)
-                val description = pageView.findViewById<TextView>(R.id.textDescription)
-                val image = pageView.findViewById<ImageView>(R.id.imageEX)
+                val image = pageView.findViewById<ImageView>(R.id.art0)
+                image.setImageResource(R.drawable.art0)
 
-                title.text = "설명"
-                description.text = """
-                    우리가 느끼는 감정은, 단지 상황 때문에 일어나는 것이 아니에요. 같은 상황도 내가 어떤 기분인지, 어떤 생각을 하는지에 따라 전혀 다르게 느껴질 수 있습니다.
-
-                    다음 그림을 살펴봅시다. 같은 그림을 봐도 기분이 우울할 때에는 ‘서로 다투어 냉담한 연인의 모습’처럼 보일 수 있지만, 기분이 좋을 때는 ‘노을지는 풍경을 함께 바라보는 평온한 연인의 모습’처럼 보일 수 있어요. 같은 장면이라도 우리의 감정 상태에 따라 전혀 다른 해석이 가능합니다.
-
-                    이렇게 우리의 감정과 사고는 서로 상호작용하며 변화할 수 있어요. 이번 훈련에서는 이러한 관계를 살펴보며, 다양한 해석을 연습해볼 것입니다.
-                """.trimIndent()
-
-                image.setImageResource(R.drawable.image_ex)
+                image.setOnClickListener {
+                    showZoomDialog(R.drawable.art0)
+                }
             }
+
             2 -> {
                 val imageViews = listOf(
-                    pageView.findViewById<ImageView>(R.id.image1),
-                    pageView.findViewById<ImageView>(R.id.image2),
-                    pageView.findViewById<ImageView>(R.id.image3),
-                    pageView.findViewById<ImageView>(R.id.image4)
+                    pageView.findViewById<ImageView>(R.id.art1),
+                    pageView.findViewById<ImageView>(R.id.art2),
+                    pageView.findViewById<ImageView>(R.id.art3),
+                    pageView.findViewById<ImageView>(R.id.art4),
+                    pageView.findViewById<ImageView>(R.id.art5),
+                    pageView.findViewById<ImageView>(R.id.art6),
+                    pageView.findViewById<ImageView>(R.id.art7),
+                    pageView.findViewById<ImageView>(R.id.art8),
+                    pageView.findViewById<ImageView>(R.id.art9),
+                    pageView.findViewById<ImageView>(R.id.art10),
+                    pageView.findViewById<ImageView>(R.id.art11),
+                    pageView.findViewById<ImageView>(R.id.art12)
                 )
 
                 fun updateImageUI() {
                     imageViews.forEachIndexed { index, imageView ->
-                        val isSelected = selectedImages.contains(index)
-                        imageView.setBackgroundColor(
-                            if (isSelected) Color.parseColor("#FFA726")
-                            else Color.TRANSPARENT
-                        )
+                        if (selectedImages.contains(index)) {
+                            // 선택된 이미지는 90% 크기로 축소
+                            imageView.scaleX = 0.9f
+                            imageView.scaleY = 0.9f
+
+                            // 배경이나 테두리는 제거
+                            imageView.background = null
+                            imageView.setPadding(0, 0, 0, 0)
+                        } else {
+                            // 선택 안 된 이미지는 원래 크기
+                            imageView.scaleX = 1.0f
+                            imageView.scaleY = 1.0f
+                            imageView.background = null
+                            imageView.setPadding(0, 0, 0, 0)
+                        }
                     }
                 }
 
@@ -234,83 +217,79 @@ class ArtActivity : AppCompatActivity() {
                         updateImageUI()
                     }
                 }
+
                 updateImageUI()
             }
+
             in 3..8 -> {
                 val question1 = pageView.findViewById<TextView>(R.id.question1)
                 val question2 = pageView.findViewById<TextView>(R.id.question2)
                 val answer1 = pageView.findViewById<EditText>(R.id.answer1)
                 val answer2 = pageView.findViewById<EditText>(R.id.answer2)
+                val imageView = pageView.findViewById<ImageView>(R.id.image)
 
-                // 첫 번째 or 두 번째 이미지
                 val isFirstImagePhase = currentPage in 3..5
-                val selectedImageIndex = if (isFirstImagePhase) selectedImageIndices.getOrNull(0) else selectedImageIndices.getOrNull(1)
+                val imageIndex = if (isFirstImagePhase) 0 else 1
+                val pageIndex = (currentPage - 3) % 3
+                val startIndex = pageIndex * 2
 
-                val phase = if (isFirstImagePhase) "첫 번째" else "두 번째"
-                val localPage = (currentPage - 3) % 3
+                val imageResId = selectedImageResourceIds.getOrNull(imageIndex) ?: 0
+                imageView.setImageResource(imageResId)
+                imageView.visibility = View.VISIBLE
 
                 val questions = listOf(
-                    "1. 여러분들이 평가하고 싶은 상황을 되돌아봅시다. 무슨 일이 일어났나요?",
-                    "2. 그때 어떤 생각을 했나요?",
-                    "3. 그 감정에 어울리는 색은 어떤 색인가요?",
-                    "4. 그 감정을 떠올리게 하는 이미지는 무엇인가요?",
-                    "5. 지금 감정을 음악으로 표현하면 어떤 곡일까요?"
+                    "상황 1. 마음이 지치고 불안한 날\n예) 부모님과 다툰 후 / 친구와의 갈등 / 직장에서 큰 실수를 한 날\n\n1. 그림의 장면이 어떤 상황처럼 느껴지나요?",
+                    "1-1. 이 상황에서 어떤 감정이 느껴지나요?",
+                    "상황 2. 기분이 좋은 날\n예) 친구들과 즐거운 시간을 보낸 후 / 좋은 소식을 들은 날 / 따뜻한 날씨를 즐기는 날\n\n2. 같은 그림을 봤을 때, 어떤 상황으로 보이나요?",
+                    "2-1. 이 상황에서 느껴지는 감정은 무엇인가요?",
+                    "3. 같은 그림인데도 상황에 따라 다르게 느껴졌나요? 나의 감정 상태가 해석에 어떤 영향을 준 것 같나요?"
                 )
 
-                when (localPage) {
+                when (pageIndex) {
                     0 -> {
                         question1.text = questions[0]
                         question2.text = questions[1]
-                        question1.visibility = View.VISIBLE
                         question2.visibility = View.VISIBLE
-                        answer1.visibility = View.VISIBLE
                         answer2.visibility = View.VISIBLE
-
-                        // 이미지 표시
-                        val imageView = pageView.findViewById<ImageView>(R.id.image)
-                        imageView.setImageResource(selectedImageResourceIds[0])
-                        imageView.visibility = View.VISIBLE
                     }
                     1 -> {
                         question1.text = questions[2]
                         question2.text = questions[3]
-                        question1.visibility = View.VISIBLE
                         question2.visibility = View.VISIBLE
-                        answer1.visibility = View.VISIBLE
                         answer2.visibility = View.VISIBLE
-
-                        // 이미지 표시
-                        val imageView = pageView.findViewById<ImageView>(R.id.image)
-                        imageView.setImageResource(selectedImageResourceIds[0])
-                        imageView.visibility = View.VISIBLE
                     }
-                    2 -> { // 질문 5만
+                    2 -> {
                         question1.text = questions[4]
-                        question1.visibility = View.VISIBLE
                         question2.visibility = View.GONE
-                        answer1.visibility = View.VISIBLE
                         answer2.visibility = View.GONE
+                    }
+                }
 
-                        // 이미지 표시
-                        val imageView = pageView.findViewById<ImageView>(R.id.image)
-                        imageView.setImageResource(selectedImageResourceIds[0])
-                        imageView.visibility = View.VISIBLE
+                // 입력값 복원
+                val savedAnswers = userAnswers[imageIndex]
+                if (savedAnswers.size > startIndex) {
+                    answer1.setText(savedAnswers[startIndex])
+                }
+                if (savedAnswers.size > startIndex + 1 && pageIndex != 2) {
+                    answer2.setText(savedAnswers[startIndex + 1])
+                }
+
+                imageView.setOnClickListener {
+                    if (imageResId != 0) {
+                        showZoomDialog(imageResId)
                     }
                 }
             }
         }
 
-        // 이전 버튼 상태
         btnPrev.isEnabled = currentPage != 0
         btnPrev.backgroundTintList = if (currentPage == 0)
             ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
         else
             ColorStateList.valueOf(Color.parseColor("#3CB371"))
 
-        // 다음 버튼 텍스트
         btnNext.text = if (currentPage == totalPages - 1) "완료 →" else "다음 →"
 
-        // 인디케이터 업데이트
         for (i in 0 until indicatorContainer.childCount) {
             val dot = indicatorContainer.getChildAt(i)
             dot.setBackgroundResource(
@@ -318,28 +297,78 @@ class ArtActivity : AppCompatActivity() {
             )
         }
     }
+    private fun showZoomDialog(imageResId: Int) {
+        val dialog = Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        val view = layoutInflater.inflate(R.layout.dialog_zoom_image, null)
+        val imageView = view.findViewById<ImageView>(R.id.zoomImage)
 
-    private fun selectTab(practice: Boolean) {
-        tabPractice.setTextColor(
-            resources.getColor(if (practice) R.color.black else R.color.gray, null)
-        )
-        tabRecord.setTextColor(
-            resources.getColor(if (practice) R.color.gray else R.color.black, null)
-        )
-        underlinePractice.visibility = if (practice) View.VISIBLE else View.GONE
-        underlineRecord.visibility = if (practice) View.GONE else View.VISIBLE
+        Glide.with(this)
+            .load(imageResId)
+            .into(imageView)
+
+        view.setOnClickListener { dialog.dismiss() }
+        dialog.setContentView(view)
+        dialog.show()
+    }
+
+    private fun getImageNameByResId(resId: Int): String {
+        return when(resId) {
+            R.drawable.art1 -> "art1"
+            R.drawable.art2 -> "art2"
+            R.drawable.art3 -> "art3"
+            R.drawable.art4 -> "art4"
+            R.drawable.art5 -> "art5"
+            R.drawable.art6 -> "art6"
+            R.drawable.art7 -> "art7"
+            R.drawable.art8 -> "art8"
+            R.drawable.art9 -> "art9"
+            R.drawable.art10 -> "art10"
+            R.drawable.art11 -> "art11"
+            R.drawable.art12 -> "art12"
+            else -> ""
+        }
     }
 
     private fun saveToDatabase() {
-        val result = hashMapOf(
-            "selectedImageIndices" to selectedImageIndices,
-            "selectedImageResourceIds" to selectedImageResourceIds,
-            "firstImageAnswers" to userAnswers[0],
-            "secondImageAnswers" to userAnswers[1],
-            "timestamp" to System.currentTimeMillis()
+        val auth = FirebaseAuth.getInstance()
+        val email = auth.currentUser?.email ?: return
+        val db = FirebaseFirestore.getInstance()
+        val timestamp = Timestamp.now()
+
+        val firstImageName = getImageNameByResId(selectedImageResourceIds.getOrNull(0) ?: 0)
+        val secondImageName = getImageNameByResId(selectedImageResourceIds.getOrNull(1) ?: 0)
+
+        // ▶ 문서 ID를 "yyyy-MM-dd_HH:mm:ss.SSS" 형식으로 설정
+        val sdf = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault())
+        val docId = sdf.format(timestamp.toDate())
+
+        val data = hashMapOf<String, Any>(
+            "firstImage" to firstImageName,
+            "secondImage" to secondImageName,
+            "timestamp" to timestamp
         )
 
-        // 실제 Firebase 저장 주석 해제 및 사용
-        // FirebaseFirestore.getInstance().collection("art_training").add(result)
+        // ▶ 첫 번째 이미지 질문 답변 저장 (1art_1 ~ 1art_3)
+        userAnswers[0].forEachIndexed { index, answer ->
+            data["1art_${index + 1}"] = answer
+        }
+
+        // ▶ 두 번째 이미지 질문 답변 저장 (2art_1 ~ 2art_3)
+        userAnswers[1].forEachIndexed { index, answer ->
+            data["2art_${index + 1}"] = answer
+        }
+
+        db.collection("user")
+            .document(email)
+            .collection("mindArt")
+            .document(docId)
+            .set(data)
+            .addOnSuccessListener {
+                Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "저장 실패: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
     }
+
 }

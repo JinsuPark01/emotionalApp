@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
@@ -79,8 +80,7 @@ class SignUpActivity : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val userId = email
-                        val signUpDate =
-                            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                        val signUpDate = Timestamp.now()
 
                         val userData = hashMapOf(
                             "email" to email,

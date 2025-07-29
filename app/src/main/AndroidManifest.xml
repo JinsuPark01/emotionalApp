@@ -78,6 +78,9 @@
         <activity android:name=".ui.emotion.SelectActivity" android:exported="false" />
         <activity android:name=".ui.emotion.AnchorActivity" android:exported="false" />
         <activity android:name=".ui.emotion.ArcActivity" android:exported="false" />
+        <activity android:name=".ui.emotion.ArcReportActivity" android:exported="false" />
+        <activity android:name=".ui.emotion.AnchorReportActivity" android:exported="false" />
+        <activity android:name=".ui.weekly.WeeklyReportActivity" android:exported="false" />
 
         <activity android:name=".ui.emotion.EmotionAvoidanceQuizActivity" android:exported="false" />
 

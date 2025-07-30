@@ -4,39 +4,70 @@
     android:padding="24dp">
 
     <LinearLayout
-        android:id="@+id/optionContainerTrap2Wrapper"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- 질문 -->
+        <!-- 질문 5 -->
         <TextView
-            android:id="@+id/textQuestionTrap2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="4. 생각의 덫을 찾아냈나요? 어떤 덫인가요?"
+            android:text="5. 여러분들이 느꼈던 것과 다른 해석을 만들어볼까요?"
             android:textSize="16sp"
             android:textColor="#000000"
-            android:lineSpacingExtra="4dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp" />
 
-        <!-- 옵션 리스트를 추가할 컨테이너 -->
-        <LinearLayout
-            android:id="@+id/optionContainerTrap2"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <!-- 저장 버튼도 LinearLayout 안에 포함 -->
-        <Button
-            android:id="@+id/btnSaveTrap2"
+        <EditText
+            android:id="@+id/answer5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="저장"
-            android:backgroundTint="@color/button_color_mind"
-            android:textColor="#FFFFFF"
+            android:hint="답변을 입력하세요"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
             android:textSize="16sp"
-            android:layout_marginTop="24dp" />
+            android:layout_marginBottom="16dp" />
 
+        <!-- 도움이 될 질문 목록 -->
+        <LinearLayout
+            android:id="@+id/accordionQuestionList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/tvQuestionList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="도움이 될 질문 목록이에요!"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iconArrow"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_back_arrow"
+                android:rotation="270" /> <!-- 회전 90도: 아래로 향하게 -->
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD" />
+
+        <TextView
+            android:id="@+id/tvQuestionListDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="- 그 생각이 확실할까요?\n\n- 이 생각이 사실이 아니라는 증거는 무엇인가요?\n\n- 일어날 가능성이 있는 다른 것들을 나의 강렬한 정서 때문에 놓치고 있지는 않나요?\n\n-  지금 내가 이렇게 느끼고 생각하는 데에 영향을 준 여러 가지 요소들이 있다면, 어떤 것들이고 각각이 차지하는 비중은 어느 정도일까요?\n\n-  여러분과 같은 생각을 친구가 한다면, 나는 친구에게 뭐라고 말해줄까요?"
+            android:textSize="14sp"
+            android:visibility="gone" />
     </LinearLayout>
 </ScrollView>

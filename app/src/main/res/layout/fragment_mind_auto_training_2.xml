@@ -4,65 +4,27 @@
     android:padding="24dp">
 
     <LinearLayout
+        android:id="@+id/optionContainerTrap2Wrapper"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- 질문 1 -->
+        <!-- 질문 -->
         <TextView
+            android:id="@+id/textQuestionTrap2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1. 여러분들이 기록하고 싶은 상황을 되볼아봅시다. 언제, 어디서, 무엇을 하고 있었나요?"
+            android:text="4. 생각의 덫을 찾아냈나요? 어떤 덫인가요?"
             android:textSize="16sp"
             android:textColor="#000000"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/answer1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="답변을 입력하세요"
-            android:background="@drawable/edit_text_background"
-            android:padding="12dp"
-            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
             android:layout_marginBottom="16dp" />
 
-        <!-- 질문 2 -->
-        <TextView
+        <!-- 옵션 리스트를 추가할 컨테이너 -->
+        <LinearLayout
+            android:id="@+id/optionContainerTrap2"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="2. 그 상황이나 감정을 마주했을 때 머릿속에 떠오른 생각이나 이미지, 믿음은 무엇이었나요?"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/answer2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="답변을 입력하세요"
-            android:background="@drawable/edit_text_background"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
-        <!-- 질문 3 -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="3. 어떤 감정을 느꼈고, 강도는 어느 정도였나요?"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/answer3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="답변을 입력하세요"
-            android:background="@drawable/edit_text_background"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

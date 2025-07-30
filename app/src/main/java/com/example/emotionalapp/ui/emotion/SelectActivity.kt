@@ -1,5 +1,6 @@
 package com.example.emotionalapp.ui.emotion
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -36,7 +37,16 @@ class SelectActivity : AppCompatActivity() {
         btnBack = findViewById(R.id.btnBack)
         btnSelect = findViewById(R.id.btnSelect)
 
-        btnBack.setOnClickListener { finish() }
+        btnBack.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("훈련 종료")
+                .setMessage("훈련을 종료하고 나가시겠어요?")
+                .setPositiveButton("예") { _, _ ->
+                    finish()
+                }
+                .setNegativeButton("아니오", null)
+                .show()
+        }
 
         mindButtons = listOf(
             findViewById(R.id.btnMind1),

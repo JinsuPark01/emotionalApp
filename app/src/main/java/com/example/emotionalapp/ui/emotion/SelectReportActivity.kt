@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -158,6 +159,15 @@ class SelectReportActivity : AppCompatActivity() {
                     days.getOrNull(value.toInt()) ?: value.toString()
             }
         }
+
+        chart.legend.apply {
+            verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            orientation = Legend.LegendOrientation.HORIZONTAL
+            setDrawInside(false)  // 차트 내부가 아니라 외부에 표시
+            yOffset = 16f         // x축과의 간격 (기본 0~6f)
+        }
+
 
         chart.axisLeft.apply {
             granularity = 1f

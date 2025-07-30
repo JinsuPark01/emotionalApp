@@ -1,5 +1,6 @@
 package com.example.emotionalapp.ui.mind
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -43,7 +44,17 @@ class AutoActivity : AppCompatActivity() {
         pageContainer = findViewById(R.id.pageContainer)
         titleText = findViewById(R.id.titleText)
 
-        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
+        val btnBack = findViewById<View>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("훈련 종료")
+                .setMessage("훈련을 종료하고 나가시겠어요?")
+                .setPositiveButton("예") { _, _ ->
+                    finish()
+                }
+                .setNegativeButton("아니오", null)
+                .show()
+        }
 
         setupIndicators(totalPages)
         updatePage()

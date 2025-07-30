@@ -1,7 +1,9 @@
 package com.example.emotionalapp.ui.login_signup
 
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -41,8 +43,7 @@ class SignUpActivity : AppCompatActivity() {
         tvPasswordError = findViewById(R.id.tvPasswordError)
         tvPasswordConfirmError = findViewById(R.id.tvPasswordConfirmError)
 
-        findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbarSignup)
-            .setNavigationOnClickListener { finish() }
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
 
         btnSignup.setOnClickListener {
             clearErrors()
@@ -53,24 +54,39 @@ class SignUpActivity : AppCompatActivity() {
 
             var hasError = false
 
+            // 이메일 빈값 + 형식 체크
             if (email.isEmpty()) {
                 tvEmailError.text = "이메일을 입력해주세요."
-                tvEmailError.visibility = android.view.View.VISIBLE
+                tvEmailError.visibility = View.VISIBLE
+                hasError = true
+            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                tvEmailError.text = "유효한 이메일 형식이 아닙니다."
+                tvEmailError.visibility = View.VISIBLE
                 hasError = true
             }
+
+            // 비밀번호 빈값 + 길이 체크
             if (password.isEmpty()) {
                 tvPasswordError.text = "비밀번호를 입력해주세요."
-                tvPasswordError.visibility = android.view.View.VISIBLE
+                tvPasswordError.visibility = View.VISIBLE
+                hasError = true
+            } else if (password.length < 6) {
+                tvPasswordError.text = "비밀번호는 6자리 이상이어야 합니다."
+                tvPasswordError.visibility = View.VISIBLE
                 hasError = true
             }
+
+            // 비밀번호 확인 빈값
             if (confirmPassword.isEmpty()) {
                 tvPasswordConfirmError.text = "비밀번호 확인을 입력해주세요."
-                tvPasswordConfirmError.visibility = android.view.View.VISIBLE
+                tvPasswordConfirmError.visibility = View.VISIBLE
                 hasError = true
             }
+
+            // 비밀번호 일치 확인
             if (password.isNotEmpty() && confirmPassword.isNotEmpty() && password != confirmPassword) {
                 tvPasswordConfirmError.text = "비밀번호가 일치하지 않습니다."
-                tvPasswordConfirmError.visibility = android.view.View.VISIBLE
+                tvPasswordConfirmError.visibility = View.VISIBLE
                 hasError = true
             }
 
@@ -102,13 +118,14 @@ class SignUpActivity : AppCompatActivity() {
                         val exception = task.exception
                         if (exception is FirebaseAuthUserCollisionException) {
                             tvEmailError.text = "이미 가입된 이메일입니다."
-                            tvEmailError.visibility = android.view.View.VISIBLE
+                            tvEmailError.visibility = View.VISIBLE
                         } else {
                             showToast(exception?.message ?: "회원가입 실패")
                         }
                     }
                 }
         }
+
     }
 
     private fun clearErrors() {

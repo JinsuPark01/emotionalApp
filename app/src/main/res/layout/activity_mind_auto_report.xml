@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- 제목 영역 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자동적 평가 기록"
+            android:textSize="18sp"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- 페이지별 콘텐츠 영역 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <!-- 제목 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기록"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginBottom="12dp" />
+
+            <!-- 질문 1 -->
+            <TextView
+                android:id="@+id/question1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. 여러분들이 기록하고 싶은 상황을 되볼아봅시다. 언제, 어디서, 무엇을 하고 있었나요?"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/answer1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="답변을 입력하세요"
+                android:background="@drawable/edit_text_background"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"
+                android:inputType="none"/>
+
+            <!-- 질문 2 -->
+            <TextView
+                android:id="@+id/question2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. 그 상황이나 감정을 마주했을 때 머릿속에 떠오른 생각이나 이미지, 믿음은 무엇이었나요?"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/answer2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="답변을 입력하세요"
+                android:background="@drawable/edit_text_background"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"
+                android:inputType="none"/>
+
+            <!-- 질문 3 -->
+            <TextView
+                android:id="@+id/question3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. 어떤 감정을 느꼈고, 강도는 어느 정도였나요?"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/answer3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="답변을 입력하세요"
+                android:background="@drawable/edit_text_background"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"
+                android:inputType="none"/>
+
+            <!-- 질문 4 -->
+            <TextView
+                android:id="@+id/question4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4. 생각의 덫을 찾아냈나요? 어떤 덫인가요?"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginBottom="4dp" />
+
+            <LinearLayout
+                android:id="@+id/optionContainerTrap2"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!-- 질문 5 -->
+            <TextView
+                android:id="@+id/question5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="5. 여러분들이 느꼈던 것과 다른 해석을 만들어볼까요?"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/answer5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="답변을 입력하세요"
+                android:background="@drawable/edit_text_background"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"
+                android:inputType="none"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

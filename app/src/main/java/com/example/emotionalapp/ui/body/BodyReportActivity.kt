@@ -10,14 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.ReportAdapter
 import com.example.emotionalapp.data.ReportItem
-import com.example.emotionalapp.ui.login_signup.LoginActivity
+import com.example.emotionalapp.ui.body.BodyTrainingRecordViewActivity
+import com.example.emotionalapp.ui.weekly.WeeklyReportActivity
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.Timestamp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.util.*
 
 class BodyReportActivity : AppCompatActivity() {
 
@@ -31,12 +34,17 @@ class BodyReportActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerViewBodyRecords)
         recyclerView.layoutManager = LinearLayoutManager(this)
-
         adapter = ReportAdapter(reportList) { reportItem ->
-            val intent = Intent(this, BodyTrainingRecordViewActivity::class.java)
+            val intent = if (reportItem.name.contains("주간 점검")) {
+                Intent(this, WeeklyReportActivity::class.java)
+            } else {
+                Intent(this, BodyTrainingRecordViewActivity::class.java)
+            }
+
             reportItem.timeStamp?.let {
                 intent.putExtra("reportDateMillis", it.toDate().time)
             }
+
             startActivity(intent)
         }
 
@@ -51,13 +59,7 @@ class BodyReportActivity : AppCompatActivity() {
 
     private fun loadReports() {
         val user = FirebaseAuth.getInstance().currentUser
-        val userEmail = user?.email
-
-        if (user == null || userEmail == null) {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-            return
-        }
+        val userEmail = user?.email ?: return
 
         val db = FirebaseFirestore.getInstance()
 
@@ -71,21 +73,33 @@ class BodyReportActivity : AppCompatActivity() {
                     .get()
                     .await()
 
-                snapshot.documents.forEach { doc ->
+                for (doc in snapshot.documents) {
                     val content = doc.getString("content") ?: "소감 없음"
 
-                    val timestamp: Timestamp? = try {
-                        doc.getTimestamp("date")
-                    } catch (e: Exception) {
-                        Log.e("TimestampParse", "date 필드 파싱 오류: ${e.message}")
-                        null
+                    // ✅ 다양한 형식의 date 처리
+                    val timestamp = when (val rawDate = doc.get("date")) {
+                        is Timestamp -> rawDate
+                        is Long -> Timestamp(Date(rawDate))
+                        is String -> {
+                            try {
+                                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                                Timestamp(sdf.parse(rawDate)!!)
+                            } catch (e: Exception) {
+                                null
+                            }
+                        }
+                        else -> null
                     }
 
-                    val formattedDate = timestamp?.toDate()?.toString() ?: "날짜 없음"
+                    val formattedDate = timestamp?.let {
+                        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it.toDate())
+                    } ?: "날짜 없음"
+
+                    val title = "훈련 소감"
 
                     reportList.add(
                         ReportItem(
-                            name = content.take(10) + "...",
+                            name = title,
                             date = formattedDate,
                             timeStamp = timestamp
                         )

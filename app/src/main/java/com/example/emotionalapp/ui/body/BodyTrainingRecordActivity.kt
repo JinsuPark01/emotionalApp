@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -51,7 +52,8 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
                 val db = FirebaseFirestore.getInstance()
                 val record = hashMapOf(
                     "content" to feedbackText,
-                    "date" to System.currentTimeMillis()
+                    "date" to Timestamp.now(),                // ✅ Timestamp로 저장
+                    "trainingId" to trainingId                // ✅ trainingId도 함께 저장
                 )
 
                 db.collection("users")

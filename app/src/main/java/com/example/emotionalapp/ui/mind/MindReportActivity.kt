@@ -83,7 +83,7 @@ class MindReportActivity : BottomNavActivity() {
                 reportList.clear()
 
                 // weekly3 컬렉션에서 가장 오래된 2번째 문서만 가져오기
-                val nthDoc = getNthOldestDoc(userEmail = userEmail, collectionName = "weekly3", n = 2)
+                val nthDoc = getNthOldestDoc(userEmail = userEmail, collectionName = "weekly3", n = 3)
                 val mindArtDocs = db.collection("user").document(userEmail).collection("mindArt").get().await()
                 val mindTrapDocs = db.collection("user").document(userEmail).collection("mindTrap").get().await()
                 val mindAutoDocs = db.collection("user").document(userEmail).collection("mindAuto").get().await()
@@ -137,7 +137,7 @@ class MindReportActivity : BottomNavActivity() {
         }
     }
 
-    suspend fun getNthOldestDoc(userEmail: String, collectionName: String, n: Int): DocumentSnapshot? {
+    private suspend fun getNthOldestDoc(userEmail: String, collectionName: String, n: Int): DocumentSnapshot? {
         if (n < 1) return null // 1부터 시작하는 인덱스
 
         var lastDoc: DocumentSnapshot? = null

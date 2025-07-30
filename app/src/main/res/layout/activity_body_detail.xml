@@ -29,185 +29,30 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- 탭 메뉴 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp">
-
-        <!-- 연습하기 탭 -->
-        <LinearLayout
-            android:id="@+id/tabPracticeContainer"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tabPractice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingVertical="12dp"
-                android:text="연습하기"
-                android:textSize="16sp"
-                android:textColor="@color/black" />
-
-            <View
-                android:id="@+id/underlinePractice"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/black"
-                android:visibility="visible" />
-        </LinearLayout>
-
-        <!-- 기록보기 탭 -->
-        <LinearLayout
-            android:id="@+id/tabRecordContainer"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tabRecord"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingVertical="12dp"
-                android:text="기록보기"
-                android:textSize="16sp"
-                android:textColor="@color/gray" />
-
-            <View
-                android:id="@+id/underlineRecord"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/black"
-                android:visibility="gone" />
-        </LinearLayout>
-    </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#DDDDDD" />
 
-    <!-- 컨텐츠 영역 -->
-    <FrameLayout
+    <!-- 연습 콘텐츠 -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:padding="16dp">
 
-        <!-- 연습하기 -->
-        <ScrollView
-            android:id="@+id/layoutPractice"
+        <TextView
+            android:id="@+id/tvPracticeContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp">
+            android:layout_height="wrap_content"
+            android:text="연습하기 콘텐츠를 불러오는 중..."
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp"
+            android:textColor="@color/black" />
+    </ScrollView>
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <View
-                    android:id="@+id/viewGrayBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="#DDDDDD" />
-
-                <TextView
-                    android:id="@+id/tvPracticeContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="연습하기 콘텐츠를 불러오는 중..."
-                    android:textSize="14sp"
-                    android:lineSpacingExtra="4dp"
-                    android:layout_marginTop="8dp"/>
-            </LinearLayout>
-        </ScrollView>
-
-        <!-- 기록보기 -->
-        <LinearLayout
-            android:id="@+id/layoutRecord"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:visibility="gone">
-
-            <!-- empty / content 모두 이 FrameLayout 안에서 토글됩니다 -->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <!-- 기록 없을 때 -->
-                <TextView
-                    android:id="@+id/tvEmptyRecord"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="훈련을 마치고 소감을 작성해주세요."
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:visibility="gone"/>
-
-                <!-- 기록 있을 때 -->
-                <ScrollView
-                    android:id="@+id/scrollRecordContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvRecordTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="USER님의 소감입니다."
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/black"
-                            android:layout_marginBottom="12dp"/>
-
-                        <TextView
-                            android:id="@+id/tvRecordContent"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/edit_text_background"
-                            android:padding="16dp"
-                            android:textSize="16sp"
-                            android:textColor="@android:color/black"
-                            android:layout_marginBottom="16dp"/>
-                    </LinearLayout>
-                </ScrollView>
-            </FrameLayout>
-
-            <Button
-                android:id="@+id/btnDeleteRecord"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:text="기록 삭제"
-                android:backgroundTint="@color/button_color_body"
-                android:textColor="@android:color/white"/>
-        </LinearLayout>
-    </FrameLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#DDDDDD" />
-
+    <!-- Training Start 버튼 -->
     <LinearLayout
-        android:id="@+id/layoutStartPracticeBar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"

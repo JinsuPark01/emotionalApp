@@ -57,29 +57,16 @@ class TrapReportActivity : AppCompatActivity() {
                 val situation = doc.get("situation") as? String ?: ""
                 val thought = doc.get("thought") as? String ?: ""
                 val trap = doc.get("trap") as? String ?: ""
-
-                val validityMap = doc.get("validity") as? Map<*, *>
-
-                val assumptions = doc.get("assumption") as? Map<*, *>
-                val assumptionAnswer1 = assumptions?.get("answer1") as? String ?: ""
-                val assumptionAnswer2 = assumptions?.get("answer2") as? String ?: ""
-                val assumptionAnswer3 = assumptions?.get("answer3") as? String ?: ""
-                val assumptionAnswer4 = assumptions?.get("answer4") as? String ?: ""
-
-                val perspectives = doc.get("perspective") as? Map<*, *>
-                val perspectiveAnswer1 = perspectives?.get("answer1") as? String ?: ""
-                val perspectiveAnswer2 = perspectives?.get("answer2") as? String ?: ""
-                val perspectiveAnswer3 = perspectives?.get("answer3") as? String ?: ""
-
                 val alternative = doc.get("alternative") as? String ?: ""
 
                 findViewById<TextView>(R.id.trapReportTitleText).text = dateString
                 findViewById<TextView>(R.id.reportSituation).text = situation
                 findViewById<TextView>(R.id.reportThought).text = thought
                 findViewById<TextView>(R.id.reportTrap).text = trap
-
+                findViewById<TextView>(R.id.reportAlternative).text = alternative
 
                 val validityContainer = findViewById<View>(R.id.validityContainer)
+                val validityMap = doc.get("validity") as? Map<*, *>
                 if (!isSectionEmpty(validityMap)) {
                     validityContainer.visibility = View.VISIBLE
 
@@ -94,14 +81,38 @@ class TrapReportActivity : AppCompatActivity() {
                 } else {
                     validityContainer.visibility = View.GONE
                 }
-                findViewById<TextView>(R.id.assumptionAnswer1).text = assumptionAnswer1
-                findViewById<TextView>(R.id.assumptionAnswer2).text = assumptionAnswer2
-                findViewById<TextView>(R.id.assumptionAnswer3).text = assumptionAnswer3
-                findViewById<TextView>(R.id.assumptionAnswer4).text = assumptionAnswer4
-                findViewById<TextView>(R.id.perspectiveAnswer1).text = perspectiveAnswer1
-                findViewById<TextView>(R.id.perspectiveAnswer2).text = perspectiveAnswer2
-                findViewById<TextView>(R.id.perspectiveAnswer3).text = perspectiveAnswer3
-                findViewById<TextView>(R.id.reportAlternative).text = alternative
+
+                val assumptionContainer = findViewById<View>(R.id.assumptionContainer)
+                val assumptions = doc.get("assumption") as? Map<*, *>
+                if (!isSectionEmpty(assumptions)) {
+                    assumptionContainer.visibility = View.VISIBLE
+
+                    findViewById<TextView>(R.id.assumptionAnswer1).text =
+                        assumptions?.get("answer1") as? String ?: ""
+                    findViewById<TextView>(R.id.assumptionAnswer2).text =
+                        assumptions?.get("answer2") as? String ?: ""
+                    findViewById<TextView>(R.id.assumptionAnswer3).text =
+                        assumptions?.get("answer3") as? String ?: ""
+                    findViewById<TextView>(R.id.assumptionAnswer4).text =
+                        assumptions?.get("answer4") as? String ?: ""
+                } else {
+                    assumptionContainer.visibility = View.GONE
+                }
+
+                val perspectiveContainer = findViewById<View>(R.id.perspectiveContainer)
+                val perspectives = doc.get("perspective") as? Map<*, *>
+                if (!isSectionEmpty(perspectives)) {
+                    perspectiveContainer.visibility = View.VISIBLE
+
+                    findViewById<TextView>(R.id.perspectiveAnswer1).text =
+                        perspectives?.get("answer1") as? String ?: ""
+                    findViewById<TextView>(R.id.perspectiveAnswer2).text =
+                        perspectives?.get("answer2") as? String ?: ""
+                    findViewById<TextView>(R.id.perspectiveAnswer3).text =
+                        perspectives?.get("answer3") as? String ?: ""
+                } else {
+                    perspectiveContainer.visibility = View.GONE
+                }
             }
             .addOnFailureListener { e ->
                 Log.e("FirestoreError", "가져오기 실패: ${e.message}")

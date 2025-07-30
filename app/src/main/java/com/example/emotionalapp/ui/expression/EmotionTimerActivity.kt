@@ -13,12 +13,18 @@ class EmotionTimerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEmotionTimerBinding
     private var timer: CountDownTimer? = null
-    private val totalTimeInMillis: Long = 120 * 1000
+
+    // --- 여기가 핵심 수정 부분입니다 (2) ---
+    // 변수로 변경하고, onCreate에서 값을 받습니다.
+    private var totalTimeInMillis: Long = 120 * 1000 // 기본값 2분
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEmotionTimerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Intent로부터 선택된 시간 값을 받아옵니다. 없으면 기본값(2분) 사용.
+        totalTimeInMillis = intent.getLongExtra("TIMER_DURATION", 120 * 1000L)
 
         // 타이머 콘텐츠 레이아웃을 pageContainer에 추가
         val timerContent = layoutInflater.inflate(R.layout.content_emotion_timer, binding.pageContainer, true)
@@ -35,6 +41,7 @@ class EmotionTimerActivity : AppCompatActivity() {
         }
     }
 
+    // ... (나머지 코드는 변경 없습니다) ...
     private fun startTimer(progressCircular: CircularProgressIndicator, tvTimer: TextView, tvGuidance: TextView) {
         val totalSeconds = (totalTimeInMillis / 1000).toInt()
         progressCircular.max = totalSeconds

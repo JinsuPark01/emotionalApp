@@ -65,7 +65,7 @@ class BodyActivity : BottomNavActivity() {
 
     private fun loadDetailTrainingData() {
         val data = listOf(
-            DetailTrainingItem("bt_detail_000", "주차별 점검", "질문지를 통한 마음 돌아보기",
+            DetailTrainingItem("weekly_training", "주차별 점검", "질문지를 통한 마음 돌아보기",
                 TrainingType.BODY_TRAINING, "100", R.color.button_color_body, targetActivityClass = WeeklyActivity::class.java),
 
             DetailTrainingItem("bt_detail_001", "소개", "신체자각 훈련에 대한 설명",

@@ -45,7 +45,7 @@ class ExpressionActivity : AppCompatActivity() {
     private fun loadTrainingData() {
         val trainingList = listOf(
             DetailTrainingItem(
-                id = "expression_000",
+                id = "weekly_training",
                 title = "주차별 점검",
                 subtitle = "질문지를 통한 마음 돌아보기",
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,

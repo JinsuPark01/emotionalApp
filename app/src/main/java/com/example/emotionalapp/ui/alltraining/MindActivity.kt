@@ -82,7 +82,7 @@ class MindActivity : BottomNavActivity() {
         // 실제 데이터는 ViewModel, Repository, DB 등에서 가져옵니다.
         val sampleDetailData = listOf(
             DetailTrainingItem(
-                id = "mind_detail_000",
+                id = "weekly_training",
                 title = "주차별 점검",
                 subtitle = "질문지를 통한 마음 돌아보기",
                 TrainingType.MIND_WATCHING_TRAINING,

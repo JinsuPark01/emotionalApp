@@ -91,5 +91,8 @@
         <activity android:name=".ui.expression.AvoidanceGuideActivity" android:exported="false" />
         <activity android:name=".ui.expression.DrivenActionGuideActivity" android:exported="false" />
 
+        <activity android:name=".ui.body.BodyTrainingRecordViewActivity" />
+
+
     </application>
 </manifest>

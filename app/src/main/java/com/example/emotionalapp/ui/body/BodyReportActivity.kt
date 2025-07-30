@@ -3,78 +3,115 @@ package com.example.emotionalapp.ui.body
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.TextView
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.ReportAdapter
 import com.example.emotionalapp.data.ReportItem
-import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
-import com.example.emotionalapp.ui.alltraining.BodyActivity
-import com.example.emotionalapp.ui.alltraining.EmotionActivity
-import com.example.emotionalapp.ui.open.BottomNavActivity
+import com.example.emotionalapp.ui.body.BodyTrainingRecordViewActivity
+import com.example.emotionalapp.ui.weekly.WeeklyReportActivity
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.util.*
 
-class BodyReportActivity : BottomNavActivity() {
+class BodyReportActivity : AppCompatActivity() {
 
-    override val isAllTrainingPage: Boolean = true // 하단 네비게이션 비활성화 유지
-
-    private lateinit var trainingRecyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ReportAdapter
-    private val reportList = mutableListOf<ReportItem>() // 더미 데이터용 리스트
+    private val reportList = ArrayList<ReportItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_training_report)
+        setContentView(R.layout.activity_body_report)
 
-        trainingRecyclerView = findViewById(R.id.trainingRecyclerView)
-
-        setupBottomNavigation()
-        setupTabListeners()
-        setupRecyclerView()
-    }
-
-    private fun setupRecyclerView() {
-        trainingRecyclerView.layoutManager = LinearLayoutManager(this)
-
+        recyclerView = findViewById(R.id.recyclerViewBodyRecords)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = ReportAdapter(reportList) { reportItem ->
-            val intent = when (reportItem.name) {
-                // 기록 아이템 name에 따라 다른 액티비티로 이동하게끔 구현해놨음
-                "PHQ-9 결과 보기" -> Intent(this, AllTrainingPageActivity::class.java)
-                "GAD-7 결과 보기" -> Intent(this, AllTrainingPageActivity::class.java)
-                "PANAS 결과 보기" -> Intent(this, AllTrainingPageActivity::class.java)
-                else -> null
+            val intent = if (reportItem.name.contains("주간 점검")) {
+                Intent(this, WeeklyReportActivity::class.java)
+            } else {
+                Intent(this, BodyTrainingRecordViewActivity::class.java)
             }
-            intent?.let { startActivity(it) }
+
+            reportItem.timeStamp?.let {
+                intent.putExtra("reportDateMillis", it.toDate().time)
+            }
+
+            startActivity(intent)
         }
 
+        recyclerView.adapter = adapter
 
-        trainingRecyclerView.adapter = adapter
-
-        // 예시 데이터 추가
-        reportList.add(ReportItem("2025-07-27", "PHQ-9 결과 보기"))
-        reportList.add(ReportItem("2025-07-26", "GAD-7 결과 보기"))
-        reportList.add(ReportItem("2025-07-25", "PANAS 결과 보기"))
-
-        adapter.notifyDataSetChanged()
-    }
-
-    private fun setupTabListeners() {
-        val tabAll = findViewById<TextView>(R.id.tabAll)
-        val tabToday = findViewById<TextView>(R.id.tabToday)
-
-        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
-
-        // 전체 훈련 탭 클릭 시 이동
-        tabAll.setOnClickListener {
-            val intent = Intent(this, BodyActivity::class.java)
-            startActivity(intent)
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
             finish()
         }
 
-        // 금일 훈련 탭은 현재 페이지이므로 클릭 시 아무 동작 없음
-        tabToday.setOnClickListener {
-            Log.d("TodayTrainingPage", "금일 훈련 탭 클릭됨 (현재 페이지)")
+        loadReports()
+    }
+
+    private fun loadReports() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email ?: return
+
+        val db = FirebaseFirestore.getInstance()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                reportList.clear()
+
+                val snapshot = db.collection("users")
+                    .document(userEmail)
+                    .collection("bodyRecord")
+                    .get()
+                    .await()
+
+                for (doc in snapshot.documents) {
+                    val content = doc.getString("content") ?: "소감 없음"
+
+                    // ✅ 다양한 형식의 date 처리
+                    val timestamp = when (val rawDate = doc.get("date")) {
+                        is Timestamp -> rawDate
+                        is Long -> Timestamp(Date(rawDate))
+                        is String -> {
+                            try {
+                                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                                Timestamp(sdf.parse(rawDate)!!)
+                            } catch (e: Exception) {
+                                null
+                            }
+                        }
+                        else -> null
+                    }
+
+                    val formattedDate = timestamp?.let {
+                        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it.toDate())
+                    } ?: "날짜 없음"
+
+                    val title = "훈련 소감"
+
+                    reportList.add(
+                        ReportItem(
+                            name = title,
+                            date = formattedDate,
+                            timeStamp = timestamp
+                        )
+                    )
+                }
+
+                reportList.sortByDescending { it.timeStamp }
+                adapter.notifyDataSetChanged()
+
+            } catch (e: Exception) {
+                Log.e("Firestore", "기록 불러오기 실패: ${e.message}", e)
+            }
         }
     }
 }

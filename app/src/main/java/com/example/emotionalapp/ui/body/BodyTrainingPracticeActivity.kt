@@ -47,6 +47,18 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
         val trainingId = intent.getIntExtra("TRAINING_ID", 2)
         val trainingTitle = intent.getStringExtra("TRAINING_TITLE") ?: "연습"
 
+        // 훈련 ID 문자열로 매핑
+        val trainingIdStr = when (trainingId) {
+            2 -> "bt_detail_002"
+            3 -> "bt_detail_003"
+            4 -> "bt_detail_004"
+            5 -> "bt_detail_005"
+            6 -> "bt_detail_006"
+            7 -> "bt_detail_007"
+            8 -> "bt_detail_008"
+            else -> "bt_detail_002"
+        }
+
         // 뷰 바인딩
         btnStart = findViewById(R.id.btnStart)
         btnStopPractice = findViewById(R.id.btnStopPractice)
@@ -85,23 +97,24 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
                 handler.post(updateRunnable)
             }
         }
+
         btnStopPractice.setOnClickListener {
             if (mediaPlayer.isPlaying) {
                 mediaPlayer.pause()
                 handler.removeCallbacks(updateRunnable)
             }
         }
+
         btnRecord.setOnClickListener {
             if (mediaPlayer.isPlaying) {
                 mediaPlayer.pause()
                 handler.removeCallbacks(updateRunnable)
             }
             startActivity(Intent(this, BodyTrainingRecordActivity::class.java).apply {
-                putExtra("TRAINING_ID", trainingId)
+                putExtra("TRAINING_ID", trainingIdStr) // 🔧 수정된 부분
             })
         }
 
-        // 재생 완료 시
         mediaPlayer.setOnCompletionListener {
             handler.removeCallbacks(updateRunnable)
             progressBar.progress = progressBar.max
@@ -117,7 +130,6 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
         }
     }
 
-    // 밀리초 → "M:SS" 포맷
     private fun formatTime(ms: Int): String {
         val totalSec = ms / 1000
         val min = totalSec / 60
@@ -125,10 +137,11 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
         return String.format("%d:%02d", min, sec)
     }
 
-    // 현재는 test_audio.mp3 한 가지만 매핑
     private fun getAudioResId(id: Int): Int = R.raw.test_audio
+}
 
-    // 훈련 ID → raw 리소스 매핑 함수
+
+// 훈련 ID → raw 리소스 매핑 함수
 //    private fun getAudioResId(id: Int): Int = when (id) {
 //        2 -> R.raw.training_002
 //        3 -> R.raw.training_003
@@ -139,4 +152,4 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
 //        8 -> R.raw.training_008
 //        else -> R.raw.training_002
 //    }
-}
+

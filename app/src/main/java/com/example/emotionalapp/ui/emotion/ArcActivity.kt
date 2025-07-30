@@ -1,5 +1,6 @@
 package com.example.emotionalapp.ui.emotion
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -52,7 +53,16 @@ class ArcActivity : AppCompatActivity() {
 
 
         val btnBack = findViewById<View>(R.id.btnBack)
-        btnBack.setOnClickListener { finish() }
+        btnBack.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("훈련 종료")
+                .setMessage("훈련을 종료하고 나가시겠어요?")
+                .setPositiveButton("예") { _, _ ->
+                    finish()
+                }
+                .setNegativeButton("아니오", null)
+                .show()
+        }
 
         setupIndicators(totalPages)
         updatePage()

@@ -32,6 +32,7 @@
             android:textColor="@android:color/black"/>
     </LinearLayout>
 
+
     <!-- 2. 퀴즈 콘텐츠 영역 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,6 +42,7 @@
         android:padding="24dp"
         android:gravity="center">
 
+        <!-- (기존 퀴즈 콘텐츠 내용은 그대로 유지됩니다) -->
         <TextView
             android:id="@+id/tv_question"
             android:layout_width="match_parent"
@@ -88,13 +90,11 @@
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp"
             android:visibility="gone">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
-
                 <TextView
                     android:id="@+id/tv_feedback_title"
                     android:layout_width="wrap_content"
@@ -103,7 +103,6 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/purple_700"/>
-
                 <TextView
                     android:id="@+id/tv_feedback_content"
                     android:layout_width="match_parent"
@@ -116,7 +115,7 @@
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-    <!-- 3. 하단 네비게이션 바 (스타일 통일) -->
+    <!-- 3. 하단 네비게이션 바 -->
     <LinearLayout
         android:id="@+id/nav_container"
         android:layout_width="match_parent"

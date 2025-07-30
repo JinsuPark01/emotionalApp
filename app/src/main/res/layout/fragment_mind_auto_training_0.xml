@@ -1,4 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,7 +22,7 @@
         android:id="@+id/textDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="이 페이지에서는 정서 훈련에 대한 개요와 설명을 제공합니다. 단계별로 진행되는 훈련을 통해 스스로의 감정을 이해하고 관리하는 방법을 배우게 됩니다."
+        android:text="지금까지 우리는 자동적 사고와 생각의 덫에 대해 알아보았어요. 이번에는 정서를 함께 살펴보려고해요.\n\n어려운 감정을 느끼거나 특정 상황을 경험했을 때, 여기에 기록해봅시다. 여러분들이 되돌아보고 싶은 상황도 좋아요. 언제 어디서 무엇을 하고 있었는지 구체적인 상황과, 그 상황이나 감정을 마주하였을 때 자동적으로 떠오른 생각은 무엇이었는지, 어떤 감정을 느꼈으며, 강도는 어느 정도인지 천천히 헤아려봅시다.\n\n그동안 연습했던 훈련을 되돌아보며, 여러분의 생각의 덫을 찾아보고 대안적인 평가까지도 만들어봐요."
         android:textSize="16sp"
         android:textColor="#555555"
         android:lineSpacingExtra="6dp" />

@@ -55,15 +55,18 @@
         <activity android:name=".ui.body.BodyTrainingRecordActivity" android:exported="false"/>
 
         <activity android:name=".ui.mind.ArtActivity" android:exported="false" />
+        <activity android:name=".ui.mind.ArtReportActivity" android:exported="false" />
         <activity android:name=".ui.mind.TrapActivity" android:exported="false" />
+        <activity android:name=".ui.mind.TrapReportActivity" android:exported="false" />
         <activity android:name=".ui.mind.AutoActivity" android:exported="false" />
+        <activity android:name=".ui.mind.AutoReportActivity" android:exported="false" />
+        <activity android:name=".ui.mind.AutoTrapReportActivity" android:exported="false" />
 
         <activity android:name=".ui.expression.AvoidanceActivity" android:exported="false" />
         <activity android:name=".ui.expression.TopicDetailActivity" android:exported="false" />
 
 
         <activity android:name=".ui.weekly.WeeklyReportActivity" android:exported="false" />
-        <activity android:name=".ui.mind.TrapReportActivity" android:exported="false" />
 
         <activity android:name=".ui.emotion.EmotionAvoidanceQuizActivity" android:exported="false" />
 
@@ -84,6 +87,9 @@
         <activity android:name=".ui.expression.ExpressionReportActivity" android:exported="false" />
 
         <activity android:name=".ui.alltraining.FireTest" android:exported="true" />
+
+        <activity android:name=".ui.expression.AvoidanceGuideActivity" android:exported="false" />
+        <activity android:name=".ui.expression.DrivenActionGuideActivity" android:exported="false" />
 
     </application>
 </manifest>

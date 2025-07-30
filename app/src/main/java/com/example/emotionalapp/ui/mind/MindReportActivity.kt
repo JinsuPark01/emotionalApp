@@ -10,11 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.ReportAdapter
 import com.example.emotionalapp.data.ReportItem
-import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
-import com.example.emotionalapp.ui.alltraining.EmotionActivity
 import com.example.emotionalapp.ui.alltraining.MindActivity
-import com.example.emotionalapp.ui.emotion.AnchorReportActivity
-import com.example.emotionalapp.ui.emotion.ArcReportActivity
 import com.example.emotionalapp.ui.login_signup.LoginActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
 import com.example.emotionalapp.ui.weekly.WeeklyReportActivity
@@ -54,8 +50,11 @@ class MindReportActivity : BottomNavActivity() {
 
         adapter = ReportAdapter(reportList) { reportItem ->
             val intent = when (reportItem.name) {
+                "생각의 덫 통계" -> Intent(this, AutoTrapReportActivity::class.java)
                 "주간 점검 기록 보기" -> Intent(this, WeeklyReportActivity::class.java)
+                "인지적 평가 기록 보기" -> Intent(this, ArtReportActivity::class.java)
                 "생각의 덫 기록 보기" -> Intent(this, TrapReportActivity::class.java)
+                "자동적 평가 기록 보기" -> Intent(this, AutoReportActivity::class.java)
                 else -> null
             }
             reportItem.timeStamp?.let {
@@ -85,18 +84,32 @@ class MindReportActivity : BottomNavActivity() {
 
                 // weekly3 컬렉션에서 가장 오래된 2번째 문서만 가져오기
                 val nthDoc = getNthOldestDoc(userEmail = userEmail, collectionName = "weekly3", n = 2)
+                val mindArtDocs = db.collection("user").document(userEmail).collection("mindArt").get().await()
                 val mindTrapDocs = db.collection("user").document(userEmail).collection("mindTrap").get().await()
-
+                val mindAutoDocs = db.collection("user").document(userEmail).collection("mindAuto").get().await()
 
                 nthDoc?.let {
                     reportList.add(ReportItem(it.id.substringBefore('_'), "주간 점검 기록 보기", it.getTimestamp("date")))
                 }
+                mindArtDocs.documents.forEach { doc ->
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "인지적 평가 기록 보기", doc.getTimestamp("date")))
+                }
                 mindTrapDocs.documents.forEach { doc ->
                     reportList.add(ReportItem(doc.id.substringBefore('_'), "생각의 덫 기록 보기", doc.getTimestamp("date")))
+                }
+                mindAutoDocs.documents.forEach { doc ->
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "자동적 평가 기록 보기", doc.getTimestamp("date")))
                 }
 
                 // 최신 날짜가 위로 오게 정렬
                 reportList.sortBy { it.date }
+                // 생각의 덫 기록이 3개 이상일 경우, 통계 항목을 맨 위에 삽입
+                if (mindTrapDocs.size() >= 3) {
+                    reportList.add(
+                        0,
+                        ReportItem("다른 사용자들의 생각의 덫 기록", "생각의 덫 통계", null)
+                    )
+                }
                 adapter.notifyDataSetChanged()
 
             } catch (e: Exception) {

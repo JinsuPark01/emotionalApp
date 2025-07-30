@@ -51,26 +51,48 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="24dp"/>
 
-            <!-- 감정 선택 버튼들을 담을 컨테이너 -->
             <GridLayout
                 android:id="@+id/grid_emotions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
-                android:alignmentMode="alignMargins">
+                android:alignmentMode="alignMargins"/>
 
-                <!-- 감정 버튼들은 코틀린 코드에서 동적으로 추가 -->
+            <!-- 시간 선택 영역 (ScrollView 안) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="32dp">
 
-            </GridLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="머무를 시간 선택하기"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:layout_marginBottom="8dp"/>
+
+                <RadioGroup
+                    android:id="@+id/rg_timer_duration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton android:id="@+id/rb_1_min" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="1분"/>
+                    <RadioButton android:id="@+id/rb_2_min" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="2분" android:checked="true"/>
+                    <RadioButton android:id="@+id/rb_3_min" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="3분"/>
+                </RadioGroup>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
+    <!-- 삭제했던 하단 바 코드를 다시 복구했습니다. -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#DDDDDD" />
 
-    <!-- 하단 버튼 바 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"

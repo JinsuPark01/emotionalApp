@@ -83,6 +83,9 @@ class DetailTrainingAdapter (
                         displayPercentageText = progressString // 또는 "오류" 등
                         Log.e("DetailTrainingAdapter", "Error parsing fraction: $progressString", e)
                     }
+                } else if (progressString == "GO") {
+                    progressValue = 100
+                    displayPercentageText = progressString
                 } else {
                     // 3. 정수도 아니고, 분수 형태도 아닌 경우 (예: "진행중", "완료" 등)
                     progressValue = 0 // 프로그레스바는 0으로

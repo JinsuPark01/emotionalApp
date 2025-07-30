@@ -82,7 +82,9 @@ class IntroActivity : BottomNavActivity() {
                 title = "소개",
                 subtitle = "정서와 훈련에 대한 설명",
                 TrainingType.INTRO,
-                currentProgress = "75",
+                "1",
+                "1",
+                currentProgress = "GO",
                 backgroundColorResId = R.color.button_color_intro,
                 targetActivityClass = IntroTrainingActivity::class.java // 실제 액티비티로 변경
             )

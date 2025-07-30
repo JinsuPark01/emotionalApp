@@ -50,7 +50,7 @@ class ExpressionActivity : AppCompatActivity() {
                 title = "주차별 점검",
                 subtitle = "질문지를 통한 마음 돌아보기",
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
-                currentProgress = "진행하기",
+                "1", "1",currentProgress = "진행하기",
                 // --- 기준이 되는 보라색 ---
                 backgroundColorResId = R.color.purple_700,
                 targetActivityClass = WeeklyActivity::class.java
@@ -60,7 +60,7 @@ class ExpressionActivity : AppCompatActivity() {
                 title = "정서회피 훈련",
                 subtitle = "정서와 관련된 신체 감각 찾기",
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
-                currentProgress = "0/3",
+                "1", "1",currentProgress = "0/3",
                 // --- 동일한 보라색으로 변경 ---
                 backgroundColorResId = R.color.purple_700,
                 targetActivityClass = AvoidanceActivity::class.java
@@ -70,7 +70,7 @@ class ExpressionActivity : AppCompatActivity() {
                 title = "정서-주도 행동 훈련",
                 subtitle = "특별한 경험을 기록하기",
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
-                currentProgress = "50",
+                "1", "1",currentProgress = "50",
                 // --- 동일한 보라색으로 변경 ---
                 backgroundColorResId = R.color.purple_700,
                 targetActivityClass = DrivenActionActivity::class.java

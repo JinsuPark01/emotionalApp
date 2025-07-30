@@ -42,10 +42,10 @@ class AvoidanceActivity : AppCompatActivity() {
 
     private fun loadTrainingData() {
         val trainingList = listOf(
-            DetailTrainingItem("guide", "교육", "정서회피 훈련에 대해 알아보기", TrainingType.EXPRESSION_ACTION_TRAINING, "내용 보기", R.color.purple_700, AvoidanceGuideActivity::class.java),
+            DetailTrainingItem("guide", "교육", "정서회피 훈련에 대해 알아보기", TrainingType.EXPRESSION_ACTION_TRAINING, "1", "1","내용 보기", R.color.purple_700, AvoidanceGuideActivity::class.java),
 
-            DetailTrainingItem("diary", "회피 일지 작성하기", "나의 회피 습관을 기록하고 관찰하기", TrainingType.EXPRESSION_ACTION_TRAINING, "작성하기", R.color.purple_500, AvoidanceChecklistActivity::class.java),
-            DetailTrainingItem("timer", "정서 머무르기", "감정을 피하지 않고 느껴보는 연습", TrainingType.EXPRESSION_ACTION_TRAINING, "시작하기", R.color.purple_500, EmotionSelectionActivity::class.java)
+            DetailTrainingItem("diary", "회피 일지 작성하기", "나의 회피 습관을 기록하고 관찰하기", TrainingType.EXPRESSION_ACTION_TRAINING, "1", "1","작성하기", R.color.purple_500, AvoidanceChecklistActivity::class.java),
+            DetailTrainingItem("timer", "정서 머무르기", "감정을 피하지 않고 느껴보는 연습", TrainingType.EXPRESSION_ACTION_TRAINING, "1", "1","시작하기", R.color.purple_500, EmotionSelectionActivity::class.java)
         )
         adapter.updateData(trainingList)
     }

@@ -40,9 +40,9 @@ class DrivenActionActivity : AppCompatActivity() {
 
     private fun loadTrainingData() {
         val trainingList = listOf(
-            DetailTrainingItem("guide", "교육", "정서-주도 행동에 대해 알아보기", TrainingType.EXPRESSION_ACTION_TRAINING, "내용 보기", R.color.purple_700, DrivenActionGuideActivity::class.java),
-            DetailTrainingItem("opposite_action", "반대 행동 하기", "감정과 반대로 행동하는 연습", TrainingType.EXPRESSION_ACTION_TRAINING, "시작하기", R.color.purple_500, OppositeActionActivity::class.java),
-            DetailTrainingItem("alternative_action", "대안 행동 찾기", "감정을 다루는 다른 방법 찾기", TrainingType.EXPRESSION_ACTION_TRAINING, "시작하기", R.color.purple_500, AlternativeActionActivity::class.java)
+            DetailTrainingItem("guide", "교육", "정서-주도 행동에 대해 알아보기", TrainingType.EXPRESSION_ACTION_TRAINING, "1", "1","내용 보기", R.color.purple_700, DrivenActionGuideActivity::class.java),
+            DetailTrainingItem("opposite_action", "반대 행동 하기", "감정과 반대로 행동하는 연습", TrainingType.EXPRESSION_ACTION_TRAINING, "1", "1","시작하기", R.color.purple_500, OppositeActionActivity::class.java),
+            DetailTrainingItem("alternative_action", "대안 행동 찾기", "감정을 다루는 다른 방법 찾기", TrainingType.EXPRESSION_ACTION_TRAINING, "1", "1","시작하기", R.color.purple_500, AlternativeActionActivity::class.java)
         )
         adapter.updateData(trainingList)
     }

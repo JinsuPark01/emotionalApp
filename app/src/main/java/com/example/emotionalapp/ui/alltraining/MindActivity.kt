@@ -86,7 +86,7 @@ class MindActivity : BottomNavActivity() {
                 title = "주차별 점검",
                 subtitle = "질문지를 통한 마음 돌아보기",
                 TrainingType.MIND_WATCHING_TRAINING,
-                currentProgress = "1/2",
+                "1", "1",currentProgress = "1/2",
                 backgroundColorResId = R.color.button_color_mind,
                 targetActivityClass = WeeklyActivity::class.java // 실제 액티비티로 변경
             ),
@@ -95,7 +95,7 @@ class MindActivity : BottomNavActivity() {
                 title = "인지적 평가",
                 subtitle = "인지적 평가 교육 및 모호한 그림 해석을 진행합니다.",
                 TrainingType.MIND_WATCHING_TRAINING,
-                currentProgress = "1/2",
+                "1", "1",currentProgress = "1/2",
                 backgroundColorResId = R.color.button_color_mind,
                 targetActivityClass = ArtActivity::class.java // 실제 액티비티로 변경
             ),
@@ -104,7 +104,7 @@ class MindActivity : BottomNavActivity() {
                 title = "생각의 덫",
                 subtitle = "생각의 덫을 파악하고 풀어내봅시다.",
                 TrainingType.MIND_WATCHING_TRAINING,
-                currentProgress = "1/3",
+                "1", "1",currentProgress = "1/3",
                 backgroundColorResId = R.color.button_color_mind,
                 targetActivityClass = TrapActivity::class.java // 실제 액티비티로 변경
             ),
@@ -113,7 +113,7 @@ class MindActivity : BottomNavActivity() {
                 title = "자동적 평가",
                 subtitle = "3주차 훈련을 돌아보는 시간",
                 TrainingType.MIND_WATCHING_TRAINING,
-                currentProgress = "0/2",
+                "1", "1",currentProgress = "0/2",
                 backgroundColorResId = R.color.button_color_mind,
                 targetActivityClass = AutoActivity::class.java // 실제 액티비티로 변경
             )

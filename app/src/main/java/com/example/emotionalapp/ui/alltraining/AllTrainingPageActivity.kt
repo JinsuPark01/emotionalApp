@@ -3,6 +3,7 @@ package com.example.emotionalapp.ui.alltraining
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.AllTrainingAdapter
@@ -10,6 +11,13 @@ import com.example.emotionalapp.data.TrainingItem
 import com.example.emotionalapp.data.TrainingType
 import com.example.emotionalapp.databinding.ActivityAllTrainingBinding
 import com.example.emotionalapp.ui.open.BottomNavActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
+import java.util.concurrent.TimeUnit
 
 class AllTrainingPageActivity : BottomNavActivity() {
 
@@ -19,6 +27,8 @@ class AllTrainingPageActivity : BottomNavActivity() {
 
     override val isAllTrainingPage: Boolean = true
 
+    private var userDiffDays: Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 뷰 바인딩 설정
@@ -27,13 +37,65 @@ class AllTrainingPageActivity : BottomNavActivity() {
 
         setupBottomNavigation()
         setupRecyclerView()
-        loadTrainingData()
+        calculateDiffDays{loadTrainingData()}
         setupTabListeners()
     }
+
+    private fun calculateDiffDays(onFinished: () -> Unit) {
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+
+        if (userEmail != null) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection("user").document(userEmail).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.contains("signupDate")) {
+                        val timestamp = document.getTimestamp("signupDate")
+                        if (timestamp != null) {
+                            val koreaTimeZone = TimeZone.getTimeZone("Asia/Seoul")
+                            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).apply {
+                                timeZone = koreaTimeZone
+                            }
+
+                            val joinDateStr = dateFormat.format(timestamp.toDate())
+                            val todayStr = dateFormat.format(Date())
+
+                            val joinDate = dateFormat.parse(joinDateStr)
+                            val todayDate = dateFormat.parse(todayStr)
+
+                            if (joinDate != null && todayDate != null) {
+                                val diffMillis = todayDate.time - joinDate.time
+                                userDiffDays = TimeUnit.MILLISECONDS.toDays(diffMillis) + 1
+                                Log.d("UserJoinDate", "가입 후 ${userDiffDays}일차 (한국 시간 기준)")
+                            }
+                        }
+                    } else {
+                        Log.w("UserJoinDateInATPA", "signupDate 필드가 없음")
+                    }
+
+                    // ✅ 여기서 호출
+                    onFinished()
+                }
+                .addOnFailureListener { e ->
+                    Log.e("UserJoinDate", "Firestore 에러: ${e.message}")
+                    onFinished() // 실패해도 계속 진행할지 여부는 판단 필요
+                }
+        } else {
+            onFinished() // 유저 정보 없음
+        }
+    }
+
 
     private fun setupRecyclerView() {
         // 어댑터 초기화 시, 아이템에 지정된 targetActivityClass로 바로 이동
         trainingAdapter = AllTrainingAdapter(emptyList()) { clickedTrainingItem ->
+
+            // "잠김"일 경우 클릭 무시 또는 토스트 메시지 출력
+            if (clickedTrainingItem.currentProgress == "잠김") {
+                Toast.makeText(this, "잠금 상태입니다.", Toast.LENGTH_SHORT).show()
+                return@AllTrainingAdapter
+            }
+
             clickedTrainingItem.targetActivityClass?.let { targetClass ->
                 val intent = Intent(this, targetClass).apply {
                     putExtra("TRAINING_ID", clickedTrainingItem.id)
@@ -49,6 +111,23 @@ class AllTrainingPageActivity : BottomNavActivity() {
     }
 
     private fun loadTrainingData() {
+        var progressArr: Array<String>
+        when (userDiffDays) {
+            in 1..7 -> {
+                progressArr = arrayOf("GO", "GO", "잠김", "잠김", "잠김")
+            }
+            in 8..14 -> {
+                progressArr = arrayOf("GO", "GO", "GO", "잠김", "잠김")
+            }
+            in 15..21 -> {
+                progressArr = arrayOf("GO", "GO", "GO", "GO", "잠김")
+            }
+            in 22..28 -> {
+                progressArr = arrayOf("GO", "GO", "GO", "GO", "GO")
+            } else -> {
+                progressArr = arrayOf("GO", "GO", "GO", "GO", "GO")
+            }
+        }
         // 각 아이템에 이동할 Activity 클래스를 직접 지정
         val sampleData = listOf(
             TrainingItem(
@@ -56,7 +135,7 @@ class AllTrainingPageActivity : BottomNavActivity() {
                 "INTRO",
                 "감정의 세계로 떠나는 첫 걸음",
                 TrainingType.INTRO,
-                "1/3",
+                progressArr[0],
                 R.color.button_color_intro,
                 IntroActivity::class.java
             ),
@@ -65,7 +144,7 @@ class AllTrainingPageActivity : BottomNavActivity() {
                 "1주차 - 정서인식 훈련",
                 "나의 감정을 정확히 알아차리기",
                 TrainingType.EMOTION_TRAINING,
-                "100%",
+                progressArr[1],
                 R.color.button_color_emotion,
                 EmotionActivity::class.java
             ),
@@ -74,7 +153,7 @@ class AllTrainingPageActivity : BottomNavActivity() {
                 "2주차 - 신체자각 훈련",
                 "몸이 보내는 신호에 귀 기울이기",
                 TrainingType.BODY_TRAINING,
-                "잠김",
+                progressArr[2],
                 R.color.button_color_body,
                 BodyActivity::class.java
             ),
@@ -83,17 +162,16 @@ class AllTrainingPageActivity : BottomNavActivity() {
                 "3주차 - 인지재구성 훈련",
                 "생각의 틀을 바꾸는 연습",
                 TrainingType.MIND_WATCHING_TRAINING,
-                "잠김",
+                progressArr[3],
                 R.color.button_color_mind,
                 MindActivity::class.java
             ),
-            // --- 여기가 핵심 수정 부분입니다 ---
             TrainingItem(
                 "eat001",
                 "4주차 - 정서표현 및 행동 훈련",
                 "건강하게 감정을 표현하고 행동하기",
                 TrainingType.EXPRESSION_ACTION_TRAINING,
-                "잠김",
+                progressArr[4],
                 R.color.button_color_expression,
                 ExpressionActivity::class.java
             )

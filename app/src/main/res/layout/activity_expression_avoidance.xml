@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- 상단 바 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -29,7 +28,6 @@
             android:layout_marginStart="12dp"/>
     </LinearLayout>
 
-    <!-- 훈련 목록 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trainingRecyclerView"
         android:layout_width="match_parent"

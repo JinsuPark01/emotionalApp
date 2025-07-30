@@ -85,5 +85,8 @@
 
         <activity android:name=".ui.alltraining.FireTest" android:exported="true" />
 
+        <activity android:name=".ui.expression.AvoidanceGuideActivity" android:exported="false" />
+        <activity android:name=".ui.expression.DrivenActionGuideActivity" android:exported="false" />
+
     </application>
 </manifest>

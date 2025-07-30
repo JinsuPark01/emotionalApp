@@ -39,19 +39,29 @@
                 android:text="최근 내가 자주 사용하는 회피 행동을 체크해보세요."
                 android:layout_marginBottom="24dp"
                 android:textSize="16sp"/>
+
             <CheckBox android:id="@+id/cb_avoid1" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="폰을 계속 만지작거리거나 SNS, 유튜브를 계속 본다." android:layout_marginBottom="8dp"/>
             <CheckBox android:id="@+id/cb_avoid2" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="갑자기 먹을 것을 찾거나 음식을 계속 먹는다." android:layout_marginBottom="8dp"/>
             <CheckBox android:id="@+id/cb_avoid3" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="아무 이유 없이 계속 잔다." android:layout_marginBottom="8dp"/>
             <CheckBox android:id="@+id/cb_avoid4" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="과제나 할 일을 미루고 딴짓을 한다." android:layout_marginBottom="8dp"/>
-            <CheckBox android:id="@+id/cb_avoid5" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="일부러 웃고 떠들면서 감정을 숨긴다." android:layout_marginBottom="8dp"/>
+            <CheckBox android:id="@+id/cb_avoid5" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="친구들이랑 있으면 일부러 웃고 떠들면서 감정을 숨긴다." android:layout_marginBottom="8dp"/>
+            <CheckBox android:id="@+id/cb_avoid6" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="음악을 크게 틀고 아무 생각 안 하려 한다." android:layout_marginBottom="8dp"/>
+            <CheckBox android:id="@+id/cb_avoid7" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="괜히 방 청소, 정리 같은 걸 시작한다." android:layout_marginBottom="8dp"/>
+            <CheckBox android:id="@+id/cb_avoid8" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="아무것도 안 하고 멍 때린다." android:layout_marginBottom="8dp"/>
+
+            <!-- 직접 입력 칸 -->
+            <EditText
+                android:id="@+id/et_custom_avoidance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="그 외 내가 자주 하는 회피 행동 (직접 입력)"
+                android:minHeight="48dp"
+                android:background="@drawable/edit_text_background"
+                android:padding="12dp"
+                android:layout_marginTop="16dp"/>
+
         </LinearLayout>
     </ScrollView>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#DDDDDD" />
-
     <!-- 하단 버튼 바 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +71,6 @@
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
-
         <TextView
             android:id="@+id/btn_start_diary"
             android:layout_width="match_parent"

@@ -21,7 +21,6 @@ class DrivenActionGuideActivity : AppCompatActivity() {
             finish()
         }
 
-        // --- 여기가 핵심 수정 부분입니다 ---
         // '퀴즈 풀어보기' 버튼을 누르면 퀴즈로 가는 대신 팝업을 띄웁니다.
         binding.btnStartQuiz.setOnClickListener {
             showCompletionDialog()

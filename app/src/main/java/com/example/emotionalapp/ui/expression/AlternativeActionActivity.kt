@@ -24,6 +24,7 @@ import com.example.emotionalapp.databinding.ActivityAlternativeActionBinding
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -264,10 +265,13 @@ class AlternativeActionActivity : AppCompatActivity() {
             .document(docId)
             .set(data)
             .await()
+
+        db.collection("user")
+            .document(user.email ?: "unknown_user")
+            .update("countComplete.alternative", FieldValue.increment(1))
+            .await()
     }
 
-    // --- 여기가 핵심 수정 부분입니다 (1) ---
-    // 누락된 함수들을 모두 추가합니다.
     private fun handleEmotionSelection(clickedButton: Button, emotion: String, pageView: View) {
         if (selectedEmotion != emotion) {
             selectedDetailedEmotion = ""

@@ -1,10 +1,11 @@
 package com.example.emotionalapp.ui.body
 
 import android.content.Intent
-import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
@@ -18,16 +19,16 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
     private lateinit var tvCurrentTime: TextView
     private lateinit var tvTotalTime: TextView
     private lateinit var tvPracticeDetail: TextView
+    private lateinit var videoView: VideoView
 
-    private lateinit var mediaPlayer: MediaPlayer
     private val handler = Handler(Looper.getMainLooper())
 
-    private val updateRunnable = object : Runnable {
+    private val updateProgressRunnable = object : Runnable {
         override fun run() {
-            if (mediaPlayer.isPlaying) {
-                val pos = mediaPlayer.currentPosition
-                progressBar.progress = pos
-                tvCurrentTime.text = formatTime(pos)
+            if (videoView.isPlaying) {
+                val position = videoView.currentPosition
+                progressBar.progress = position
+                tvCurrentTime.text = formatTime(position)
                 handler.postDelayed(this, 500)
             }
         }
@@ -37,23 +38,14 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_body_practice)
 
-        // 뒤로가기 버튼
-        findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
-
-        // ✅ 수정된 부분: trainingId를 String으로 받도록 변경
         val trainingIdStr = intent.getStringExtra("TRAINING_ID") ?: "bt_detail_002"
         val trainingTitle = intent.getStringExtra("TRAINING_TITLE") ?: "연습"
 
-        // 훈련 ID로 DAY 텍스트 매핑
-        val tvTitle = findViewById<TextView>(R.id.tv_practice_title)
+        findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
+
         tvPracticeDetail = findViewById(R.id.tv_practice_detail)
-
-
-        // 오디오 초기화
-        mediaPlayer = MediaPlayer.create(this, getAudioResId(trainingIdStr)).apply {
-            isLooping = false
-        }
-        val duration = mediaPlayer.duration
+        val tvTitle = findViewById<TextView>(R.id.tv_practice_title)
+        tvTitle.text = trainingTitle
 
         btnStart = findViewById(R.id.btnStart)
         btnStopPractice = findViewById(R.id.btnStopPractice)
@@ -61,69 +53,78 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         tvCurrentTime = findViewById(R.id.tvCurrentTime)
         tvTotalTime = findViewById(R.id.tvTotalTime)
+        videoView = findViewById(R.id.videoView)
 
-        progressBar.max = duration
-        tvTotalTime.text = formatTime(duration)
+        // 비디오 URI 설정
+        val videoResId = getVideoResId(trainingIdStr)
+        if (videoResId != null) {
+            val uri = Uri.parse("android.resource://${packageName}/$videoResId")
+            videoView.setVideoURI(uri)
+            videoView.visibility = View.VISIBLE
+            videoView.setOnPreparedListener { mp ->
+                val duration = mp.duration
+                progressBar.max = duration
+                tvTotalTime.text = formatTime(duration)
+            }
+            videoView.setOnCompletionListener {
+                handler.removeCallbacks(updateProgressRunnable)
+                progressBar.progress = progressBar.max
+                tvCurrentTime.text = formatTime(progressBar.max)
+            }
+        } else {
+            Toast.makeText(this, "비디오 파일이 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+        }
 
         btnStart.setOnClickListener {
-            if (!mediaPlayer.isPlaying) {
-                mediaPlayer.start()
-                handler.post(updateRunnable)
+            if (!videoView.isPlaying) {
+                videoView.start()
+                handler.post(updateProgressRunnable)
             }
         }
 
         btnStopPractice.setOnClickListener {
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                handler.removeCallbacks(updateRunnable)
+            if (videoView.isPlaying) {
+                videoView.pause()
+                handler.removeCallbacks(updateProgressRunnable)
             }
         }
 
         btnRecord.setOnClickListener {
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                handler.removeCallbacks(updateRunnable)
+            if (videoView.isPlaying) {
+                videoView.pause()
+                handler.removeCallbacks(updateProgressRunnable)
             }
-
             val intent = Intent(this, BodyTrainingRecordActivity::class.java)
             intent.putExtra("TRAINING_ID", trainingIdStr)
             startActivity(intent)
-        }
-
-        mediaPlayer.setOnCompletionListener {
-            handler.removeCallbacks(updateRunnable)
-            progressBar.progress = progressBar.max
-            tvCurrentTime.text = formatTime(duration)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacks(updateRunnable)
-        if (::mediaPlayer.isInitialized) {
-            mediaPlayer.release()
+        handler.removeCallbacks(updateProgressRunnable)
+        if (::videoView.isInitialized) {
+            videoView.stopPlayback()
         }
     }
 
     private fun formatTime(ms: Int): String {
-        val totalSec = ms / 1000
-        val min = totalSec / 60
-        val sec = totalSec % 60
-        return String.format("%d:%02d", min, sec)
+        val totalSeconds = ms / 1000
+        val minutes = totalSeconds / 60
+        val seconds = totalSeconds % 60
+        return String.format("%d:%02d", minutes, seconds)
     }
 
-    private fun getAudioResId(idStr: String): Int {
+    private fun getVideoResId(idStr: String): Int? {
         return when (idStr) {
-            "bt_detail_002" -> R.raw.test_audio
-            "bt_detail_003" -> R.raw.test_audio
-            "bt_detail_004" -> R.raw.test_audio
-            "bt_detail_005" -> R.raw.test_audio
-            "bt_detail_006" -> R.raw.test_audio
-            "bt_detail_007" -> R.raw.test_audio
-            "bt_detail_008" -> R.raw.test_audio
-            else -> R.raw.test_audio
+            "bt_detail_002" -> R.raw.video_bt_detail_002
+            "bt_detail_003" -> R.raw.video_bt_detail_003
+            "bt_detail_004" -> R.raw.video_bt_detail_004
+            "bt_detail_005" -> R.raw.video_bt_detail_005
+            "bt_detail_006" -> R.raw.video_bt_detail_006
+            "bt_detail_007" -> R.raw.video_bt_detail_007
+            "bt_detail_008" -> R.raw.video_bt_detail_008
+            else -> null
         }
     }
-
 }
-

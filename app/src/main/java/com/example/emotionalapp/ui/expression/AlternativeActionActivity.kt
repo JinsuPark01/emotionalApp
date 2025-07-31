@@ -23,6 +23,7 @@ import com.example.emotionalapp.databinding.ActivityAlternativeActionBinding
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -262,6 +263,11 @@ class AlternativeActionActivity : AppCompatActivity() {
             .collection("expressionAlternative")
             .document(docId)
             .set(data)
+            .await()
+
+        db.collection("user")
+            .document(user.email ?: "unknown_user")
+            .update("countComplete.alternative", FieldValue.increment(1))
             .await()
     }
 

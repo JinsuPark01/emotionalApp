@@ -116,7 +116,11 @@ class SignUpActivity : AppCompatActivity() {
                                 "bt_detail_005" to 0,
                                 "bt_detail_006" to 0,
                                 "bt_detail_007" to 0,
-                                "bt_detail_008" to 0
+                                "bt_detail_008" to 0,
+                                "alternative" to 0,
+                                "avoidance" to 0,
+                                "opposite" to 0,
+                                "stay" to 0
                             )
                         )
 

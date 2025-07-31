@@ -3,6 +3,7 @@ package com.example.emotionalapp.ui.expression
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
@@ -15,6 +16,7 @@ import com.example.emotionalapp.databinding.ActivityOppositeActionBinding
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -71,7 +73,6 @@ class OppositeActionActivity : AppCompatActivity() {
                         Toast.makeText(this@OppositeActionActivity, "훈련 기록이 저장되었습니다.", Toast.LENGTH_SHORT).show()
 
                         val intent = Intent(this@OppositeActionActivity, AllTrainingPageActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(intent)
                         finish()
 
@@ -116,6 +117,11 @@ class OppositeActionActivity : AppCompatActivity() {
             .document(docId)
             .set(data)
             .await() // Firestore 작업이 끝날 때까지 여기서 실행이 '일시정지' 됩니다.
+
+        db.collection("user")
+            .document(user.email ?: "unknown_user")
+            .update("countComplete.opposite", FieldValue.increment(1))
+            .await()
     }
 
     // ... (나머지 함수들은 변경 없습니다) ...

@@ -265,8 +265,6 @@ class AlternativeActionActivity : AppCompatActivity() {
             .await()
     }
 
-    // --- 여기가 핵심 수정 부분입니다 (1) ---
-    // 누락된 함수들을 모두 추가합니다.
     private fun handleEmotionSelection(clickedButton: Button, emotion: String, pageView: View) {
         if (selectedEmotion != emotion) {
             selectedDetailedEmotion = ""

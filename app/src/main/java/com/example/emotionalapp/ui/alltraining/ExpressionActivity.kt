@@ -64,7 +64,7 @@ class ExpressionActivity : BottomNavActivity() {
             DetailTrainingItem(
                 id = "avoidance_training",
                 title = "정서회피 훈련 교육",
-                subtitle = "나의 회피 습관을 기록하고 관찰하기",
+                subtitle = "정서 회피에 대해 알아보기",
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
                 "1", "1", currentProgress = "0/3",
                 backgroundColorResId = R.color.purple_700,
@@ -77,7 +77,7 @@ class ExpressionActivity : BottomNavActivity() {
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
                 "1", "1", currentProgress = "0/3",
                 backgroundColorResId = R.color.purple_700,
-                targetActivityClass = AvoidanceChecklistActivity::class.java
+                targetActivityClass = AvoidanceActivity::class.java
             ),
             DetailTrainingItem(
                 id = "avoidance_training",

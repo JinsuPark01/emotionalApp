@@ -5,19 +5,27 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class AutoActivity : AppCompatActivity() {
 
@@ -69,13 +77,29 @@ class AutoActivity : AppCompatActivity() {
 
         btnNext.setOnClickListener {
             if (!validateCurrentPage()) return@setOnClickListener
+            btnNext.isEnabled = false
 
             saveCurrentInput()
             if (currentPage < totalPages - 1) {
                 currentPage++
                 updatePage()
+                btnNext.isEnabled = true
             } else {
-                saveToFirestore()
+                // 마지막 페이지 - 저장 처리 (Coroutine)
+                lifecycleScope.launch {
+                    val success = withContext(Dispatchers.IO) {
+                        saveToFirestoreSuspend()
+                    }
+
+                    if (success) {
+                        Toast.makeText(this@AutoActivity, "자동적 사고 훈련이 저장되었어요.", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@AutoActivity, AllTrainingPageActivity::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(this@AutoActivity, "저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        btnNext.isEnabled = true
+                    }
+                }
             }
         }
     }
@@ -249,8 +273,61 @@ class AutoActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveToFirestore() {
-        val user = FirebaseAuth.getInstance().currentUser ?: return
+//    private fun saveToFirestore() {
+//        val user = FirebaseAuth.getInstance().currentUser ?: return
+//        val userEmail = user.email ?: return
+//        val db = FirebaseFirestore.getInstance()
+//        val timestamp = Timestamp.now()
+//
+//        val sdf = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault())
+//        sdf.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+//        val docId = sdf.format(timestamp.toDate())
+//
+//        val data = hashMapOf(
+//            "answer1" to answerList[0],
+//            "answer2" to answerList[1],
+//            "answer3" to answerList[2],
+//            "trap" to selectedTrapText,
+//            "answer5" to answerList[4],
+//            "date" to timestamp
+//        )
+//
+//        db.collection("user").document(user.email ?: "")
+//            .collection("mindAuto")
+//            .document(docId)
+//            .set(data)
+//            .addOnSuccessListener {
+//                Toast.makeText(this, "자동적 사고 훈련이 저장되었어요.", Toast.LENGTH_SHORT).show()
+//                // 저장 성공 시에만 countComplete.auto +1
+//                db.collection("user")
+//                    .document(userEmail)
+//                    .update("countComplete.auto", FieldValue.increment(1))
+//                    .addOnSuccessListener {
+//                        runOnUiThread {
+//                            Log.d("Firestore", "카운트 증가 성공")
+//                            btnNext.isEnabled = true
+//                            startActivity(Intent(this, AllTrainingPageActivity::class.java))
+//                            finish()
+//                        }
+//                    }
+//                    .addOnFailureListener { e ->
+//                        Log.w("Firestore", "카운트 증가 실패", e)
+//                        btnNext.isEnabled = true
+//                    }
+//            }
+//            .addOnFailureListener {
+//                Toast.makeText(this, "저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
+//                btnNext.isEnabled = true
+//            }
+//    }
+    private suspend fun saveToFirestoreSuspend(): Boolean = suspendCoroutine { continuation ->
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+        if (user == null || userEmail == null) {
+            continuation.resume(false)
+            return@suspendCoroutine
+        }
+
         val db = FirebaseFirestore.getInstance()
         val timestamp = Timestamp.now()
 
@@ -267,17 +344,24 @@ class AutoActivity : AppCompatActivity() {
             "date" to timestamp
         )
 
-        db.collection("user").document(user.email ?: "")
-            .collection("mindAuto")
-            .document(docId)
+        db.collection("user").document(userEmail)
+            .collection("mindAuto").document(docId)
             .set(data)
             .addOnSuccessListener {
-                Toast.makeText(this, "자동적 사고 훈련이 저장되었어요.", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, AllTrainingPageActivity::class.java))
-                finish()
+                db.collection("user").document(userEmail)
+                    .update("countComplete.auto", FieldValue.increment(1))
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "카운트 증가 성공")
+                        continuation.resume(true)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "카운트 증가 실패", e)
+                        continuation.resume(false)
+                    }
             }
             .addOnFailureListener {
-                Toast.makeText(this, "저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                continuation.resume(false)
             }
     }
+
 }

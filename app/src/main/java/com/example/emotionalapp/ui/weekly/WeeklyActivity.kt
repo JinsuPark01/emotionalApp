@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.example.emotionalapp.ui.login_signup.LoginActivity
@@ -20,10 +21,15 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.coroutines.resume
 
 class WeeklyActivity : AppCompatActivity() {
 
@@ -124,67 +130,20 @@ class WeeklyActivity : AppCompatActivity() {
 
                 // 중복 저장 방지
                 btnNext.isEnabled = false
-                
-                // Firestore에 저장
-                val user = FirebaseAuth.getInstance().currentUser
-                val userEmail = user?.email
 
-                if (user == null || userEmail == null) {
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                    return@setOnClickListener
+                lifecycleScope.launch {
+                    val success = withContext(Dispatchers.IO) {
+                        saveWeeklyDataToFirestore()
+                    }
+                    btnNext.isEnabled = true
+
+                    if (success) {
+                        moveToNextPage()
+                    } else {
+                        Toast.makeText(this@WeeklyActivity, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
-                val nowTimestamp = Timestamp.now()
-                val nowDate = nowTimestamp.toDate()
-                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
-                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
-                }.format(nowDate)
-
-                val data = hashMapOf(
-                    "type" to "weekly3",
-                    "date" to nowTimestamp,
-                    "phq9" to hashMapOf(
-                        "answers" to phq9Selections.toList(),
-                        "sum" to phq9Sum
-                    ),
-                    "gad7" to hashMapOf(
-                        "answers" to gad7Selections.toList(),
-                        "sum" to gad7Sum
-                    ),
-                    "panas" to hashMapOf(
-                        "answers" to panasSelections.toList(),
-                        "positiveSum" to panasPositiveSum,
-                        "negativeSum" to panasNegativeSum
-                    )
-                )
-
-                val db = FirebaseFirestore.getInstance()
-                db.collection("user")
-                    .document(userEmail)
-                    .collection("weekly3")
-                    .document(today)
-                    .set(data)
-                    .addOnSuccessListener {
-                        // 저장 성공 시에만 countComplete.weekly +1
-                        db.collection("user")
-                            .document(userEmail)
-                            .update("countComplete.weekly", FieldValue.increment(1))
-                            .addOnSuccessListener {
-                                Log.d("Firestore", "카운트 증가 성공")
-                                moveToNextPage()
-                            }
-                            .addOnFailureListener { e ->
-                                Log.w("Firestore", "카운트 증가 실패", e)
-                                // 선택: 사용자에게 경고할지, 무시할지 결정
-                            }
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w("Firestore", "저장 실패", e)
-                        Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                        return@addOnFailureListener
-                    }
             } else {
                 moveToNextPage()
             }
@@ -201,6 +160,63 @@ class WeeklyActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    private suspend fun saveWeeklyDataToFirestore(): Boolean = suspendCancellableCoroutine { continuation ->
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+
+        if (user == null || userEmail == null) {
+            continuation.resume(false)
+            return@suspendCancellableCoroutine
+        }
+
+        val nowTimestamp = Timestamp.now()
+        val nowDate = nowTimestamp.toDate()
+        val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone("Asia/Seoul")
+        }.format(nowDate)
+
+        val data = hashMapOf(
+            "type" to "weekly3",
+            "date" to nowTimestamp,
+            "phq9" to hashMapOf(
+                "answers" to phq9Selections.toList(),
+                "sum" to phq9Sum
+            ),
+            "gad7" to hashMapOf(
+                "answers" to gad7Selections.toList(),
+                "sum" to gad7Sum
+            ),
+            "panas" to hashMapOf(
+                "answers" to panasSelections.toList(),
+                "positiveSum" to panasPositiveSum,
+                "negativeSum" to panasNegativeSum
+            )
+        )
+
+        val db = FirebaseFirestore.getInstance()
+        db.collection("user")
+            .document(userEmail)
+            .collection("weekly3")
+            .document(today)
+            .set(data)
+            .addOnSuccessListener {
+                db.collection("user")
+                    .document(userEmail)
+                    .update("countComplete.weekly", FieldValue.increment(1))
+                    .addOnSuccessListener {
+                        continuation.resume(true)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "카운트 증가 실패", e)
+                        continuation.resume(false)
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.w("Firestore", "저장 실패", e)
+                continuation.resume(false)
+            }
     }
 
     private fun setupIndicators(count: Int) {

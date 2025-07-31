@@ -96,19 +96,19 @@ class ExpressionReportActivity : BottomNavActivity() {
                 val alternativeDocs = db.collection("user").document(userEmail).collection("expressionAlternative").get().await()
 
                 nthDoc?.let {
-                    reportList.add(ReportItem(it.id.substringBefore('_'), "주간 점검 기록 보기", it.getTimestamp("date"), backgroundColorResId = R.color.pink))
+                    reportList.add(ReportItem(it.id.substringBefore('_'), "주간 점검 기록 보기", it.getTimestamp("date"), backgroundColorResId = R.color.button_color_expression))
                 }
                 avoidanceDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "회피 일지 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.pink))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "회피 일지 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.button_color_expression))
                 }
                 stayDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "반대 행동하기 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.pink))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "반대 행동하기 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.button_color_expression))
                 }
                 oppositeDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "정서 머무르기 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.pink))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "정서 머무르기 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.button_color_expression))
                 }
                 alternativeDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "대안 행동 찾기 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.pink))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "대안 행동 찾기 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.button_color_expression))
                 }
 
                 // 최신 날짜가 위로 오게 정렬

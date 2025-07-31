@@ -124,7 +124,7 @@ class BodyReportActivity : AppCompatActivity() {
                     )
                 }
 
-                reportList.sortByDescending { it.timeStamp }
+                reportList.sortBy { it.timeStamp }
                 adapter.notifyDataSetChanged()
 
             } catch (e: Exception) {

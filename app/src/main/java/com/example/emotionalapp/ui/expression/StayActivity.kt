@@ -163,7 +163,7 @@ class StayActivity : AppCompatActivity() {
         val data = hashMapOf(
             "type" to "emotionStay",
             "date" to timestamp,
-            "Emotion" to selectedEmotion,
+            "emotion" to selectedEmotion,
             "answer1" to clarifiedEmotion,
             "answer2" to moodChanged
         )

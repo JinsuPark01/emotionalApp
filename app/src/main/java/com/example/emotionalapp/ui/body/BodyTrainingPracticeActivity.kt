@@ -48,17 +48,6 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
         val tvTitle = findViewById<TextView>(R.id.tv_practice_title)
         tvPracticeDetail = findViewById(R.id.tv_practice_detail)
 
-        tvTitle.text = trainingTitle
-        tvPracticeDetail.text = when (trainingIdStr) {
-            "bt_detail_002" -> "DAY 1 연습"
-            "bt_detail_003" -> "DAY 2 연습"
-            "bt_detail_004" -> "DAY 3 연습"
-            "bt_detail_005" -> "DAY 4 연습"
-            "bt_detail_006" -> "DAY 5 연습"
-            "bt_detail_007" -> "DAY 6 연습"
-            "bt_detail_008" -> "DAY 7 연습"
-            else -> "준비 중인 연습입니다."
-        }
 
         // 오디오 초기화
         mediaPlayer = MediaPlayer.create(this, getAudioResId(trainingIdStr)).apply {
@@ -137,18 +126,4 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
     }
 
 }
-
-
-
-// 훈련 ID → raw 리소스 매핑 함수
-//    private fun getAudioResId(id: Int): Int = when (id) {
-//        2 -> R.raw.training_002
-//        3 -> R.raw.training_003
-//        4 -> R.raw.training_004
-//        5 -> R.raw.training_005
-//        6 -> R.raw.training_006
-//        7 -> R.raw.training_007
-//        8 -> R.raw.training_008
-//        else -> R.raw.training_002
-//    }
 

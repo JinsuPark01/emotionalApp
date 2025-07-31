@@ -7,7 +7,7 @@
 
     <!-- '세부 감정' 부분을 삭제했습니다. -->
 
-    <TextView android:text="대안 행동 예시" style="@style/FormLabelStyle" android:layout_marginTop="0dp"/>
+    <TextView android:text="대안 행동 예시(둘 중 하나 이상 작성)" style="@style/FormLabelStyle" android:layout_marginTop="0dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_alternative_actions"
         android:layout_width="match_parent"

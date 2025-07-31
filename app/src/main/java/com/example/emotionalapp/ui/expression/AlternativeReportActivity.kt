@@ -30,6 +30,7 @@ class AlternativeReportActivity : AppCompatActivity() {
     private lateinit var answer3: TextView
     private lateinit var answer4: TextView
     private lateinit var answer5: TextView
+    private lateinit var answer6: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,7 @@ class AlternativeReportActivity : AppCompatActivity() {
         answer3 = findViewById(R.id.answer3)
         answer4 = findViewById(R.id.answer4)
         answer5 = findViewById(R.id.answer5)
+        answer6 = findViewById(R.id.answer6)
 
         btnBack.setOnClickListener { finish() }
 
@@ -88,5 +90,6 @@ class AlternativeReportActivity : AppCompatActivity() {
         answer3.text = document.getString("answer3") ?: "기록된 내용이 없습니다."
         answer4.text = document.getString("answer4") ?: "기록된 내용이 없습니다."
         answer5.text = document.getString("answer5") ?: "기록된 내용이 없습니다."
+        answer6.text = document.getString("answer6") ?: "기록된 내용이 없습니다."
     }
 }

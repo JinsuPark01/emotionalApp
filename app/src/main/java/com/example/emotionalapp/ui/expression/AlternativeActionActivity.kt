@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -249,12 +250,12 @@ class AlternativeActionActivity : AppCompatActivity() {
         // --- 여기가 핵심 수정 부분입니다 (3) ---
         // Firestore에 두 필드를 모두 저장하도록 변경
         val data = hashMapOf(
-            "situation" to situation,
-            "emotion_main" to selectedEmotion,
-            "emotion_detail" to if (selectedEmotion == "직접 입력") "N/A" else selectedDetailedEmotion,
-            "alternative_action_selected" to selectedAlternative, // 선택한 예시
-            "alternative_action_custom" to customAlternative,   // 직접 입력한 내용
-            "action_taken" to finalActionTaken,
+            "answer1" to situation,
+            "answer2" to selectedEmotion,
+            "answer3" to if (selectedEmotion == "직접 입력") "" else selectedDetailedEmotion,
+            "answer4" to selectedAlternative, // 선택한 예시
+            "answer5" to customAlternative,   // 직접 입력한 내용
+            "answer6" to finalActionTaken,
             "date" to timestamp
         )
 
@@ -277,12 +278,14 @@ class AlternativeActionActivity : AppCompatActivity() {
         selectedEmotion = emotion
 
         highlightSelectedEmotion(clickedButton)
-
+        val tvDirectInputHint = pageView.findViewById<TextView>(R.id.tv_direct_input_hint)
         val detailedContainer = pageView.findViewById<LinearLayout>(R.id.detailed_emotion_container)
         if (emotion == "직접 입력") {
             detailedContainer.visibility = View.GONE
+            tvDirectInputHint.visibility = View.VISIBLE  // 직접 입력일 때 텍스트 표시
         } else {
             detailedContainer.visibility = View.VISIBLE
+            tvDirectInputHint.visibility = View.GONE     // 감정 선택 시 텍스트 숨김
             emotionDetailsMap[emotion]?.let { details ->
                 val detailedEmotions = resources.getStringArray(details.detailedEmotionsResId).toList()
                 val recyclerDetailed = pageView.findViewById<RecyclerView>(R.id.recycler_detailed_emotions)

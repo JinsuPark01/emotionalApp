@@ -129,7 +129,7 @@ class ExpressionReportActivity : BottomNavActivity() {
 
         // 전체 훈련 탭 클릭 시 이동
         tabAll.setOnClickListener {
-            val intent = Intent(this, MindActivity::class.java)
+            val intent = Intent(this, ExpressionActivity::class.java)
             startActivity(intent)
             finish()
         }

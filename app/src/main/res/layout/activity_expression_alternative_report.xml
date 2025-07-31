@@ -67,7 +67,7 @@
 
             <!-- 질문 4 -->
             <TextView
-                android:text="4. 선택한/입력한 대안 행동"
+                android:text="4. 선택한 대안 행동"
                 style="@style/FormLabelStyle"/>
             <TextView
                 android:id="@+id/answer4"
@@ -76,10 +76,19 @@
 
             <!-- 질문 5 -->
             <TextView
-                android:text="5. 어떻게 행동했나요?"
+                android:text="5. 입력한 대안 행동"
                 style="@style/FormLabelStyle"/>
             <TextView
                 android:id="@+id/answer5"
+                style="@style/FormInputStyle"
+                android:hint="기록된 내용이 없습니다."/>
+
+            <!-- 질문 6 -->
+            <TextView
+                android:text="6. 어떻게 행동했나요?"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/answer6"
                 style="@style/FormInputStyle"
                 android:hint="기록된 내용이 없습니다."/>
 

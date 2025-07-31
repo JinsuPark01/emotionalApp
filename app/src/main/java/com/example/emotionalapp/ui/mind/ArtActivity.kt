@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
@@ -19,8 +20,13 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class ArtActivity : AppCompatActivity() {
 
@@ -83,9 +89,12 @@ class ArtActivity : AppCompatActivity() {
         }
 
         btnNext.setOnClickListener {
+            btnNext.isEnabled = false
+
             if (currentPage == 2) {
                 if (selectedImages.size < 2) {
                     Toast.makeText(this, "이미지를 2개 선택해야 합니다.", Toast.LENGTH_SHORT).show()
+                    btnNext.isEnabled = true
                     return@setOnClickListener
                 }
                 selectedImageIndices.clear()
@@ -112,6 +121,7 @@ class ArtActivity : AppCompatActivity() {
 
                 if (!isValid) {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
+                    btnNext.isEnabled = true
                     return@setOnClickListener
                 }
 
@@ -133,8 +143,23 @@ class ArtActivity : AppCompatActivity() {
             if (currentPage < totalPages - 1) {
                 currentPage++
                 updatePage()
+                btnNext.isEnabled = true
             } else {
-                saveToDatabase()
+                // 마지막 페이지 - 저장 처리 (Coroutine)
+                lifecycleScope.launch {
+                    val success = withContext(Dispatchers.IO) {
+                        saveToDatabaseSuspend()
+                    }
+
+                    if (success) {
+                        Toast.makeText(this@ArtActivity, "자동적 사고 훈련이 저장되었어요.", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@ArtActivity, AllTrainingPageActivity::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(this@ArtActivity, "저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        btnNext.isEnabled = true
+                    }
+                }
             }
         }
     }
@@ -341,12 +366,14 @@ class ArtActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveToDatabase() {
-        // 중복 저장 방지
-        btnNext.isEnabled = false
+    private suspend fun saveToDatabaseSuspend(): Boolean = suspendCoroutine { continuation ->
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+        if (user == null || userEmail == null) {
+            continuation.resume(false)
+            return@suspendCoroutine
+        }
 
-        val auth = FirebaseAuth.getInstance()
-        val email = auth.currentUser?.email ?: return
         val db = FirebaseFirestore.getInstance()
         val timestamp = Timestamp.now()
 
@@ -373,31 +400,23 @@ class ArtActivity : AppCompatActivity() {
             data["2art_${index + 1}"] = answer
         }
 
-        db.collection("user")
-            .document(email)
-            .collection("mindArt")
-            .document(docId)
+        db.collection("user").document(userEmail)
+            .collection("mindArt").document(docId)
             .set(data)
             .addOnSuccessListener {
-                Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show()
-                // 저장 성공 시에만 countComplete.art +1
-                db.collection("user")
-                    .document(email)
+                db.collection("user").document(userEmail)
                     .update("countComplete.art", FieldValue.increment(1))
                     .addOnSuccessListener {
                         Log.d("Firestore", "카운트 증가 성공")
-                        startActivity(Intent(this, AllTrainingPageActivity::class.java))
-                        finish()
-                        btnNext.isEnabled = true
+                        continuation.resume(true)
                     }
                     .addOnFailureListener { e ->
                         Log.w("Firestore", "카운트 증가 실패", e)
-                        btnNext.isEnabled = true
+                        continuation.resume(false)
                     }
             }
             .addOnFailureListener {
-                Toast.makeText(this, "저장 실패: ${it.message}", Toast.LENGTH_SHORT).show()
-                btnNext.isEnabled = true
+                continuation.resume(false)
             }
     }
 

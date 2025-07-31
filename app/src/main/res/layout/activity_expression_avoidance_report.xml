@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- 제목 영역 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회피 일지 기록"
+            android:textSize="18sp"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- 페이지별 콘텐츠 영역 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 체크리스트 선택 항목 -->
+            <TextView
+                android:text="선택한 나의 회피 행동"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_avoid1"
+                style="@style/FormInputStyle"
+                android:hint="선택한 항목이 없습니다."/>
+
+            <!-- 직접 입력 항목 -->
+            <TextView
+                android:text="직접 입력한 나의 회피 행동"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_avoid2"
+                style="@style/FormInputStyle"
+                android:hint="입력한 내용이 없습니다."/>
+
+            <!-- 질문 1 -->
+            <TextView
+                android:text="상황"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_answer1"
+                style="@style/FormInputStyle"
+                android:hint="기록된 내용이 없습니다."/>
+
+            <!-- 질문 2 -->
+            <TextView
+                android:text="내가 느낀 감정"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_answer2"
+                style="@style/FormInputStyle"
+                android:hint="기록된 내용이 없습니다."/>
+
+            <!-- 질문 3 -->
+            <TextView
+                android:text="내가 피한 방법"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_answer3"
+                style="@style/FormInputStyle"
+                android:hint="기록된 내용이 없습니다."/>
+
+            <!-- 질문 4 -->
+            <TextView
+                android:text="피한 후 결과"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_result4"
+                style="@style/FormInputStyle"
+                android:hint="기록된 내용이 없습니다."/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

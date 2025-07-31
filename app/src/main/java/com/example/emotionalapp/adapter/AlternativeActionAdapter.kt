@@ -10,10 +10,11 @@ import com.example.emotionalapp.data.AlternativeActionItem
 
 class AlternativeActionAdapter(
     private val items: List<AlternativeActionItem>,
-    private val onItemClick: (AlternativeActionItem) -> Unit
+    private val initialSelectedPosition: Int,
+    private val onItemClick: (Int, AlternativeActionItem) -> Unit
 ) : RecyclerView.Adapter<AlternativeActionAdapter.ViewHolder>() {
 
-    private var selectedPosition = -1
+    private var selectedPosition = initialSelectedPosition
 
     class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
 
@@ -34,13 +35,11 @@ class AlternativeActionAdapter(
         }
 
         holder.itemView.setOnClickListener {
-            onItemClick(item)
-
-            // 이전에 선택된 아이템과 새로 선택된 아이템의 UI를 모두 갱신합니다.
             val previousPosition = selectedPosition
             selectedPosition = holder.adapterPosition
             notifyItemChanged(previousPosition)
             notifyItemChanged(selectedPosition)
+            onItemClick(selectedPosition, item)
         }
     }
 

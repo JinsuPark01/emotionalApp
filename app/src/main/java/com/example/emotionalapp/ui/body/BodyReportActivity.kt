@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.ReportAdapter
 import com.example.emotionalapp.data.ReportItem
-import com.example.emotionalapp.ui.body.BodyTrainingRecordViewActivity
 import com.example.emotionalapp.ui.weekly.WeeklyReportActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -34,11 +33,14 @@ class BodyReportActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerViewBodyRecords)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
         adapter = ReportAdapter(reportList) { reportItem ->
             val intent = if (reportItem.name.contains("주간 점검")) {
                 Intent(this, WeeklyReportActivity::class.java)
             } else {
-                Intent(this, BodyTrainingReportDetailActivity::class.java)
+                Intent(this, BodyTrainingReportDetailActivity::class.java).apply {
+                    putExtra("trainingId", reportItem.trainingId) // ← trainingId 전달
+                }
             }
 
             reportItem.timeStamp?.let {
@@ -76,7 +78,7 @@ class BodyReportActivity : AppCompatActivity() {
                 for (doc in snapshot.documents) {
                     val content = doc.getString("content") ?: "소감 없음"
 
-                    // date 필드 형식 유연하게 처리
+                    // date 필드 처리
                     val timestamp = when (val rawDate = doc.get("date")) {
                         is Timestamp -> rawDate
                         is Long -> Timestamp(Date(rawDate))
@@ -95,7 +97,6 @@ class BodyReportActivity : AppCompatActivity() {
                         SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it.toDate())
                     } ?: "날짜 없음"
 
-                    // trainingId에 따라 제목 설정
                     val trainingId = doc.getString("trainingId") ?: ""
                     val title = when (trainingId) {
                         "bt_detail_002" -> "전체 몸 스캔 인식하기"
@@ -113,7 +114,8 @@ class BodyReportActivity : AppCompatActivity() {
                         ReportItem(
                             name = title,
                             date = formattedDate,
-                            timeStamp = timestamp
+                            timeStamp = timestamp,
+                            trainingId = trainingId
                         )
                     )
                 }

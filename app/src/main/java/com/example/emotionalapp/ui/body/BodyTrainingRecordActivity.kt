@@ -11,6 +11,8 @@ import com.example.emotionalapp.R
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Locale
+import java.text.SimpleDateFormat
 
 class BodyTrainingRecordActivity : AppCompatActivity() {
 
@@ -37,29 +39,32 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // SharedPreferences에 저장 (원래 코드 유지)
             val prefs = getSharedPreferences("body_training_records", Context.MODE_PRIVATE)
             val key = "feedback_$trainingId"
-            prefs.edit()
-                .putString(key, feedbackText)
-                .apply()
+            prefs.edit().putString(key, feedbackText).apply()
 
-            // Firestore에 저장 추가
             val user = FirebaseAuth.getInstance().currentUser
             val userEmail = user?.email
 
             if (userEmail != null) {
                 val db = FirebaseFirestore.getInstance()
+
                 val record = hashMapOf(
                     "content" to feedbackText,
-                    "date" to Timestamp.now(),                // ✅ Timestamp로 저장
-                    "trainingId" to trainingId                // ✅ trainingId도 함께 저장
+                    "date" to Timestamp.now(),
+                    "trainingId" to trainingId
                 )
+
+                // ✅ 날짜 기반 문서 ID 생성
+                val nowDate = Timestamp.now().toDate()
+                val formatter = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault())
+                val docId = formatter.format(nowDate)
 
                 db.collection("user")
                     .document(userEmail)
                     .collection("bodyRecord")
-                    .add(record)
+                    .document(docId)  // ← 여기!
+                    .set(record)
                     .addOnSuccessListener {
                         Toast.makeText(this, "소감이 저장되었습니다.", Toast.LENGTH_SHORT).show()
                         finish()
@@ -71,5 +76,6 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
                 Toast.makeText(this, "로그인된 사용자를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 }

@@ -128,7 +128,11 @@ class EmotionActivity : BottomNavActivity() {
             if (clickedDetailItem.currentProgress == "잠김") {
                 Toast.makeText(this, "잠금 상태입니다.", Toast.LENGTH_SHORT).show()
                 return@DetailTrainingAdapter
+            } else if (clickedDetailItem.progressDenominator == clickedDetailItem.progressNumerator) {
+                Toast.makeText(this, "모두 완료한 훈련입니다.", Toast.LENGTH_SHORT).show()
+                return@DetailTrainingAdapter
             }
+
 
             if (clickedDetailItem.targetActivityClass != null) {
                 val intent = Intent(this, clickedDetailItem.targetActivityClass).apply {

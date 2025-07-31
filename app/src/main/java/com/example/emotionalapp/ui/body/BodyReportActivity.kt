@@ -119,7 +119,8 @@ class BodyReportActivity : AppCompatActivity() {
                             name = title,
                             date = formattedDate,
                             timeStamp = timestamp,
-                            trainingId = trainingId
+                            trainingId = trainingId,
+                            backgroundColorResId = R.color.pink
                         )
                     )
                 }

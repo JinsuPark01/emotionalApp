@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.data.ReportItem
@@ -20,6 +21,19 @@ class ReportAdapter(
         fun bind(item: ReportItem) {
             dateText.text = item.date
             nameText.text = item.name
+
+            // 배경색 설정
+            val contentLayout = itemView.findViewById<View>(R.id.content_layout)
+            val colorResId = item.backgroundColorResId
+            if (colorResId != null) {
+                contentLayout.setBackgroundColor(
+                    ContextCompat.getColor(itemView.context, colorResId)
+                )
+            } else {
+                contentLayout.setBackgroundColor(
+                    ContextCompat.getColor(itemView.context, R.color.pink)
+                )
+            }
 
             itemView.setOnClickListener {
                 onItemClick(item)

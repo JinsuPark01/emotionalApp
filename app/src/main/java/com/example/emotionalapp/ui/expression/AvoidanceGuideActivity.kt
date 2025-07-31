@@ -21,7 +21,7 @@ class AvoidanceGuideActivity : AppCompatActivity() {
         }
 
         binding.btnStartQuiz.setOnClickListener {
-            startActivity(Intent(this, EmotionAvoidanceQuizActivity::class.java))
+            startActivity(Intent(this, AvoidanceQuizActivity::class.java))
         }
 
         // --- 여기가 핵심 수정 부분입니다 ---

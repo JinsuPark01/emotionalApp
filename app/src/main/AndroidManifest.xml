@@ -61,22 +61,16 @@
         <activity android:name=".ui.mind.AutoTrapReportActivity" android:exported="false" />
 
         <activity android:name=".ui.expression.AvoidanceActivity" android:exported="false" />
-        <activity android:name=".ui.expression.TopicDetailActivity" android:exported="false" />
 
         <activity android:name=".ui.weekly.WeeklyReportActivity" android:exported="false" />
 
-        <activity android:name=".ui.expression.EmotionAvoidanceQuizActivity" android:exported="false" />
-
-        <activity android:name=".ui.expression.EmotionSelectionActivity" android:exported="false" />
+        <activity android:name=".ui.expression.AvoidanceQuizActivity" android:exported="false" />
+        <activity android:name=".ui.expression.StayActivity" android:exported="false" />
 
         <activity android:name=".ui.expression.DrivenActionQuizActivity" android:exported="false" />
         <activity android:name=".ui.expression.OppositeActionActivity" android:exported="false" />
         <activity android:name=".ui.expression.AlternativeActionActivity" android:exported="false" />
         <activity android:name=".ui.weekly.WeeklyActivity" android:exported="false" />
-
-        <activity android:name=".ui.expression.EmotionTimerActivity" android:exported="false" />
-        <activity android:name=".ui.expression.EmotionReflectionActivity" android:exported="false" />
-        <activity android:name=".ui.expression.EmotionFeedbackActivity" android:exported="false" />
 
         <activity android:name=".ui.emotion.EmotionReportActivity" android:exported="false" />
         <activity android:name=".ui.body.BodyReportActivity" android:exported="false" />

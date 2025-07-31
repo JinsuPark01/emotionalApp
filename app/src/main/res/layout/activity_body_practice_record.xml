@@ -10,8 +10,7 @@
         android:layout_height="56dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:paddingHorizontal="16dp">
 
         <ImageView
             android:id="@+id/btnBack"
@@ -30,11 +29,11 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- 구분선 -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#DDDDDD" />
+
 
     <!-- 소감 입력 영역 (스크롤) -->
     <ScrollView

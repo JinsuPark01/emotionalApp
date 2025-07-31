@@ -77,7 +77,7 @@ class ExpressionActivity : BottomNavActivity() {
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
                 "1", "1", currentProgress = "0/3",
                 backgroundColorResId = R.color.purple_700,
-                targetActivityClass = AvoidanceChecklistActivity::class.java
+                targetActivityClass = AvoidanceActivity::class.java
             ),
             DetailTrainingItem(
                 id = "avoidance_training",

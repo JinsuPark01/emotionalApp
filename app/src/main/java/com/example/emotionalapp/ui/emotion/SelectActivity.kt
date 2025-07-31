@@ -1,13 +1,17 @@
 package com.example.emotionalapp.ui.emotion
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
+import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
@@ -69,6 +73,8 @@ class SelectActivity : AppCompatActivity() {
             if (selectedMind == -1 || selectedBody == -1) {
                 Toast.makeText(this, "마음과 몸의 감정을 선택해주세요", Toast.LENGTH_SHORT).show()
             } else {
+                // 중복 저장 방지
+                btnSelect.isEnabled = false
                 saveEmotionData()
             }
         }
@@ -155,8 +161,20 @@ class SelectActivity : AppCompatActivity() {
                 .document(timestampStr) // 문자열 기반 ID (문서명으로 사용)
                 .set(data)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "감정이 기록되었습니다.", Toast.LENGTH_SHORT).show()
-                    finish()
+                    // 저장 성공 시에만 countComplete.select +1
+                    db.collection("user")
+                        .document(email)
+                        .update("countComplete.select", FieldValue.increment(1))
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "감정이 기록되었습니다.", Toast.LENGTH_SHORT).show()
+                            // 마지막 페이지에서 완료 시 다른 액티비티 이동
+                            val intent = Intent(this, AllTrainingPageActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        .addOnFailureListener { e ->
+                            Log.w("Firestore", "카운트 증가 실패", e)
+                        }
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()

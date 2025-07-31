@@ -83,7 +83,7 @@ class EmotionReportActivity : BottomNavActivity() {
                 // 감정 기록을 가장 위에 추가
                 reportList.add(
                     0,
-                    ReportItem("감정 기록", "감정 기록 보기", null)
+                    ReportItem("감정 기록", "감정 기록 보기", null, backgroundColorResId = R.color.button_color_emotion)
                 )
 
                 val tempList = mutableListOf<ReportItem>()
@@ -104,7 +104,8 @@ class EmotionReportActivity : BottomNavActivity() {
                         ReportItem(
                             oldestDoc.id.substringBefore('_'),
                             "주간 점검 기록 보기",
-                            oldestDoc.getTimestamp("date")
+                            oldestDoc.getTimestamp("date"),
+                            backgroundColorResId = R.color.button_color_emotion
                         )
                     )
                 }
@@ -114,7 +115,8 @@ class EmotionReportActivity : BottomNavActivity() {
                         ReportItem(
                             doc.id.substringBefore('_'),
                             "ARC 정서 경험 기록 보기",
-                            doc.getTimestamp("date")
+                            doc.getTimestamp("date"),
+                            backgroundColorResId = R.color.button_color_emotion
                         )
                     )
                 }
@@ -124,7 +126,8 @@ class EmotionReportActivity : BottomNavActivity() {
                         ReportItem(
                             doc.id.substringBefore('_'),
                             "닻 내리기 기록 보기",
-                            doc.getTimestamp("date")
+                            doc.getTimestamp("date"),
+                            backgroundColorResId = R.color.button_color_emotion
                         )
                     )
                 }

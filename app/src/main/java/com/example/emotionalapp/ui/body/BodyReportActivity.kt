@@ -120,7 +120,7 @@ class BodyReportActivity : AppCompatActivity() {
                             date = formattedDate,
                             timeStamp = timestamp,
                             trainingId = trainingId,
-                            backgroundColorResId = R.color.pink
+                            backgroundColorResId = R.color.button_color_body
                         )
                     )
                 }

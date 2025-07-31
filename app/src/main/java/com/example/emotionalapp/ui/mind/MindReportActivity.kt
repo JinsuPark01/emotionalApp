@@ -89,16 +89,16 @@ class MindReportActivity : BottomNavActivity() {
                 val mindAutoDocs = db.collection("user").document(userEmail).collection("mindAuto").get().await()
 
                 nthDoc?.let {
-                    reportList.add(ReportItem(it.id.substringBefore('_'), "주간 점검 기록 보기", it.getTimestamp("date"), backgroundColorResId = R.color.pink))
+                    reportList.add(ReportItem(it.id.substringBefore('_'), "주간 점검 기록 보기", it.getTimestamp("date"), backgroundColorResId = R.color.button_color_mind))
                 }
                 mindArtDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "인지적 평가 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.pink))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "인지적 평가 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.button_color_mind))
                 }
                 mindTrapDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "생각의 덫 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.pink))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "생각의 덫 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.button_color_mind))
                 }
                 mindAutoDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "자동적 평가 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.pink))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "자동적 평가 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.button_color_mind))
                 }
 
                 // 최신 날짜가 위로 오게 정렬

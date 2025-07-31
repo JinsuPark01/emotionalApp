@@ -163,10 +163,9 @@ class StayActivity : AppCompatActivity() {
         val data = hashMapOf(
             "type" to "emotionStay",
             "date" to timestamp,
-            "selectedEmotion" to selectedEmotion,
-            "selectedTimerMillis" to selectedTimerMillis,
-            "clarifiedEmotion" to clarifiedEmotion,
-            "moodChanged" to moodChanged
+            "Emotion" to selectedEmotion,
+            "answer1" to clarifiedEmotion,
+            "answer2" to moodChanged
         )
 
         val db = FirebaseFirestore.getInstance()
@@ -227,7 +226,7 @@ class StayActivity : AppCompatActivity() {
             3 -> { /* 특별 처리 없음 */ }
         }
 
-        btnPrev.isEnabled = currentPage != 0
+        btnPrev.isEnabled = currentPage != 0 && currentPage != 2
         btnPrev.backgroundTintList = ColorStateList.valueOf(
             Color.parseColor(if (btnPrev.isEnabled) "#3CB371" else "#D9D9D9")
         )

@@ -135,13 +135,19 @@ class AlternativeActionActivity : AppCompatActivity() {
         updateIndicators()
     }
 
+    // --- 여기가 핵심 수정 부분입니다 (1) ---
     private fun loadPageContent(view: View) {
         when (currentPage) {
             0 -> {
                 view.findViewById<EditText>(R.id.edit_situation).setText(situation)
                 setupEmotionButtons(view)
+                // 페이지를 다시 불러올 때, 이전에 선택한 감정이 있다면 세부 감정 목록을 다시 표시
+                if (selectedEmotion.isNotBlank() && selectedEmotion != "직접 입력") {
+                    handleEmotionSelection(selectedEmotionButton!!, selectedEmotion, view)
+                }
             }
             1 -> {
+                // '직접 입력'을 선택하면 이 페이지는 비어있게 됩니다.
                 if (selectedEmotion != "직접 입력") {
                     setupSuggestionPage(view)
                 }
@@ -159,26 +165,24 @@ class AlternativeActionActivity : AppCompatActivity() {
         emotions.forEach { emotion ->
             val button = createEmotionButton(emotion)
             gridEmotions.addView(button)
+            // 페이지가 다시 로드될 때 이전에 선택한 버튼을 강조 표시
             if (emotion == selectedEmotion) {
-                handleEmotionSelection(button, emotion, view)
+                highlightSelectedEmotion(button, view)
             }
             button.setOnClickListener { handleEmotionSelection(it as Button, emotion, view) }
         }
     }
 
+    // --- 여기가 핵심 수정 부분입니다 (2) ---
     private fun setupSuggestionPage(view: View) {
         emotionDetailsMap[selectedEmotion]?.let { details ->
-            val detailedEmotions = resources.getStringArray(details.detailedEmotionsResId).toList()
-            val recyclerDetailed = view.findViewById<RecyclerView>(R.id.recycler_detailed_emotions)
-            recyclerDetailed.layoutManager = LinearLayoutManager(this)
-            recyclerDetailed.adapter = DetailedEmotionAdapter(detailedEmotions) { item ->
-                selectedDetailedEmotion = item
-            }
             val alternativeActions = resources.getStringArray(details.alternativeActionsResId).toList().map { AlternativeActionItem(it) }
             val recyclerAlternative = view.findViewById<RecyclerView>(R.id.recycler_alternative_actions)
             recyclerAlternative.layoutManager = LinearLayoutManager(this)
             recyclerAlternative.adapter = AlternativeActionAdapter(alternativeActions) { item ->
                 selectedAlternative = item.actionText
+                // 대안 행동 선택 시, '나만의 대안 행동' 입력창은 비워줍니다.
+                view.findViewById<EditText>(R.id.edit_custom_action).text.clear()
             }
         }
     }
@@ -219,15 +223,21 @@ class AlternativeActionActivity : AppCompatActivity() {
         val timestamp = Timestamp.now()
         val sdf = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault())
         val docId = sdf.format(timestamp.toDate())
+
+        // '나만의 대안 행동'이 입력되었다면, 그것을 최종 대안 행동으로 사용
         val finalAlternativeAction = if (customAlternative.isNotBlank()) customAlternative else selectedAlternative
+
+        // --- 여기가 핵심 수정 부분입니다 ---
+        // 필드 이름을 'answer1', 'answer2', ... 형식으로 변경
         val data = hashMapOf(
-            "situation" to situation,
-            "emotion_main" to selectedEmotion,
-            "emotion_detail" to if (selectedEmotion == "직접 입력") "N/A" else selectedDetailedEmotion,
-            "alternative_action" to finalAlternativeAction,
-            "action_taken" to finalActionTaken,
+            "answer1" to situation,            // 1. 어떤 상황이었나요?
+            "answer2" to selectedEmotion,      // 2. 그때 어떤 감정을 느꼈나요?
+            "answer3" to if (selectedEmotion == "직접 입력") "N/A" else selectedDetailedEmotion, // 세부 감정
+            "answer4" to finalAlternativeAction, // 선택한/입력한 대안 행동
+            "answer5" to finalActionTaken,     // 3. 어떻게 행동했나요?
             "date" to timestamp
         )
+
         db.collection("user").document(user.email ?: "unknown_user")
             .collection("expressionAlternative")
             .document(docId)
@@ -235,22 +245,22 @@ class AlternativeActionActivity : AppCompatActivity() {
             .await()
     }
 
+    // --- 여기가 핵심 수정 부분입니다 (3) ---
     private fun handleEmotionSelection(clickedButton: Button, emotion: String, pageView: View) {
-        selectedEmotionButton?.apply {
-            background = ContextCompat.getDrawable(this@AlternativeActionActivity, R.drawable.bg_topic_button)
-            setTextColor(ContextCompat.getColor(this@AlternativeActionActivity, android.R.color.black))
+        // 다른 대표 감정을 선택했을 때만 세부 선택 초기화
+        if (selectedEmotion != emotion) {
+            selectedDetailedEmotion = ""
+            selectedAlternative = ""
         }
-        clickedButton.background = ContextCompat.getDrawable(this, R.drawable.bg_round_green_button)?.apply {
-            setTint(ContextCompat.getColor(this@AlternativeActionActivity, R.color.purple_500))
-        }
-        clickedButton.setTextColor(ContextCompat.getColor(this, android.R.color.white))
-        selectedEmotionButton = clickedButton
         selectedEmotion = emotion
+
+        highlightSelectedEmotion(clickedButton, pageView)
 
         val detailedContainer = pageView.findViewById<LinearLayout>(R.id.detailed_emotion_container)
         if (emotion == "직접 입력") {
             detailedContainer.visibility = View.GONE
         } else {
+            detailedContainer.visibility = View.VISIBLE
             emotionDetailsMap[emotion]?.let { details ->
                 val detailedEmotions = resources.getStringArray(details.detailedEmotionsResId).toList()
                 val recyclerDetailed = pageView.findViewById<RecyclerView>(R.id.recycler_detailed_emotions)
@@ -258,9 +268,20 @@ class AlternativeActionActivity : AppCompatActivity() {
                 recyclerDetailed.adapter = DetailedEmotionAdapter(detailedEmotions) { item ->
                     selectedDetailedEmotion = item
                 }
-                detailedContainer.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun highlightSelectedEmotion(button: Button, view: View) {
+        selectedEmotionButton?.apply {
+            background = ContextCompat.getDrawable(this@AlternativeActionActivity, R.drawable.bg_topic_button)
+            setTextColor(ContextCompat.getColor(this@AlternativeActionActivity, android.R.color.black))
+        }
+        button.background = ContextCompat.getDrawable(this, R.drawable.bg_round_green_button)?.apply {
+            setTint(ContextCompat.getColor(this@AlternativeActionActivity, R.color.purple_500))
+        }
+        button.setTextColor(ContextCompat.getColor(this, android.R.color.white))
+        selectedEmotionButton = button
     }
 
     private fun createEmotionButton(text: String): Button {

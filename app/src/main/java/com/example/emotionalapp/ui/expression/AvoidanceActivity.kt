@@ -140,14 +140,9 @@ class AvoidanceActivity : AppCompatActivity() {
                     .document(dateString)
                     .set(data)
                     .addOnSuccessListener {
-                        AlertDialog.Builder(this@AvoidanceActivity)
-                            .setMessage("감정을 회피하는 습관을 돌아봤다는 것 자체가 이미 중요한 변화의 시작이에요. 스스로를 마주한 용기를 진심으로 응원해요!")
-                            .setPositiveButton("확인") { _, _ ->
-                                startActivity(Intent(this@AvoidanceActivity, AllTrainingPageActivity::class.java))
-                                finish()
-                            }
-                            .setCancelable(false)
-                            .show()
+                        Toast.makeText(this@AvoidanceActivity, "기록 완료.", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@AvoidanceActivity, AllTrainingPageActivity::class.java))
+                        finish()
                     }
                     .addOnFailureListener { e ->
                         Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
@@ -190,6 +185,7 @@ class AvoidanceActivity : AppCompatActivity() {
         val pageView = inflater.inflate(layoutId, pageContainer, false)
         pageContainer.addView(pageView)
 
+        // ✅ [복원 처리]
         if (currentPage == 0) {
             val checkBoxes = listOf(
                 R.id.cb_avoid1 to "회피 행동 1",
@@ -219,6 +215,7 @@ class AvoidanceActivity : AppCompatActivity() {
             pageView.findViewById<EditText>(R.id.et_result)?.setText(result)
         }
 
+        // ✅ 버튼 상태 및 인디케이터 업데이트
         btnPrev.isEnabled = currentPage != 0
         btnPrev.backgroundTintList = if (currentPage == 0)
             ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
@@ -234,4 +231,5 @@ class AvoidanceActivity : AppCompatActivity() {
             )
         }
     }
+
 }

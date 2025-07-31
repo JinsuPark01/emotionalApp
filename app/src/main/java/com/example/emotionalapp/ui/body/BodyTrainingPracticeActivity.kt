@@ -1,5 +1,6 @@
 package com.example.emotionalapp.ui.body
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -41,7 +42,17 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
         val trainingIdStr = intent.getStringExtra("TRAINING_ID") ?: "bt_detail_002"
         val trainingTitle = intent.getStringExtra("TRAINING_TITLE") ?: "연습"
 
-        findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
+        val btnBack = findViewById<View>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("훈련 종료")
+                .setMessage("훈련을 종료하고 나가시겠어요?")
+                .setPositiveButton("예") { _, _ ->
+                    finish()
+                }
+                .setNegativeButton("아니오", null)
+                .show()
+        }
 
         tvPracticeDetail = findViewById(R.id.tv_practice_detail)
         val tvTitle = findViewById<TextView>(R.id.tv_practice_title)

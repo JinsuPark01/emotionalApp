@@ -1,9 +1,11 @@
 package com.example.emotionalapp.ui.body
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -25,8 +27,16 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_body_practice_record)
 
         // 1) 뒤로가기 버튼
-        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
-            finish()
+        val btnBack = findViewById<View>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("훈련 종료")
+                .setMessage("훈련을 종료하고 나가시겠어요?")
+                .setPositiveButton("예") { _, _ ->
+                    finish()
+                }
+                .setNegativeButton("아니오", null)
+                .show()
         }
 
         // 2) Intent로부터 trainingId 받기

@@ -90,7 +90,7 @@ class ExpressionActivity : BottomNavActivity() {
             ),
             DetailTrainingItem(
                 id = "avoidance_training",
-                title = "정서-주도 행동 훈련",
+                title = "정서-주도 행동 훈련 교육",
                 subtitle = "정서-주도 행동에 대해 알아보기",
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
                 "1", "1", currentProgress = "0/3",
@@ -108,8 +108,8 @@ class ExpressionActivity : BottomNavActivity() {
             ),
             DetailTrainingItem(
                 id = "driven_action_training",
-                title = "정서-주도 행동 훈련",
-                subtitle = "특별한 경험을 기록하기",
+                title = "대안 행동 찾기",
+                subtitle = "감정을 다루는 다른 방법 찾기",
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
                 "1", "1", currentProgress = "50",
                 backgroundColorResId = R.color.purple_700,

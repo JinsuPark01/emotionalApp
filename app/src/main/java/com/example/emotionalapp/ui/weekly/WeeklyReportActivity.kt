@@ -63,19 +63,33 @@ class WeeklyReportActivity : AppCompatActivity() {
                 val phq9Sum = (phq9Map?.get("sum") as? Number)?.toInt() ?: 0
 
                 findViewById<TextView>(R.id.weeklyReportTitleText).text = dateString
-                findViewById<TextView>(R.id.phq9Score).text = "점수: ${phq9Sum}점"
-                findViewById<TextView>(R.id.phq9Interpretation).text = interpretPhq9(phq9Sum)
+                if (phq9Sum == -1 || gad7Sum == -1 || positiveSum == -1 || negativeSum == -1){
+                    findViewById<TextView>(R.id.phq9Score).text = "점수: 기록되지 않음"
+                    findViewById<TextView>(R.id.phq9Interpretation).text = interpretPhq9(phq9Sum)
 
-                findViewById<TextView>(R.id.gad7Score).text = "점수: ${gad7Sum}점"
-                findViewById<TextView>(R.id.gad7Interpretation).text = interpretGad7(gad7Sum)
+                    findViewById<TextView>(R.id.gad7Score).text = "점수: 기록되지 않음"
+                    findViewById<TextView>(R.id.gad7Interpretation).text = interpretGad7(gad7Sum)
 
-                findViewById<TextView>(R.id.panasPositiveScore).text =
-                    "긍정 점수: ${positiveSum} (평균: 29 ~ 34)"
-                findViewById<TextView>(R.id.panasNegativeScore).text =
-                    "부정 점수: ${negativeSum} (평균: 26 ~ 30)"
-                findViewById<TextView>(R.id.panasInterpretation).text =
-                    interpretPanas(positiveSum, negativeSum)
+                    findViewById<TextView>(R.id.panasPositiveScore).text =
+                        "긍정 점수: 기록되지 않음"
+                    findViewById<TextView>(R.id.panasNegativeScore).text =
+                        "부정 점수: 기록되지 않음"
+                    findViewById<TextView>(R.id.panasInterpretation).text =
+                        interpretPanas(positiveSum, negativeSum)
+                }else{
+                    findViewById<TextView>(R.id.phq9Score).text = "점수: ${phq9Sum}점"
+                    findViewById<TextView>(R.id.phq9Interpretation).text = interpretPhq9(phq9Sum)
 
+                    findViewById<TextView>(R.id.gad7Score).text = "점수: ${gad7Sum}점"
+                    findViewById<TextView>(R.id.gad7Interpretation).text = interpretGad7(gad7Sum)
+
+                    findViewById<TextView>(R.id.panasPositiveScore).text =
+                        "긍정 점수: ${positiveSum} (평균: 29 ~ 34)"
+                    findViewById<TextView>(R.id.panasNegativeScore).text =
+                        "부정 점수: ${negativeSum} (평균: 26 ~ 30)"
+                    findViewById<TextView>(R.id.panasInterpretation).text =
+                        interpretPanas(positiveSum, negativeSum)
+                }
             }
             .addOnFailureListener { e ->
                 Log.e("FirestoreError", "가져오기 실패: ${e.message}")
@@ -84,6 +98,7 @@ class WeeklyReportActivity : AppCompatActivity() {
     }
 
     private fun interpretPhq9(score: Int): String = when {
+        score < 0 -> "해당 주차에 대한 정보가 없습니다."
         score <= 4 -> "정상입니다. 적응 상 어려움을 초래할만한 우울관련 증상을 거의 보고하지 않았습니다."
         score <= 9 -> "경미한 수준입니다. 약간의 우울감이 있으나 일상생활에 지장을 줄 정도는 아닙니다."
         score <= 14 -> "중간 수준의 우울감입니다. 2주 연속 지속될 경우 일상생활(직업적, 사회적)에 다소 영향을 미칠 수 있어 관심이 필요합니다."
@@ -92,6 +107,7 @@ class WeeklyReportActivity : AppCompatActivity() {
     }
 
     private fun interpretGad7(score: Int): String = when {
+        score < 0 -> "해당 주차에 대한 정보가 없습니다."
         score <= 4 -> "정상입니다. 주의가 필요할 정도의 불안을 보고하지 않았습니다."
         score <= 9 -> "다소 경미한 수준의 걱정과 불안을 경험하는 것으로 보입니다."
         score <= 14 -> "주의가 필요한 수준의 과도한 걱정과 불안을 보고하였습니다. 2주 연속 지속될 경우 정신건강전문가의 도움을 받아보세요."
@@ -99,6 +115,7 @@ class WeeklyReportActivity : AppCompatActivity() {
     }
 
     private fun interpretPanas(pa: Int, na: Int): String = when {
+        pa < 0 && na < 0 -> "해당 주차에 대한 정보가 없습니다."
         pa > na -> "긍정 감정 우세"
         pa < na -> "부정 감정 우세"
         else -> "긍·부정 감정 균형"

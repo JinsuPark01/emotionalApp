@@ -10,8 +10,11 @@ import com.example.emotionalapp.adapter.AllTrainingAdapter
 import com.example.emotionalapp.data.TrainingItem
 import com.example.emotionalapp.data.TrainingType
 import com.example.emotionalapp.databinding.ActivityAllTrainingBinding
+import com.example.emotionalapp.ui.login_signup.LoginActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -28,6 +31,7 @@ class AllTrainingPageActivity : BottomNavActivity() {
     override val isAllTrainingPage: Boolean = true
 
     private var userDiffDays: Long = 0
+    private var countCompleteMap: Map<String, Long> = emptyMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +41,11 @@ class AllTrainingPageActivity : BottomNavActivity() {
 
         setupBottomNavigation()
         setupRecyclerView()
-        calculateDiffDays{loadTrainingData()}
+        calculateDiffDaysAndGetCount{loadTrainingData()}
         setupTabListeners()
     }
 
-    private fun calculateDiffDays(onFinished: () -> Unit) {
+    private fun calculateDiffDaysAndGetCount(onFinished: () -> Unit) {
         val user = FirebaseAuth.getInstance().currentUser
         val userEmail = user?.email
 
@@ -49,24 +53,44 @@ class AllTrainingPageActivity : BottomNavActivity() {
             val db = FirebaseFirestore.getInstance()
             db.collection("user").document(userEmail).get()
                 .addOnSuccessListener { document ->
-                    if (document != null && document.contains("signupDate")) {
-                        val timestamp = document.getTimestamp("signupDate")
-                        if (timestamp != null) {
-                            val koreaTimeZone = TimeZone.getTimeZone("Asia/Seoul")
-                            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).apply {
-                                timeZone = koreaTimeZone
+                    if (document != null) {
+                        if (document.contains("signupDate")) {
+                            val timestamp = document.getTimestamp("signupDate")
+                            if (timestamp != null) {
+                                val koreaTimeZone = TimeZone.getTimeZone("Asia/Seoul")
+                                val dateFormat =
+                                    SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).apply {
+                                        timeZone = koreaTimeZone
+                                    }
+
+                                val joinDateStr = dateFormat.format(timestamp.toDate())
+                                val todayStr = dateFormat.format(Date())
+
+                                val joinDate = dateFormat.parse(joinDateStr)
+                                val todayDate = dateFormat.parse(todayStr)
+
+                                if (joinDate != null && todayDate != null) {
+                                    val diffMillis = todayDate.time - joinDate.time
+                                    userDiffDays = TimeUnit.MILLISECONDS.toDays(diffMillis) + 1
+                                    Log.d("UserJoinDate", "가입 후 ${userDiffDays}일차 (한국 시간 기준)")
+                                }
                             }
-
-                            val joinDateStr = dateFormat.format(timestamp.toDate())
-                            val todayStr = dateFormat.format(Date())
-
-                            val joinDate = dateFormat.parse(joinDateStr)
-                            val todayDate = dateFormat.parse(todayStr)
-
-                            if (joinDate != null && todayDate != null) {
-                                val diffMillis = todayDate.time - joinDate.time
-                                userDiffDays = TimeUnit.MILLISECONDS.toDays(diffMillis) + 1
-                                Log.d("UserJoinDate", "가입 후 ${userDiffDays}일차 (한국 시간 기준)")
+                        }
+                        if (document.contains("countComplete")) {
+                            val rawMap = document["countComplete"] as? Map<*, *>
+                            if (rawMap != null) {
+                                countCompleteMap = rawMap.mapNotNull { (key, value) ->
+                                    val k = key as? String
+                                    val v = when (value) {
+                                        is Long -> value
+                                        is Number -> value.toLong()
+                                        else -> null
+                                    }
+                                    if (k != null && v != null) k to v else null
+                                }.toMap()
+                                Log.d("CountComplete", "가져온 맵: $countCompleteMap")
+                            } else {
+                                Log.w("CountComplete", "countComplete 맵이 null이거나 형식이 다름")
                             }
                         }
                     } else {
@@ -111,22 +135,13 @@ class AllTrainingPageActivity : BottomNavActivity() {
     }
 
     private fun loadTrainingData() {
-        var progressArr: Array<String>
-        when (userDiffDays) {
-            in 1..7 -> {
-                progressArr = arrayOf("GO", "GO", "잠김", "잠김", "잠김")
-            }
-            in 8..14 -> {
-                progressArr = arrayOf("GO", "GO", "GO", "잠김", "잠김")
-            }
-            in 15..21 -> {
-                progressArr = arrayOf("GO", "GO", "GO", "GO", "잠김")
-            }
-            in 22..28 -> {
-                progressArr = arrayOf("GO", "GO", "GO", "GO", "GO")
-            } else -> {
-                progressArr = arrayOf("GO", "GO", "GO", "GO", "GO")
-            }
+        checkAndInsertMissedWeeklies()
+        var progressArr: Array<String> = when (userDiffDays) {
+            in 1..7 -> {arrayOf("GO", "GO", "잠김", "잠김", "잠김") }
+            in 8..14 -> {arrayOf("GO", "GO", "GO", "잠김", "잠김") }
+            in 15..21 -> {arrayOf("GO", "GO", "GO", "GO", "잠김") }
+            in 22..28 -> {arrayOf("GO", "GO", "GO", "GO", "GO") }
+            else -> {arrayOf("GO", "GO", "GO", "GO", "GO") }
         }
         // 각 아이템에 이동할 Activity 클래스를 직접 지정
         val sampleData = listOf(
@@ -178,6 +193,78 @@ class AllTrainingPageActivity : BottomNavActivity() {
         )
         trainingAdapter.updateData(sampleData)
     }
+
+    private fun insertDummyWeekly() {
+        // Firestore에 저장
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+
+        if (user == null || userEmail == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+        val nowTimestamp = Timestamp.now()
+        val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone("Asia/Seoul")
+        }.format(nowTimestamp.toDate())
+        val dummyData = hashMapOf(
+            "type" to "weekly3",
+            "date" to nowTimestamp,
+            "phq9" to hashMapOf(
+                "answers" to List(9) { -1 },  // 전혀 선택 안 했다는 의미
+                "sum" to -1
+            ),
+            "gad7" to hashMapOf(
+                "answers" to List(7) { -1 },
+                "sum" to -1
+            ),
+            "panas" to hashMapOf(
+                "answers" to List(20) { -1 },  // PANAS는 보통 20문항
+                "positiveSum" to -1,
+                "negativeSum" to -1
+            )
+        )
+
+        val db = FirebaseFirestore.getInstance()
+        db.collection("user")
+            .document(userEmail)
+            .collection("weekly3")
+            .document(today) // 문서명 중복 방지용
+            .set(dummyData)
+            .addOnSuccessListener {
+                Log.d("Firestore", "더미 weekly3 저장 성공")
+                // 저장 성공 시에만 countComplete.weekly +1
+                db.collection("user")
+                    .document(userEmail)
+                    .update("countComplete.weekly", FieldValue.increment(1))
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "카운트 증가 성공")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "카운트 증가 실패", e)
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "더미 weekly3 저장 실패", e)
+            }
+    }
+
+    private fun checkAndInsertMissedWeeklies() {
+        val currentWeek = ((userDiffDays - 1) / 7).toInt()
+        val completedWeeklies = countCompleteMap["weekly"]?.toInt() ?: 0
+
+        val missingCount = currentWeek - completedWeeklies
+
+        repeat(missingCount) {
+            insertDummyWeekly()
+        }
+
+    }
+
+
+
 
     private fun setupTabListeners() {
         // 뷰 바인딩을 사용하여 뷰에 접근

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView android:text="1. 어떤 상황이었나요?" style="@style/FormLabelStyle"/>
+    <EditText android:id="@+id/edit_situation" style="@style/FormInputStyle" android:hint="무슨 일이 있었는지 짧게 써주세요."/>
+
+    <TextView android:text="2. 그때 어떤 감정을 느꼈나요?" style="@style/FormLabelStyle"/>
+    <GridLayout
+        android:id="@+id/grid_emotions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/detailed_emotion_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        android:visibility="gone">
+
+        <TextView android:text="세부 감정" style="@style/FormLabelStyle" android:layout_marginTop="0dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_detailed_emotions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+</LinearLayout>

@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
 
     <!-- 상단 바 -->
     <LinearLayout
@@ -13,6 +12,7 @@
         android:layout_height="56dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
         android:background="@color/white">
 
         <ImageView
@@ -24,10 +24,11 @@
 
         <TextView
             android:id="@+id/tv_practice_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="Practice"
+            android:layout_weight="1"
+            android:text=""
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -37,24 +38,34 @@
         android:layout_height="1dp"
         android:background="#DDDDDD" />
 
-
-    <!-- 3) 연습 상세 콘텐츠 -->
+    <!-- 연습 상세 -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="16dp">
 
         <TextView
             android:id="@+id/tv_practice_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="내용을 불러오는 중..."
+            android:text="시작 버튼 눌러 훈련을 시작하세요."
             android:textSize="14sp"
-            android:lineSpacingExtra="4dp"
-            android:paddingHorizontal="16dp"/>
+            android:gravity="center"
+            android:lineSpacingExtra="4dp" />
     </ScrollView>
 
-    <!-- 4) 오디오 진행도 표시 -->
+    <!-- 비디오 -->
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="16dp"
+        android:visibility="gone" />
+
+    <!-- 오디오 진행도 표시 -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -63,8 +74,9 @@
         android:indeterminate="false"
         android:progress="0"
         android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp"/>
+        android:layout_marginHorizontal="16dp" />
 
+    <!-- 시간 표시 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,7 +105,7 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <!-- 5) 시작 / 정지 / 기록 버튼 -->
+    <!-- 버튼 -->
     <LinearLayout
         android:id="@+id/buttonContainer"
         android:layout_width="match_parent"

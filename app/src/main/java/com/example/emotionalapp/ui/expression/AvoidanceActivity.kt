@@ -140,12 +140,11 @@ class AvoidanceActivity : AppCompatActivity() {
                     .document(dateString)
                     .set(data)
                     .addOnSuccessListener {
-                        Log.d("Firestore", "정서 회피 저장 성공")
-                        startActivity(Intent(this, AllTrainingPageActivity::class.java))
+                        Toast.makeText(this@AvoidanceActivity, "기록 완료.", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@AvoidanceActivity, AllTrainingPageActivity::class.java))
                         finish()
                     }
                     .addOnFailureListener { e ->
-                        Log.e("Firestore", "저장 실패", e)
                         Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                         btnNext.isEnabled = true
                     }
@@ -174,7 +173,7 @@ class AvoidanceActivity : AppCompatActivity() {
         titleText.text = when (currentPage) {
             0 -> "나의 회피 행동 체크하기"
             1 -> "회피 일지 작성"
-            else -> ""
+            else -> "나의 회피 행동 체크하기"
         }
 
         val layoutId = when (currentPage) {
@@ -186,6 +185,37 @@ class AvoidanceActivity : AppCompatActivity() {
         val pageView = inflater.inflate(layoutId, pageContainer, false)
         pageContainer.addView(pageView)
 
+        // ✅ [복원 처리]
+        if (currentPage == 0) {
+            val checkBoxes = listOf(
+                R.id.cb_avoid1 to "회피 행동 1",
+                R.id.cb_avoid2 to "회피 행동 2",
+                R.id.cb_avoid3 to "회피 행동 3",
+                R.id.cb_avoid4 to "회피 행동 4",
+                R.id.cb_avoid5 to "회피 행동 5",
+                R.id.cb_avoid6 to "회피 행동 6",
+                R.id.cb_avoid7 to "회피 행동 7",
+                R.id.cb_avoid8 to "회피 행동 8"
+            )
+
+            for ((id, text) in checkBoxes) {
+                val cb = pageView.findViewById<CheckBox>(id)
+                if (avoid1 == cb.text.toString()) {
+                    cb.isChecked = true
+                }
+            }
+
+            val etCustom = pageView.findViewById<EditText>(R.id.et_custom_avoidance)
+            etCustom.setText(avoid2)
+
+        } else if (currentPage == 1) {
+            pageView.findViewById<EditText>(R.id.et_situation)?.setText(situation)
+            pageView.findViewById<EditText>(R.id.et_emotion)?.setText(emotion)
+            pageView.findViewById<EditText>(R.id.et_method)?.setText(method)
+            pageView.findViewById<EditText>(R.id.et_result)?.setText(result)
+        }
+
+        // ✅ 버튼 상태 및 인디케이터 업데이트
         btnPrev.isEnabled = currentPage != 0
         btnPrev.backgroundTintList = if (currentPage == 0)
             ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
@@ -201,4 +231,5 @@ class AvoidanceActivity : AppCompatActivity() {
             )
         }
     }
+
 }

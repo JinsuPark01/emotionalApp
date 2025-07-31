@@ -1,5 +1,7 @@
 package com.example.emotionalapp.ui.expression
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -10,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
@@ -17,6 +20,14 @@ import com.example.emotionalapp.adapter.AlternativeActionAdapter
 import com.example.emotionalapp.adapter.DetailedEmotionAdapter
 import com.example.emotionalapp.data.AlternativeActionItem
 import com.example.emotionalapp.databinding.ActivityAlternativeActionBinding
+import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class EmotionDetails(
     val detailedEmotionsResId: Int,
@@ -34,9 +45,10 @@ class AlternativeActionActivity : AppCompatActivity() {
     private var selectedDetailedEmotion: String = ""
     private var selectedAlternative: String = ""
     private var customAlternative: String = ""
-    private var actionTaken: String = ""
+    private var finalActionTaken: String = ""
 
     private var selectedEmotionButton: Button? = null
+    private var isSaving = false
 
     private val emotionDetailsMap = mapOf(
         "화남" to EmotionDetails(R.array.detailed_emotions_anger, R.array.alternative_actions_anger),
@@ -56,25 +68,53 @@ class AlternativeActionActivity : AppCompatActivity() {
         setupIndicators()
         updatePage()
 
-        binding.btnBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("훈련 종료")
+                .setMessage("훈련을 종료하고 나가시겠어요?")
+                .setPositiveButton("예") { _, _ -> finish() }
+                .setNegativeButton("아니오", null)
+                .show()
+        }
 
         binding.navPage.btnNext.setOnClickListener {
-            // '다음' 버튼을 누를 때, 현재 페이지의 데이터를 저장하고 유효성을 검사합니다.
-            // '직접 입력'을 선택하면, saveCurrentPageDataAndValidate 함수 내부에서 currentPage가 자동으로 변경됩니다.
-            if (!saveCurrentPageDataAndValidate()) return@setOnClickListener
+            if (isSaving) return@setOnClickListener
+            if (!validateAndSaveCurrentPage()) return@setOnClickListener
 
-            if (currentPage < totalPages - 1) {
-                currentPage++
+            val nextPage = if (currentPage == 0 && selectedEmotion == "직접 입력") 2 else currentPage + 1
+
+            if (nextPage < totalPages) {
+                currentPage = nextPage
                 updatePage()
             } else {
-                Toast.makeText(this, "훈련이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                finish()
+                lifecycleScope.launch {
+                    isSaving = true
+                    binding.navPage.btnNext.isEnabled = false
+                    try {
+                        saveToFirestore()
+                        Toast.makeText(this@AlternativeActionActivity, "훈련 기록이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@AlternativeActionActivity, AllTrainingPageActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        startActivity(intent)
+                        finish()
+                    } catch (e: Exception) {
+                        Toast.makeText(this@AlternativeActionActivity, "저장에 실패했습니다: ${e.message}", Toast.LENGTH_LONG).show()
+                        isSaving = false
+                        binding.navPage.btnNext.isEnabled = true
+                    }
+                }
             }
         }
 
         binding.navPage.btnPrev.setOnClickListener {
+            saveCurrentPageData()
             if (currentPage > 0) {
-                currentPage--
+                if (currentPage == 2 && selectedEmotion == "직접 입력") {
+                    currentPage = 0
+                } else {
+                    currentPage--
+                }
                 updatePage()
             }
         }
@@ -83,7 +123,6 @@ class AlternativeActionActivity : AppCompatActivity() {
     private fun updatePage() {
         val inflater = LayoutInflater.from(this)
         binding.pageContainer.removeAllViews()
-
         val pageView = when (currentPage) {
             0 -> inflater.inflate(R.layout.page_alternative_action_1_emotion, binding.pageContainer, false)
             1 -> inflater.inflate(R.layout.page_alternative_action_2_suggestion, binding.pageContainer, false)
@@ -91,36 +130,109 @@ class AlternativeActionActivity : AppCompatActivity() {
             else -> throw IllegalStateException("Invalid page")
         }
         binding.pageContainer.addView(pageView)
-
-        setupPageContent(pageView)
+        loadPageContent(pageView)
         updateNavButtons()
         updateIndicators()
     }
 
-    private fun setupPageContent(view: View) {
+    private fun loadPageContent(view: View) {
         when (currentPage) {
             0 -> {
-                val gridEmotions = view.findViewById<android.widget.GridLayout>(R.id.grid_emotions)
-                gridEmotions.removeAllViews()
-                val emotions = listOf("화남", "슬픔", "불안", "외로움", "죄책감", "무기력", "창피함", "직접 입력")
-                emotions.forEach { emotion ->
-                    val button = createEmotionButton(emotion)
-                    gridEmotions.addView(button)
-                    button.setOnClickListener { handleEmotionSelection(it as Button, emotion, view) }
-                }
+                view.findViewById<EditText>(R.id.edit_situation).setText(situation)
+                setupEmotionButtons(view)
             }
             1 -> {
-                emotionDetailsMap[selectedEmotion]?.let { details ->
-                    val alternativeActions = resources.getStringArray(details.alternativeActionsResId).toList().map { AlternativeActionItem(it) }
-                    val recyclerAlternative = view.findViewById<RecyclerView>(R.id.recycler_alternative_actions)
-                    recyclerAlternative.layoutManager = LinearLayoutManager(this)
-                    recyclerAlternative.adapter = AlternativeActionAdapter(alternativeActions) { item ->
-                        selectedAlternative = item.actionText
-                        Toast.makeText(this, "'${item.actionText}' 선택됨", Toast.LENGTH_SHORT).show()
-                    }
+                if (selectedEmotion != "직접 입력") {
+                    setupSuggestionPage(view)
                 }
             }
+            2 -> {
+                view.findViewById<EditText>(R.id.edit_action_taken).setText(finalActionTaken)
+            }
         }
+    }
+
+    private fun setupEmotionButtons(view: View) {
+        val gridEmotions = view.findViewById<android.widget.GridLayout>(R.id.grid_emotions)
+        gridEmotions.removeAllViews()
+        val emotions = listOf("화남", "슬픔", "불안", "외로움", "죄책감", "무기력", "창피함", "직접 입력")
+        emotions.forEach { emotion ->
+            val button = createEmotionButton(emotion)
+            gridEmotions.addView(button)
+            if (emotion == selectedEmotion) {
+                handleEmotionSelection(button, emotion, view)
+            }
+            button.setOnClickListener { handleEmotionSelection(it as Button, emotion, view) }
+        }
+    }
+
+    private fun setupSuggestionPage(view: View) {
+        emotionDetailsMap[selectedEmotion]?.let { details ->
+            val detailedEmotions = resources.getStringArray(details.detailedEmotionsResId).toList()
+            val recyclerDetailed = view.findViewById<RecyclerView>(R.id.recycler_detailed_emotions)
+            recyclerDetailed.layoutManager = LinearLayoutManager(this)
+            recyclerDetailed.adapter = DetailedEmotionAdapter(detailedEmotions) { item ->
+                selectedDetailedEmotion = item
+            }
+            val alternativeActions = resources.getStringArray(details.alternativeActionsResId).toList().map { AlternativeActionItem(it) }
+            val recyclerAlternative = view.findViewById<RecyclerView>(R.id.recycler_alternative_actions)
+            recyclerAlternative.layoutManager = LinearLayoutManager(this)
+            recyclerAlternative.adapter = AlternativeActionAdapter(alternativeActions) { item ->
+                selectedAlternative = item.actionText
+            }
+        }
+    }
+
+    private fun saveCurrentPageData() {
+        val pageView = binding.pageContainer.getChildAt(0) ?: return
+        when (currentPage) {
+            0 -> situation = pageView.findViewById<EditText>(R.id.edit_situation).text.toString().trim()
+            1 -> customAlternative = pageView.findViewById<EditText>(R.id.edit_custom_action).text.toString().trim()
+            2 -> finalActionTaken = pageView.findViewById<EditText>(R.id.edit_action_taken).text.toString().trim()
+        }
+    }
+
+    private fun validateAndSaveCurrentPage(): Boolean {
+        saveCurrentPageData()
+        return when (currentPage) {
+            0 -> {
+                if (situation.isBlank()) { Toast.makeText(this, "상황을 입력해주세요.", Toast.LENGTH_SHORT).show(); return false }
+                if (selectedEmotion.isBlank()) { Toast.makeText(this, "감정을 선택해주세요.", Toast.LENGTH_SHORT).show(); return false }
+                if (selectedEmotion != "직접 입력" && selectedDetailedEmotion.isBlank()) { Toast.makeText(this, "세부 감정을 선택해주세요.", Toast.LENGTH_SHORT).show(); return false }
+                true
+            }
+            1 -> {
+                if (selectedAlternative.isBlank() && customAlternative.isBlank()) { Toast.makeText(this, "대안 행동을 선택하거나 직접 입력해주세요.", Toast.LENGTH_SHORT).show(); return false }
+                true
+            }
+            2 -> {
+                if (finalActionTaken.isBlank()){ Toast.makeText(this, "어떻게 행동했는지 입력해주세요.", Toast.LENGTH_SHORT).show(); return false }
+                true
+            }
+            else -> true
+        }
+    }
+
+    private suspend fun saveToFirestore() {
+        val user = FirebaseAuth.getInstance().currentUser ?: throw Exception("User not logged in")
+        val db = FirebaseFirestore.getInstance()
+        val timestamp = Timestamp.now()
+        val sdf = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault())
+        val docId = sdf.format(timestamp.toDate())
+        val finalAlternativeAction = if (customAlternative.isNotBlank()) customAlternative else selectedAlternative
+        val data = hashMapOf(
+            "situation" to situation,
+            "emotion_main" to selectedEmotion,
+            "emotion_detail" to if (selectedEmotion == "직접 입력") "N/A" else selectedDetailedEmotion,
+            "alternative_action" to finalAlternativeAction,
+            "action_taken" to finalActionTaken,
+            "date" to timestamp
+        )
+        db.collection("user").document(user.email ?: "unknown_user")
+            .collection("expressionAlternative")
+            .document(docId)
+            .set(data)
+            .await()
     }
 
     private fun handleEmotionSelection(clickedButton: Button, emotion: String, pageView: View) {
@@ -136,7 +248,6 @@ class AlternativeActionActivity : AppCompatActivity() {
         selectedEmotion = emotion
 
         val detailedContainer = pageView.findViewById<LinearLayout>(R.id.detailed_emotion_container)
-
         if (emotion == "직접 입력") {
             detailedContainer.visibility = View.GONE
         } else {
@@ -146,49 +257,9 @@ class AlternativeActionActivity : AppCompatActivity() {
                 recyclerDetailed.layoutManager = LinearLayoutManager(this)
                 recyclerDetailed.adapter = DetailedEmotionAdapter(detailedEmotions) { item ->
                     selectedDetailedEmotion = item
-                    Toast.makeText(this, "'$item' 선택됨", Toast.LENGTH_SHORT).show()
                 }
                 detailedContainer.visibility = View.VISIBLE
             }
-        }
-    }
-
-    // --- 여기가 핵심 수정 부분입니다 ---
-    private fun saveCurrentPageDataAndValidate(): Boolean {
-        // 현재 페이지의 View를 가져옵니다.
-        // getChildAt(0)이 null일 수 있으므로 안전 호출(?.)을 사용합니다.
-        val pageView = binding.pageContainer.getChildAt(0) ?: return false
-
-        return when (currentPage) {
-            0 -> {
-                situation = pageView.findViewById<EditText>(R.id.edit_situation).text.toString().trim()
-                if (situation.isBlank()) { Toast.makeText(this, "상황을 입력해주세요.", Toast.LENGTH_SHORT).show(); return false }
-                if (selectedEmotion.isBlank()) { Toast.makeText(this, "감정을 선택해주세요.", Toast.LENGTH_SHORT).show(); return false }
-
-                // '직접 입력'이 아니고, 세부 감정도 선택하지 않았다면 막습니다.
-                if (selectedEmotion != "직접 입력" && selectedDetailedEmotion.isBlank()) {
-                    Toast.makeText(this, "세부 감정을 선택해주세요.", Toast.LENGTH_SHORT).show(); return false
-                }
-
-                // '직접 입력'을 선택했다면, 다음 페이지를 2(3번째 페이지)로 설정합니다.
-                if (selectedEmotion == "직접 입력") {
-                    currentPage = 1 // 다음 페이지 인덱스를 2가 아닌 1로 설정하여 다음 클릭 시 2가 되도록 함
-                }
-                true
-            }
-            1 -> {
-                customAlternative = pageView.findViewById<EditText>(R.id.edit_custom_action).text.toString().trim()
-                if (selectedAlternative.isBlank() && customAlternative.isBlank()) {
-                    Toast.makeText(this, "대안 행동을 선택하거나 직접 입력해주세요.", Toast.LENGTH_SHORT).show(); return false
-                }
-                true
-            }
-            2 -> {
-                actionTaken = pageView.findViewById<EditText>(R.id.edit_action_taken).text.toString().trim()
-                if (actionTaken.isBlank()){ Toast.makeText(this, "어떻게 행동했는지 입력해주세요.", Toast.LENGTH_SHORT).show(); return false }
-                true
-            }
-            else -> true
         }
     }
 

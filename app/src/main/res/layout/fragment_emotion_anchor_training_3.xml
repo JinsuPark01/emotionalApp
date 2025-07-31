@@ -30,7 +30,7 @@
             android:id="@+id/textQuestion2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2. 활동 후 어떻게 변화했나요?"
+            android:text="2. 활동 후 느낌이 달라졌나요?"
             android:textSize="16sp"
             android:textColor="#000000"
             android:layout_marginBottom="12dp" />

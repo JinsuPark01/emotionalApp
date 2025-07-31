@@ -35,7 +35,9 @@ class BodyTrainingReportDetailActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
 
         val millis = intent.getLongExtra("reportDateMillis", -1L)
-        if (millis == -1L) {
+        val trainingIdFromIntent = intent.getStringExtra("trainingId") ?: ""
+
+        if (millis == -1L || trainingIdFromIntent.isBlank()) {
             Toast.makeText(this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show()
             finish()
             return
@@ -52,13 +54,13 @@ class BodyTrainingReportDetailActivity : AppCompatActivity() {
             return
         }
 
-        // 날짜 범위 설정 (하루 전체)
-        val calendar = Calendar.getInstance()
-        calendar.time = reportDate
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
+        val calendar = Calendar.getInstance().apply {
+            time = reportDate
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
         val startOfDay = Timestamp(calendar.time)
 
         calendar.add(Calendar.DATE, 1)
@@ -72,7 +74,10 @@ class BodyTrainingReportDetailActivity : AppCompatActivity() {
             .whereLessThan("date", startOfNextDay)
             .get()
             .addOnSuccessListener { snapshot ->
-                val doc = snapshot.documents.firstOrNull()
+                val doc = snapshot.documents.firstOrNull {
+                    it.getString("trainingId") == trainingIdFromIntent
+                }
+
                 if (doc == null) {
                     Toast.makeText(this, "기록을 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
                     finish()

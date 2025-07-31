@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.ReportAdapter
 import com.example.emotionalapp.data.ReportItem
-import com.example.emotionalapp.ui.body.BodyTrainingRecordViewActivity
 import com.example.emotionalapp.ui.weekly.WeeklyReportActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -34,11 +33,14 @@ class BodyReportActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerViewBodyRecords)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
         adapter = ReportAdapter(reportList) { reportItem ->
             val intent = if (reportItem.name.contains("주간 점검")) {
                 Intent(this, WeeklyReportActivity::class.java)
             } else {
-                Intent(this, BodyTrainingReportDetailActivity::class.java)
+                Intent(this, BodyTrainingReportDetailActivity::class.java).apply {
+                    putExtra("trainingId", reportItem.trainingId)
+                }
             }
 
             reportItem.timeStamp?.let {
@@ -67,6 +69,7 @@ class BodyReportActivity : AppCompatActivity() {
             try {
                 reportList.clear()
 
+                // ✅ 1. bodyRecord 로드
                 val snapshot = db.collection("user")
                     .document(userEmail)
                     .collection("bodyRecord")
@@ -75,28 +78,10 @@ class BodyReportActivity : AppCompatActivity() {
 
                 for (doc in snapshot.documents) {
                     val content = doc.getString("content") ?: "소감 없음"
-
-                    // date 필드 형식 유연하게 처리
-                    val timestamp = when (val rawDate = doc.get("date")) {
-                        is Timestamp -> rawDate
-                        is Long -> Timestamp(Date(rawDate))
-                        is String -> {
-                            try {
-                                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                                Timestamp(sdf.parse(rawDate)!!)
-                            } catch (e: Exception) {
-                                null
-                            }
-                        }
-                        else -> null
-                    }
-
-                    val formattedDate = timestamp?.let {
-                        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it.toDate())
-                    } ?: "날짜 없음"
-
-                    // trainingId에 따라 제목 설정
+                    val timestamp = extractTimestamp(doc.get("date"))
+                    val formattedDate = formatDate(timestamp)
                     val trainingId = doc.getString("trainingId") ?: ""
+
                     val title = when (trainingId) {
                         "bt_detail_002" -> "전체 몸 스캔 인식하기"
                         "bt_detail_003" -> "먹기 명상(음식의 오감 알아차리기)"
@@ -105,7 +90,6 @@ class BodyReportActivity : AppCompatActivity() {
                         "bt_detail_006" -> "바디 스캔(감각 알아차리기)"
                         "bt_detail_007" -> "바디 스캔(미세한 감각 변화 알아차리기)"
                         "bt_detail_008" -> "먹기 명상(감정과 신체 연결 알아차리기)"
-                        "weekly_check"  -> "주간 점검"
                         else -> "훈련 소감"
                     }
 
@@ -113,17 +97,61 @@ class BodyReportActivity : AppCompatActivity() {
                         ReportItem(
                             name = title,
                             date = formattedDate,
-                            timeStamp = timestamp
+                            timeStamp = timestamp,
+                            trainingId = trainingId
                         )
                     )
                 }
 
-                reportList.sortByDescending { it.timeStamp }
+                // ✅ 2. weekly3 로드 (2주차 주간 점검용)
+                val weeklySnapshot = db.collection("user")
+                    .document(userEmail)
+                    .collection("weekly3")
+                    .get()
+                    .await()
+
+                for (doc in weeklySnapshot.documents) {
+                    val timestamp = doc.getTimestamp("date")
+                    val formattedDate = formatDate(timestamp)
+
+                    reportList.add(
+                        ReportItem(
+                            name = "주간 점검",
+                            date = formattedDate,
+                            timeStamp = timestamp,
+                            trainingId = "weekly_check"
+                        )
+                    )
+                }
+
+                reportList.sortBy { it.timeStamp }
                 adapter.notifyDataSetChanged()
 
             } catch (e: Exception) {
                 Log.e("Firestore", "기록 불러오기 실패: ${e.message}", e)
             }
         }
+    }
+
+    private fun extractTimestamp(dateField: Any?): Timestamp? {
+        return when (dateField) {
+            is Timestamp -> dateField
+            is Long -> Timestamp(Date(dateField))
+            is String -> {
+                try {
+                    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    Timestamp(sdf.parse(dateField)!!)
+                } catch (e: Exception) {
+                    null
+                }
+            }
+            else -> null
+        }
+    }
+
+    private fun formatDate(ts: Timestamp?): String {
+        return ts?.let {
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it.toDate())
+        } ?: "날짜 없음"
     }
 }

@@ -1,4 +1,4 @@
-package com.example.emotionalapp.ui.emotion
+package com.example.emotionalapp.ui.expression
 
 import android.os.Bundle
 import android.view.View

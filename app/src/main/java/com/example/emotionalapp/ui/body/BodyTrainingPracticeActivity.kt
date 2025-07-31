@@ -5,11 +5,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
 
@@ -25,6 +21,7 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
 
     private lateinit var mediaPlayer: MediaPlayer
     private val handler = Handler(Looper.getMainLooper())
+
     private val updateRunnable = object : Runnable {
         override fun run() {
             if (mediaPlayer.isPlaying) {
@@ -40,57 +37,45 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_body_practice)
 
-        // 뒤로가기
+        // 뒤로가기 버튼
         findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
 
-        // Intent로부터 데이터 수신
-        val trainingId = intent.getIntExtra("TRAINING_ID", 2)
+        // ✅ 수정된 부분: trainingId를 String으로 받도록 변경
+        val trainingIdStr = intent.getStringExtra("TRAINING_ID") ?: "bt_detail_002"
         val trainingTitle = intent.getStringExtra("TRAINING_TITLE") ?: "연습"
 
-        // 훈련 ID 문자열로 매핑
-        val trainingIdStr = when (trainingId) {
-            2 -> "bt_detail_002"
-            3 -> "bt_detail_003"
-            4 -> "bt_detail_004"
-            5 -> "bt_detail_005"
-            6 -> "bt_detail_006"
-            7 -> "bt_detail_007"
-            8 -> "bt_detail_008"
-            else -> "bt_detail_002"
+        // 훈련 ID로 DAY 텍스트 매핑
+        val tvTitle = findViewById<TextView>(R.id.tv_practice_title)
+        tvPracticeDetail = findViewById(R.id.tv_practice_detail)
+
+        tvTitle.text = trainingTitle
+        tvPracticeDetail.text = when (trainingIdStr) {
+            "bt_detail_002" -> "DAY 1 연습"
+            "bt_detail_003" -> "DAY 2 연습"
+            "bt_detail_004" -> "DAY 3 연습"
+            "bt_detail_005" -> "DAY 4 연습"
+            "bt_detail_006" -> "DAY 5 연습"
+            "bt_detail_007" -> "DAY 6 연습"
+            "bt_detail_008" -> "DAY 7 연습"
+            else -> "준비 중인 연습입니다."
         }
 
-        // 뷰 바인딩
+        // 오디오 초기화
+        mediaPlayer = MediaPlayer.create(this, getAudioResId(trainingIdStr)).apply {
+            isLooping = false
+        }
+        val duration = mediaPlayer.duration
+
         btnStart = findViewById(R.id.btnStart)
         btnStopPractice = findViewById(R.id.btnStopPractice)
         btnRecord = findViewById(R.id.btnRecord)
         progressBar = findViewById(R.id.progressBar)
         tvCurrentTime = findViewById(R.id.tvCurrentTime)
         tvTotalTime = findViewById(R.id.tvTotalTime)
-        val tvTitle = findViewById<TextView>(R.id.tv_practice_title)
-        tvPracticeDetail = findViewById(R.id.tv_practice_detail)
 
-        // 제목 및 상세 내용 설정
-        tvTitle.text = trainingTitle
-        tvPracticeDetail.text = when (trainingId) {
-            2 -> "DAY 1 연습"
-            3 -> "DAY 2 연습"
-            4 -> "DAY 3 연습"
-            5 -> "DAY 4 연습"
-            6 -> "DAY 5 연습"
-            7 -> "DAY 6 연습"
-            8 -> "DAY 7 연습"
-            else -> "준비 중인 연습입니다."
-        }
-
-        // MediaPlayer 초기화 (현재는 test_audio.mp3 한 개만 사용)
-        mediaPlayer = MediaPlayer.create(this, getAudioResId(trainingId)).apply {
-            isLooping = false
-        }
-        val duration = mediaPlayer.duration
         progressBar.max = duration
         tvTotalTime.text = formatTime(duration)
 
-        // 버튼 리스너
         btnStart.setOnClickListener {
             if (!mediaPlayer.isPlaying) {
                 mediaPlayer.start()
@@ -110,9 +95,10 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
                 mediaPlayer.pause()
                 handler.removeCallbacks(updateRunnable)
             }
-            startActivity(Intent(this, BodyTrainingRecordActivity::class.java).apply {
-                putExtra("TRAINING_ID", trainingIdStr) // 🔧 수정된 부분
-            })
+
+            val intent = Intent(this, BodyTrainingRecordActivity::class.java)
+            intent.putExtra("TRAINING_ID", trainingIdStr)
+            startActivity(intent)
         }
 
         mediaPlayer.setOnCompletionListener {
@@ -137,8 +123,21 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
         return String.format("%d:%02d", min, sec)
     }
 
-    private fun getAudioResId(id: Int): Int = R.raw.test_audio
+    private fun getAudioResId(idStr: String): Int {
+        return when (idStr) {
+            "bt_detail_002" -> R.raw.test_audio
+            "bt_detail_003" -> R.raw.test_audio
+            "bt_detail_004" -> R.raw.test_audio
+            "bt_detail_005" -> R.raw.test_audio
+            "bt_detail_006" -> R.raw.test_audio
+            "bt_detail_007" -> R.raw.test_audio
+            "bt_detail_008" -> R.raw.test_audio
+            else -> R.raw.test_audio
+        }
+    }
+
 }
+
 
 
 // 훈련 ID → raw 리소스 매핑 함수

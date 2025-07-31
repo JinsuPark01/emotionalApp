@@ -92,6 +92,7 @@
         <activity android:name=".ui.expression.DrivenActionGuideActivity" android:exported="false" />
 
         <activity android:name=".ui.body.BodyTrainingRecordViewActivity" />
+        <activity android:name=".ui.body.BodyTrainingReportDetailActivity" />
 
 
     </application>

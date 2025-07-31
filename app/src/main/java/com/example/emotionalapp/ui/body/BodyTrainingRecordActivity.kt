@@ -56,7 +56,7 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
                     "trainingId" to trainingId                // ✅ trainingId도 함께 저장
                 )
 
-                db.collection("users")
+                db.collection("user")
                     .document(userEmail)
                     .collection("bodyRecord")
                     .add(record)

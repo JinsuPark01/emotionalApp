@@ -107,7 +107,12 @@ class MindReportActivity : BottomNavActivity() {
                 if (mindTrapDocs.size() >= 3) {
                     reportList.add(
                         0,
-                        ReportItem("다른 사용자들의 생각의 덫 기록", "생각의 덫 통계", null)
+                        ReportItem(
+                            date = "다른 사용자들의 생각의 덫 기록",
+                            name = "생각의 덫 통계",
+                            timeStamp = null,
+                            backgroundColorResId = R.color.button_color_mind
+                        )
                     )
                 }
                 adapter.notifyDataSetChanged()

@@ -9,7 +9,7 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.data.EmotionAvoidanceQuizItem
 import com.example.emotionalapp.databinding.ActivityEmotionAvoidanceQuizBinding
 
-class EmotionAvoidanceQuizActivity : AppCompatActivity() {
+class AvoidanceQuizActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEmotionAvoidanceQuizBinding
     private lateinit var quizItems: List<EmotionAvoidanceQuizItem>

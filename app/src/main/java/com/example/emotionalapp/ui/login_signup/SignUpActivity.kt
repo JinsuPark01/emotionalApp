@@ -101,7 +101,16 @@ class SignUpActivity : AppCompatActivity() {
                         val userData = hashMapOf(
                             "email" to email,
                             "password" to password, // 실제 서비스에서는 평문 저장 금지
-                            "signupDate" to signUpDate
+                            "signupDate" to signUpDate,
+                            "countComplete" to hashMapOf(
+                                "weekly" to 0,
+                                "select" to 0,
+                                "anchor" to 0,
+                                "arc" to 0,
+                                "art" to 0,
+                                "trap" to 0,
+                                "auto" to 0
+                            )
                         )
 
                         db.collection("user").document(userId)

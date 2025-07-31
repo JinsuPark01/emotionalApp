@@ -7,7 +7,6 @@ data class ReportItem(
     val name: String,
     val timeStamp: Timestamp? = null, // Timestamp 필드 추가, null 허용
     val trainingId: String? = null,
-    val docId: String? = null
 )
 
 

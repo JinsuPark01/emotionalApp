@@ -1,5 +1,6 @@
 package com.example.emotionalapp.ui.expression
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -7,9 +8,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
+import com.example.emotionalapp.ui.login_signup.LoginActivity
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Date
 
 class AvoidanceReportActivity : AppCompatActivity() {
 
@@ -41,18 +45,34 @@ class AvoidanceReportActivity : AppCompatActivity() {
 
         btnBack.setOnClickListener { finish() }
 
-        // Intent에서 docId와 collectionName 가져오기
-        val docId = intent.getStringExtra("docId")
-        val collectionName = intent.getStringExtra("collectionName")
+        val reportMillis = intent?.getLongExtra("reportDateMillis", -1L) ?: -1L
+        if (reportMillis == -1L) {
+            Toast.makeText(this, "잘못된 보고서 정보입니다.", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+        val reportTimestamp = Timestamp(Date(reportMillis))
 
-        // docId 또는 collectionName이 없으면 오류 처리 후 액티비티 종료
-        if (docId.isNullOrBlank() || collectionName.isNullOrBlank()) {
-            Toast.makeText(this, "오류: 기록 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+
+        if (user == null || userEmail == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
             return
         }
 
-        loadReportData(collectionName, docId)
+        val db = FirebaseFirestore.getInstance()
+        db.collection("user").document(userEmail).collection("expressionAvoidance")
+            .whereEqualTo("date", reportTimestamp).get()
+            .addOnSuccessListener { snapshot ->
+                val doc = snapshot.documents.firstOrNull() ?: return@addOnSuccessListener
+                populateUI(doc)
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreError", "가져오기 실패: ${e.message}")
+                Toast.makeText(this, "데이터를 불러오는 데 실패했어요.", Toast.LENGTH_SHORT).show()
+            }
     }
 
     /**

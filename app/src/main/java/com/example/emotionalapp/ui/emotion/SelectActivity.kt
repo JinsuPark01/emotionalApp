@@ -36,6 +36,11 @@ class SelectActivity : AppCompatActivity() {
     private lateinit var layoutHowToDesc: LinearLayout
     private lateinit var iconArrowHowTo: ImageView
 
+    private lateinit var accordionCaution: LinearLayout
+    private lateinit var layoutCautionDesc: LinearLayout
+    private lateinit var iconArrowCaution: ImageView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_emotion_select)
@@ -79,23 +84,86 @@ class SelectActivity : AppCompatActivity() {
     private fun checkTimeAndSetButton() {
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val isAllowedHour = hour in 11..12 || hour in 18..20
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone("Asia/Seoul")
+        }.format(calendar.time)
 
-        if (!isAllowedHour) {
+        val timeSlot = when (hour) {
+            in 11..12 -> "morning"
+            in 19..20 -> "evening"
+            else -> null
+        }
+
+        if (timeSlot == null) {
             btnSelect.isEnabled = false
             btnSelect.text = "기록은 11~12시, 19~20시에만 가능합니다."
             btnSelect.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
-        } else {
-            btnSelect.setOnClickListener {
-                if (selectedMind == -1 || selectedBody == -1) {
-                    Toast.makeText(this, "마음과 몸의 감정을 선택해주세요", Toast.LENGTH_SHORT).show()
-                } else {
+            return
+        }
+
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser ?: return
+        val email = user.email ?: return
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("user")
+            .document(email)
+            .collection("emotionSelect")
+            .whereGreaterThanOrEqualTo("date", getTimeSlotStart(timeSlot))
+            .whereLessThan("date", getTimeSlotEnd(timeSlot))
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
                     btnSelect.isEnabled = false
-                    saveEmotionData()
+                    btnSelect.text = "해당 시간 기록이 완료 되었습니다."
+                    btnSelect.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
+                } else {
+                    btnSelect.isEnabled = true
+                    btnSelect.text = "감정 기록하기"
+                    btnSelect.setOnClickListener {
+                        if (selectedMind == -1 || selectedBody == -1) {
+                            Toast.makeText(this, "마음과 몸의 감정을 선택해주세요", Toast.LENGTH_SHORT).show()
+                        } else {
+                            btnSelect.isEnabled = false
+                            saveEmotionData()
+                        }
+                    }
                 }
             }
-        }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "기록 확인 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
+
+    // 현재 시간 기준 오전 or 오후 타임슬롯 시작
+    private fun getTimeSlotStart(slot: String): Timestamp {
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")).apply {
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            if (slot == "morning") {
+                set(Calendar.HOUR_OF_DAY, 10)
+            } else {
+                set(Calendar.HOUR_OF_DAY, 18)
+            }
+        }
+        return Timestamp(calendar.time)
+    }
+
+    private fun getTimeSlotEnd(slot: String): Timestamp {
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")).apply {
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            if (slot == "morning") {
+                set(Calendar.HOUR_OF_DAY, 13)  // 13시 미만까지 포함
+            } else {
+                set(Calendar.HOUR_OF_DAY, 21)  // 21시 미만까지 포함
+            }
+        }
+        return Timestamp(calendar.time)
+    }
+
 
     private fun setupFeelingButtons() {
         mindButtons.forEachIndexed { index, button ->
@@ -127,12 +195,21 @@ class SelectActivity : AppCompatActivity() {
         layoutHowToDesc = findViewById(R.id.layoutHowToDesc)
         iconArrowHowTo = findViewById(R.id.iconArrowHowTo)
 
+        accordionCaution = findViewById(R.id.accordionCaution)
+        layoutCautionDesc = findViewById(R.id.layoutCautionDesc)
+        iconArrowCaution = findViewById(R.id.iconArrowCaution)
+
+
         accordionWhatIs.setOnClickListener {
             toggleAccordion(tvWhatIsDesc, iconArrow)
         }
 
         accordionHowTo.setOnClickListener {
             toggleAccordion(layoutHowToDesc, iconArrowHowTo)
+        }
+
+        accordionCaution.setOnClickListener {
+            toggleAccordion(layoutCautionDesc, iconArrowCaution)
         }
     }
 

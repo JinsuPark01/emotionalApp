@@ -5,12 +5,10 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.MediaController
-import android.widget.TextView
-import android.widget.VideoView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
@@ -22,9 +20,15 @@ class IntroTrainingActivity : AppCompatActivity() {
     private lateinit var btnPrev: TextView
     private lateinit var btnNext: TextView
     private lateinit var indicatorContainer: LinearLayout
-
+    private lateinit var btnStart: Button
+    private lateinit var btnStopPractice: Button
+    private lateinit var progressBar: ProgressBar
+    private lateinit var tvCurrentTime: TextView
+    private lateinit var tvTotalTime: TextView
     private lateinit var videoView: VideoView
     private lateinit var accordion: LinearLayout
+
+    private val handler = Handler(Looper.getMainLooper())
 
     private val titlePages = listOf(
         "정서란?",
@@ -37,7 +41,19 @@ class IntroTrainingActivity : AppCompatActivity() {
         "정서조절은 우리가 정서의 발생과 강도, 표현 및 경험에 영향을 미치는 과정입니다(Gross & Thompson, 2007). 이 과정에서 우리는 종종 부적응적인 정서조절전략을 사용해서 오히려 의도하지 않은 심리적 고통을 겪을 수 있어요.\n\n예를 들어 정서적 느낌을 느끼지 않으려고 회피하거나 혹은 무시해서 오히려 정서경험이 강해지거나 떨쳐내기가 더욱 힘들어지는 것 등입니다. 어떤 것을 회피하려는 것은 타조가 위협을 피해 머리만 숨기는 것과 같이 ‘눈가리고 아웅‘하는 것일 수 있어요.\n\n<감정록> 에서 하고자 하는 것은 우리가 사용하고 있는 부적응적 정서조절 전략을 살펴보고 이를 적응적으로 바꾸고자 훈련을 하는 것입니다.",
         "1. 훈련의 최종목표는 정서를 없애는 것이 아니에요. 정서를 적응적이고 기능적인 수준으로 경험할 수 있도록 조절하면서, 불편한 정서들조차 적응적이고 유용할 수 있음을 경험하는 것입니다.\n\n2. 훈련 과정의 핵심은 ‘비판단적으로 알아차리고’, ‘기록하고’, ‘행동을 수정’하는 것이에요. \n\n3. 정서는 3요소로 이루어져 있어요. 정서와 관련된 ‘몸의 느낌(신체적 요소)’과 ‘생각(인지적 요소)’과 ‘정서에 반응하여 일어나는 정서주도행동(행동적 요소)’입니다. 정서를 경험할 때 이 세 가지의 상호작용을 잘 알아차리는 것이 중요해요. 앞으로 우리는 이 요소들을 골고루 연습해 볼 것입니다. \n\n4. 우선 정서의 느낌을 알아차리고, 정서와 관련된 생각을 알아차려서 수정해보고, 정서에 따른 행동도 살펴서 변화를 시도해 볼 거에요. 매주 순서대로 연습하지만 한 주 훈련이 끝나면 그 부분은 언제든지 다시 돌아가서 살펴볼 수 있습니다."
     )
+
     private var currentPage = 0
+
+    private val updateProgressRunnable = object : Runnable {
+        override fun run() {
+            if (videoView.isPlaying) {
+                val position = videoView.currentPosition
+                progressBar.progress = position
+                tvCurrentTime.text = formatTime(position)
+                handler.postDelayed(this, 500)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,15 +64,16 @@ class IntroTrainingActivity : AppCompatActivity() {
         btnPrev = findViewById(R.id.btnPrev)
         btnNext = findViewById(R.id.btnNext)
         indicatorContainer = findViewById(R.id.indicatorContainer)
-
-        videoView = findViewById(R.id.videoView)
         accordion = findViewById(R.id.accordion)
+        btnStart = findViewById(R.id.btnStart)
+        btnStopPractice = findViewById(R.id.btnStopPractice)
+        progressBar = findViewById(R.id.progressBar)
+        tvCurrentTime = findViewById(R.id.tvCurrentTime)
+        tvTotalTime = findViewById(R.id.tvTotalTime)
+        videoView = findViewById(R.id.videoView)
 
-        // 👇 btnBack 처리 추가
         val btnBack = findViewById<View>(R.id.btnBack)
-        btnBack.setOnClickListener {
-            finish()
-        }
+        btnBack.setOnClickListener { finish() }
 
         setupIndicators(pages.size)
         updatePage()
@@ -73,20 +90,14 @@ class IntroTrainingActivity : AppCompatActivity() {
                 currentPage++
                 updatePage()
             } else {
-                // 마지막 페이지에서 완료 시 다른 액티비티 이동
                 val intent = Intent(this, AllTrainingPageActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }
 
-        // 아코디언 클릭 리스너
         accordion.setOnClickListener {
-            if (text.visibility == View.GONE) {
-                text.visibility = View.VISIBLE
-            } else {
-                text.visibility = View.GONE
-            }
+            text.visibility = if (text.visibility == View.GONE) View.VISIBLE else View.GONE
         }
     }
 
@@ -108,18 +119,13 @@ class IntroTrainingActivity : AppCompatActivity() {
         title.text = titlePages[currentPage]
         text.text = pages[currentPage]
 
-        // 이전 버튼 상태
         btnPrev.isEnabled = currentPage != 0
-        if (currentPage == 0) {
-            btnPrev.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
-        } else {
-            btnPrev.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#3CB371"))
-        }
+        btnPrev.backgroundTintList = ColorStateList.valueOf(
+            if (currentPage == 0) Color.parseColor("#D9D9D9") else Color.parseColor("#3CB371")
+        )
 
-        // 다음 버튼 텍스트
         btnNext.text = if (currentPage == pages.lastIndex) "완료 →" else "다음 →"
 
-        // 인디케이터 업데이트
         for (i in 0 until indicatorContainer.childCount) {
             val dot = indicatorContainer.getChildAt(i)
             dot.setBackgroundResource(
@@ -127,18 +133,60 @@ class IntroTrainingActivity : AppCompatActivity() {
             )
         }
 
-        val videoView = findViewById<VideoView>(R.id.videoView)
-        val mediaController = MediaController(this)
-        mediaController.setAnchorView(videoView)
+        val videoResId = getVideoResId(currentPage)
+        if (videoResId != null) {
+            val uri = Uri.parse("android.resource://$packageName/$videoResId")
+            videoView.setVideoURI(uri)
+            videoView.visibility = View.VISIBLE
+            videoView.setOnPreparedListener { mp ->
+                progressBar.max = mp.duration
+                tvTotalTime.text = formatTime(mp.duration)
+            }
+            videoView.setOnCompletionListener {
+                handler.removeCallbacks(updateProgressRunnable)
+                progressBar.progress = progressBar.max
+                tvCurrentTime.text = formatTime(progressBar.max)
+            }
+        } else {
+            videoView.visibility = View.GONE
+        }
 
-        val videoName = "intro${currentPage + 1}"
-        val videoResId = resources.getIdentifier(videoName, "raw", packageName)
-        val uri = Uri.parse("android.resource://$packageName/$videoResId")
+        btnStart.setOnClickListener {
+            if (!videoView.isPlaying) {
+                videoView.start()
+                handler.post(updateProgressRunnable)
+            }
+        }
 
-        videoView.setMediaController(mediaController)
-        videoView.setVideoURI(uri)
-        videoView.setOnPreparedListener { it.isLooping = true }
-        videoView.start()
+        btnStopPractice.setOnClickListener {
+            if (videoView.isPlaying) {
+                videoView.pause()
+                handler.removeCallbacks(updateProgressRunnable)
+            }
+        }
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(updateProgressRunnable)
+        if (::videoView.isInitialized) {
+            videoView.stopPlayback()
+        }
+    }
+
+    private fun formatTime(ms: Int): String {
+        val totalSeconds = ms / 1000
+        val minutes = totalSeconds / 60
+        val seconds = totalSeconds % 60
+        return String.format("%d:%02d", minutes, seconds)
+    }
+
+    private fun getVideoResId(index: Int): Int? {
+        return when (index) {
+            0 -> R.raw.intro1
+            1 -> R.raw.intro2
+            2 -> R.raw.intro3
+            else -> null
+        }
     }
 }

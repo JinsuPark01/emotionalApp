@@ -188,6 +188,6 @@ class OppositeActionActivity : AppCompatActivity() {
     }
     private fun updateNavButtons() {
         binding.navPage.btnPrev.isEnabled = currentPage > 0
-        binding.navPage.btnNext.text = if (currentPage == totalPages - 1) "완료" else "다음 →"
+        binding.navPage.btnNext.text = if (currentPage == totalPages - 1) "완료 →" else "다음 →"
     }
 }

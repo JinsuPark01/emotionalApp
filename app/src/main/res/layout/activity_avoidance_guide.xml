@@ -31,36 +31,52 @@
         android:id="@+id/guide_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <!-- (기존 교육 내용들은 그대로 유지) -->
-        <TextView style="@style/GuideTitleStyle" android:text="정서 회피란?"/>
-        <TextView style="@style/GuideContentStyle" android:text="@string/topic_content_what_is_avoidance"/>
-        <TextView style="@style/GuideTitleStyle" android:text="회피해도 괜찮은 정서 vs 회피하면 안 되는 정서"/>
-        <TextView style="@style/GuideContentStyle" android:text="@string/topic_content_emotions_to_avoid"/>
-        <TextView style="@style/GuideTitleStyle" android:text="정서 회피의 단기적 효과"/>
-        <TextView style="@style/GuideContentStyle" android:text="@string/topic_content_short_term_effects"/>
-        <TextView style="@style/GuideTitleStyle" android:text="정서 회피의 장기적 결과"/>
-        <TextView style="@style/GuideContentStyle" android:text="@string/topic_content_long_term_effects"/>
-
-        <TextView
-            android:id="@+id/btn_start_quiz"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="32dp"
-            android:gravity="center"
-            android:text="퀴즈 풀어보기"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:backgroundTint="#3CB371"
-            android:background="@drawable/bg_round_green_button"
-            android:visibility="gone" /> <!-- visibility를 gone으로 설정 -->
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    </LinearLayout>
-</ScrollView>
-    </LinearLayout>
+            <!-- 1. 정서 회피란? -->
+            <TextView style="@style/GuideTitleStyle" android:text="정서 회피란?"/>
+            <TextView style="@style/GuideContentStyle" android:text="@string/topic_content_what_is_avoidance"/>
+            <ImageView style="@style/GuideImageStyle" android:src="@drawable/guide_giraffe_reading"/>
+
+            <!-- 2. 회피해도 괜찮은 정서 vs ... -->
+            <TextView style="@style/GuideTitleStyle" android:text="회피해도 괜찮은 정서 vs 회피하면 안 되는 정서"/>
+            <TextView style="@style/GuideContentStyle" android:text="@string/topic_content_emotions_to_avoid"/>
+            <ImageView style="@style/GuideImageStyle" android:src="@drawable/guide_giraffe_sad"/>
+
+            <!-- 3. 단기적 효과 -->
+            <TextView style="@style/GuideTitleStyle" android:text="정서 회피의 단기적 효과"/>
+            <TextView style="@style/GuideContentStyle" android:text="@string/topic_content_short_term_effects"/>
+            <ImageView style="@style/GuideImageStyle" android:src="@drawable/guide_giraffe_happy"/>
+
+            <!-- 4. 장기적 결과 -->
+            <TextView style="@style/GuideTitleStyle" android:text="정서 회피의 장기적 결과"/>
+            <TextView style="@style/GuideContentStyle" android:text="@string/topic_content_long_term_effects"/>
+            <ImageView style="@style/GuideImageStyle" android:src="@drawable/guide_giraffe_pointing"/>
+
+            <!-- 5. 추가 내용 -->
+            <TextView style="@style/GuideTitleStyle" android:text="핵심 정리"/>
+            <TextView style="@style/GuideContentStyle" android:text="“감정을 무조건 피하지도, 무조건 직면하지도 않아도 돼요.\n상황에 맞게, 감정을 다루는 방법을 선택하는 게 중요해요.”\n감정을 피하고 싶을 땐, “지금은 잠깐 쉬자. 하지만 나중엔 꼭 다시 돌아보자.”\n이렇게 자신에게 말해줘도 좋아요.”"/>
+            <ImageView style="@style/GuideImageStyle" android:src="@drawable/guide_giraffe_default"/>
+
+            <!-- 하단 퀴즈 버튼 -->
+            <TextView
+                android:id="@+id/btn_start_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:text="퀴즈 풀어보기"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:backgroundTint="#3CB371"
+                android:background="@drawable/bg_round_green_button"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

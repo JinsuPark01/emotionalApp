@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">emotionalApp</string>
+    <string name="app_name">감정록</string>
     <string name="training_icon">훈련 아이콘</string>
     <string name="view_details_arrow">세부 정보 보기 화살표</string>
 
@@ -129,5 +129,101 @@
     지금부터 당신은 감정에 끌려가기보단, 직접 선택한 대안 행동을 해보고, 그 결과가 어땠는지 돌아볼 시간을 가질거예요.\n\n
     감정을 \'없애는\'게 아니라, 감정을 다루는 당신만의 방법을 만들어보는 시간이에요.
 </string>
+    <!-- Alternative Action - Detailed Emotions and Actions -->
+    <string-array name="detailed_emotions_anger">
+        <item>짜증</item>
+        <item>분노</item>
+        <item>억울함</item>
+        <item>불쾌함</item>
+    </string-array>
+    <string-array name="alternative_actions_anger">
+        <item>- 나가서 5분 산책하기</item>
+        <item>- 종이에 하고 싶은 말 다 써보기</item>
+        <item>- 눈 감고 10초간 숨 크게 쉬기</item>
+        <item>- 운동하기 (팔벌려 뛰기, 제자리 뛰기 등)</item>
+        <item>- ‘지금 나는 화났어’라고 조용히 말해보기</item>
+    </string-array>
+
+    <string-array name="detailed_emotions_sadness">
+        <item>서운함</item>
+        <item>상실감</item>
+        <item>허무함</item>
+        <item>눈물 날 것 같은 느낌</item>
+    </string-array>
+    <string-array name="alternative_actions_sadness">
+        <item>- 좋아하는 노래 듣기</item>
+        <item>- 감정을 적는 일기 쓰기</item>
+        <item>- 나를 토닥이는 말 해보기 (“그럴 수 있지, 괜찮아”)</item>
+        <item>- 따뜻한 물 마시기</item>
+        <item>- 울고 싶은 만큼 울기</item>
+    </string-array>
+
+    <string-array name="detailed_emotions_anxiety">
+        <item>초조함</item>
+        <item>긴장</item>
+        <item>걱정</item>
+        <item>마음이 복잡함</item>
+    </string-array>
+    <string-array name="alternative_actions_anxiety">
+        <item>- 숨을 천천히 3번 쉬기</item>
+        <item>- “지금 당장은 괜찮아”라고 반복해보기</item>
+        <item>- 내가 할 수 있는 한 가지만 정해서 하기</item>
+        <item>- 손, 발 등 펴기 반복하면서 감각 느끼기</item>
+        <item>- 주변 물건 5개 자세히 바라보기</item>
+    </string-array>
+
+    <string-array name="detailed_emotions_loneliness">
+        <item>쓸쓸함</item>
+        <item>함께 있고 싶은 느낌</item>
+        <item>나만 혼자인 느낌</item>
+        <item>누구도 날 모르는 느낌</item>
+    </string-array>
+    <string-array name="alternative_actions_loneliness">
+        <item>- 친구/가족에게 안부 메시지 보내기</item>
+        <item>- 예전에 찍은 사진 보기</item>
+        <item>- 따뜻한 말 한마디 내게 써보기</item>
+        <item>- 좋아하는 인물/주인공 영상 보기</item>
+    </string-array>
+
+    <string-array name="detailed_emotions_guilt">
+        <item>미안함</item>
+        <item>후회</item>
+        <item>내가 잘못한 것 같음</item>
+        <item>실망스러움</item>
+    </string-array>
+    <string-array name="alternative_actions_guilt">
+        <item>- 사과 메시지 초안 써보기 (보내지 않아도 됨)</item>
+        <item>- 잘못한 일과 별개로 내가 잘한 일 1개 적기</item>
+        <item>- 실수한 상황을 다시 떠올리며 대처 연습</item>
+        <item>- “다음에는 이렇게 해볼래” 다짐 쓰기</item>
+    </string-array>
+
+    <string-array name="detailed_emotions_lethargy">
+        <item>귀찮음</item>
+        <item>아무 의욕 없음</item>
+        <item>몸이 축 처지는 느낌</item>
+        <item>‘내가 왜 이러지?’ 하는 생각</item>
+    </string-array>
+    <string-array name="alternative_actions_lethargy">
+        <item>- 지금 당장 할 수 있는 가장 쉬운 일 하나 하기</item>
+        <item>- 조용히 5분 누워 있다가 일어나기</item>
+        <item>- ‘나를 위한 미션’ 1개 적기</item>
+        <item>- 햇볕이 잘 드는 창가 바라보기</item>
+        <item>- 햇빛 보기 or 창문 열기</item>
+    </string-array>
+
+    <string-array name="detailed_emotions_shame">
+        <item>민망함</item>
+        <item>부끄러움</item>
+        <item>실수했을 때 움츠러듦</item>
+        <item>사람들이 날 이상하게 볼까봐 걱정됨</item>
+    </string-array>
+    <string-array name="alternative_actions_shame">
+        <item>- “사람들은 대부분 자기 일에 집중해” 되뇌기</item>
+        <item>- 그 상황을 웃긴 만화처럼 상상해보기</item>
+        <item>- 친구한테 “나 오늘 이런 실수했어” 말해보기</item>
+        <item>- 실수 상황을 글로 써보고 정리하기</item>
+        <item>- “완벽하지 않아도 괜찮아” 써보기</item>
+    </string-array>
 
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -15,6 +16,7 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
@@ -250,7 +252,11 @@ class AutoActivity : AppCompatActivity() {
     }
 
     private fun saveToFirestore() {
+        // 중복 저장 방지
+        btnNext.isEnabled = false
+
         val user = FirebaseAuth.getInstance().currentUser ?: return
+        val userEmail = user.email ?: return
         val db = FirebaseFirestore.getInstance()
         val timestamp = Timestamp.now()
 
@@ -273,11 +279,24 @@ class AutoActivity : AppCompatActivity() {
             .set(data)
             .addOnSuccessListener {
                 Toast.makeText(this, "자동적 사고 훈련이 저장되었어요.", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, AllTrainingPageActivity::class.java))
-                finish()
+                // 저장 성공 시에만 countComplete.auto +1
+                db.collection("user")
+                    .document(userEmail)
+                    .update("countComplete.auto", FieldValue.increment(1))
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "카운트 증가 성공")
+                        startActivity(Intent(this, AllTrainingPageActivity::class.java))
+                        finish()
+                        btnNext.isEnabled = true
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "카운트 증가 실패", e)
+                        btnNext.isEnabled = true
+                    }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                btnNext.isEnabled = true
             }
     }
 }

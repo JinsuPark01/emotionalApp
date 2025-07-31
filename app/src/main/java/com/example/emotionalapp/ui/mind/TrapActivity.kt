@@ -22,6 +22,7 @@ import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.example.emotionalapp.ui.login_signup.LoginActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -191,6 +192,8 @@ class TrapActivity : AppCompatActivity() {
                 }
 
                 // Firestore에 저장
+                btnNext.isEnabled = false // 중복 저장 방지
+
                 val user = FirebaseAuth.getInstance().currentUser
                 val userEmail = user?.email
 
@@ -241,11 +244,24 @@ class TrapActivity : AppCompatActivity() {
                     .set(data)
                     .addOnSuccessListener {
                         Log.d("Firestore", "데이터 저장 성공")
-                        moveToNextPageOrFinish()
+                        // 저장 성공 시에만 countComplete.trap +1
+                        db.collection("user")
+                            .document(userEmail)
+                            .update("countComplete.trap", FieldValue.increment(1))
+                            .addOnSuccessListener {
+                                Log.d("Firestore", "카운트 증가 성공")
+                                moveToNextPageOrFinish()
+                                btnNext.isEnabled = true
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("Firestore", "카운트 증가 실패", e)
+                                btnNext.isEnabled = true
+                            }
                     }
                     .addOnFailureListener { e ->
                         Log.w("Firestore", "저장 실패", e)
                         Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        btnNext.isEnabled = true
                     }
                 return@setOnClickListener
             }

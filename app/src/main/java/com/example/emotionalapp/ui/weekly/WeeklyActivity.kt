@@ -174,15 +174,17 @@ class WeeklyActivity : AppCompatActivity() {
                             .addOnSuccessListener {
                                 Log.d("Firestore", "카운트 증가 성공")
                                 moveToNextPage()
+                                btnNext.isEnabled = true
                             }
                             .addOnFailureListener { e ->
                                 Log.w("Firestore", "카운트 증가 실패", e)
-                                // 선택: 사용자에게 경고할지, 무시할지 결정
+                                btnNext.isEnabled = true
                             }
                     }
                     .addOnFailureListener { e ->
                         Log.w("Firestore", "저장 실패", e)
                         Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        btnNext.isEnabled = true
                         return@addOnFailureListener
                     }
             } else {

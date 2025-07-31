@@ -171,13 +171,16 @@ class SelectActivity : AppCompatActivity() {
                             val intent = Intent(this, AllTrainingPageActivity::class.java)
                             startActivity(intent)
                             finish()
+                            btnSelect.isEnabled = true
                         }
                         .addOnFailureListener { e ->
                             Log.w("Firestore", "카운트 증가 실패", e)
+                            btnSelect.isEnabled = true
                         }
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+                    btnSelect.isEnabled = true
                 }
 
         } else {

@@ -83,6 +83,20 @@
         <activity android:name=".ui.body.BodyTrainingRecordViewActivity" />
         <activity android:name=".ui.body.BodyTrainingReportDetailActivity" />
 
+        <activity
+            android:name=".ui.expression.AvoidanceReportActivity"
+            android:exported="false" />
 
+        <activity
+            android:name=".ui.expression.OppositeReportActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.expression.StayReportActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.expression.AlternativeReportActivity"
+            android:exported="false" />
     </application>
 </manifest>

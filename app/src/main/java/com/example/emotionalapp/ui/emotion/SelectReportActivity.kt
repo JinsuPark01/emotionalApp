@@ -137,6 +137,7 @@ class SelectReportActivity : AppCompatActivity() {
             setDrawValues(false)
             lineWidth = 2f
         }
+
         val dataSet19 = LineDataSet(entries19.filterNotNull(), "19시").apply {
             color = Color.RED
             setCircleColor(Color.RED)
@@ -148,11 +149,18 @@ class SelectReportActivity : AppCompatActivity() {
         chart.data = lineData
         chart.description.isEnabled = false
 
+        // 사용자 조작 방지
+        chart.setTouchEnabled(false)
+        chart.isDragEnabled = false
+        chart.setScaleEnabled(false)
+        chart.isHighlightPerTapEnabled = false
+
+        // X축 설정
         chart.xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM
             granularity = 1f
             axisMinimum = 0f
-            axisMaximum = 6f // 항상 7일 기준 고정
+            axisMaximum = 6f // 7일 기준
             valueFormatter = object : ValueFormatter() {
                 private val days = listOf("1일차", "2일차", "3일차", "4일차", "5일차", "6일차", "7일차")
                 override fun getAxisLabel(value: Float, axis: AxisBase?) =
@@ -160,15 +168,17 @@ class SelectReportActivity : AppCompatActivity() {
             }
         }
 
+        // 범례 설정 (왼쪽 정렬 + 그래프와 간격)
         chart.legend.apply {
             verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-            horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
             orientation = Legend.LegendOrientation.HORIZONTAL
-            setDrawInside(false)  // 차트 내부가 아니라 외부에 표시
-            yOffset = 16f         // x축과의 간격 (기본 0~6f)
+            setDrawInside(false)
+            yOffset = 24f  // 그래프와 범례 간격 늘림
+            xOffset = 16f  // 왼쪽 여백
         }
 
-
+        // Y축 왼쪽
         chart.axisLeft.apply {
             granularity = 1f
             axisMinimum = 0f
@@ -181,7 +191,10 @@ class SelectReportActivity : AppCompatActivity() {
             }
         }
 
+        // Y축 오른쪽 비활성화
         chart.axisRight.isEnabled = false
+
         chart.invalidate()
     }
+
 }

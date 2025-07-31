@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.databinding.ActivityAvoidanceGuideBinding
-import com.example.emotionalapp.ui.emotion.EmotionAvoidanceQuizActivity
 
 class AvoidanceGuideActivity : AppCompatActivity() {
 

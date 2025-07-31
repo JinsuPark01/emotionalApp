@@ -2,6 +2,8 @@ package com.example.emotionalapp.ui.emotion
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -69,17 +71,30 @@ class SelectActivity : AppCompatActivity() {
 
         setupFeelingButtons()
 
-        btnSelect.setOnClickListener {
-            if (selectedMind == -1 || selectedBody == -1) {
-                Toast.makeText(this, "마음과 몸의 감정을 선택해주세요", Toast.LENGTH_SHORT).show()
-            } else {
-                // 중복 저장 방지
-                btnSelect.isEnabled = false
-                saveEmotionData()
-            }
-        }
+        checkTimeAndSetButton()
 
         setupAccordionViews()
+    }
+
+    private fun checkTimeAndSetButton() {
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val isAllowedHour = hour in 11..12 || hour in 18..20
+
+        if (!isAllowedHour) {
+            btnSelect.isEnabled = false
+            btnSelect.text = "기록은 11~12시, 19~20시에만 가능합니다."
+            btnSelect.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
+        } else {
+            btnSelect.setOnClickListener {
+                if (selectedMind == -1 || selectedBody == -1) {
+                    Toast.makeText(this, "마음과 몸의 감정을 선택해주세요", Toast.LENGTH_SHORT).show()
+                } else {
+                    btnSelect.isEnabled = false
+                    saveEmotionData()
+                }
+            }
+        }
     }
 
     private fun setupFeelingButtons() {

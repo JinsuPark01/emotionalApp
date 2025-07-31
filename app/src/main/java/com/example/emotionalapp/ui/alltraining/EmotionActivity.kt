@@ -162,13 +162,13 @@ class EmotionActivity : BottomNavActivity() {
      */
     private fun loadDetailTrainingData() {
         val denominatorArr: Array<String> = when (userDiffDays) {
-            1L -> arrayOf("1", "1", "1", "잠김")
-            2L -> arrayOf("1", "2", "2", "잠김")
-            3L -> arrayOf("1", "3", "3", "잠김")
-            4L -> arrayOf("1", "4", "3", "1")
-            5L -> arrayOf("1", "5", "3", "2")
-            6L -> arrayOf("1", "6", "3", "3")
-            7L -> arrayOf("1", "7", "4", "4")
+            1L -> arrayOf("1", "2", "1", "잠김")
+            2L -> arrayOf("1", "4", "2", "잠김")
+            3L -> arrayOf("1", "6", "3", "잠김")
+            4L -> arrayOf("1", "8", "3", "1")
+            5L -> arrayOf("1", "10", "3", "2")
+            6L -> arrayOf("1", "12", "3", "3")
+            7L -> arrayOf("1", "14", "4", "4")
             else -> arrayOf("잠김", "잠김", "잠김", "잠김")
         }
 

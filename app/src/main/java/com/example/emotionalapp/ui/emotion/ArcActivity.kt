@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.example.emotionalapp.ui.login_signup.LoginActivity
@@ -21,10 +22,16 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.coroutines.resume
 
 class ArcActivity : AppCompatActivity() {
 
@@ -41,6 +48,7 @@ class ArcActivity : AppCompatActivity() {
     private var userResponse: String = ""
     private var userShortConsequence: String = ""
     private var userLongConsequence: String = ""
+    private var saveJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +84,10 @@ class ArcActivity : AppCompatActivity() {
         }
 
         btnNext.setOnClickListener {
-            if (currentPage == 1) {
+            if (currentPage == 0) {
+                currentPage++
+                updatePage()
+            } else if (currentPage == 1) {
                 // pageContainer 내부 현재 페이지 뷰 찾기
                 val pageView = pageContainer.getChildAt(0)
                 val answer1 = pageView.findViewById<EditText>(R.id.editSituationArcA)
@@ -89,6 +100,9 @@ class ArcActivity : AppCompatActivity() {
                 if (userAntecedent.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener // 저장 안 하고 넘어가지 않음
+                }else{
+                    currentPage++
+                    updatePage()
                 }
             } else if (currentPage == 2) {
                 // pageContainer 내부 현재 페이지 뷰 찾기
@@ -103,8 +117,15 @@ class ArcActivity : AppCompatActivity() {
                 if (userResponse.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener // 저장 안 하고 넘어가지 않음
+                }else{
+                    currentPage++
+                    updatePage()
                 }
             } else if (currentPage == 3) {
+                // 중복 저장 방지
+                if (saveJob?.isActive == true) return@setOnClickListener
+                btnNext.isEnabled = false
+
                 // pageContainer 내부 현재 페이지 뷰 찾기
                 val pageView = pageContainer.getChildAt(0)
                 val answer3 = pageView.findViewById<EditText>(R.id.editShortTermArcC)
@@ -118,77 +139,78 @@ class ArcActivity : AppCompatActivity() {
                 // 입력 체크
                 if (userShortConsequence.isEmpty() || userLongConsequence.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
+                    btnNext.isEnabled = true  // 다시 활성화
                     return@setOnClickListener // 저장 안 하고 넘어가지 않음
-                }
-            }
-
-            if (currentPage < totalPages - 1) {
-                currentPage++
-                updatePage()
-            } else {
-                // 중복 저장 방지
-                btnNext.isEnabled = false
-                // Firestore에 저장
-                val user = FirebaseAuth.getInstance().currentUser
-                val userEmail = user?.email
-
-                if (user == null || userEmail == null) {
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                    return@setOnClickListener
-                }
-
-                val nowTimestamp = Timestamp.now()
-                val nowDate = nowTimestamp.toDate()
-                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
-                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
-                }.format(nowDate)
-
-                val data = hashMapOf(
-                    "type" to "emotionArc",
-                    "date" to nowTimestamp,
-                    "antecedent" to userAntecedent,
-                    "response" to userResponse,
-                    "consequences" to hashMapOf(
-                        "short" to userShortConsequence,
-                        "long" to userLongConsequence
-                    )
-                )
-
-                val db = FirebaseFirestore.getInstance()
-                db.collection("user")
-                    .document(userEmail)
-                    .collection("emotionArc")
-                    .document(today)
-                    .set(data)
-                    .addOnSuccessListener {
-                        Log.d("Firestore", "데이터 저장 성공")
-                        // 저장 성공 시에만 countComplete.arc +1
-                        db.collection("user")
-                            .document(userEmail)
-                            .update("countComplete.arc", FieldValue.increment(1))
-                            .addOnSuccessListener {
-                                Log.d("Firestore", "카운트 증가 성공")
-                                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                                btnNext.isEnabled = true
-                            }
-                            .addOnFailureListener { e ->
-                                Log.w("Firestore", "카운트 증가 실패", e)
-                                btnNext.isEnabled = true
-                            }
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w("Firestore", "저장 실패", e)
-                        Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Firestore에 저장
+                    saveJob = lifecycleScope.launch {
+                        val success = withContext(Dispatchers.IO) {
+                            saveArcDataToFirestore()
+                        }
                         btnNext.isEnabled = true
-                        return@addOnFailureListener
+
+                        if (success) {
+                            Toast.makeText(this@ArcActivity, "ARC 훈련 기록이 저장되었어요.", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@ArcActivity, AllTrainingPageActivity::class.java))
+                            finish()
+                        } else {
+                            Toast.makeText(this@ArcActivity, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        }
                     }
+                }
             }
         }
 
+    }
+
+    private suspend fun saveArcDataToFirestore(): Boolean = suspendCancellableCoroutine { continuation ->
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+
+        if (user == null || userEmail == null) {
+            continuation.resume(false)
+            return@suspendCancellableCoroutine
+        }
+
+        val nowTimestamp = Timestamp.now()
+        val nowDate = nowTimestamp.toDate()
+        val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone("Asia/Seoul")
+        }.format(nowDate)
+
+        val data = hashMapOf(
+            "type" to "emotionArc",
+            "date" to nowTimestamp,
+            "antecedent" to userAntecedent,
+            "response" to userResponse,
+            "consequences" to hashMapOf(
+                "short" to userShortConsequence,
+                "long" to userLongConsequence
+            )
+        )
+
+        val db = FirebaseFirestore.getInstance()
+        db.collection("user")
+            .document(userEmail)
+            .collection("emotionArc")
+            .document(today)
+            .set(data)
+            .addOnSuccessListener {
+                db.collection("user")
+                    .document(userEmail)
+                    .update("countComplete.arc", FieldValue.increment(1))
+                    .addOnSuccessListener {
+                        continuation.resume(true)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "카운트 증가 실패", e)
+                        continuation.resume(false)
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.w("Firestore", "저장 실패", e)
+                continuation.resume(false)
+            }
     }
 
     private fun setupIndicators(count: Int) {

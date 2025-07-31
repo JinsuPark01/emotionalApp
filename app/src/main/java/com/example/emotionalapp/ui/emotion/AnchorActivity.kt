@@ -200,7 +200,6 @@ class AnchorActivity : AppCompatActivity() {
                                 val intent = Intent(this, AllTrainingPageActivity::class.java)
                                 startActivity(intent)
                                 finish()
-                                btnNext.isEnabled = true
                             }
                             .addOnFailureListener { e ->
                                 Log.w("Firestore", "카운트 증가 실패", e)

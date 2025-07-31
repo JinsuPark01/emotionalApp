@@ -73,8 +73,6 @@ class SelectActivity : AppCompatActivity() {
             if (selectedMind == -1 || selectedBody == -1) {
                 Toast.makeText(this, "마음과 몸의 감정을 선택해주세요", Toast.LENGTH_SHORT).show()
             } else {
-                // 중복 저장 방지
-                btnSelect.isEnabled = false
                 saveEmotionData()
             }
         }
@@ -127,6 +125,7 @@ class SelectActivity : AppCompatActivity() {
     }
 
     private fun saveEmotionData() {
+        btnSelect.isEnabled = false
         val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
 

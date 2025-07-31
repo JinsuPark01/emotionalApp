@@ -136,7 +136,7 @@ class AvoidanceActivity : AppCompatActivity() {
                 val db = FirebaseFirestore.getInstance()
                 db.collection("user")
                     .document(userEmail)
-                    .collection("emotionAvoidance")
+                    .collection("expressionAvoidance")
                     .document(dateString)
                     .set(data)
                     .addOnSuccessListener {

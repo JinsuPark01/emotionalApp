@@ -170,7 +170,7 @@ class StayActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         db.collection("user")
             .document(email)
-            .collection("emotionStay")
+            .collection("expressionStay")
             .document(dateString)
             .set(data)
             .addOnSuccessListener {

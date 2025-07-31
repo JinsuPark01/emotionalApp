@@ -61,11 +61,17 @@ class AnchorReportActivity : AppCompatActivity() {
                 val sensation = elements?.get("sensation") as? String ?: ""
                 val behavior = elements?.get("behavior") as? String ?: ""
 
+                val evaluation = doc.get("evaluation") as? Map<*, *>
+                val change = evaluation?.get("change") as? String ?: ""
+                val effect = evaluation?.get("effect") as? String ?: ""
+
                 findViewById<TextView>(R.id.anchorReportTitleText).text = dateString
                 findViewById<TextView>(R.id.reportTextC).text = selectedCue
                 findViewById<TextView>(R.id.reportTextT).text = thought
                 findViewById<TextView>(R.id.reportTextS).text = sensation
                 findViewById<TextView>(R.id.reportTextB).text = behavior
+                findViewById<TextView>(R.id.reportTextEC).text = change
+                findViewById<TextView>(R.id.reportTextEE).text = effect
             }
             .addOnFailureListener { e ->
                 Log.e("FirestoreError", "가져오기 실패: ${e.message}")

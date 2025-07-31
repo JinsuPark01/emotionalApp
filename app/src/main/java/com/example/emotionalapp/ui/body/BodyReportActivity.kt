@@ -3,17 +3,22 @@ package com.example.emotionalapp.ui.body
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.ReportAdapter
 import com.example.emotionalapp.data.ReportItem
+import com.example.emotionalapp.ui.alltraining.BodyActivity
 import com.example.emotionalapp.ui.weekly.WeeklyReportActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,7 +40,7 @@ class BodyReportActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         adapter = ReportAdapter(reportList) { reportItem ->
-            val intent = if (reportItem.name.contains("주간 점검")) {
+            val intent = if (reportItem.name.contains("주간 점검 기록 보기")) {
                 Intent(this, WeeklyReportActivity::class.java)
             } else {
                 Intent(this, BodyTrainingReportDetailActivity::class.java).apply {
@@ -56,7 +61,24 @@ class BodyReportActivity : AppCompatActivity() {
             finish()
         }
 
+        setupTabListeners()
         loadReports()
+    }
+
+    private fun setupTabListeners() {
+        val tabAll = findViewById<TextView>(R.id.tabAll)
+        val tabToday = findViewById<TextView>(R.id.tabToday)
+
+        tabAll.setOnClickListener {
+            val intent = Intent(this, BodyActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        // "기록 보기" 탭은 현재 화면 → 아무 동작 없음
+        tabToday.setOnClickListener {
+            Log.d("Tab", "기록 보기 탭 클릭됨 (현재 화면)")
+        }
     }
 
     private fun loadReports() {
@@ -77,7 +99,6 @@ class BodyReportActivity : AppCompatActivity() {
                     .await()
 
                 for (doc in snapshot.documents) {
-                    val content = doc.getString("content") ?: "소감 없음"
                     val timestamp = extractTimestamp(doc.get("date"))
                     val formattedDate = formatDate(timestamp)
                     val trainingId = doc.getString("trainingId") ?: ""
@@ -104,26 +125,12 @@ class BodyReportActivity : AppCompatActivity() {
                 }
 
                 // ✅ 2. weekly3 로드 (2주차 주간 점검용)
-                val weeklySnapshot = db.collection("user")
-                    .document(userEmail)
-                    .collection("weekly3")
-                    .get()
-                    .await()
-
-                for (doc in weeklySnapshot.documents) {
-                    val timestamp = doc.getTimestamp("date")
-                    val formattedDate = formatDate(timestamp)
-
-                    reportList.add(
-                        ReportItem(
-                            name = "주간 점검",
-                            date = formattedDate,
-                            timeStamp = timestamp,
-                            trainingId = "weekly_check"
-                        )
-                    )
+                val nthDoc = getNthOldestDoc(userEmail = userEmail, collectionName = "weekly3", n = 2, db)
+                nthDoc?.let {
+                    reportList.add(ReportItem(it.id.substringBefore('_'), "주간 점검 기록 보기", it.getTimestamp("date")))
                 }
 
+                // 최신순 정렬
                 reportList.sortBy { it.timeStamp }
                 adapter.notifyDataSetChanged()
 
@@ -153,5 +160,42 @@ class BodyReportActivity : AppCompatActivity() {
         return ts?.let {
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it.toDate())
         } ?: "날짜 없음"
+    }
+
+    private suspend fun getNthOldestDoc(
+        userEmail: String,
+        collectionName: String,
+        n: Int,
+        db: FirebaseFirestore
+    ): DocumentSnapshot? {
+        if (n < 1) return null // 1부터 시작하는 인덱스
+
+        var lastDoc: DocumentSnapshot? = null
+
+        // (n - 1)번 반복해서 앞 문서를 순차적으로 탐색
+        for (i in 1 until n) {
+            val query = db.collection("user")
+                .document(userEmail)
+                .collection(collectionName)
+                .orderBy("date", Query.Direction.ASCENDING)
+                .let { if (lastDoc != null) it.startAfter(lastDoc) else it }
+                .limit(1)
+                .get()
+                .await()
+
+            lastDoc = query.documents.firstOrNull() ?: return null // 앞 문서가 없다면 n번째는 없음
+        }
+
+        // n번째 문서
+        val nthQuery = db.collection("user")
+            .document(userEmail)
+            .collection(collectionName)
+            .orderBy("date", Query.Direction.ASCENDING)
+            .let { if (lastDoc != null) it.startAfter(lastDoc) else it }
+            .limit(1)
+            .get()
+            .await()
+
+        return nthQuery.documents.firstOrNull()
     }
 }

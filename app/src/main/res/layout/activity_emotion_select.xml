@@ -420,6 +420,65 @@
                     android:textSize="14sp"/>
             </LinearLayout>
 
+            <!-- 어떻게 진행하나요? -->
+            <LinearLayout
+                android:id="@+id/accordionCaution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvCaution"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="*필독* 주의 사항"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#ff4802" />
+
+                <ImageView
+                    android:id="@+id/iconArrowCaution"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_back_arrow"
+                    android:rotation="270" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD" />
+
+            <LinearLayout
+                android:id="@+id/layoutCautionDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="상태 기록하기는 오전 11~12시 오후 7~8시에 기록 가능하고 해당 시간 이후에는 기록할 수 없으니 꼭 시간 내에 실시해 주세요!"
+                    android:textSize="14sp"
+                    android:paddingBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="상태 기록하기는 밀린 기록에 대해 다시 작성할 수 없습니다.(다른 훈련은 깜빡해서 밀렸더라도 해당 주차에는 기록이 가능합니다.)"
+                    android:textSize="14sp"
+                    android:paddingBottom="8dp"/>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

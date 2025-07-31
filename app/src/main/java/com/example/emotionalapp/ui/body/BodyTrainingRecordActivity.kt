@@ -1,15 +1,19 @@
 package com.example.emotionalapp.ui.body
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
+import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Locale
 import java.text.SimpleDateFormat
@@ -67,7 +71,20 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
                     .set(record)
                     .addOnSuccessListener {
                         Toast.makeText(this, "소감이 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                        finish()
+                        Log.d("Firestore", "데이터 저장 성공")
+                        // 저장 성공 시에만 countComplete.trainingId +1
+                        db.collection("user")
+                            .document(userEmail)
+                            .update("countComplete.$trainingId", FieldValue.increment(1))
+                            .addOnSuccessListener {
+                                Log.d("Firestore", "카운트 증가 성공")
+                                val intent = Intent(this, AllTrainingPageActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("Firestore", "카운트 증가 실패", e)
+                            }
                     }
                     .addOnFailureListener {
                         Toast.makeText(this, "저장 실패: ${it.message}", Toast.LENGTH_SHORT).show()

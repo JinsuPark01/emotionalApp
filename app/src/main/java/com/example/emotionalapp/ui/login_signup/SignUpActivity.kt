@@ -109,7 +109,14 @@ class SignUpActivity : AppCompatActivity() {
                                 "arc" to 0,
                                 "art" to 0,
                                 "trap" to 0,
-                                "auto" to 0
+                                "auto" to 0,
+                                "bt_detail_002" to 0,
+                                "bt_detail_003" to 0,
+                                "bt_detail_004" to 0,
+                                "bt_detail_005" to 0,
+                                "bt_detail_006" to 0,
+                                "bt_detail_007" to 0,
+                                "bt_detail_008" to 0
                             )
                         )
 

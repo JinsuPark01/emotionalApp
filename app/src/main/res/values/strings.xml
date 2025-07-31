@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">emotionalApp</string>
+    <string name="app_name">감정록</string>
     <string name="training_icon">훈련 아이콘</string>
     <string name="view_details_arrow">세부 정보 보기 화살표</string>
 

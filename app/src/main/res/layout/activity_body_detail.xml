@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:gravity="center"
-            android:text="Training Start"
+            android:text="훈련 시작하기"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:background="@drawable/bg_round_green_button" />

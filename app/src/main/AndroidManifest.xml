@@ -82,6 +82,5 @@
         <activity android:name=".ui.body.BodyTrainingRecordViewActivity" />
         <activity android:name=".ui.body.BodyTrainingReportDetailActivity" />
 
-
     </application>
 </manifest>

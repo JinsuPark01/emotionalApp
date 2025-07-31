@@ -76,8 +76,8 @@ class AutoActivity : AppCompatActivity() {
         }
 
         btnNext.setOnClickListener {
-            btnNext.isEnabled = false
             if (!validateCurrentPage()) return@setOnClickListener
+            btnNext.isEnabled = false
 
             saveCurrentInput()
             if (currentPage < totalPages - 1) {

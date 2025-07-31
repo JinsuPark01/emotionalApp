@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.example.emotionalapp.ui.login_signup.LoginActivity
@@ -24,9 +25,14 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.coroutines.resume
 
 class TrapActivity : AppCompatActivity() {
 
@@ -192,77 +198,20 @@ class TrapActivity : AppCompatActivity() {
                 }
 
                 // Firestore에 저장
-                btnNext.isEnabled = false // 중복 저장 방지
+                btnNext.isEnabled = false
 
-                val user = FirebaseAuth.getInstance().currentUser
-                val userEmail = user?.email
+                lifecycleScope.launch {
+                    val success = withContext(Dispatchers.IO) {
+                        saveMindTrapDataToFirestore()
+                    }
+                    btnNext.isEnabled = true
 
-                if (user == null || userEmail == null) {
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                    return@setOnClickListener
+                    if (success) {
+                        moveToNextPageOrFinish()
+                    } else {
+                        Toast.makeText(this@TrapActivity, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
                 }
-
-                val nowTimestamp = Timestamp.now()
-                val nowDate = nowTimestamp.toDate()
-                val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
-                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
-                }.format(nowDate)
-
-                val data = hashMapOf(
-                    "type" to "mindTrap",
-                    "date" to nowTimestamp,
-                    "situation" to responsePage1Answer1,
-                    "thought" to responsePage1Answer2,
-                    "trap" to responsePage2Text,
-                    "validity" to hashMapOf(
-                        "answer1" to responsePage4ZeroAnswers[0],
-                        "answer2" to responsePage4ZeroAnswers[1],
-                        "answer3" to responsePage4ZeroAnswers[2],
-                        "answer4" to responsePage4ZeroAnswers[3]
-                    ),
-                    "assumption" to hashMapOf(
-                        "answer1" to responsePage4OneAnswers[0],
-                        "answer2" to responsePage4OneAnswers[1],
-                        "answer3" to responsePage4OneAnswers[2],
-                        "answer4" to responsePage4OneAnswers[3]
-                    ),
-                    "perspective" to hashMapOf(
-                        "answer1" to responsePage4TwoAnswers[0],
-                        "answer2" to responsePage4TwoAnswers[1],
-                        "answer3" to responsePage4TwoAnswers[2]
-                    ),
-                    "alternative" to responsePage6Text
-                )
-
-                val db = FirebaseFirestore.getInstance()
-                db.collection("user")
-                    .document(userEmail)
-                    .collection("mindTrap")
-                    .document(today)
-                    .set(data)
-                    .addOnSuccessListener {
-                        Log.d("Firestore", "데이터 저장 성공")
-                        // 저장 성공 시에만 countComplete.trap +1
-                        db.collection("user")
-                            .document(userEmail)
-                            .update("countComplete.trap", FieldValue.increment(1))
-                            .addOnSuccessListener {
-                                Log.d("Firestore", "카운트 증가 성공")
-                                moveToNextPageOrFinish()
-                                btnNext.isEnabled = true
-                            }
-                            .addOnFailureListener { e ->
-                                Log.w("Firestore", "카운트 증가 실패", e)
-                                btnNext.isEnabled = true
-                            }
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w("Firestore", "저장 실패", e)
-                        Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                        btnNext.isEnabled = true
-                    }
                 return@setOnClickListener
             }
             moveToNextPageOrFinish()
@@ -280,6 +229,71 @@ class TrapActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    private suspend fun saveMindTrapDataToFirestore(): Boolean = suspendCancellableCoroutine { continuation ->
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+
+        if (user == null || userEmail == null) {
+            continuation.resume(false)
+            return@suspendCancellableCoroutine
+        }
+
+        val nowTimestamp = Timestamp.now()
+        val nowDate = nowTimestamp.toDate()
+        val today = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone("Asia/Seoul")
+        }.format(nowDate)
+
+        val data = hashMapOf(
+            "type" to "mindTrap",
+            "date" to nowTimestamp,
+            "situation" to responsePage1Answer1,
+            "thought" to responsePage1Answer2,
+            "trap" to responsePage2Text,
+            "validity" to hashMapOf(
+                "answer1" to responsePage4ZeroAnswers[0],
+                "answer2" to responsePage4ZeroAnswers[1],
+                "answer3" to responsePage4ZeroAnswers[2],
+                "answer4" to responsePage4ZeroAnswers[3]
+            ),
+            "assumption" to hashMapOf(
+                "answer1" to responsePage4OneAnswers[0],
+                "answer2" to responsePage4OneAnswers[1],
+                "answer3" to responsePage4OneAnswers[2],
+                "answer4" to responsePage4OneAnswers[3]
+            ),
+            "perspective" to hashMapOf(
+                "answer1" to responsePage4TwoAnswers[0],
+                "answer2" to responsePage4TwoAnswers[1],
+                "answer3" to responsePage4TwoAnswers[2]
+            ),
+            "alternative" to responsePage6Text
+        )
+
+        val db = FirebaseFirestore.getInstance()
+        db.collection("user")
+            .document(userEmail)
+            .collection("mindTrap")
+            .document(today)
+            .set(data)
+            .addOnSuccessListener {
+                db.collection("user")
+                    .document(userEmail)
+                    .update("countComplete.trap", FieldValue.increment(1))
+                    .addOnSuccessListener {
+                        continuation.resume(true)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "카운트 증가 실패", e)
+                        continuation.resume(false)
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.w("Firestore", "저장 실패", e)
+                continuation.resume(false)
+            }
     }
 
     private fun setupIndicators(count: Int) {

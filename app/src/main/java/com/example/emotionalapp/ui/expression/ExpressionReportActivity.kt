@@ -11,6 +11,7 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.ReportAdapter
 import com.example.emotionalapp.data.ReportItem
 import com.example.emotionalapp.ui.alltraining.ExpressionActivity
+import com.example.emotionalapp.ui.alltraining.MindActivity
 import com.example.emotionalapp.ui.login_signup.LoginActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
 import com.example.emotionalapp.ui.weekly.WeeklyReportActivity
@@ -49,9 +50,6 @@ class ExpressionReportActivity : BottomNavActivity() {
 
         // --- 여기가 핵심 수정 부분입니다 (1) ---
         adapter = ReportAdapter(reportList) { reportItem ->
-            // reportItem의 trainingId 필드를 사용하여 docId를 가져옵니다.
-            val docId = reportItem.trainingId
-
             val intent = when (reportItem.name) {
                 "주간 점검 기록 보기" -> Intent(this, WeeklyReportActivity::class.java)
                 "회피 일지 기록 보기" -> Intent(this, AvoidanceReportActivity::class.java)
@@ -60,12 +58,15 @@ class ExpressionReportActivity : BottomNavActivity() {
                 "대안 행동 찾기 기록 보기" -> Intent(this, AlternativeReportActivity::class.java)
                 else -> null
             }
-
-            intent?.putExtra("reportDocId", docId) // docId를 전달
+            reportItem.timeStamp?.let {
+                intent?.putExtra("reportDateMillis", it.toDate().time)
+            }
             intent?.let { startActivity(it) }
         }
 
         trainingRecyclerView.adapter = adapter
+        reportList.clear()
+        adapter.notifyDataSetChanged()
     }
 
     private fun loadReportsWithCoroutines() {
@@ -91,26 +92,26 @@ class ExpressionReportActivity : BottomNavActivity() {
                 // --- 여기가 핵심 수정 부분입니다 (2) ---
                 // ReportItem 생성 시, doc.id를 trainingId 파라미터에 전달합니다.
                 weeklyDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "주간 점검 기록 보기", doc.getTimestamp("date"), doc.id))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "주간 점검 기록 보기", doc.getTimestamp("date")))
                 }
                 avoidanceDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "회피 일지 기록 보기", doc.getTimestamp("date"), doc.id))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "회피 일지 기록 보기", doc.getTimestamp("date")))
                 }
                 stayDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "정서 머무르기 기록 보기", doc.getTimestamp("date"), doc.id))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "정서 머무르기 기록 보기", doc.getTimestamp("date")))
                 }
                 oppositeDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "반대 행동하기 기록 보기", doc.getTimestamp("date"), doc.id))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "반대 행동하기 기록 보기", doc.getTimestamp("date")))
                 }
                 alternativeDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "대안 행동 찾기 기록 보기", doc.getTimestamp("date"), doc.id))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "대안 행동 찾기 기록 보기", doc.getTimestamp("date")))
                 }
 
                 reportList.sortByDescending { it.timeStamp }
                 adapter.notifyDataSetChanged()
 
             } catch (e: Exception) {
-                Log.e("Firestore", "4주차 데이터 불러오기 실패", e)
+                Log.e("Firestore", "데이터 불러오기 실패", e)
             }
         }
     }
@@ -118,19 +119,19 @@ class ExpressionReportActivity : BottomNavActivity() {
     private fun setupTabListeners() {
         val tabAll = findViewById<TextView>(R.id.tabAll)
         val tabToday = findViewById<TextView>(R.id.tabToday)
-        val titleText = findViewById<TextView>(R.id.titleText)
 
-        titleText.text = "4주차 기록보기"
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
+        // 전체 훈련 탭 클릭 시 이동
         tabAll.setOnClickListener {
-            val intent = Intent(this, ExpressionActivity::class.java)
+            val intent = Intent(this, MindActivity::class.java)
             startActivity(intent)
             finish()
         }
 
+        // 금일 훈련 탭은 현재 페이지이므로 클릭 시 아무 동작 없음
         tabToday.setOnClickListener {
-            Log.d("ExpressionReport", "금일 훈련 탭 클릭됨 (현재 페이지)")
+            Log.d("TodayTrainingPage", "금일 훈련 탭 클릭됨 (현재 페이지)")
         }
     }
 }

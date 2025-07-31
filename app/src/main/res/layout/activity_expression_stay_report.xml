@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- 제목 영역 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="정서 머무르기 기록"
+            android:textSize="18sp"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- 페이지별 콘텐츠 영역 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 선택한 감정 -->
+            <TextView
+                android:text="선택했던 감정"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_emotion"
+                style="@style/FormInputStyle"
+                android:hint="기록된 감정이 없습니다."/>
+
+            <!-- 질문 1 -->
+            <TextView
+                android:text="감정에 머무르고 나서 더 선명해진 감정"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_answer1"
+                style="@style/FormInputStyle"
+                android:hint="기록된 내용이 없습니다."/>
+
+            <!-- 질문 2 -->
+            <TextView
+                android:text="지금 기분이 조금 달라졌나요? 무엇을 느꼈나요?"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_answer2"
+                style="@style/FormInputStyle"
+                android:hint="기록된 내용이 없습니다."/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

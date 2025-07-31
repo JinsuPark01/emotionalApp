@@ -3,13 +3,16 @@ package com.example.emotionalapp.ui.body
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.ReportAdapter
 import com.example.emotionalapp.data.ReportItem
+import com.example.emotionalapp.ui.alltraining.BodyActivity
 import com.example.emotionalapp.ui.weekly.WeeklyReportActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -58,7 +61,24 @@ class BodyReportActivity : AppCompatActivity() {
             finish()
         }
 
+        setupTabListeners()
         loadReports()
+    }
+
+    private fun setupTabListeners() {
+        val tabAll = findViewById<TextView>(R.id.tabAll)
+        val tabToday = findViewById<TextView>(R.id.tabToday)
+
+        tabAll.setOnClickListener {
+            val intent = Intent(this, BodyActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        // "기록 보기" 탭은 현재 화면 → 아무 동작 없음
+        tabToday.setOnClickListener {
+            Log.d("Tab", "기록 보기 탭 클릭됨 (현재 화면)")
+        }
     }
 
     private fun loadReports() {
@@ -79,7 +99,6 @@ class BodyReportActivity : AppCompatActivity() {
                     .await()
 
                 for (doc in snapshot.documents) {
-                    val content = doc.getString("content") ?: "소감 없음"
                     val timestamp = extractTimestamp(doc.get("date"))
                     val formattedDate = formatDate(timestamp)
                     val trainingId = doc.getString("trainingId") ?: ""
@@ -111,6 +130,7 @@ class BodyReportActivity : AppCompatActivity() {
                     reportList.add(ReportItem(it.id.substringBefore('_'), "주간 점검 기록 보기", it.getTimestamp("date")))
                 }
 
+                // 최신순 정렬
                 reportList.sortBy { it.timeStamp }
                 adapter.notifyDataSetChanged()
 

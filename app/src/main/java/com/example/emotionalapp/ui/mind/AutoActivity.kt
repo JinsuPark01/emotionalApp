@@ -92,9 +92,15 @@ class AutoActivity : AppCompatActivity() {
                     }
 
                     if (success) {
-                        Toast.makeText(this@AutoActivity, "자동적 사고 훈련이 저장되었어요.", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@AutoActivity, AllTrainingPageActivity::class.java))
-                        finish()
+                        AlertDialog.Builder(this@AutoActivity)
+                            .setTitle("수고 많으셨습니다.")
+                            .setMessage("우리는 누구나 익숙한 방식으로 세상을 바라보며 살아갑니다. 여러분은 그 익숙함을 잠시 멈추고, 다른 시선과 해석의 가능성을 연습하셨습니다. 물론 훈련이 끝났다고 해서 완벽하게 새로운 해석이 바로 떠오르지 않을 수 있어요. 중요한 것은 해석을 바꿀 수 있다는 가능성을 기억하는 것입니다.\n\n앞으로도 감정을 흔들리게 하는 생각이 떠오를 때, “내가 지금 어떻게 해석하고 있는 걸까?”, “혹시 다른 해석도 가능하지 않을까?”라는 질문을 마음속에 떠올려보세요. 감정은 우리가 세상을 어떻게 해석하는지에 따라 달라집니다. 그리고 해석은 언제든지 다시 바라보고, 선택할 수 있는 것입니다. 앞으로도 연습을 통해 생각의 범위를 더욱 늘려가봅시다.")
+                            .setPositiveButton("확인") { _, _ ->
+                                startActivity(Intent(this@AutoActivity, AllTrainingPageActivity::class.java))
+                                finish()
+                            }
+                            .setCancelable(false)
+                            .show()
                     } else {
                         Toast.makeText(this@AutoActivity, "저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
                         btnNext.isEnabled = true
@@ -273,53 +279,6 @@ class AutoActivity : AppCompatActivity() {
         }
     }
 
-//    private fun saveToFirestore() {
-//        val user = FirebaseAuth.getInstance().currentUser ?: return
-//        val userEmail = user.email ?: return
-//        val db = FirebaseFirestore.getInstance()
-//        val timestamp = Timestamp.now()
-//
-//        val sdf = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault())
-//        sdf.timeZone = TimeZone.getTimeZone("Asia/Seoul")
-//        val docId = sdf.format(timestamp.toDate())
-//
-//        val data = hashMapOf(
-//            "answer1" to answerList[0],
-//            "answer2" to answerList[1],
-//            "answer3" to answerList[2],
-//            "trap" to selectedTrapText,
-//            "answer5" to answerList[4],
-//            "date" to timestamp
-//        )
-//
-//        db.collection("user").document(user.email ?: "")
-//            .collection("mindAuto")
-//            .document(docId)
-//            .set(data)
-//            .addOnSuccessListener {
-//                Toast.makeText(this, "자동적 사고 훈련이 저장되었어요.", Toast.LENGTH_SHORT).show()
-//                // 저장 성공 시에만 countComplete.auto +1
-//                db.collection("user")
-//                    .document(userEmail)
-//                    .update("countComplete.auto", FieldValue.increment(1))
-//                    .addOnSuccessListener {
-//                        runOnUiThread {
-//                            Log.d("Firestore", "카운트 증가 성공")
-//                            btnNext.isEnabled = true
-//                            startActivity(Intent(this, AllTrainingPageActivity::class.java))
-//                            finish()
-//                        }
-//                    }
-//                    .addOnFailureListener { e ->
-//                        Log.w("Firestore", "카운트 증가 실패", e)
-//                        btnNext.isEnabled = true
-//                    }
-//            }
-//            .addOnFailureListener {
-//                Toast.makeText(this, "저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
-//                btnNext.isEnabled = true
-//            }
-//    }
     private suspend fun saveToFirestoreSuspend(): Boolean = suspendCoroutine { continuation ->
         val user = FirebaseAuth.getInstance().currentUser
         val userEmail = user?.email
@@ -363,5 +322,4 @@ class AutoActivity : AppCompatActivity() {
                 continuation.resume(false)
             }
     }
-
 }

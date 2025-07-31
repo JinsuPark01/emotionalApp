@@ -50,7 +50,6 @@ class ArtActivity : AppCompatActivity() {
         R.drawable.art10, R.drawable.art11, R.drawable.art12
     )
 
-
     private val userAnswers = arrayOf(
         MutableList(5) { "" }, // 첫 번째 이미지의 5문항
         MutableList(5) { "" }  // 두 번째 이미지의 5문항
@@ -109,14 +108,14 @@ class ArtActivity : AppCompatActivity() {
 
             if (currentPage in 3..8) {
                 val pageView = pageContainer.getChildAt(0)
-                val answer1 = pageView.findViewById<EditText>(R.id.answer1)
-                val answer2 = pageView.findViewById<EditText>(R.id.answer2)
+                val answer1 = pageView?.findViewById<EditText>(R.id.answer1)
+                val answer2 = pageView?.findViewById<EditText>(R.id.answer2)
 
                 val isSingleAnswerPage = (currentPage - 3) % 3 == 2
                 val isValid = if (isSingleAnswerPage) {
-                    answer1.text.toString().isNotBlank()
+                    answer1?.text.toString().isNotBlank() == true
                 } else {
-                    answer1.text.toString().isNotBlank() && answer2.text.toString().isNotBlank()
+                    answer1?.text.toString().isNotBlank() == true && answer2?.text.toString().isNotBlank() == true
                 }
 
                 if (!isValid) {
@@ -129,8 +128,8 @@ class ArtActivity : AppCompatActivity() {
                 val pageIndex = (currentPage - 3) % 3
                 val startIndex = pageIndex * 2
                 val answers = mutableListOf<String>()
-                answers.add(answer1.text.toString())
-                if (!isSingleAnswerPage) answers.add(answer2.text.toString())
+                answer1?.text.toString().let { answers.add(it) }
+                if (!isSingleAnswerPage) answer2?.text.toString().let { answers.add(it) }
 
                 while (userAnswers[imageIndex].size < startIndex + answers.size) {
                     userAnswers[imageIndex].add("")
@@ -145,16 +144,21 @@ class ArtActivity : AppCompatActivity() {
                 updatePage()
                 btnNext.isEnabled = true
             } else {
-                // 마지막 페이지 - 저장 처리 (Coroutine)
                 lifecycleScope.launch {
                     val success = withContext(Dispatchers.IO) {
                         saveToDatabaseSuspend()
                     }
 
                     if (success) {
-                        Toast.makeText(this@ArtActivity, "자동적 사고 훈련이 저장되었어요.", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@ArtActivity, AllTrainingPageActivity::class.java))
-                        finish()
+                        AlertDialog.Builder(this@ArtActivity)
+                            .setTitle("훌륭합니다!")
+                            .setMessage("다른 시각에서 상황을 바라보는 연습은 처음엔 조금 어색할 수 있어요. 하지만 꾸준히 해보면 점차 익숙해져 나중에는 자연스럽게 여러 관점으로 생각할 수 있게 됩니다.\n\n이 연습에서 정해진 정답은 없다는 점을 기억하세요. 우리가 이렇게 다양한 시각을 연습하는 이유는 '더 맞는', ‘옳은’ 해석을 찾기 위해서가 아닙니다. 단지 우리가 처음에 떠올린 생각 외에도 다른 해석이 얼마든지 가능하다는 사실을 알아내기 위함입니다.")
+                            .setPositiveButton("확인") { _, _ ->
+                                startActivity(Intent(this@ArtActivity, AllTrainingPageActivity::class.java))
+                                finish()
+                            }
+                            .setCancelable(false)
+                            .show()
                     } else {
                         Toast.makeText(this@ArtActivity, "저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
                         btnNext.isEnabled = true
@@ -197,9 +201,9 @@ class ArtActivity : AppCompatActivity() {
         when (currentPage) {
             1 -> {
                 val image = pageView.findViewById<ImageView>(R.id.art0)
-                image.setImageResource(R.drawable.art0)
+                image?.setImageResource(R.drawable.art0)
 
-                image.setOnClickListener {
+                image?.setOnClickListener {
                     showZoomDialog(R.drawable.art0)
                 }
             }
@@ -223,25 +227,21 @@ class ArtActivity : AppCompatActivity() {
                 fun updateImageUI() {
                     imageViews.forEachIndexed { index, imageView ->
                         if (selectedImages.contains(index)) {
-                            // 선택된 이미지는 90% 크기로 축소
-                            imageView.scaleX = 0.9f
-                            imageView.scaleY = 0.9f
-
-                            // 배경이나 테두리는 제거
-                            imageView.background = null
-                            imageView.setPadding(0, 0, 0, 0)
+                            imageView?.scaleX = 0.9f
+                            imageView?.scaleY = 0.9f
+                            imageView?.background = null
+                            imageView?.setPadding(0, 0, 0, 0)
                         } else {
-                            // 선택 안 된 이미지는 원래 크기
-                            imageView.scaleX = 1.0f
-                            imageView.scaleY = 1.0f
-                            imageView.background = null
-                            imageView.setPadding(0, 0, 0, 0)
+                            imageView?.scaleX = 1.0f
+                            imageView?.scaleY = 1.0f
+                            imageView?.background = null
+                            imageView?.setPadding(0, 0, 0, 0)
                         }
                     }
                 }
 
                 imageViews.forEachIndexed { index, imageView ->
-                    imageView.setOnClickListener {
+                    imageView?.setOnClickListener {
                         if (selectedImages.contains(index)) {
                             selectedImages.remove(index)
                         } else {
@@ -271,8 +271,8 @@ class ArtActivity : AppCompatActivity() {
                 val startIndex = pageIndex * 2
 
                 val imageResId = selectedImageResourceIds.getOrNull(imageIndex) ?: 0
-                imageView.setImageResource(imageResId)
-                imageView.visibility = View.VISIBLE
+                imageView?.setImageResource(imageResId)
+                imageView?.visibility = View.VISIBLE
 
                 val questions = listOf(
                     "상황 1. 마음이 지치고 불안한 날\n예) 부모님과 다툰 후 / 친구와의 갈등 / 직장에서 큰 실수를 한 날\n\n1. 그림의 장면이 어떤 상황처럼 느껴지나요?",
@@ -284,34 +284,33 @@ class ArtActivity : AppCompatActivity() {
 
                 when (pageIndex) {
                     0 -> {
-                        question1.text = questions[0]
-                        question2.text = questions[1]
-                        question2.visibility = View.VISIBLE
-                        answer2.visibility = View.VISIBLE
+                        question1?.text = questions[0]
+                        question2?.text = questions[1]
+                        question2?.visibility = View.VISIBLE
+                        answer2?.visibility = View.VISIBLE
                     }
                     1 -> {
-                        question1.text = questions[2]
-                        question2.text = questions[3]
-                        question2.visibility = View.VISIBLE
-                        answer2.visibility = View.VISIBLE
+                        question1?.text = questions[2]
+                        question2?.text = questions[3]
+                        question2?.visibility = View.VISIBLE
+                        answer2?.visibility = View.VISIBLE
                     }
                     2 -> {
-                        question1.text = questions[4]
-                        question2.visibility = View.GONE
-                        answer2.visibility = View.GONE
+                        question1?.text = questions[4]
+                        question2?.visibility = View.GONE
+                        answer2?.visibility = View.GONE
                     }
                 }
 
-                // 입력값 복원
                 val savedAnswers = userAnswers[imageIndex]
                 if (savedAnswers.size > startIndex) {
-                    answer1.setText(savedAnswers[startIndex])
+                    answer1?.setText(savedAnswers[startIndex])
                 }
                 if (savedAnswers.size > startIndex + 1 && pageIndex != 2) {
-                    answer2.setText(savedAnswers[startIndex + 1])
+                    answer2?.setText(savedAnswers[startIndex + 1])
                 }
 
-                imageView.setOnClickListener {
+                imageView?.setOnClickListener {
                     if (imageResId != 0) {
                         showZoomDialog(imageResId)
                     }
@@ -334,6 +333,7 @@ class ArtActivity : AppCompatActivity() {
             )
         }
     }
+
     private fun showZoomDialog(imageResId: Int) {
         val dialog = Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         val view = layoutInflater.inflate(R.layout.dialog_zoom_image, null)
@@ -390,12 +390,10 @@ class ArtActivity : AppCompatActivity() {
             "date" to timestamp
         )
 
-        // ▶ 첫 번째 이미지 질문 답변 저장 (1art_1 ~ 1art_3)
         userAnswers[0].forEachIndexed { index, answer ->
             data["1art_${index + 1}"] = answer
         }
 
-        // ▶ 두 번째 이미지 질문 답변 저장 (2art_1 ~ 2art_3)
         userAnswers[1].forEachIndexed { index, answer ->
             data["2art_${index + 1}"] = answer
         }
@@ -419,5 +417,4 @@ class ArtActivity : AppCompatActivity() {
                 continuation.resume(false)
             }
     }
-
 }

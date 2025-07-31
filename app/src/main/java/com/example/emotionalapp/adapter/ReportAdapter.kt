@@ -17,6 +17,7 @@ class ReportAdapter(
     inner class ReportViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val dateText: TextView = itemView.findViewById(R.id.report_time)
         private val nameText: TextView = itemView.findViewById(R.id.report_name)
+        private val contentLayout: View = itemView.findViewById(R.id.content_layout)
 
         fun bind(item: ReportItem) {
             dateText.text = item.date

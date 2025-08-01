@@ -35,6 +35,7 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_body_practice)
@@ -115,6 +116,8 @@ class BodyTrainingPracticeActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()

@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -364,21 +365,54 @@ class WeeklyActivity : AppCompatActivity() {
     private fun updatePHQ9ButtonStates(questionIndex: Int) {
         val selected = phq9Selections[questionIndex]
         phq9ButtonGroups[questionIndex].forEachIndexed { index, btn ->
-            btn.alpha = if (index == selected) 1.0f else 0.3f
+            val iconImageView = btn.getChildAt(0) as ImageView
+            val labelTextView = btn.getChildAt(1) as TextView
+
+            if (index == selected) {
+                btn.alpha = 1.0f
+                iconImageView.setImageResource(R.drawable.ic_weekly_on)
+                labelTextView.setTextColor(Color.parseColor("#00897B"))
+            } else {
+                btn.alpha = 0.3f
+                iconImageView.setImageResource(R.drawable.ic_weekly)
+                labelTextView.setTextColor(Color.parseColor("#000000"))
+            }
         }
     }
 
     private fun updateGAD7ButtonStates(questionIndex: Int) {
         val selected = gad7Selections[questionIndex]
         gad7ButtonGroups[questionIndex].forEachIndexed { index, btn ->
-            btn.alpha = if (index == selected) 1.0f else 0.3f
+            val iconImageView = btn.getChildAt(0) as ImageView
+            val labelTextView = btn.getChildAt(1) as TextView
+
+            if (index == selected) {
+                btn.alpha = 1.0f
+                iconImageView.setImageResource(R.drawable.ic_weekly_on)
+                labelTextView.setTextColor(Color.parseColor("#00897B"))
+            } else {
+                btn.alpha = 0.3f
+                iconImageView.setImageResource(R.drawable.ic_weekly)
+                labelTextView.setTextColor(Color.parseColor("#000000"))
+            }
         }
     }
 
     private fun updatePanasButtonStates(questionIndex: Int) {
         val selected = panasSelections[questionIndex]
         panasButtonGroups[questionIndex].forEachIndexed { index, btn ->
-            btn.alpha = if (index == selected) 1.0f else 0.3f
+            val iconImageView = btn.getChildAt(0) as ImageView
+            val labelTextView = btn.getChildAt(1) as TextView
+
+            if (index == selected) {
+                btn.alpha = 1.0f
+                iconImageView.setImageResource(R.drawable.ic_weekly_on)
+                labelTextView.setTextColor(Color.parseColor("#00897B"))
+            } else {
+                btn.alpha = 0.3f
+                iconImageView.setImageResource(R.drawable.ic_weekly)
+                labelTextView.setTextColor(Color.parseColor("#000000"))
+            }
         }
     }
 

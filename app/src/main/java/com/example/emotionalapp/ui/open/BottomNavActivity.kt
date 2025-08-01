@@ -28,8 +28,8 @@ open class BottomNavActivity : AppCompatActivity() {
 
         // "나의 훈련" 버튼일 경우 - 연두색 강조 및 클릭 비활성화
         if (isAllTrainingPage) {
-            tvMyTraining.setTextColor(Color.parseColor("#3CB371")) // 연두색
-            ivMyTraining.setColorFilter(Color.parseColor("#3CB371"))
+            tvMyTraining.setTextColor(Color.parseColor("#00897B"))
+            ivMyTraining.setColorFilter(Color.parseColor("#00897B"))
         } else {
             btnMyTraining.setOnClickListener {
                 startActivity(Intent(this, AllTrainingPageActivity::class.java))

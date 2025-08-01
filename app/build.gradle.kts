@@ -71,4 +71,6 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1")
     implementation("androidx.lifecycle:lifecycle-process:2.6.2")
+
+    implementation("nl.dionsegijn:konfetti-xml:2.0.2")//2주차 효과를 위한 의존성 추가
 }

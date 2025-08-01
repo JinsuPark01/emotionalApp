@@ -51,7 +51,10 @@
             android:text="연습하기 콘텐츠를 불러오는 중..."
             android:textSize="14sp"
             android:lineSpacingExtra="4dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textIsSelectable="true"
+            android:autoLink="none" />
+
     </ScrollView>
 
     <!-- Training Start 버튼 -->

@@ -19,6 +19,10 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Locale
 import java.text.SimpleDateFormat
+import nl.dionsegijn.konfetti.core.*
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import nl.dionsegijn.konfetti.xml.KonfettiView
+import java.util.concurrent.TimeUnit
 
 class BodyTrainingRecordActivity : AppCompatActivity() {
 
@@ -26,7 +30,27 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_body_practice_record)
 
-        // 1) 뒤로가기 버튼
+        val konfettiView = findViewById<nl.dionsegijn.konfetti.xml.KonfettiView>(R.id.konfettiView)
+        konfettiView.visibility = View.VISIBLE
+
+        konfettiView.start(
+            Party(
+                speed = 0f,
+                maxSpeed = 30f,
+                damping = 0.9f,
+                spread = 360,
+                colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
+                emitter = Emitter(duration = 1, TimeUnit.SECONDS).max(100),
+                position = Position.Relative(0.5, 0.3)
+            )
+        )
+
+        AlertDialog.Builder(this)
+            .setTitle("훈련 완료")
+            .setMessage("잘하셨습니다! 오늘도 당신은 당신의 몸에 주의를 기울였습니다!")
+            .setPositiveButton("확인", null)
+            .show()
+
         val btnBack = findViewById<View>(R.id.btnBack)
         btnBack.setOnClickListener {
             AlertDialog.Builder(this)
@@ -39,13 +63,13 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
                 .show()
         }
 
-        // 2) Intent로부터 trainingId 받기
         val trainingId = intent.getStringExtra("TRAINING_ID") ?: return
 
         val etFeedback = findViewById<EditText>(R.id.etFeedback1)
         val btnSave = findViewById<Button>(R.id.btnSaveFeedback)
 
-        // 3) 저장 버튼 클릭
+
+
         btnSave.setOnClickListener {
             val feedbackText = etFeedback.text.toString().trim()
             if (feedbackText.isEmpty()) {

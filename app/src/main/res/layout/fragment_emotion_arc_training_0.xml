@@ -24,11 +24,8 @@
             android:id="@+id/textOverviewArcIntro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이것은 우리가 정서를 느낄 때의 경험 A(antecedents), 반응 R(responses), 결과 C(consequences)를 순서대로 정리하는 활동이에요. 모든 정서경험은 어떤 사건이나 상황으로 시작되고, 우리는 그 상황에 반응하게 됩니다. 그리고 그 반응은 지금 당장의 결과를 만들기도 하고, 시간이 지나면서 생기는 더 큰 변화로 이어지기도 해요.
-            \n\n이 활동의 목적은 감정이 왜 일어났고, 내가 어떤 반응을 했으며, 그 반응이 어떤 결과를 가져왔는지를 이해하는 것입니다.
-            \n이를 통해 나의 감정과 행동을 더 객관적으로 바라보고, 비슷한 상황에서 다른 선택이나 더 도움이 되는 반응을 찾아볼 수 있어요.
-            \n\n또한 이 활동은, 감정을 피하려고 했던 행동도 함께 돌아보는 과정이에요.
-            \n그 행동이 잘못된 건 아니에요. 오히려 그 순간에는 감정을 줄이는 데 도움이 되었을 수 있어요. 다만, 그 행동이 장기적으로 나에게 도움이 되는지를 함께 고민해 보는 것이 중요해요."
+            android:text="이 활동은 우리가 정서경험을 느낄 때,\n경험 A, 반응 R, 결과 C의 순서로 정리해보는 활동이에요.\n\n모든 정서경험은 어떤 사건이나 상황으로 시작되고, 우리는 그 상황에 자연스럽게 반응하게 됩니다.\n그리고 그 반응은 지금 당장의 결과를 만들기도 하고, 시간이 지나면서 더 큰 변화로 이어지기도 해요.\n\n이 활동의 목적은, 감정이 왜 일어났는지, 내가 어떤 반응을 했는지,\n그 반응이 어떤 결과를 가져왔는지를 이해하는 것이에요.\n\n이를 통해 나의 감정과 행동을 더 객관적으로 바라보고,\n비슷한 상황에서 더 도움이 되는 선택이나 반응을 찾는 데 도움을 받을 수 있어요.\n\n또한 이 활동은,\n감정을 피하려고 했던 행동도 함께 돌아보는 과정이에요.\n그 행동이 꼭 잘못된 건 아니에요.\n오히려 그 순간에는 감정을 줄이는 데 도움이 되었을 수도 있어요.\n다만, 그 행동이 장기적으로도 나에게 도움이 되었는지를 생각해보는 것이 중요해요.\n행동이 옳았는지를 평가하는 것이 아니라,\n그 행동이 나에게 어떤 영향을 주었는지를 스스로 돌아보며 기록해 보세요.
+"
             android:textSize="16sp"
             android:textColor="#555555"
             android:lineSpacingExtra="6dp"
@@ -40,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="A: 감정을 유발한 상황은 무엇이었나요?"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/button_color_emotion"
             android:layout_marginTop="12dp" />
@@ -49,8 +46,8 @@
             android:id="@+id/textStepADescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="예: 많은 사람들 앞에서 발표해야 함
-            \n예: 혼자 있는 것이 힘듦"
+            android:text="예: 많은 사람들 앞에서 발표할 때 떨려요.
+            \n예: 혼자 있는 시간이 힘들게 느껴져요."
             android:textSize="16sp"
             android:textColor="#555555"
             android:layout_marginBottom="8dp" />
@@ -59,8 +56,8 @@
             android:id="@+id/textStepR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="R: 그 상황에서 어떤 감정, 신체 반응, 행동을 했나요?"
-            android:textSize="18sp"
+            android:text="R: 그 상황에서 어떤 감정, 신체반응, 행동을 했나요?"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/button_color_emotion"
             android:layout_marginTop="12dp" />
@@ -69,8 +66,8 @@
             android:id="@+id/textStepRDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="예: 무기력함, 소화가 잘 안됨
-            \n예: 하루 종일 침대 안에만 있었음"
+            android:text="예: 온몸에 힘이 빠지고, 다른 일을 할 수가 없어요.
+            \n예: 아무도 안 만나고 침대에만 누워있어요"
             android:textSize="16sp"
             android:textColor="#555555"
             android:layout_marginBottom="8dp" />
@@ -80,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="C: 그 반응의 단기적/장기적 결과는 무엇이었나요?"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/button_color_emotion"
             android:layout_marginTop="12dp" />
@@ -89,8 +86,8 @@
             android:id="@+id/textStepCDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="예: 단기적 결과 - 불안을 피하고 마음이 편해짐
-            \n예: 장기적 결과 - 자신감이 점점 줄어듦"
+            android:text="예: 단기적 결과 - 발표를 취소해서 마음이 안정되요.
+            \n예: 장기적 결과 - 똑같은 상황이 반복되고 점점 무기력해져요."
             android:textSize="16sp"
             android:textColor="#555555"
             android:layout_marginBottom="16dp" />

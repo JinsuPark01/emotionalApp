@@ -93,7 +93,7 @@ class AnchorActivity : AppCompatActivity() {
                     val cueList = listOf(
                         "숨소리에 집중하기",
                         "심장 박동 8번 느껴보기",
-                        "'음~'소리를 5초간 내어보기"
+                        "'옴~'소리를 5초간 내어보기"
                     )
                     selectedCue = cueList[selectedCueIndex]
                     Log.d("AnchorActivity", "선택한 단서: $selectedCue")

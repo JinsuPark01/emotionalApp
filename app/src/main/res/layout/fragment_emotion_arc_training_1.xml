@@ -36,7 +36,7 @@
             android:id="@+id/editSituationArcA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="정서 경험을 유발한 상황이나 사건을 입력하세요"
+            android:hint="정서 경험을 유발한 상황이나 사건을 떠올려 보세요"
             android:background="@drawable/edit_text_background"
             android:padding="12dp"
             android:textSize="16sp"

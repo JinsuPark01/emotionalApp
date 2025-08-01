@@ -15,6 +15,7 @@ import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.example.emotionalapp.ui.login_signup.LoginActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
@@ -141,10 +142,21 @@ class AvoidanceActivity : AppCompatActivity() {
                     .set(data)
                     .addOnSuccessListener {
                         Toast.makeText(this@AvoidanceActivity, "기록 완료.", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@AvoidanceActivity, AllTrainingPageActivity::class.java))
-                        finish()
+                        db.collection("user")
+                            .document(userEmail)
+                            .update("countComplete.avoidance", FieldValue.increment(1))
+                            .addOnSuccessListener {
+                                Log.d("Firestore", "카운트 증가 성공")
+                                val intent = Intent(this, AllTrainingPageActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("Firestore", "카운트 증가 실패", e)
+                                btnNext.isEnabled = true
+                            }
                     }
-                    .addOnFailureListener { e ->
+                    .addOnFailureListener {
                         Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                         btnNext.isEnabled = true
                     }

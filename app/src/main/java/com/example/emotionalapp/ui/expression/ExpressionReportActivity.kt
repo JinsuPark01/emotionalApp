@@ -112,7 +112,7 @@ class ExpressionReportActivity : BottomNavActivity() {
                 }
 
                 // 최신 날짜가 위로 오게 정렬
-                reportList.sortBy { it.date }
+                reportList.sortBy { it.timeStamp }
                 adapter.notifyDataSetChanged()
 
             } catch (e: Exception) {

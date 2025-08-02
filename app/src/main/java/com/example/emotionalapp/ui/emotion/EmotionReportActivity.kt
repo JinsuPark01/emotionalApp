@@ -133,7 +133,7 @@ class EmotionReportActivity : BottomNavActivity() {
                 }
 
                 // 날짜 기준 오름차순 정렬 후 reportList에 추가
-                tempList.sortBy { it.date }
+                tempList.sortBy { it.timeStamp }
                 reportList.addAll(tempList)
 
                 adapter.notifyDataSetChanged()

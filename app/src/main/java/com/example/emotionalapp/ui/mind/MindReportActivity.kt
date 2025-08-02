@@ -102,7 +102,7 @@ class MindReportActivity : BottomNavActivity() {
                 }
 
                 // 최신 날짜가 위로 오게 정렬
-                reportList.sortBy { it.date }
+                reportList.sortBy { it.timeStamp }
                 // 생각의 덫 기록이 3개 이상일 경우, 통계 항목을 맨 위에 삽입
                 if (mindTrapDocs.size() >= 3) {
                     reportList.add(

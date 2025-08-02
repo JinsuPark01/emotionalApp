@@ -18,10 +18,6 @@
             android:name=".ui.login_signup.LoginActivity"
             android:exported="true">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <!-- 회원가입 화면 -->
@@ -98,5 +94,13 @@
         <activity
             android:name=".ui.expression.AlternativeReportActivity"
             android:exported="false" />
+
+        <activity android:name=".AddTester"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
     </application>
 </manifest>

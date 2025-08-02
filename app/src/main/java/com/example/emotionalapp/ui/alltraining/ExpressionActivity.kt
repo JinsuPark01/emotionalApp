@@ -175,7 +175,7 @@ class ExpressionActivity : BottomNavActivity() {
             ),
             DetailTrainingItem(
                 id = "avoidance_training",
-                title = "정서회피 훈련 교육",
+                title = "정서회피 교육",
                 subtitle = "정서 회피에 대해 알아보기",
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
                 progressNumerator = "1",
@@ -208,7 +208,7 @@ class ExpressionActivity : BottomNavActivity() {
             ),
             DetailTrainingItem(
                 id = "avoidance_training",
-                title = "정서-주도 행동 훈련 교육",
+                title = "정서-주도 행동 교육",
                 subtitle = "정서-주도 행동에 대해 알아보기",
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
                 progressNumerator = "1",

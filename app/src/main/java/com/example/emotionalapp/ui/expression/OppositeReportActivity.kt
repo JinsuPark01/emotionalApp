@@ -73,7 +73,6 @@ class OppositeReportActivity : AppCompatActivity() {
      * Firestore 문서의 데이터로 UI를 채우는 함수
      */
     private fun populateUI(document: DocumentSnapshot) {
-        // TODO: 아래 "필드이름"은 실제 Firestore 문서에 저장된 필드명(Key)으로 정확하게 변경해야 합니다.
         // XML의 ID를 보고 추정한 필드 이름입니다. 실제와 다를 수 있습니다.
 
         // .getString()은 필드가 없거나 타입이 다르면 null을 반환합니다.

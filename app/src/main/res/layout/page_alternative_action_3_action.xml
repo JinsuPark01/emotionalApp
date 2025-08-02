@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:padding="16dp">
     <TextView android:text="3. 어떻게 행동했나요?" style="@style/FormLabelStyle" android:layout_marginTop="0dp"/>
     <EditText android:id="@+id/edit_action_taken" style="@style/FormInputStyle" android:hint="그때 감정대로 행동했나요?\n아니면 당신이 고른 대안 행동을 해봤나요?"/>

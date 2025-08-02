@@ -115,7 +115,7 @@ class SelectActivity : AppCompatActivity() {
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
                     btnSelect.isEnabled = false
-                    btnSelect.text = "해당 시간 기록이 완료 되었습니다."
+                    btnSelect.text = "해당 시간 기록을 이미 기록하셨습니다."
                     btnSelect.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
                 } else {
                     btnSelect.isEnabled = true
@@ -144,7 +144,7 @@ class SelectActivity : AppCompatActivity() {
             if (slot == "morning") {
                 set(Calendar.HOUR_OF_DAY, 10)
             } else {
-                set(Calendar.HOUR_OF_DAY, 18)
+                set(Calendar.HOUR_OF_DAY, 13)
             }
         }
         return Timestamp(calendar.time)
@@ -156,7 +156,7 @@ class SelectActivity : AppCompatActivity() {
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
             if (slot == "morning") {
-                set(Calendar.HOUR_OF_DAY, 13)  // 13시 미만까지 포함
+                set(Calendar.HOUR_OF_DAY, 18)  // 13시 미만까지 포함
             } else {
                 set(Calendar.HOUR_OF_DAY, 21)  // 21시 미만까지 포함
             }

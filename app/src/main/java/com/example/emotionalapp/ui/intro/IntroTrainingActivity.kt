@@ -15,6 +15,7 @@ import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 
 class IntroTrainingActivity : AppCompatActivity() {
 
+    private lateinit var headerTitle: TextView
     private lateinit var title: TextView
     private lateinit var text: TextView
     private lateinit var btnPrev: TextView
@@ -59,6 +60,7 @@ class IntroTrainingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro_training)
 
+        headerTitle = findViewById(R.id.headerTitle)
         title = findViewById(R.id.title)
         text = findViewById(R.id.text)
         btnPrev = findViewById(R.id.btnPrev)
@@ -116,6 +118,7 @@ class IntroTrainingActivity : AppCompatActivity() {
     }
 
     private fun updatePage() {
+        headerTitle.text = titlePages[currentPage]
         title.text = titlePages[currentPage]
         text.text = pages[currentPage]
 

@@ -2,7 +2,7 @@
 android:orientation="vertical"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:padding="24dp">
+android:padding="16dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,18 +16,32 @@ android:padding="24dp">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="최근 내가 자주 사용하는 회피 행동을 체크해보세요."
+                android:textStyle="bold"
+                android:text="먼저 내가 자주 하는 회피 행동을 체크해보고, 오늘 실제로 한 행동을 짧게 기록해 볼 거예요."
+                android:layout_marginBottom="8dp"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="너무 길게 쓰지 않아도 돼요! 떠오르는 대로 적어보세요."
                 android:layout_marginBottom="24dp"
                 android:textSize="16sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="최근 내가 자주 사용하는 회피 행동을 체크해보세요."
+                android:layout_marginBottom="12dp"
+                android:textSize="16sp"/>
 
-            <CheckBox android:id="@+id/cb_avoid1" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="폰을 계속 만지작거리거나 SNS, 유튜브를 계속 본다." android:layout_marginBottom="8dp"/>
-            <CheckBox android:id="@+id/cb_avoid2" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="갑자기 먹을 것을 찾거나 음식을 계속 먹는다." android:layout_marginBottom="8dp"/>
-            <CheckBox android:id="@+id/cb_avoid3" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="아무 이유 없이 계속 잔다." android:layout_marginBottom="8dp"/>
-            <CheckBox android:id="@+id/cb_avoid4" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="과제나 할 일을 미루고 딴짓을 한다." android:layout_marginBottom="8dp"/>
-            <CheckBox android:id="@+id/cb_avoid5" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="친구들이랑 있으면 일부러 웃고 떠들면서 감정을 숨긴다." android:layout_marginBottom="8dp"/>
-            <CheckBox android:id="@+id/cb_avoid6" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="음악을 크게 틀고 아무 생각 안 하려 한다." android:layout_marginBottom="8dp"/>
-            <CheckBox android:id="@+id/cb_avoid7" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="괜히 방 청소, 정리 같은 걸 시작한다." android:layout_marginBottom="8dp"/>
-            <CheckBox android:id="@+id/cb_avoid8" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="아무것도 안 하고 멍 때린다." android:layout_marginBottom="8dp"/>
+            <CheckBox android:id="@+id/cb_avoid1" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="폰을 계속 만지작거리거나 SNS, 유튜브를 계속 본다." android:layout_marginBottom="4dp"/>
+            <CheckBox android:id="@+id/cb_avoid2" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="갑자기 먹을 것을 찾거나 음식을 계속 먹는다." android:layout_marginBottom="4dp"/>
+            <CheckBox android:id="@+id/cb_avoid3" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="아무 이유 없이 계속 잔다." android:layout_marginBottom="4dp"/>
+            <CheckBox android:id="@+id/cb_avoid4" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="과제나 할 일을 미루고 딴짓을 한다." android:layout_marginBottom="4dp"/>
+            <CheckBox android:id="@+id/cb_avoid5" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="친구들이랑 있으면 일부러 웃고 떠들면서 감정을 숨긴다." android:layout_marginBottom="4dp"/>
+            <CheckBox android:id="@+id/cb_avoid6" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="음악을 크게 틀고 아무 생각 안 하려 한다." android:layout_marginBottom="4dp"/>
+            <CheckBox android:id="@+id/cb_avoid7" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="괜히 방 청소, 정리 같은 걸 시작한다." android:layout_marginBottom="4dp"/>
+            <CheckBox android:id="@+id/cb_avoid8" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="아무것도 안 하고 멍 때린다." android:layout_marginBottom="4dp"/>
 
             <!-- 직접 입력 칸 -->
             <EditText
@@ -35,11 +49,27 @@ android:padding="24dp">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="그 외 내가 자주 하는 회피 행동 (직접 입력)"
-                android:minHeight="48dp"
+                android:textSize="16sp"
                 android:background="@drawable/edit_text_background"
                 android:padding="12dp"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginBottom="24dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="이 행동은 나에게 어떤 영향을 주나요?"
+                android:layout_marginBottom="12dp"
+                android:textSize="16sp"/>
+            <EditText
+                android:id="@+id/et_effect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="이 행동은 나에게 ____한 영향을 준다."
+                android:textSize="16sp"
+                android:background="@drawable/edit_text_background"
+                android:padding="12dp" />
 
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

@@ -13,6 +13,12 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow" />
+
         <TextView
             android:id="@+id/tv_page_title"
             android:layout_width="wrap_content"
@@ -22,6 +28,7 @@
             android:layout_marginStart="8dp"
             android:textStyle="bold" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,19 +42,29 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp">
 
+            <TextView
+                android:id="@+id/tabToday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="기록 보기"
+                android:textStyle="bold" />
             <!-- 전체 훈련 (선택된 탭 + 검정 밑줄) -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
-                    android:id="@+id/tabToday"
+                    android:id="@+id/tabAll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="금일 훈련"
                     android:padding="12dp"
+                    android:text="전체 훈련"
                     android:textStyle="bold" />
                 <!-- 검정 밑줄 -->
                 <View
@@ -55,15 +72,6 @@
                     android:layout_height="2dp"
                     android:background="#000000" />
             </LinearLayout>
-            <TextView
-                android:id="@+id/tabAll"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="전체 훈련"
-                android:padding="12dp"
-                android:textStyle="bold" />
         </LinearLayout>
         <!-- 밑줄은 양옆 여백 없이 전체 길이로 -->
         <View
@@ -71,69 +79,6 @@
             android:layout_height="1dp"
             android:background="#DDDDDD" />
     </LinearLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dateSelector"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="8dp"
-        android:paddingHorizontal="16dp"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
-
-        <!-- 왼쪽 화살표 -->
-        <ImageView
-            android:id="@+id/btnPrevDay"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_back_arrow"
-            android:contentDescription="이전 날짜"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="0dp" />
-
-        <!-- 날짜 텍스트 + 달력 아이콘 -->
-        <LinearLayout
-            android:id="@+id/dateCenterBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <TextView
-                android:id="@+id/textSelectedDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2025-10-16"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/btnCalendar"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/ic_calendar"
-                android:contentDescription="달력 보기" />
-        </LinearLayout>
-
-        <!-- 오른쪽 화살표 -->
-        <ImageView
-            android:id="@+id/btnNextDay"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_forward_arrow"
-            android:contentDescription="다음 날짜"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="0dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <!-- 훈련 목록 RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trainingRecyclerView"

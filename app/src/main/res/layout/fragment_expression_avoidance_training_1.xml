@@ -2,7 +2,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:padding="24dp">
     <ScrollView
         android:layout_width="match_parent"
@@ -21,39 +20,6 @@
             <EditText android:id="@+id/et_method" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="감정을 피하기 위해 무엇을 했나요?" android:minHeight="48dp" android:background="@drawable/edit_text_background" android:padding="12dp" android:layout_marginBottom="16dp"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="피한 후 결과:" android:textStyle="bold" android:layout_marginBottom="4dp"/>
             <EditText android:id="@+id/et_result" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="그 행동을 한 뒤 기분이나 상황이 어땠나요?" android:minHeight="48dp" android:background="@drawable/edit_text_background" android:padding="12dp" android:layout_marginBottom="16dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="내가 자주 사용하는 회피 행동은"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
-            <EditText
-                android:id="@+id/et_habit_behavior"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="눌러서 입력"
-                android:background="@drawable/edit_text_background"
-                android:padding="12dp"
-                android:layout_marginTop="4dp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="이다. 이 행동은 나에게"
-                android:textSize="16sp"/>
-            <EditText
-                android:id="@+id/et_habit_impact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="눌러서 입력"
-                android:background="@drawable/edit_text_background"
-                android:padding="12dp"
-                android:layout_marginTop="4dp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="한 영향을 준다."
-                android:textSize="16sp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

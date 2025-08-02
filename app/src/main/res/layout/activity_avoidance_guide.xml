@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <!-- 상단 바 -->
@@ -60,13 +59,9 @@
 
             <!-- 5. 추가 내용 -->
             <TextView style="@style/GuideTitleStyle" android:text="핵심 정리"/>
-            <TextView
-                style="@style/GuideContentStyle"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:background="#F5F5F5"
-                android:paddingVertical="16dp"
-                android:text="“감정을 무조건 피하지도, 무조건 직면하지도 않아도 돼요.\n상황에 맞게, 감정을 다루는 방법을 선택하는 게 중요해요.”\n\n감정을 피하고 싶을 땐, “지금은 잠깐 쉬자. 하지만 나중엔 꼭 다시 돌아보자.”\n이렇게 자신에게 말해줘도 좋아요.”"/>
+            <TextView style="@style/GuideContentStyle" android:text="“감정을 무조건 피하지도, 무조건 직면하지도 않아도 돼요.\n상황에 맞게, 감정을 다루는 방법을 선택하는 게 중요해요.”\n감정을 피하고 싶을 땐, “지금은 잠깐 쉬자. 하지만 나중엔 꼭 다시 돌아보자.”\n이렇게 자신에게 말해줘도 좋아요.”"/>
+            <ImageView style="@style/GuideImageStyle" android:src="@drawable/guide_giraffe_default"/>
+
             <!-- 하단 퀴즈 버튼 -->
             <TextView
                 android:id="@+id/btn_start_quiz"

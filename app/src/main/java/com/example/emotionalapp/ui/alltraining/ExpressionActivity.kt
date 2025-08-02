@@ -1,6 +1,5 @@
 package com.example.emotionalapp.ui.alltraining
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -99,14 +98,15 @@ class ExpressionActivity : BottomNavActivity() {
                         Log.w("UserJoinDateInATPA", "signupDate 필드가 없음")
                     }
 
+                    // ✅ 여기서 호출
                     onFinished()
                 }
                 .addOnFailureListener { e ->
                     Log.e("UserJoinDate", "Firestore 에러: ${e.message}")
-                    onFinished()
+                    onFinished() // 실패해도 계속 진행할지 여부는 판단 필요
                 }
         } else {
-            onFinished()
+            onFinished() // 유저 정보 없음
         }
     }
 
@@ -114,6 +114,7 @@ class ExpressionActivity : BottomNavActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.trainingRecyclerView)
         adapter = DetailTrainingAdapter(emptyList()) { item ->
 
+            // "잠김"일 경우 클릭 무시 또는 토스트 메시지 출력
             if (item.currentProgress == "잠김") {
                 Toast.makeText(this, "잠금 상태입니다.", Toast.LENGTH_SHORT).show()
                 return@DetailTrainingAdapter
@@ -122,31 +123,9 @@ class ExpressionActivity : BottomNavActivity() {
                 return@DetailTrainingAdapter
             }
 
-            if (item.id == "driven_action_training") {
-                AlertDialog.Builder(this)
-                    .setTitle("대안 행동 찾기 가이드")
-                    .setMessage(
-                        "감정은 누구나 느껴요.\n" +
-                                "중요한 건, 그 감정을 느낄 때 어떻게 행동하느냐예요.\n\n" +
-                                "지금부터 당신은 감정에 끌려가기보단,\n" +
-                                "직접 선택한 대안 행동을 해보고,\n" +
-                                "그 결과가 어땠는지 돌아볼 시간을 가질 거예요.\n\n" +
-                                "감정을 '없애는' 게 아니라, 감정을 다루는 자신만의 방법을 만들어보는 시간이에요.\n" +
-                                "편하게 선택하고 적어보세요!"
-                    )
-                    .setPositiveButton("시작하기") { _, _ ->
-                        item.targetActivityClass?.let { targetClass ->
-                            val intent = Intent(this, targetClass)
-                            startActivity(intent)
-                        }
-                    }
-                    .setNegativeButton("취소", null)
-                    .show()
-            } else {
-                item.targetActivityClass?.let { targetClass ->
-                    val intent = Intent(this, targetClass)
-                    startActivity(intent)
-                }
+            item.targetActivityClass?.let { targetClass ->
+                val intent = Intent(this, targetClass)
+                startActivity(intent)
             }
         }
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -165,6 +144,7 @@ class ExpressionActivity : BottomNavActivity() {
             else -> arrayOf("잠김", "잠김", "잠김", "잠김", "잠김", "잠김")
         }
 
+        // 헬퍼 함수: 분모가 잠김이면 currentProgress를 "잠김"으로 반환
         fun getCurrentProgress(key: String, denominator: String): String {
             return if (denominator == "잠김") {
                 "잠김"
@@ -195,7 +175,7 @@ class ExpressionActivity : BottomNavActivity() {
             ),
             DetailTrainingItem(
                 id = "avoidance_training",
-                title = "정서회피 교육",
+                title = "정서회피 훈련 교육",
                 subtitle = "정서 회피에 대해 알아보기",
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
                 progressNumerator = "1",
@@ -228,7 +208,7 @@ class ExpressionActivity : BottomNavActivity() {
             ),
             DetailTrainingItem(
                 id = "avoidance_training",
-                title = "정서-주도 행동 교육",
+                title = "정서-주도 행동 훈련 교육",
                 subtitle = "정서-주도 행동에 대해 알아보기",
                 trainingType = TrainingType.EXPRESSION_ACTION_TRAINING,
                 progressNumerator = "1",

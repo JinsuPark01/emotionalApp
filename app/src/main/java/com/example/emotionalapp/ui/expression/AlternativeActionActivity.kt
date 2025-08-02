@@ -40,7 +40,7 @@ class AlternativeActionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAlternativeActionBinding
     private var currentPage = 0
-    private val totalPages = 3
+    private val totalPages = 4
 
     private var situation: String = ""
     private var selectedEmotion: String = ""
@@ -86,7 +86,7 @@ class AlternativeActionActivity : AppCompatActivity() {
             if (isSaving) return@setOnClickListener
             if (!validateAndSaveCurrentPage()) return@setOnClickListener
 
-            val nextPage = if (currentPage == 0 && selectedEmotion == "직접 입력") 2 else currentPage + 1
+            val nextPage = if (currentPage == 1 && selectedEmotion == "직접 입력") 2 else currentPage + 1
 
             if (nextPage < totalPages) {
                 currentPage = nextPage
@@ -115,8 +115,8 @@ class AlternativeActionActivity : AppCompatActivity() {
         binding.navPage.btnPrev.setOnClickListener {
             saveCurrentPageData()
             if (currentPage > 0) {
-                if (currentPage == 2 && selectedEmotion == "직접 입력") {
-                    currentPage = 0
+                if (currentPage == 3 && selectedEmotion == "직접 입력") {
+                    currentPage = 1
                 } else {
                     currentPage--
                 }
@@ -129,9 +129,10 @@ class AlternativeActionActivity : AppCompatActivity() {
         val inflater = LayoutInflater.from(this)
         binding.pageContainer.removeAllViews()
         val pageView = when (currentPage) {
-            0 -> inflater.inflate(R.layout.page_alternative_action_1_emotion, binding.pageContainer, false)
-            1 -> inflater.inflate(R.layout.page_alternative_action_2_suggestion, binding.pageContainer, false)
-            2 -> inflater.inflate(R.layout.page_alternative_action_3_action, binding.pageContainer, false)
+            0 -> inflater.inflate(R.layout.page_alternative_action_0_guide, binding.pageContainer, false)
+            1 -> inflater.inflate(R.layout.page_alternative_action_1_emotion, binding.pageContainer, false)
+            2 -> inflater.inflate(R.layout.page_alternative_action_2_suggestion, binding.pageContainer, false)
+            3 -> inflater.inflate(R.layout.page_alternative_action_3_action, binding.pageContainer, false)
             else -> throw IllegalStateException("Invalid page")
         }
         binding.pageContainer.addView(pageView)
@@ -144,11 +145,11 @@ class AlternativeActionActivity : AppCompatActivity() {
 
     private fun loadPageContent(view: View) {
         when (currentPage) {
-            0 -> {
+            1 -> {
                 view.findViewById<EditText>(R.id.edit_situation).setText(situation)
                 setupEmotionButtons(view)
             }
-            1 -> {
+            2 -> {
                 if (selectedEmotion != "직접 입력") {
                     setupSuggestionPage(view)
                 }
@@ -156,7 +157,7 @@ class AlternativeActionActivity : AppCompatActivity() {
                 // 2페이지가 로드될 때, 저장된 '나만의 대안 행동' 텍스트를 다시 채워줍니다.
                 view.findViewById<EditText>(R.id.edit_custom_action).setText(customAlternative)
             }
-            2 -> {
+            3 -> {
                 view.findViewById<EditText>(R.id.edit_action_taken).setText(finalActionTaken)
             }
         }
@@ -201,14 +202,14 @@ class AlternativeActionActivity : AppCompatActivity() {
     private fun saveCurrentPageData() {
         val pageView = binding.pageContainer.getChildAt(0) ?: return
         when (currentPage) {
-            0 -> situation = pageView.findViewById<EditText>(R.id.edit_situation).text.toString().trim()
-            1 -> {
+            1 -> situation = pageView.findViewById<EditText>(R.id.edit_situation).text.toString().trim()
+            2 -> {
                 // --- 여기가 핵심 수정 부분입니다 (1) ---
                 // '나만의 대안 행동'은 항상 저장합니다.
                 // '대안 행동 예시' 선택 여부와는 독립적입니다.
                 customAlternative = pageView.findViewById<EditText>(R.id.edit_custom_action).text.toString().trim()
             }
-            2 -> finalActionTaken = pageView.findViewById<EditText>(R.id.edit_action_taken).text.toString().trim()
+            3 -> finalActionTaken = pageView.findViewById<EditText>(R.id.edit_action_taken).text.toString().trim()
         }
     }
 
@@ -217,13 +218,13 @@ class AlternativeActionActivity : AppCompatActivity() {
     private fun validateAndSaveCurrentPage(): Boolean {
         saveCurrentPageData()
         return when (currentPage) {
-            0 -> {
+            1 -> {
                 if (situation.isBlank()) { Toast.makeText(this, "상황을 입력해주세요.", Toast.LENGTH_SHORT).show(); return false }
                 if (selectedEmotion.isBlank()) { Toast.makeText(this, "감정을 선택해주세요.", Toast.LENGTH_SHORT).show(); return false }
                 if (selectedEmotion != "직접 입력" && selectedDetailedEmotion.isBlank()) { Toast.makeText(this, "세부 감정을 선택해주세요.", Toast.LENGTH_SHORT).show(); return false }
                 true
             }
-            1 -> {
+            2 -> {
                 // --- 여기가 핵심 수정 부분입니다 (2) ---
                 // 이제 둘 중 하나만 입력되어 있어도 유효성 검사를 통과합니다.
                 if (selectedAlternative.isBlank() && customAlternative.isBlank()) {
@@ -231,7 +232,7 @@ class AlternativeActionActivity : AppCompatActivity() {
                 }
                 true
             }
-            2 -> {
+            3 -> {
                 if (finalActionTaken.isBlank()){ Toast.makeText(this, "어떻게 행동했는지 입력해주세요.", Toast.LENGTH_SHORT).show(); return false }
                 true
             }

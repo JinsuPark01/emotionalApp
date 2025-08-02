@@ -24,7 +24,6 @@ class AvoidanceGuideActivity : AppCompatActivity() {
             startActivity(Intent(this, AvoidanceQuizActivity::class.java))
         }
 
-        // --- 여기가 핵심 수정 부분입니다 ---
         // 스크롤 뷰에 스크롤 리스너 추가
         binding.guideScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             // v를 ScrollView로 캐스팅하여 자식 뷰에 접근합니다.

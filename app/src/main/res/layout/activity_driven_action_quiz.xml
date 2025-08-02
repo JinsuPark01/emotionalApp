@@ -120,13 +120,35 @@
 
     </LinearLayout>
 
-    <!-- 다음 문제 / 완료 버튼 -->
-    <Button
-        android:id="@+id/btn_next_question"
+    <LinearLayout
+        android:id="@+id/nav_container"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_margin="16dp"
-        android:text="다음 문제"
-        android:visibility="gone"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:background="#FFFFFF"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/btn_next_question"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:paddingHorizontal="24dp"
+                android:gravity="center"
+                android:text="다음 문제"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:backgroundTint="#3CB371"
+                android:background="@drawable/bg_round_green_button" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

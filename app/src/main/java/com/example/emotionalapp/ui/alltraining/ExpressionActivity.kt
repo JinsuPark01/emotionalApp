@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -13,31 +14,30 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.DetailTrainingAdapter
 import com.example.emotionalapp.data.DetailTrainingItem
 import com.example.emotionalapp.data.TrainingType
+import com.example.emotionalapp.databinding.ActivityDetailTrainingBinding
 import com.example.emotionalapp.ui.expression.*
 import com.example.emotionalapp.ui.open.BottomNavActivity
 import com.example.emotionalapp.ui.weekly.WeeklyActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import java.util.TimeZone
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ExpressionActivity : BottomNavActivity() {
 
+    private lateinit var binding: ActivityDetailTrainingBinding
     private lateinit var adapter: DetailTrainingAdapter
-
     override val isAllTrainingPage: Boolean = true
-
     private var userDiffDays: Long = 0
     private var countCompleteMap: Map<String, Long> = emptyMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_training)
+        binding = ActivityDetailTrainingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+        binding.btnBack.setOnClickListener {
             finish()
         }
 
@@ -45,8 +45,8 @@ class ExpressionActivity : BottomNavActivity() {
         setupTabListeners()
         setupBottomNavigation()
         calculateDiffDaysAndGetCount { loadTrainingData() }
-
     }
+
     private fun calculateDiffDaysAndGetCount(onFinished: () -> Unit) {
         val user = FirebaseAuth.getInstance().currentUser
         val userEmail = user?.email
@@ -66,7 +66,7 @@ class ExpressionActivity : BottomNavActivity() {
                                     }
 
                                 val joinDateStr = dateFormat.format(timestamp.toDate())
-                                val todayStr = dateFormat.format(Date())
+                                val todayStr = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).apply { timeZone = koreaTimeZone }.format(Date())
 
                                 val joinDate = dateFormat.parse(joinDateStr)
                                 val todayDate = dateFormat.parse(todayStr)
@@ -111,9 +111,7 @@ class ExpressionActivity : BottomNavActivity() {
     }
 
     private fun setupRecyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.trainingRecyclerView)
         adapter = DetailTrainingAdapter(emptyList()) { item ->
-
             if (item.currentProgress == "잠김") {
                 Toast.makeText(this, "잠금 상태입니다.", Toast.LENGTH_SHORT).show()
                 return@DetailTrainingAdapter
@@ -149,8 +147,8 @@ class ExpressionActivity : BottomNavActivity() {
                 }
             }
         }
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+        binding.trainingRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.trainingRecyclerView.adapter = adapter
     }
 
     private fun loadTrainingData() {
@@ -263,19 +261,27 @@ class ExpressionActivity : BottomNavActivity() {
         adapter.updateData(trainingList)
     }
 
+    // --- 여기가 핵심 수정 부분입니다 ---
     private fun setupTabListeners() {
-        val tabAll = findViewById<TextView>(R.id.tabAll)
-        val tabToday = findViewById<TextView>(R.id.tabToday)
+        binding.tvPageTitle.text = "4주차 훈련"
 
-        tabAll.setOnClickListener {
-            Log.d("AllTrainingPage", "전체 훈련 탭 클릭됨 (현재 페이지)")
+        // '전체 훈련' 탭 (현재 페이지)
+        binding.tabAll.setOnClickListener {
+            Log.d("ExpressionActivity", "전체 훈련 탭 클릭됨 (현재 페이지)")
+            binding.underlineAll.visibility = View.VISIBLE
+            binding.underlineRecord.visibility = View.INVISIBLE
+            // 현재 화면이므로 아무것도 하지 않음
         }
 
-        tabToday.setOnClickListener {
-            Log.d("AllTrainingPage", "금일 훈련 탭 클릭됨 - TodayTrainingPageActivity로 이동")
+        // '기록 보기' 탭
+        binding.tabRecord.setOnClickListener {
+            Log.d("ExpressionActivity", "기록 보기 탭 클릭됨 - ExpressionReportActivity로 이동")
+            binding.underlineAll.visibility = View.INVISIBLE
+            binding.underlineRecord.visibility = View.VISIBLE
+
             val intent = Intent(this, ExpressionReportActivity::class.java)
+            // finish()를 호출하면, 기록 보기에서 뒤로 왔을 때 앱이 종료되므로 삭제합니다.
             startActivity(intent)
-            finish()
         }
     }
 }

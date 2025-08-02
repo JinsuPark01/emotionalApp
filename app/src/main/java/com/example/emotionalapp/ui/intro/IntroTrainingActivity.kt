@@ -1,5 +1,6 @@
 package com.example.emotionalapp.ui.intro
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -92,9 +93,15 @@ class IntroTrainingActivity : AppCompatActivity() {
                 currentPage++
                 updatePage()
             } else {
-                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                startActivity(intent)
-                finish()
+                AlertDialog.Builder(this)
+                    .setTitle("주의 사항")
+                    .setMessage("훈련은 4주(28일)간 진행되며, 1주당 최소 4일은 연습해야 효과가 있습니다.")
+                    .setPositiveButton("확인") { _, _ ->
+                        val intent = Intent(this, AllTrainingPageActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    .show()
             }
         }
 

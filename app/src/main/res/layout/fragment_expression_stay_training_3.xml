@@ -2,7 +2,6 @@
 android:orientation="vertical"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:fitsSystemWindows="true"
 android:padding="24dp">
     <!-- 콘텐츠 영역 -->
     <ScrollView

@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:padding="16dp">
 
     <!-- '세부 감정' 부분을 삭제했습니다. -->

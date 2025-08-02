@@ -42,7 +42,7 @@
             <ImageView style="@style/GuideImageStyle" android:src="@drawable/guide_giraffe_teacher"/>
             <View style="@style/GuideDivider"/>
 
-            <TextView style="@style/GuideContentStyle" android:text="적응적 행동이란?\n감정을 느낀 뒤, 나에게 도움이 되는 방식으로 행동하는 것이에요.\n\n예시\n- 외롭다고 느껴서 친구에게 먼저 연락함\n- 화가 나서 조용히 “지금 좀 힘들어” 말함\n- 불안해서 시험공부 계획 세움\n\n“이런 행동은 감정과 잘 연결된 행동이에요.\n감정이 줄어들고, 관계도 더 좋아질 수 있어요.”"/>
+            <TextView style="@style/GuideContentStyle" android:text="적응적 행동이란?\n감정을 느낀 뒤, 나에게 도움이 되는 방식으로 행동하는 것이에요.\n\n예시\n- 외롭다고 느껴서 친구에게 먼저 연락함\n- 화가 나서 조용히 “지금 좀 힘들어”라고 말함\n- 불안해서 시험공부 계획 세움\n\n“이런 행동은 감정과 잘 연결된 행동이에요.\n감정이 줄어들고, 관계도 더 좋아질 수 있어요.”"/>
             <ImageView style="@style/GuideImageStyle" android:src="@drawable/guide_giraffe_wink"/>
             <View style="@style/GuideDivider"/>
 

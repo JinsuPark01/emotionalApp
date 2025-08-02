@@ -28,6 +28,7 @@ class AvoidanceReportActivity : AppCompatActivity() {
     private lateinit var tvAnswer2: TextView
     private lateinit var tvAnswer3: TextView
     private lateinit var tvResult4: TextView
+    private lateinit var tvEffect: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class AvoidanceReportActivity : AppCompatActivity() {
         tvAnswer2 = findViewById(R.id.tv_answer2)
         tvAnswer3 = findViewById(R.id.tv_answer3)
         tvResult4 = findViewById(R.id.tv_result4)
+        tvEffect = findViewById(R.id.tv_effect)
 
         btnBack.setOnClickListener { finish() }
 
@@ -119,5 +121,6 @@ class AvoidanceReportActivity : AppCompatActivity() {
         tvAnswer2.text = document.getString("answer2") ?: "기록된 내용이 없습니다."
         tvAnswer3.text = document.getString("answer3") ?: "기록된 내용이 없습니다."
         tvResult4.text = document.getString("result4") ?: "기록된 내용이 없습니다."
+        tvEffect.text = document.getString("effect") ?: "기록된 내용이 없습니다."
     }
 }

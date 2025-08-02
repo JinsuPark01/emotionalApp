@@ -37,6 +37,7 @@ class AvoidanceActivity : AppCompatActivity() {
     private var emotion: String = ""
     private var method: String = ""
     private var result: String = ""
+    private var effect: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,14 +83,17 @@ class AvoidanceActivity : AppCompatActivity() {
                 }
 
                 val customText = pageView.findViewById<EditText>(R.id.et_custom_avoidance)?.text?.toString()?.trim() ?: ""
+                val effectText = pageView.findViewById<EditText>(R.id.et_effect)?.text?.toString()?.trim() ?: ""
 
-                if (checkedText.isEmpty() && customText.isEmpty()) {
-                    Toast.makeText(this, "하나 이상의 회피 행동을 선택하거나 입력해주세요.", Toast.LENGTH_SHORT).show()
+
+                if (checkedText.isEmpty() && customText.isEmpty() && effectText.isEmpty()) {
+                    Toast.makeText(this, "모든 질문에 답해주세요", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
                 avoid1 = checkedText.firstOrNull() ?: ""
                 avoid2 = customText
+                effect = effectText
 
             } else if (currentPage == 1) {
                 situation = pageView.findViewById<EditText>(R.id.et_situation)?.text?.toString()?.trim() ?: ""
@@ -131,7 +135,8 @@ class AvoidanceActivity : AppCompatActivity() {
                     "answer1" to situation,
                     "answer2" to emotion,
                     "answer3" to method,
-                    "result4" to result
+                    "result4" to result,
+                    "effect" to effect
                 )
 
                 val db = FirebaseFirestore.getInstance()
@@ -219,6 +224,9 @@ class AvoidanceActivity : AppCompatActivity() {
 
             val etCustom = pageView.findViewById<EditText>(R.id.et_custom_avoidance)
             etCustom.setText(avoid2)
+
+            val etEffect = pageView.findViewById<EditText>(R.id.et_effect)
+            etEffect.setText(effect)
 
         } else if (currentPage == 1) {
             pageView.findViewById<EditText>(R.id.et_situation)?.setText(situation)

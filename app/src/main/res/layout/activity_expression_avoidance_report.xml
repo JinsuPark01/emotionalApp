@@ -57,6 +57,15 @@
                 style="@style/FormInputStyle"
                 android:hint="입력한 내용이 없습니다."/>
 
+            <!-- 직접 입력 항목 -->
+            <TextView
+                android:text="직접 입력한 회피 행동의 영향"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_effect"
+                style="@style/FormInputStyle"
+                android:hint="입력한 내용이 없습니다."/>
+
             <!-- 질문 1 -->
             <TextView
                 android:text="상황"

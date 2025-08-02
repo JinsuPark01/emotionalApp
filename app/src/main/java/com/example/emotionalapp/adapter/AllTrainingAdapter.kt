@@ -12,7 +12,7 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.data.TrainingItem
 import java.util.regex.Pattern
 
-class AllTrainingAdapter(
+class AllTrainingAdapter (
     private var trainingList: List<TrainingItem>,
     private val onItemClick: (TrainingItem) -> Unit
 ) : RecyclerView.Adapter<AllTrainingAdapter.TrainingViewHolder>() {

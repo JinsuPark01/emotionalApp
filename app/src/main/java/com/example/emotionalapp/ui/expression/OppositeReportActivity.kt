@@ -25,6 +25,7 @@ class OppositeReportActivity : AppCompatActivity() {
     private lateinit var answer1: TextView
     private lateinit var answer2: TextView
     private lateinit var answer3: TextView
+    private lateinit var answer5: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,8 @@ class OppositeReportActivity : AppCompatActivity() {
         answer1 = findViewById(R.id.answer1)
         answer2 = findViewById(R.id.answer2)
         answer3 = findViewById(R.id.answer3)
+        answer5 = findViewById(R.id.answer5)
+
 
         btnBack.setOnClickListener { finish() }
 
@@ -80,5 +83,6 @@ class OppositeReportActivity : AppCompatActivity() {
         answer1.text = document.getString("answer1") ?: "기록된 감정이 없습니다."
         answer2.text = document.getString("answer2") ?: "기록된 행동이 없습니다."
         answer3.text = document.getString("answer3") ?: "기록된 반대 행동이 없습니다."
+        answer5.text = document.getString("answer5") ?: "기록된 실천 후 느낌이 없습니다."
     }
 }

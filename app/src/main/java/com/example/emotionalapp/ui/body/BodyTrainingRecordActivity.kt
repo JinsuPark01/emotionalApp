@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat
 import nl.dionsegijn.konfetti.core.*
 import nl.dionsegijn.konfetti.core.emitter.Emitter
 import nl.dionsegijn.konfetti.xml.KonfettiView
+import java.util.TimeZone
 import java.util.concurrent.TimeUnit
 
 class BodyTrainingRecordActivity : AppCompatActivity() {
@@ -95,8 +96,9 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
 
                 // ✅ 날짜 기반 문서 ID 생성
                 val nowDate = Timestamp.now().toDate()
-                val formatter = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault())
-                val docId = formatter.format(nowDate)
+                val docId = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                }.format(nowDate)
 
                 db.collection("user")
                     .document(userEmail)

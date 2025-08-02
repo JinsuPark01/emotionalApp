@@ -6,6 +6,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="최근 일주일동안 어떻게 느꼈는지 답해주세요"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <!-- 질문 1 -->
         <TextView

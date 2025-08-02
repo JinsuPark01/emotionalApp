@@ -416,8 +416,8 @@ class TrapActivity : AppCompatActivity() {
 
             val options = listOf(
                 "그 생각이 확실할까요?\n - 생각의 타당성 점검하기",
-                "그 생각이 만약 실제라면 얼마나 나쁠까요?\n -생각을 실제로 가정하기",
-                "객관적으로 살펴볼까요?\n -관점을 다르게 해보기"
+                "그 생각이 만약 실제라면 얼마나 나쁠까요?\n - 생각을 실제로 가정하기",
+                "객관적으로 살펴볼까요?\n - 관점을 다르게 해보기"
             )
 
             options.forEachIndexed { index, text ->

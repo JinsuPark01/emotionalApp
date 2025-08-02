@@ -19,6 +19,7 @@
             android:src="@drawable/ic_back_arrow" />
 
         <TextView
+            android:id="@+id/headerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="INTRO"
@@ -168,7 +169,7 @@
                 android:padding="8dp"
                 android:text="설명"
                 android:textSize="14sp"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </LinearLayout>
     </ScrollView>
     <!-- 하단 네비게이션 바 (include 방식) -->

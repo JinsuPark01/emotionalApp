@@ -31,15 +31,15 @@ class AvoidanceActivity : AppCompatActivity() {
     private val totalPages = 2
     private var currentPage = 0
 
-    private var selectedAvoidances = mutableListOf<String>()
-    private var customAvoidance: String = ""
+    // 저장할 변수들
+    private var avoid1: String = ""
+    private var avoid2: String = ""
     private var situation: String = ""
     private var emotion: String = ""
     private var method: String = ""
     private var result: String = ""
     private var habitBehavior: String = ""
     private var habitImpact: String = ""
-    private var isSaving = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,16 +72,141 @@ class AvoidanceActivity : AppCompatActivity() {
         }
 
         btnNext.setOnClickListener {
-            if (isSaving) return@setOnClickListener
             if (!validateCurrentPage()) return@setOnClickListener
-            saveCurrentPageData()
 
+            saveCurrentPageData()
             if (currentPage < totalPages - 1) {
                 currentPage++
                 updatePage()
             } else {
+                btnNext.isEnabled = false
                 saveToFirestore()
             }
+        }
+    }
+
+    private fun saveToFirestore() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val userEmail = user?.email
+        if (user == null || userEmail == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
+        val now = Timestamp.now()
+        val dateString = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault()).format(now.toDate())
+
+        val data = hashMapOf(
+            "date" to now,
+            "avoid1" to avoid1,
+            "avoid2" to avoid2,
+            "situation" to situation,
+            "emotion" to emotion,
+            "method" to method,
+            "result" to result,
+            "habit_behavior" to habitBehavior,
+            "habit_impact" to habitImpact
+        )
+
+        val db = FirebaseFirestore.getInstance()
+        db.collection("user").document(userEmail).collection("expressionAvoidance").document(dateString).set(data)
+            .addOnSuccessListener {
+                db.collection("user").document(userEmail).update("countComplete.avoidance", FieldValue.increment(1))
+                    .addOnSuccessListener {
+                        showCompletionDialog()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "카운트 증가 실패", e)
+                        showCompletionDialog() // 저장 자체는 성공했으므로 팝업은 띄워줌
+                    }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+                btnNext.isEnabled = true
+            }
+    }
+
+    private fun showCompletionDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("기록 완료!")
+            .setMessage("감정을 회피하는 습관을 돌아봤다는 것 자체가 이미 중요한 변화의 시작이에요. 스스로를 마주한 용기를 진심으로 응원해요!")
+            .setPositiveButton("확인") { _, _ ->
+                val intent = Intent(this, AllTrainingPageActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun saveCurrentPageData() {
+        val pageView = pageContainer.getChildAt(0) ?: return
+        if (currentPage == 0) {
+            val checkBoxes = listOf(
+                R.id.cb_avoid1, R.id.cb_avoid2, R.id.cb_avoid3, R.id.cb_avoid4,
+                R.id.cb_avoid5, R.id.cb_avoid6, R.id.cb_avoid7, R.id.cb_avoid8
+            )
+            val checkedText = checkBoxes.mapNotNull { id ->
+                val cb = pageView.findViewById<CheckBox>(id)
+                if (cb.isChecked) cb.text.toString() else null
+            }
+            avoid1 = checkedText.joinToString(", ") // 여러 개 선택 시 쉼표로 구분
+            avoid2 = pageView.findViewById<EditText>(R.id.et_custom_avoidance)?.text.toString().trim()
+        } else {
+            situation = pageView.findViewById<EditText>(R.id.et_situation)?.text.toString().trim()
+            emotion = pageView.findViewById<EditText>(R.id.et_emotion)?.text.toString().trim()
+            method = pageView.findViewById<EditText>(R.id.et_method)?.text.toString().trim()
+            result = pageView.findViewById<EditText>(R.id.et_result)?.text.toString().trim()
+            habitBehavior = pageView.findViewById<EditText>(R.id.et_habit_behavior)?.text.toString().trim()
+            habitImpact = pageView.findViewById<EditText>(R.id.et_habit_impact)?.text.toString().trim()
+        }
+    }
+
+    private fun validateCurrentPage(): Boolean {
+        val pageView = pageContainer.getChildAt(0) ?: return false
+        return if (currentPage == 0) {
+            val checkedText = getCheckedTexts(pageView)
+            val customText = pageView.findViewById<EditText>(R.id.et_custom_avoidance)?.text.toString().trim()
+            if (checkedText.isEmpty() && customText.isEmpty()) {
+                Toast.makeText(this, "하나 이상의 회피 행동을 선택하거나 입력해주세요.", Toast.LENGTH_SHORT).show()
+                false
+            } else true
+        } else {
+            val situationVal = pageView.findViewById<EditText>(R.id.et_situation)?.text.toString().trim()
+            val emotionVal = pageView.findViewById<EditText>(R.id.et_emotion)?.text.toString().trim()
+            val methodVal = pageView.findViewById<EditText>(R.id.et_method)?.text.toString().trim()
+            val resultVal = pageView.findViewById<EditText>(R.id.et_result)?.text.toString().trim()
+            val habitBehaviorVal = pageView.findViewById<EditText>(R.id.et_habit_behavior)?.text.toString().trim()
+            val habitImpactVal = pageView.findViewById<EditText>(R.id.et_habit_impact)?.text.toString().trim()
+
+            if (situationVal.isEmpty() || emotionVal.isEmpty() || methodVal.isEmpty() || resultVal.isEmpty() || habitBehaviorVal.isEmpty() || habitImpactVal.isEmpty()) {
+                Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
+                false
+            } else true
+        }
+    }
+
+    private fun getCheckedTexts(view: View): List<String> {
+        val checkBoxes = listOf( R.id.cb_avoid1, R.id.cb_avoid2, R.id.cb_avoid3, R.id.cb_avoid4, R.id.cb_avoid5, R.id.cb_avoid6, R.id.cb_avoid7, R.id.cb_avoid8)
+        return checkBoxes.mapNotNull { id ->
+            val cb = view.findViewById<CheckBox>(id)
+            if (cb.isChecked) cb.text.toString() else null
+        }
+    }
+
+    private fun setupIndicators(count: Int) {
+        indicatorContainer.removeAllViews()
+        repeat(count) {
+            val dot = View(this).apply {
+                layoutParams = LinearLayout.LayoutParams(20, 20).apply {
+                    marginStart = 8
+                    marginEnd = 8
+                }
+                setBackgroundResource(R.drawable.ic_dot_circle_gray)
+            }
+            indicatorContainer.addView(dot)
         }
     }
 
@@ -104,147 +229,50 @@ class AvoidanceActivity : AppCompatActivity() {
         val pageView = inflater.inflate(layoutId, pageContainer, false)
         pageContainer.addView(pageView)
 
-        loadPageContent(pageView)
-        updateNavButtonsAndIndicators()
-    }
-
-    private fun loadPageContent(view: View) {
+        // ✅ [복원 처리]
         if (currentPage == 0) {
-            getCheckBoxes(view).forEach { cb ->
-                if (selectedAvoidances.contains(cb.text.toString())) {
+            val checkBoxes = listOf(
+                R.id.cb_avoid1 to "회피 행동 1",
+                R.id.cb_avoid2 to "회피 행동 2",
+                R.id.cb_avoid3 to "회피 행동 3",
+                R.id.cb_avoid4 to "회피 행동 4",
+                R.id.cb_avoid5 to "회피 행동 5",
+                R.id.cb_avoid6 to "회피 행동 6",
+                R.id.cb_avoid7 to "회피 행동 7",
+                R.id.cb_avoid8 to "회피 행동 8"
+            )
+
+            for ((id, text) in checkBoxes) {
+                val cb = pageView.findViewById<CheckBox>(id)
+                if (avoid1 == cb.text.toString()) {
                     cb.isChecked = true
                 }
             }
-            view.findViewById<EditText>(R.id.et_custom_avoidance).setText(customAvoidance)
+
+            val etCustom = pageView.findViewById<EditText>(R.id.et_custom_avoidance)
+            etCustom.setText(avoid2)
+
         } else if (currentPage == 1) {
-            view.findViewById<EditText>(R.id.et_situation).setText(situation)
-            view.findViewById<EditText>(R.id.et_emotion).setText(emotion)
-            view.findViewById<EditText>(R.id.et_method).setText(method)
-            view.findViewById<EditText>(R.id.et_result).setText(result)
-            view.findViewById<EditText>(R.id.et_habit_behavior).setText(habitBehavior)
-            view.findViewById<EditText>(R.id.et_habit_impact).setText(habitImpact)
-        }
-    }
-
-    private fun saveCurrentPageData() {
-        val pageView = pageContainer.getChildAt(0) ?: return
-        if (currentPage == 0) {
-            selectedAvoidances = getCheckBoxes(pageView).filter { it.isChecked }.map { it.text.toString() }.toMutableList()
-            customAvoidance = pageView.findViewById<EditText>(R.id.et_custom_avoidance).text.toString().trim()
-        } else if (currentPage == 1) {
-            situation = pageView.findViewById<EditText>(R.id.et_situation).text.toString().trim()
-            emotion = pageView.findViewById<EditText>(R.id.et_emotion).text.toString().trim()
-            method = pageView.findViewById<EditText>(R.id.et_method).text.toString().trim()
-            result = pageView.findViewById<EditText>(R.id.et_result).text.toString().trim()
-            habitBehavior = pageView.findViewById<EditText>(R.id.et_habit_behavior).text.toString().trim()
-            habitImpact = pageView.findViewById<EditText>(R.id.et_habit_impact).text.toString().trim()
-        }
-    }
-
-    private fun validateCurrentPage(): Boolean {
-        val pageView = pageContainer.getChildAt(0) ?: return false
-        return if (currentPage == 0) {
-            val isChecked = getCheckBoxes(pageView).any { it.isChecked }
-            val customText = pageView.findViewById<EditText>(R.id.et_custom_avoidance).text.toString().trim()
-            if (!isChecked && customText.isEmpty()) {
-                Toast.makeText(this, "하나 이상의 회피 행동을 선택하거나 입력해주세요.", Toast.LENGTH_SHORT).show()
-                false
-            } else true
-        } else {
-            val fields = listOf(R.id.et_situation, R.id.et_emotion, R.id.et_method, R.id.et_result, R.id.et_habit_behavior, R.id.et_habit_impact)
-            val allFilled = fields.all { pageView.findViewById<EditText>(it).text.isNotBlank() }
-            if (!allFilled) {
-                Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
-            }
-            allFilled
-        }
-    }
-
-    private fun saveToFirestore() {
-        isSaving = true
-        btnNext.isEnabled = false
-
-        val user = FirebaseAuth.getInstance().currentUser
-        val userEmail = user?.email
-        if (user == null || userEmail == null) {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-            return
+            pageView.findViewById<EditText>(R.id.et_situation)?.setText(situation)
+            pageView.findViewById<EditText>(R.id.et_emotion)?.setText(emotion)
+            pageView.findViewById<EditText>(R.id.et_method)?.setText(method)
+            pageView.findViewById<EditText>(R.id.et_result)?.setText(result)
         }
 
-        val now = Timestamp.now()
-        val dateString = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault()).format(now.toDate())
-
-        val data = hashMapOf(
-            "date" to now,
-            "selected_avoidances" to selectedAvoidances,
-            "custom_avoidance" to customAvoidance,
-            "situation" to situation,
-            "emotion" to emotion,
-            "method" to method,
-            "result" to result,
-            "habit_behavior" to habitBehavior,
-            "habit_impact" to habitImpact
-        )
-
-        val db = FirebaseFirestore.getInstance()
-        db.collection("user").document(userEmail).collection("expressionAvoidance").document(dateString).set(data)
-            .addOnSuccessListener {
-                db.collection("user").document(userEmail).update("countComplete.avoidance", FieldValue.increment(1))
-                    .addOnCompleteListener { showCompletionDialog() }
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                isSaving = false
-                btnNext.isEnabled = true
-            }
-    }
-
-    private fun showCompletionDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("기록 완료!")
-            .setMessage("감정을 회피하는 습관을 돌아봤다는 것 자체가 이미 중요한 변화의 시작이에요. 스스로를 마주한 용기를 진심으로 응원해요!")
-            .setPositiveButton("확인") { _, _ ->
-                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                finish()
-            }
-            .setCancelable(false)
-            .show()
-    }
-
-    private fun getCheckBoxes(view: View): List<CheckBox> {
-        return listOf(
-            view.findViewById(R.id.cb_avoid1), view.findViewById(R.id.cb_avoid2),
-            view.findViewById(R.id.cb_avoid3), view.findViewById(R.id.cb_avoid4),
-            view.findViewById(R.id.cb_avoid5), view.findViewById(R.id.cb_avoid6),
-            view.findViewById(R.id.cb_avoid7), view.findViewById(R.id.cb_avoid8)
-        )
-    }
-
-    private fun setupIndicators(count: Int) {
-        indicatorContainer.removeAllViews()
-        repeat(count) {
-            val dot = View(this).apply {
-                layoutParams = LinearLayout.LayoutParams(20, 20).apply {
-                    marginStart = 8
-                    marginEnd = 8
-                }
-                setBackgroundResource(R.drawable.ic_dot_circle_gray)
-            }
-            indicatorContainer.addView(dot)
-        }
-    }
-
-    private fun updateNavButtonsAndIndicators() {
+        // ✅ 버튼 상태 및 인디케이터 업데이트
         btnPrev.isEnabled = currentPage != 0
-        btnPrev.backgroundTintList = if (currentPage == 0) ColorStateList.valueOf(Color.parseColor("#D9D9D9")) else ColorStateList.valueOf(Color.parseColor("#3CB371"))
-        btnNext.text = if (currentPage == totalPages - 1) "완료" else "다음 →"
+        btnPrev.backgroundTintList = if (currentPage == 0)
+            ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
+        else
+            ColorStateList.valueOf(Color.parseColor("#3CB371"))
+
+        btnNext.text = if (currentPage == totalPages - 1) "완료 →" else "다음 →"
 
         for (i in 0 until indicatorContainer.childCount) {
             val dot = indicatorContainer.getChildAt(i)
-            dot.setBackgroundResource(if (i == currentPage) R.drawable.ic_dot_circle_black else R.drawable.ic_dot_circle_gray)
+            dot.setBackgroundResource(
+                if (i == currentPage) R.drawable.ic_dot_circle_black else R.drawable.ic_dot_circle_gray
+            )
         }
     }
 }

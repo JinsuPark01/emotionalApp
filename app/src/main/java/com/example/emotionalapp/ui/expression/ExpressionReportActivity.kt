@@ -56,8 +56,6 @@ class ExpressionReportActivity : BottomNavActivity() {
                 else -> null
             }
 
-            // --- 여기가 핵심 수정 부분입니다 ---
-            // docId를 전달하기 위해, ReportItem의 trainingId 필드를 사용합니다.
             intent?.putExtra("reportDocId", reportItem.trainingId)
             intent?.let { startActivity(it) }
         }
@@ -85,20 +83,22 @@ class ExpressionReportActivity : BottomNavActivity() {
                 val oppositeDocs = db.collection("user").document(userEmail).collection("expressionOpposite").get().await()
                 val alternativeDocs = db.collection("user").document(userEmail).collection("expressionAlternative").get().await()
 
+                // --- 여기가 핵심 수정 부분입니다 ---
+                // ReportItem 생성자에서 불필요한 색상 파라미터를 제거했습니다.
                 weeklyDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "주간 점검 기록 보기", doc.getTimestamp("date"), doc.id, R.color.button_color_expression))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "주간 점검 기록 보기", doc.getTimestamp("date"), doc.id))
                 }
                 avoidanceDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "회피 일지 기록 보기", doc.getTimestamp("date"), doc.id, R.color.button_color_expression))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "회피 일지 기록 보기", doc.getTimestamp("date"), doc.id))
                 }
                 stayDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "정서 머무르기 기록 보기", doc.getTimestamp("date"), doc.id, R.color.button_color_expression))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "정서 머무르기 기록 보기", doc.getTimestamp("date"), doc.id))
                 }
                 oppositeDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "반대 행동하기 기록 보기", doc.getTimestamp("date"), doc.id, R.color.button_color_expression))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "반대 행동하기 기록 보기", doc.getTimestamp("date"), doc.id))
                 }
                 alternativeDocs.documents.forEach { doc ->
-                    reportList.add(ReportItem(doc.id.substringBefore('_'), "대안 행동 찾기 기록 보기", doc.getTimestamp("date"), doc.id, R.color.button_color_expression))
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "대안 행동 찾기 기록 보기", doc.getTimestamp("date"), doc.id))
                 }
 
                 reportList.sortByDescending { it.timeStamp }

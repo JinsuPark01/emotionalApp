@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.emotionalapp.R
 import com.example.emotionalapp.databinding.ActivityOppositeActionBinding
-import com.example.emotionalapp.databinding.PageOppositeAction2RecordBinding // --- 1. 바인딩 클래스 import ---
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -103,11 +102,9 @@ class OppositeActionActivity : AppCompatActivity() {
     private fun loadPageContent(view: View) {
         when (currentPage) {
             1 -> {
-                // --- 2. 바인딩을 사용하여 안전하게 뷰에 접근 ---
-                val contentBinding = PageOppositeAction2RecordBinding.bind(view)
-                contentBinding.editFeeling.setText(answers["answer1"] as? String ?: "")
-                contentBinding.editImpulsiveAction.setText(answers["answer2"] as? String ?: "")
-                contentBinding.editOppositeAction.setText(answers["answer3"] as? String ?: "")
+                view.findViewById<EditText>(R.id.edit_feeling).setText(answers["answer1"] as? String ?: "")
+                view.findViewById<EditText>(R.id.edit_impulsive_action).setText(answers["answer2"] as? String ?: "")
+                view.findViewById<EditText>(R.id.edit_opposite_action).setText(answers["answer3"] as? String ?: "")
             }
             3 -> {
                 view.findViewById<CheckBox>(R.id.cb_practice).isChecked = answers["practiced"] as? Boolean ?: false
@@ -122,10 +119,9 @@ class OppositeActionActivity : AppCompatActivity() {
         val currentView = binding.pageContainer.getChildAt(0) ?: return
         when (currentPage) {
             1 -> {
-                val contentBinding = PageOppositeAction2RecordBinding.bind(currentView)
-                answers["answer1"] = contentBinding.editFeeling.text.toString()
-                answers["answer2"] = contentBinding.editImpulsiveAction.text.toString()
-                answers["answer3"] = contentBinding.editOppositeAction.text.toString()
+                answers["answer1"] = currentView.findViewById<EditText>(R.id.edit_feeling)?.text.toString()
+                answers["answer2"] = currentView.findViewById<EditText>(R.id.edit_impulsive_action)?.text.toString()
+                answers["answer3"] = currentView.findViewById<EditText>(R.id.edit_opposite_action)?.text.toString()
             }
             3 -> {
                 answers["practiced"] = currentView.findViewById<CheckBox>(R.id.cb_practice).isChecked
@@ -138,6 +134,7 @@ class OppositeActionActivity : AppCompatActivity() {
 
     private fun validateAndSaveCurrentPage(): Boolean {
         saveCurrentPageData()
+        val currentView = binding.pageContainer.getChildAt(0) ?: return false
         return when (currentPage) {
             1 -> {
                 if (answers["answer1"].toString().isBlank() || answers["answer2"].toString().isBlank() || answers["answer3"].toString().isBlank()) {

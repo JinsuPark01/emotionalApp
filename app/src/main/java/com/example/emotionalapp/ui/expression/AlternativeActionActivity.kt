@@ -246,8 +246,9 @@ class AlternativeActionActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser ?: throw Exception("User not logged in")
         val db = FirebaseFirestore.getInstance()
         val timestamp = Timestamp.now()
-        val sdf = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault())
-        val docId = sdf.format(timestamp.toDate())
+        val docId = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone("Asia/Seoul")
+        }.format(timestamp.toDate())
 
         // --- 여기가 핵심 수정 부분입니다 (3) ---
         // Firestore에 두 필드를 모두 저장하도록 변경

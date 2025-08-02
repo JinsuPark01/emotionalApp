@@ -100,8 +100,9 @@ class OppositeActionActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val timestamp = Timestamp.now()
 
-        val sdf = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault())
-        val docId = sdf.format(timestamp.toDate())
+        val docId = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS", Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone("Asia/Seoul")
+        }.format(timestamp.toDate())
 
         val data = hashMapOf(
             "answer1" to answers["feeling"],

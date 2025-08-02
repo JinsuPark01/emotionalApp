@@ -13,6 +13,7 @@ import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.ReportAdapter
 import com.example.emotionalapp.data.ReportItem
 import com.example.emotionalapp.ui.alltraining.BodyActivity
+import com.example.emotionalapp.ui.open.BottomNavActivity
 import com.example.emotionalapp.ui.weekly.WeeklyReportActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +27,9 @@ import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.*
 
-class BodyReportActivity : AppCompatActivity() {
+class BodyReportActivity : BottomNavActivity() {
+
+    override val isAllTrainingPage: Boolean = true // 하단 네비게이션 비활성화 유지
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ReportAdapter
@@ -60,7 +63,7 @@ class BodyReportActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.btnBack).setOnClickListener {
             finish()
         }
-
+        setupBottomNavigation()
         setupTabListeners()
         loadReports()
     }

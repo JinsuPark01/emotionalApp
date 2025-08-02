@@ -38,7 +38,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- 체크리스트 선택 항목 -->
             <TextView
                 android:text="선택한 나의 회피 행동"
                 style="@style/FormLabelStyle"/>
@@ -47,7 +46,6 @@
                 style="@style/FormInputStyle"
                 android:hint="선택한 항목이 없습니다."/>
 
-            <!-- 직접 입력 항목 -->
             <TextView
                 android:text="직접 입력한 나의 회피 행동"
                 style="@style/FormLabelStyle"/>
@@ -56,7 +54,6 @@
                 style="@style/FormInputStyle"
                 android:hint="입력한 내용이 없습니다."/>
 
-            <!-- 질문 1 -->
             <TextView
                 android:text="상황"
                 style="@style/FormLabelStyle"/>
@@ -65,7 +62,6 @@
                 style="@style/FormInputStyle"
                 android:hint="기록된 내용이 없습니다."/>
 
-            <!-- 질문 2 -->
             <TextView
                 android:text="내가 느낀 감정"
                 style="@style/FormLabelStyle"/>
@@ -74,7 +70,6 @@
                 style="@style/FormInputStyle"
                 android:hint="기록된 내용이 없습니다."/>
 
-            <!-- 질문 3 -->
             <TextView
                 android:text="내가 피한 방법"
                 style="@style/FormLabelStyle"/>
@@ -83,7 +78,6 @@
                 style="@style/FormInputStyle"
                 android:hint="기록된 내용이 없습니다."/>
 
-            <!-- 질문 4 -->
             <TextView
                 android:text="피한 후 결과"
                 style="@style/FormLabelStyle"/>
@@ -91,6 +85,26 @@
                 android:id="@+id/tv_result4"
                 style="@style/FormInputStyle"
                 android:hint="기록된 내용이 없습니다."/>
+
+            <TextView
+                android:text="내가 자주 사용하는 회피 행동은"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_habit_behavior"
+                style="@style/FormInputStyle"
+                android:hint="기록된 내용이 없습니다."/>
+            <TextView
+                android:text="이다. 이 행동은 나에게"
+                style="@style/FormLabelStyle"
+                android:layout_marginTop="0dp"/>
+            <TextView
+                android:id="@+id/tv_habit_impact"
+                style="@style/FormInputStyle"
+                android:hint="기록된 내용이 없습니다."/>
+            <TextView
+                android:text="한 영향을 준다."
+                style="@style/FormLabelStyle"
+                android:layout_marginTop="0dp"/>
 
         </LinearLayout>
     </ScrollView>

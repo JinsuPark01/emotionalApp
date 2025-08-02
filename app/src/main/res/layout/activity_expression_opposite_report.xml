@@ -4,20 +4,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!-- 제목 영역 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:padding="16dp">
-
         <ImageView
             android:id="@+id/btnBack"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_back_arrow" />
-
         <TextView
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
@@ -27,8 +24,6 @@
             android:layout_marginStart="8dp"
             android:textStyle="bold" />
     </LinearLayout>
-
-    <!-- 페이지별 콘텐츠 영역 -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,8 +32,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <!-- 질문 1 -->
             <TextView
                 android:text="1. 지금 느끼는 감정"
                 style="@style/FormLabelStyle"/>
@@ -46,8 +39,6 @@
                 android:id="@+id/answer1"
                 style="@style/FormInputStyle"
                 android:hint="기록된 감정이 없습니다."/>
-
-            <!-- 질문 2 -->
             <TextView
                 android:text="2. 감정이 시키는 행동"
                 style="@style/FormLabelStyle"/>
@@ -55,8 +46,6 @@
                 android:id="@+id/answer2"
                 style="@style/FormInputStyle"
                 android:hint="기록된 행동이 없습니다."/>
-
-            <!-- 질문 3 -->
             <TextView
                 android:text="3. 반대로 행동한다면?"
                 style="@style/FormLabelStyle"/>
@@ -64,7 +53,20 @@
                 android:id="@+id/answer3"
                 style="@style/FormInputStyle"
                 android:hint="기록된 반대 행동이 없습니다."/>
-
+            <TextView
+                android:text="4. 실천 여부"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/tv_practiced"
+                style="@style/FormInputStyle"
+                android:hint="기록되지 않았습니다."/>
+            <TextView
+                android:text="5. 실천 후 느낌"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/answer5"
+                style="@style/FormInputStyle"
+                android:hint="기록된 내용이 없습니다."/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

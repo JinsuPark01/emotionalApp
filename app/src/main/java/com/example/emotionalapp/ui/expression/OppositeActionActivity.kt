@@ -104,9 +104,10 @@ class OppositeActionActivity : AppCompatActivity() {
         val docId = sdf.format(timestamp.toDate())
 
         val data = hashMapOf(
-            "answer1" to answers["feeling"],
-            "answer2" to answers["impulsive_action"],
-            "answer3" to answers["opposite_action"],
+            "answer1" to answers["answer1"],
+            "answer2" to answers["answer2"],
+            "answer3" to answers["answer3"],
+            "answer5" to answers["answer5"],
             "date" to timestamp
         )
 
@@ -143,18 +144,20 @@ class OppositeActionActivity : AppCompatActivity() {
     }
     private fun loadPageContent(view: View) {
         if (currentPage == 1) {
-            view.findViewById<EditText>(R.id.edit_feeling).setText(answers["feeling"])
-            view.findViewById<EditText>(R.id.edit_impulsive_action).setText(answers["impulsive_action"])
-            view.findViewById<EditText>(R.id.edit_opposite_action).setText(answers["opposite_action"])
+            view.findViewById<EditText>(R.id.answer1).setText(answers["answer1"])
+            view.findViewById<EditText>(R.id.answer2).setText(answers["answer2"])
+            view.findViewById<EditText>(R.id.answer3).setText(answers["answer3"])
+            view.findViewById<EditText>(R.id.answer5).setText(answers["answer5"])
         }
     }
     private fun validateCurrentPage(): Boolean {
         val currentView = binding.pageContainer.getChildAt(0) ?: return true
         if (currentPage == 1) {
-            val feeling = currentView.findViewById<EditText>(R.id.edit_feeling)?.text.toString().trim()
-            val impulsiveAction = currentView.findViewById<EditText>(R.id.edit_impulsive_action)?.text.toString().trim()
-            val oppositeAction = currentView.findViewById<EditText>(R.id.edit_opposite_action)?.text.toString().trim()
-            if (feeling.isBlank() || impulsiveAction.isBlank() || oppositeAction.isBlank()) {
+            val answer1 = currentView.findViewById<EditText>(R.id.answer1)?.text.toString().trim()
+            val answer2 = currentView.findViewById<EditText>(R.id.answer2)?.text.toString().trim()
+            val answer3 = currentView.findViewById<EditText>(R.id.answer3)?.text.toString().trim()
+            val answer5 = currentView.findViewById<EditText>(R.id.answer5)?.text.toString().trim()
+            if (answer1.isBlank() || answer2.isBlank() || answer3.isBlank() || answer5.isBlank()) {
                 Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 return false
             }
@@ -164,9 +167,11 @@ class OppositeActionActivity : AppCompatActivity() {
     private fun saveCurrentInput() {
         val currentView = binding.pageContainer.getChildAt(0) ?: return
         if (currentPage == 1) {
-            answers["feeling"] = currentView.findViewById<EditText>(R.id.edit_feeling)?.text.toString()
-            answers["impulsive_action"] = currentView.findViewById<EditText>(R.id.edit_impulsive_action)?.text.toString()
-            answers["opposite_action"] = currentView.findViewById<EditText>(R.id.edit_opposite_action)?.text.toString()
+            answers["answer1"] = currentView.findViewById<EditText>(R.id.answer1)?.text.toString()
+            answers["answer2"] = currentView.findViewById<EditText>(R.id.answer2)?.text.toString()
+            answers["answer3"] = currentView.findViewById<EditText>(R.id.answer3)?.text.toString()
+            answers["answer5"] = currentView.findViewById<EditText>(R.id.answer3)?.text.toString()
+
         }
     }
     private fun setupIndicators() {

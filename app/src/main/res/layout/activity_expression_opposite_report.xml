@@ -65,6 +65,14 @@
                 android:id="@+id/answer3"
                 style="@style/FormInputStyle"
                 android:hint="기록된 반대 행동이 없습니다."/>
+            <!-- 질문 4 -->
+            <TextView
+                android:text="5. 실천 후 느낌?"
+                style="@style/FormLabelStyle"/>
+            <TextView
+                android:id="@+id/answer5"
+                style="@style/FormInputStyle"
+                android:hint="기록된 실천 후 느낌이 없습니다."/>
 
         </LinearLayout>
     </ScrollView>

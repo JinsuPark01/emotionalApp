@@ -4,10 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
-    <TextView android:text="1. 지금 느끼는 감정" style="@style/FormLabelStyle"/>
-    <EditText android:id="@+id/edit_feeling" style="@style/FormInputStyle" android:hint="예: 화남, 짜증, 외로움, 불안, 슬픔 등"/>
+    <TextView android:text="1. 지금 느끼는 감정" style="@style/FormLabelStyle" />
+    <TextView android:text="&quot;지금 어떤 감정을 느끼고 있나요?&quot;" android:textSize="12sp" style="@style/FormLabelStyle"/>
+    <EditText android:id="@+id/answer1" style="@style/FormInputStyle" android:hint="예: 화남, 짜증, 외로움, 불안, 슬픔 등"/>
     <TextView android:text="2. 감정이 시키는 행동" style="@style/FormLabelStyle"/>
-    <EditText android:id="@+id/edit_impulsive_action" style="@style/FormInputStyle" android:hint="예: 소리 지르기, 도망가기, 자버리기 등"/>
+    <TextView android:text="&quot;그 감정 때문에 지금 하고 싶은 행동이 뭔가요?&quot;" android:textSize="12sp" style="@style/FormLabelStyle"/>
+    <EditText android:id="@+id/answer2" style="@style/FormInputStyle" android:hint="예: 소리 지르기, 도망가기, 자버리기 등"/>
     <TextView android:text="3. 반대로 행동한다면?" style="@style/FormLabelStyle"/>
-    <EditText android:id="@+id/edit_opposite_action" style="@style/FormInputStyle" android:hint="예: 조용히 말하기, 1분 산책, 친구한테 말 걸기 등"/>
+    <TextView android:text="&quot;그 감정과 반대로 행동한다면... 어떤 걸 해볼 수 있을까요?&quot;" android:textSize="12sp" style="@style/FormLabelStyle"/>
+    <EditText android:id="@+id/answer3" style="@style/FormInputStyle" android:hint="예: 조용히 말하기, 1분 산책, 친구한테 말 걸기 등"/>
+    <TextView android:text="4. 실천 타임" style="@style/FormLabelStyle"/>
+    <TextView android:text="&quot;오늘의 반대 행동, 해봐요!&quot;" android:textSize="12sp" style="@style/FormLabelStyle"/>
+    <CheckBox
+        android:id="@+id/answer4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="지금 해볼게요!"/>
+    <TextView android:text="5. 실천 후 느낌?" style="@style/FormLabelStyle"/>
+    <TextView android:text="&quot;해보니까 어땠나요?&quot;\n예: 조용히 말하기, 1분 산책, 친구한테 말 걸기 등" android:textSize="12sp" style="@style/FormLabelStyle"/>
+    <EditText android:id="@+id/answer5" style="@style/FormInputStyle" android:hint="예: 조용히 말하기, 1분 산책, 친구한테 말 걸기 등"/>
 </LinearLayout>

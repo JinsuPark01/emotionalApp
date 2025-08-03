@@ -1,5 +1,6 @@
 package com.example.emotionalapp.ui.alltraining
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -136,6 +137,21 @@ class AllTrainingPageActivity : BottomNavActivity() {
 
     private fun loadTrainingData() {
         checkAndInsertMissedWeeklies()
+        if(userDiffDays == 28L){
+            AlertDialog.Builder(this)
+                .setTitle("안내")
+                .setMessage("오늘은 훈련 마지막 날입니다. 오늘이면 훈련은 끝나지만, 앞으로도 훈련을 통해 배운 것을 활용하여 일상 속에서 감정을 잘 알아차리고 조절해보아요.")
+                .setPositiveButton("확인", null)
+                .setCancelable(false)
+                .show()
+        }else if (userDiffDays > 28L) {
+            AlertDialog.Builder(this)
+                .setTitle("안내")
+                .setMessage("전체 훈련이 마무리되었습니다. 훈련은 끝났지만, 앞으로도 훈련을 통해 배운 것을 활용하여 일상 속에서 감정을 잘 알아차리고 조절해보아요.")
+                .setPositiveButton("확인", null)
+                .setCancelable(false)
+                .show()
+        }
         var progressArr: Array<String> = when (userDiffDays) {
             in 1..7 -> {arrayOf("GO", "GO", "잠김", "잠김", "잠김") }
             in 8..14 -> {arrayOf("GO", "GO", "GO", "잠김", "잠김") }

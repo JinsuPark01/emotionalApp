@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="12dp"
-                    android:text="훈련 일지"
+                    android:text="훈련 일정"
                     android:textStyle="bold" />
                 <!-- 검정 밑줄 -->
                 <View

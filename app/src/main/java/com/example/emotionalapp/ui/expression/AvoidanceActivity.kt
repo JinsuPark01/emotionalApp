@@ -87,7 +87,7 @@ class AvoidanceActivity : AppCompatActivity() {
                 val effectText = pageView.findViewById<EditText>(R.id.et_effect)?.text?.toString()?.trim() ?: ""
 
 
-                if (checkedText.isEmpty() && customText.isEmpty() && effectText.isEmpty()) {
+                if ((checkedText.isEmpty() && customText.isEmpty()) || effectText.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답해주세요", Toast.LENGTH_SHORT).show()
                     return@setSingleListener
                 }

@@ -71,7 +71,7 @@ class DrivenActionQuizActivity : AppCompatActivity() {
     private fun showCompletionDialog() {
         AlertDialog.Builder(this)
             .setTitle("훈련 완료!")
-            .setMessage("감정을 마주하고, 스스로 선택하는 힘을 길러봤어요. 감정에 휘둘리기보다, 그 감정을 이해하고 주도하려는 시도가 지금의 변화를 만들었어요. 내 감정의 주인이 되기 위한 여정은 이제 시작이에요. 지금처럼 차분하게, 계속 연습해 나가요!")
+            .setMessage("정서-주도 행동의 의미를 탐색하고, 스스로의 행동을 돌아봤어요. 이제 감정에 휘둘리는 대신 감정과 함께 걷는 연습이 시작됐어요. 지금처럼 차근차근, 계속 나아가 보아요!")
             .setPositiveButton("확인") { _, _ ->
                 // '확인' 버튼을 누르면 액티비티를 종료합니다.
                 startActivity(Intent(this@DrivenActionQuizActivity, AllTrainingPageActivity::class.java))

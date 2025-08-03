@@ -1,6 +1,7 @@
 // BodyTrainingActivity.kt
 package com.example.emotionalapp.ui.alltraining
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.os.Bundle
@@ -153,6 +154,15 @@ class BodyActivity : BottomNavActivity() {
     }
 
     private fun loadDetailTrainingData() {
+        if (userDiffDays in 8L..14L && (countCompleteMap["weekly"] ?: 0) <= 1) {
+            AlertDialog.Builder(this)
+                .setTitle("안내")
+                .setMessage("주차별 점검을 먼저 시행하세요!")
+                .setPositiveButton("확인", null)
+                .setCancelable(false)
+                .show()
+        }
+
         val denominatorArr: Array<String> = when (userDiffDays) {
             8L -> arrayOf("2", "1", "잠김", "잠김", "잠김", "잠김", "잠김", "잠김")
             9L -> arrayOf("2", "1", "1", "잠김", "잠김", "잠김", "잠김", "잠김")

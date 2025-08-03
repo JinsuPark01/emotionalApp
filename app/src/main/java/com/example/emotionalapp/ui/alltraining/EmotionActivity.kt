@@ -1,5 +1,6 @@
 package com.example.emotionalapp.ui.alltraining
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -161,6 +162,14 @@ class EmotionActivity : BottomNavActivity() {
      * EmotionTrainingActivity에 표시될 각 세부 훈련 항목에 대한 데이터를 로드하는 함수
      */
     private fun loadDetailTrainingData() {
+        if (userDiffDays in 1L..7L && (countCompleteMap["weekly"] ?: 0) <= 0) {
+            AlertDialog.Builder(this)
+                .setTitle("안내")
+                .setMessage("주차별 점검을 먼저 시행하세요!")
+                .setPositiveButton("확인", null)
+                .setCancelable(false)
+                .show()
+        }
         val denominatorArr: Array<String> = when (userDiffDays) {
             1L -> arrayOf("1", "2", "1", "잠김")
             2L -> arrayOf("1", "4", "2", "잠김")

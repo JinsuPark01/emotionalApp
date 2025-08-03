@@ -559,8 +559,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="6. 나 자신이 실패자로 여겨지거나 자신과 가족을 실망시켰다
-고 느낀다."
+            android:text="6. 나 자신이 실패자로 여겨지거나 자신과 가족을 실망시켰다고 느낀다."
             android:textSize="16sp"
             android:textStyle="bold" />
 

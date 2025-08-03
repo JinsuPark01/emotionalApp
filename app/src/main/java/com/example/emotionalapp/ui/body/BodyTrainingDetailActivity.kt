@@ -103,8 +103,8 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
             )
 
             "bt_detail_008" -> buildSpannable(
-                "DAY 7 - 먹기명상(먹기명상을 통한 감정과 신체 연결 알아차림)" to 19,
-                "목표: 감정이 먹는 행동에 어떤 영향을 주는지 알아차리고,\n       반응 관찰하기" to 16,
+                "DAY 7 - 먹기명상\n(먹기명상을 통한 감정과 신체 연결 알아차림)" to 19,
+                "목표: 감정이 먹는 행동에 어떤 영향을 주는지 알아차리고,\n\t반응 관찰하기" to 16,
                 "[이렇게 진행돼요]" to 18,
                 "①. 오늘 먹고 싶은 음식 하나 떠올려보세요.\n②. ‘왜' 먹고 싶은지 자문해봅니다.\n③. 한 입 먹기 전, 감정을 살펴보고,\n④. 한 입 먹은 후, 감정의 변화를 알아차려봅니다.\n⑤. 떠오르는 감정에 이름 붙이지 않고 흘려보냅니다." to 16,
                 "[유의점]" to 18,
@@ -118,9 +118,13 @@ class BodyTrainingDetailActivity : AppCompatActivity() {
 
         btnStartPractice.setOnClickListener {
             when (trainingId) {
-                "bt_detail_002" -> showEncouragementDialog("DAY 1, 집중이 안되는 것은 누구나 그렇습니다. 오늘도 잘 해내실 거예요. 🌱", trainingId, trainingTitle)
-                "bt_detail_003" -> showEncouragementDialog("DAY 2, 잘하려 애쓰지 않아도 괜찮아요. 이미 충분합니다.🍇", trainingId, trainingTitle)
+                "bt_detail_002" -> showEncouragementDialog("DAY 1, 집중이 안되는 것은 누구나 그렇습니다. 오늘도 잘 해내실 거예요. \uD83C\uDF31", trainingId, trainingTitle)
+                "bt_detail_003" -> showEncouragementDialog("DAY 2, 잘하려 애쓰지 않아도 괜찮아요. 이미 충분합니다.\uD83C\uDF47", trainingId, trainingTitle)
                 "bt_detail_004" -> showEncouragementDialog("DAY 3, 훈련을 한다고 해서 감정이 곧바로 사라지는 것이 아닌 감정을 다스릴 준비를 하는 것 입니다. \uD83D\uDE0C", trainingId, trainingTitle)
+                "bt_detail_005" -> showEncouragementDialog("DAY 4, 당신의 내면에 집중하는 이 순간, 그 자체로 이미 훌륭한 시작입니다. \uD83D\uDD0D", trainingId, trainingTitle)
+                "bt_detail_006" -> showEncouragementDialog("DAY 5, 지금 이 순간, 나를 위한 작은 실천도 큰 변화를 만듭니다. \uD83D\uDCAA", trainingId, trainingTitle)
+                "bt_detail_007" -> showEncouragementDialog("DAY 6, 지금 느끼는 작은 변화 하나도, 내 몸과 마음이 들려주는 소중한 메시지입니다. \uD83C\uDFA7", trainingId, trainingTitle)
+                "bt_detail_008" -> showEncouragementDialog("DAY 7, 한 입 경험 속에도, 내 감정과 몸이 조용히 이야기하고 있습니다. \uD83C\uDF7D\uFE0F", trainingId, trainingTitle)
                 else -> goToPractice(trainingId, trainingTitle)
             }
         }

@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.example.emotionalapp.util.setSingleListener
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -71,11 +72,11 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
 
 
 
-        btnSave.setOnClickListener {
+        btnSave.setSingleListener {
             val feedbackText = etFeedback.text.toString().trim()
             if (feedbackText.isEmpty()) {
                 Toast.makeText(this, "소감을 입력해주세요.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+                return@setSingleListener
             }
 
             val prefs = getSharedPreferences("body_training_records", Context.MODE_PRIVATE)

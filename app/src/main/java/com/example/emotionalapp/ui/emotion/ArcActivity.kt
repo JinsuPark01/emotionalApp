@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.example.emotionalapp.ui.login_signup.LoginActivity
+import com.example.emotionalapp.util.setSingleListener
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -83,7 +84,7 @@ class ArcActivity : AppCompatActivity() {
             }
         }
 
-        btnNext.setOnClickListener {
+        btnNext.setSingleListener {
             if (currentPage == 0) {
                 currentPage++
                 updatePage()
@@ -99,7 +100,7 @@ class ArcActivity : AppCompatActivity() {
                 // 입력 체크
                 if (userAntecedent.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener // 저장 안 하고 넘어가지 않음
+                    return@setSingleListener // 저장 안 하고 넘어가지 않음
                 }else{
                     currentPage++
                     updatePage()
@@ -116,14 +117,14 @@ class ArcActivity : AppCompatActivity() {
                 // 입력 체크
                 if (userResponse.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener // 저장 안 하고 넘어가지 않음
+                    return@setSingleListener // 저장 안 하고 넘어가지 않음
                 }else{
                     currentPage++
                     updatePage()
                 }
             } else if (currentPage == 3) {
                 // 중복 저장 방지
-                if (saveJob?.isActive == true) return@setOnClickListener
+                if (saveJob?.isActive == true) return@setSingleListener
                 btnNext.isEnabled = false
 
                 // pageContainer 내부 현재 페이지 뷰 찾기
@@ -140,7 +141,7 @@ class ArcActivity : AppCompatActivity() {
                 if (userShortConsequence.isEmpty() || userLongConsequence.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
                     btnNext.isEnabled = true  // 다시 활성화
-                    return@setOnClickListener // 저장 안 하고 넘어가지 않음
+                    return@setSingleListener // 저장 안 하고 넘어가지 않음
                 } else {
                     // Firestore에 저장
                     saveJob = lifecycleScope.launch {

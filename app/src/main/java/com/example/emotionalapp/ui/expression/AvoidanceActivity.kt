@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.example.emotionalapp.ui.login_signup.LoginActivity
+import com.example.emotionalapp.util.setSingleListener
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -68,7 +69,7 @@ class AvoidanceActivity : AppCompatActivity() {
             }
         }
 
-        btnNext.setOnClickListener {
+        btnNext.setSingleListener {
             val pageView = pageContainer.getChildAt(0)
 
             if (currentPage == 0) {
@@ -88,7 +89,7 @@ class AvoidanceActivity : AppCompatActivity() {
 
                 if (checkedText.isEmpty() && customText.isEmpty() && effectText.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답해주세요", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
+                    return@setSingleListener
                 }
 
                 avoid1 = checkedText.firstOrNull() ?: ""
@@ -103,7 +104,7 @@ class AvoidanceActivity : AppCompatActivity() {
 
                 if (situation.isEmpty() || emotion.isEmpty() || method.isEmpty() || result.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
+                    return@setSingleListener
                 }
             }
 
@@ -120,7 +121,7 @@ class AvoidanceActivity : AppCompatActivity() {
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
-                    return@setOnClickListener
+                    return@setSingleListener
                 }
 
                 val now = Timestamp.now()

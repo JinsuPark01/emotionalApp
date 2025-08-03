@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.example.emotionalapp.util.setSingleListener
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -87,14 +88,14 @@ class ArtActivity : AppCompatActivity() {
             }
         }
 
-        btnNext.setOnClickListener {
+        btnNext.setSingleListener {
             btnNext.isEnabled = false
 
             if (currentPage == 2) {
                 if (selectedImages.size < 2) {
                     Toast.makeText(this, "이미지를 2개 선택해야 합니다.", Toast.LENGTH_SHORT).show()
                     btnNext.isEnabled = true
-                    return@setOnClickListener
+                    return@setSingleListener
                 }
                 selectedImageIndices.clear()
                 selectedImageIndices.addAll(selectedImages)
@@ -121,7 +122,7 @@ class ArtActivity : AppCompatActivity() {
                 if (!isValid) {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
                     btnNext.isEnabled = true
-                    return@setOnClickListener
+                    return@setSingleListener
                 }
 
                 val imageIndex = if (currentPage in 3..5) 0 else 1

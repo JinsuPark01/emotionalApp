@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.emotionalapp.R
 import com.example.emotionalapp.databinding.ActivityOppositeActionBinding
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.example.emotionalapp.util.setSingleListener
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -53,11 +54,11 @@ class OppositeActionActivity : AppCompatActivity() {
                 .show()
         }
 
-        binding.navPage.btnNext.setOnClickListener {
+        binding.navPage.btnNext.setSingleListener {
             // --- 2. 코루틴을 사용하여 저장 로직 호출 ---
-            if (isSaving) return@setOnClickListener // 이미 저장 중이면 무시
+            if (isSaving) return@setSingleListener // 이미 저장 중이면 무시
 
-            if (!validateCurrentPage()) return@setOnClickListener
+            if (!validateCurrentPage()) return@setSingleListener
             saveCurrentInput()
 
             if (currentPage < totalPages - 1) {

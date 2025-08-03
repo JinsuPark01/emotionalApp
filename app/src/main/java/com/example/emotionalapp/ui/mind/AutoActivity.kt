@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.example.emotionalapp.util.setSingleListener
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -75,8 +76,8 @@ class AutoActivity : AppCompatActivity() {
             }
         }
 
-        btnNext.setOnClickListener {
-            if (!validateCurrentPage()) return@setOnClickListener
+        btnNext.setSingleListener {
+            if (!validateCurrentPage()) return@setSingleListener
             btnNext.isEnabled = false
 
             saveCurrentInput()

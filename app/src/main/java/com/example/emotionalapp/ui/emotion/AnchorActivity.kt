@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import com.example.emotionalapp.util.setSingleListener
 
 class AnchorActivity : AppCompatActivity() {
 
@@ -84,7 +85,7 @@ class AnchorActivity : AppCompatActivity() {
             }
         }
 
-        btnNext.setOnClickListener {
+        btnNext.setSingleListener {
             if (currentPage == 1) {
                 val inputText = findViewById<EditText>(R.id.editCustomAnswer)?.text?.toString()?.trim() ?: ""
                 customCueInput = inputText
@@ -102,7 +103,7 @@ class AnchorActivity : AppCompatActivity() {
                     Log.d("AnchorActivity", "선택한 단서: $selectedCue")
                 } else {
                     Toast.makeText(this, "단서를 선택하거나 입력해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
+                    return@setSingleListener
                 }
             } else if (currentPage == 2) {
                 // pageContainer 내부 현재 페이지 뷰 찾기
@@ -120,12 +121,12 @@ class AnchorActivity : AppCompatActivity() {
                 // 입력 체크 (원하면)
                 if (page2Answer1.isEmpty() || page2Answer2.isEmpty() || page2Answer3.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener // 저장 안 하고 넘어가지 않음
+                    return@setSingleListener // 저장 안 하고 넘어가지 않음
                 }
             } else if (currentPage == 3) {
                 if (selectedQ1Index == -1 || selectedQ2Index == -1) {
                     Toast.makeText(this, "두 질문 모두 답변해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
+                    return@setSingleListener
                 }
                 // 첫 번째 질문 옵션
                 val optionsQ1 = listOf(
@@ -159,7 +160,7 @@ class AnchorActivity : AppCompatActivity() {
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
-                    return@setOnClickListener
+                    return@setSingleListener
                 }
 
                 val nowTimestamp = Timestamp.now()

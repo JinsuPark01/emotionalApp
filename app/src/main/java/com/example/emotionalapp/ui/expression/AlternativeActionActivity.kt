@@ -22,6 +22,7 @@ import com.example.emotionalapp.adapter.DetailedEmotionAdapter
 import com.example.emotionalapp.data.AlternativeActionItem
 import com.example.emotionalapp.databinding.ActivityAlternativeActionBinding
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.example.emotionalapp.util.setSingleListener
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -82,9 +83,9 @@ class AlternativeActionActivity : AppCompatActivity() {
                 .show()
         }
 
-        binding.navPage.btnNext.setOnClickListener {
-            if (isSaving) return@setOnClickListener
-            if (!validateAndSaveCurrentPage()) return@setOnClickListener
+        binding.navPage.btnNext.setSingleListener {
+            if (isSaving) return@setSingleListener
+            if (!validateAndSaveCurrentPage()) return@setSingleListener
 
             val nextPage = if (currentPage == 1 && selectedEmotion == "직접 입력") 2 else currentPage + 1
 

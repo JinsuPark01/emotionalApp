@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
 import com.example.emotionalapp.ui.login_signup.LoginActivity
+import com.example.emotionalapp.util.setSingleListener
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -91,7 +92,7 @@ class TrapActivity : AppCompatActivity() {
             }
         }
 
-        btnNext.setOnClickListener {
+        btnNext.setSingleListener {
             if (currentPage == 1) {
                 // pageContainer 내부 현재 페이지 뷰 찾기
                 val pageView = pageContainer.getChildAt(0)
@@ -104,7 +105,7 @@ class TrapActivity : AppCompatActivity() {
 
                 if (r1.isEmpty() || r2.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답변해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
+                    return@setSingleListener
                 }
 
                 responsePage1Answer1 = r1
@@ -129,14 +130,14 @@ class TrapActivity : AppCompatActivity() {
                     Log.d("TrapActivity", "선택한 단서: $responsePage2Text")
                 } else {
                     Toast.makeText(this, "덫을 선택해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
+                    return@setSingleListener
                 }
             } else if (currentPage == 3) {
                 if (selectedTrapIndex != -1) {
                     Log.d("TrapActivity", "선택한 덫 번호: $selectedTrapIndex")
                 } else {
                     Toast.makeText(this, "질문을 선택해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
+                    return@setSingleListener
                 }
             } else if (currentPage == 4) {
                 // pageContainer 내부 현재 페이지 뷰 찾기
@@ -155,7 +156,7 @@ class TrapActivity : AppCompatActivity() {
                 val inputs = listOf(a1, a2, a3) + if (selectedTrapIndex != 2) listOf(a4) else emptyList()
                 if (inputs.any { it.isEmpty() }) {
                     Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener  // 저장 없이 리턴
+                    return@setSingleListener  // 저장 없이 리턴
                 }
 
                 // 전역 변수에 저장
@@ -194,7 +195,7 @@ class TrapActivity : AppCompatActivity() {
 
                 if (responsePage6Text.isEmpty()) {
                     Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener  // 저장 없이 리턴
+                    return@setSingleListener  // 저장 없이 리턴
                 }
 
                 // Firestore에 저장
@@ -212,7 +213,7 @@ class TrapActivity : AppCompatActivity() {
                         Toast.makeText(this@TrapActivity, "저장 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                     }
                 }
-                return@setOnClickListener
+                return@setSingleListener
             }
             moveToNextPageOrFinish()
         }

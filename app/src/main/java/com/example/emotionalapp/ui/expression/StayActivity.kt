@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.emotionalapp.R
 import com.example.emotionalapp.ui.alltraining.AllTrainingPageActivity
+import com.example.emotionalapp.util.setSingleListener
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -90,12 +91,12 @@ class StayActivity : AppCompatActivity() {
             }
         }
 
-        btnNext.setOnClickListener {
+        btnNext.setSingleListener {
             when (currentPage) {
                 0 -> {
                     if (selectedEmotion == null) {
                         Toast.makeText(this, "오늘의 감정을 선택해주세요.", Toast.LENGTH_SHORT).show()
-                        return@setOnClickListener
+                        return@setSingleListener
                     }
                     // 타이머 분 선택은 이미 selectedTimerMillis에 저장됨
                     currentPage++
@@ -116,14 +117,14 @@ class StayActivity : AppCompatActivity() {
 
                     if (clarifiedEmotion.isEmpty() || moodChanged.isEmpty()) {
                         Toast.makeText(this, "모든 항목을 입력해주세요.", Toast.LENGTH_SHORT).show()
-                        return@setOnClickListener
+                        return@setSingleListener
                     }
 
                     currentPage++
                     updatePage()
                 }
                 3 -> {
-                    if (saveJob?.isActive == true) return@setOnClickListener
+                    if (saveJob?.isActive == true) return@setSingleListener
                     btnNext.isEnabled = false
 
                     saveJob = lifecycleScope.launch {

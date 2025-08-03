@@ -273,17 +273,41 @@ class TrapActivity : AppCompatActivity() {
         )
 
         val db = FirebaseFirestore.getInstance()
-        db.collection("user")
-            .document(userEmail)
-            .collection("mindTrap")
+        val userRef = db.collection("user").document(userEmail)
+
+        // 1. 문서 저장
+        userRef.collection("mindTrap")
             .document(today)
             .set(data)
             .addOnSuccessListener {
-                db.collection("user")
-                    .document(userEmail)
-                    .update("countComplete.trap", FieldValue.increment(1))
+                // 2. countComplete.trap 증가
+                userRef.update("countComplete.trap", FieldValue.increment(1))
                     .addOnSuccessListener {
-                        continuation.resume(true)
+                        // 3. 카운트 값 확인
+                        userRef.get().addOnSuccessListener { document ->
+                            val trapCount = document.get("countComplete.trap") as? Long ?: 0L
+                            Log.d("TrapActivity", "현재 trap 기록 수: $trapCount")
+
+                            // 조건 만족 시 팝업 표시
+                            if (trapCount >= 3) {
+                                runOnUiThread {
+                                    AlertDialog.Builder(this@TrapActivity)
+                                        .setTitle("생각의 덫 통계 잠금해제!")
+                                        .setMessage("기록보기에서 다른 사람의 생각의 덫 통계를 확인하세요!")
+                                        .setPositiveButton("확인") { dialog, _ ->
+                                            dialog.dismiss()
+                                            continuation.resume(true) // 저장 성공 처리
+                                        }
+                                        .setCancelable(false)
+                                        .show()
+                                }
+                            } else {
+                                continuation.resume(true)
+                            }
+                        }.addOnFailureListener {
+                            Log.w("Firestore", "카운트 가져오기 실패", it)
+                            continuation.resume(false)
+                        }
                     }
                     .addOnFailureListener { e ->
                         Log.w("Firestore", "카운트 증가 실패", e)

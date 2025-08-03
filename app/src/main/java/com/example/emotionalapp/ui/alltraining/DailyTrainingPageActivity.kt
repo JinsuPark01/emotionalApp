@@ -13,23 +13,12 @@ class DailyTrainingPageActivity : BottomNavActivity() {
 
     override val isAllTrainingPage: Boolean = true // 하단 네비게이션 비활성화 유지
 
-    private lateinit var trainingRecyclerView: RecyclerView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_daily_training)
 
-        trainingRecyclerView = findViewById(R.id.trainingRecyclerView)
-
         setupBottomNavigation()
         setupTabListeners()
-        setupRecyclerView()
-    }
-
-    private fun setupRecyclerView() {
-        // 현재는 구현 안 함 - 틀만 유지
-        trainingRecyclerView.layoutManager = LinearLayoutManager(this)
-        // trainingRecyclerView.adapter = ...
     }
 
     private fun setupTabListeners() {

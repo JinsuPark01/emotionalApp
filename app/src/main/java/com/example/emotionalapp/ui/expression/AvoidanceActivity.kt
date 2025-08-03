@@ -87,7 +87,7 @@ class AvoidanceActivity : AppCompatActivity() {
                 val effectText = pageView.findViewById<EditText>(R.id.et_effect)?.text?.toString()?.trim() ?: ""
 
 
-                if (checkedText.isEmpty() && customText.isEmpty() && effectText.isEmpty()) {
+                if ((checkedText.isEmpty() && customText.isEmpty()) || effectText.isEmpty()) {
                     Toast.makeText(this, "모든 질문에 답해주세요", Toast.LENGTH_SHORT).show()
                     return@setSingleListener
                 }
@@ -147,15 +147,21 @@ class AvoidanceActivity : AppCompatActivity() {
                     .document(dateString)
                     .set(data)
                     .addOnSuccessListener {
-                        Toast.makeText(this@AvoidanceActivity, "기록 완료.", Toast.LENGTH_SHORT).show()
                         db.collection("user")
                             .document(userEmail)
                             .update("countComplete.avoidance", FieldValue.increment(1))
                             .addOnSuccessListener {
                                 Log.d("Firestore", "카운트 증가 성공")
-                                val intent = Intent(this, AllTrainingPageActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                                androidx.appcompat.app.AlertDialog.Builder(this)
+                                    .setTitle("훈련 완료!")
+                                    .setMessage("감정을 회피하는 습관을 돌아봤다는 것 자체가 이미 중요한 변화의 시작이에요. 스스로를 마주한 용기를 진심으로 응원해요!")
+                                    .setPositiveButton("확인") { _, _ ->
+                                        // '확인' 버튼을 누르면 액티비티를 종료합니다.
+                                        startActivity(Intent(this@AvoidanceActivity, AllTrainingPageActivity::class.java))
+                                        finish()
+                                    }
+                                    .setCancelable(false) // 팝업 바깥을 눌러도 닫히지 않게 설정
+                                    .show()
                             }
                             .addOnFailureListener { e ->
                                 Log.w("Firestore", "카운트 증가 실패", e)

@@ -8,7 +8,7 @@
     정서 회피는 불편하거나 감당하기 힘든 감정을 느낄 때,\n
     생각하지 않으려 하거나, 딴 짓을 하면서 그 감정을 피하려는 행동을 말해요.\n\n
     <b>예시</b>\n
-    - 친구랑 싸우고 나서 괜히 계속 게임만 함\n
+    - 친구랑 싸우고 나서 괜히 계속 게임만 하기\n
     - 시험 망치고 하루 종일 유튜브 보기\n
     - 속상한 일 있었는데 “아 몰라” 하고 잠자기\n\n
     “이런 행동은 모두 감정을 느끼지 않으려는 회피 행동이에요.\n
@@ -97,15 +97,15 @@
     <string name="quiz_driven_q3_question">정서-주도 행동은 모두 나쁘기만 하고, 고쳐야 할 행동이다.</string>
 
     <!-- Driven Action Quiz Feedbacks for Q1 -->
-    <string name="quiz_driven_q1_correct_feedback">맞아요! 정서-주도 행동은 ‘감정에 끌려서 무의식적으로’ 나오는 행동이에요. 의도적인 선택은 ‘적응적 행동’에 가까워요!</string>
-    <string name="quiz_driven_q1_wrong_feedback">정서-주도 행동은 ‘감정에 끌려서 무의식적으로’ 나오는 행동이에요. 의도적인 선택은 ‘적응적 행동’에 가깝답니다!</string>
+    <string name="quiz_driven_q1_correct_feedback">맞아요! 감정에 휘둘려서 바로 나오는 행동이 정서-주도 행동이에요. 정확히 이해하고 있네요!</string>
+    <string name="quiz_driven_q1_wrong_feedback">정서-주도 행동은 ‘감정에 끌려서 무의식적으로’ 나오는 행동이에요. 의도적인 선택은 ‘적응적 행동’에 가까워요!</string>
 
     <!-- Driven Action Quiz Feedbacks for Q2 -->
     <string name="quiz_driven_q2_correct_feedback">정답! 감정이 행동으로 바로 튀어나올 때 그게 바로 정서-주도 행동이죠.</string>
     <string name="quiz_driven_q2_wrong_feedback">감정을 바로 행동으로 표현하는 건 흔한 정서-주도 행동이에요. 나중엔 후회할 수 있어서, 적응적인 방식으로 바꿔보는 연습이 필요해요!</string>
 
     <!-- Driven Action Quiz Feedbacks for Q3 -->
-    <string name="quiz_driven_q3_correct_feedback">정확해요! 정서-주도 행동이 무조건 나쁜 건 아니에요. 감정에 민감하다는 뜻이기도 하니까, 그걸 ‘도움 되는 행동’으로 바꾸는 연습이 필요한 거예요!</string>
+    <string name="quiz_driven_q3_correct_feedback">정확해요! 감정을 느끼는 건 나쁜 게 아니에요. 어떻게 표현하느냐가 중요하죠.</string>
     <string name="quiz_driven_q3_wrong_feedback">정서-주도 행동이 무조건 나쁜 건 아니에요. 감정에 민감하다는 뜻이기도 하니까, 그걸 ‘도움 되는 행동’으로 바꾸는 연습이 필요한 거예요!</string>
 
     <!-- Opposite Action Training Contents -->
@@ -122,8 +122,8 @@
     <!-- Alternative Action Training Contents -->
     <string name="alternative_action_guide_text">
     감정은 누구나 느껴요. 중요한 건, 그 감정을 느낄 때 어떻게 행동하느냐예요.\n\n
-    지금부터 당신은 감정에 끌려가기보단, 직접 선택한 대안 행동을 해보고, 그 결과가 어땠는지 돌아볼 시간을 가질거예요.\n\n
-    감정을 \'없애는\'게 아니라, 감정을 다루는 당신만의 방법을 만들어보는 시간이에요.
+    지금부터 감정에 끌려가기보단, 직접 선택한 대안 행동을 해보고, 그 결과가 어땠는지 돌아볼 시간을 가질거예요.\n\n
+    감정을 \'없애는\'게 아니라, 감정을 다루는 자신만의 방법을 만들어보는 시간이에요.
 </string>
     <!-- Alternative Action - Detailed Emotions and Actions -->
     <string-array name="detailed_emotions_anger">

@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="1. 매사에 흥미나 즐거움이 거의 없다."
+            android:text="1. 초조하거나 불안하거나 조마조마하게 느낀다."
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="좀처럼 아니다"
+                    android:text="전혀 아니다"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -73,7 +73,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="때때로 그렇다"
+                    android:text="며칠동안"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="자주 그렇다"
+                    android:text="절반 이상"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -117,7 +117,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="거의 언제나\n그렇다"
+                    android:text="거의 매일"
                     android:textAlignment="center"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -128,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="2. 기분이 가라앉거나 우울하거나 희망이 없다고 느낀다."
+            android:text="2. 걱정하는 것을 멈추거나 조절할 수가 없다."
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <!-- 좀처럼 아니다 -->
+            <!-- 전혀 아니다 -->
             <LinearLayout
                 android:id="@+id/btnG1_0"
                 android:layout_width="0dp"
@@ -159,7 +159,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="좀처럼 아니다"
+                    android:text="전혀 아니다"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -181,7 +181,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="때때로 그렇다"
+                    android:text="며칠동안"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -203,7 +203,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="자주 그렇다"
+                    android:text="절반 이상"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -225,7 +225,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="거의 언제나\n그렇다"
+                    android:text="거의 매일"
                     android:textAlignment="center"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -236,7 +236,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="3. 잠들기 어렵거나 자주 깬다. 혹은 잠을 너무 잔다."
+            android:text="3. 여러 가지 것들에 대해 걱정을 너무 많이 한다."
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -249,7 +249,7 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <!-- 좀처럼 아니다 -->
+            <!-- 전혀 아니다 -->
             <LinearLayout
                 android:id="@+id/btnG2_0"
                 android:layout_width="0dp"
@@ -267,7 +267,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="좀처럼 아니다"
+                    android:text="전혀 아니다"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -289,7 +289,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="때때로 그렇다"
+                    android:text="며칠동안"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -311,7 +311,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="자주 그렇다"
+                    android:text="절반 이상"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -333,7 +333,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="거의 언제나\n그렇다"
+                    android:text="거의 매일"
                     android:textAlignment="center"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -344,7 +344,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="4. 피곤하다고 느끼거나 기운이 거의 없다."
+            android:text="4. 편하게 있기가 어렵다."
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -357,7 +357,7 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <!-- 좀처럼 아니다 -->
+            <!-- 전혀 아니다 -->
             <LinearLayout
                 android:id="@+id/btnG3_0"
                 android:layout_width="0dp"
@@ -375,7 +375,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="좀처럼 아니다"
+                    android:text="전혀 아니다"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -397,7 +397,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="때때로 그렇다"
+                    android:text="며칠동안"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -419,7 +419,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="자주 그렇다"
+                    android:text="절반 이상"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -441,7 +441,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="거의 언제나\n그렇다"
+                    android:text="거의 매일"
                     android:textAlignment="center"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -452,7 +452,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="5. 식욕이 줄었다. 혹은 너무 많이 먹는다."
+            android:text="5. 너무 안절부절 못해서 가만히 있기가 힘들다."
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -465,7 +465,7 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <!-- 좀처럼 아니다 -->
+            <!-- 전혀 아니다 -->
             <LinearLayout
                 android:id="@+id/btnG4_0"
                 android:layout_width="0dp"
@@ -483,7 +483,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="좀처럼 아니다"
+                    android:text="전혀 아니다"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -505,7 +505,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="때때로 그렇다"
+                    android:text="며칠동안"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -527,7 +527,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="자주 그렇다"
+                    android:text="절반 이상"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -549,7 +549,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="거의 언제나\n그렇다"
+                    android:text="거의 매일"
                     android:textAlignment="center"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -560,8 +560,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="6. 나 자신이 실패자로 여겨지거나 자신과 가족을 실망시켰다
-고 느낀다."
+            android:text="6. 쉽게 짜증이 나거나 쉽게 성을 내게 된다."
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -574,7 +573,7 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <!-- 좀처럼 아니다 -->
+            <!-- 전혀 아니다 -->
             <LinearLayout
                 android:id="@+id/btnG5_0"
                 android:layout_width="0dp"
@@ -592,7 +591,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="좀처럼 아니다"
+                    android:text="전혀 아니다"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -614,7 +613,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="때때로 그렇다"
+                    android:text="며칠동안"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -636,7 +635,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="자주 그렇다"
+                    android:text="절반 이상"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -658,7 +657,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="거의 언제나\n그렇다"
+                    android:text="거의 매일"
                     android:textAlignment="center"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -669,7 +668,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="7. 신문을 읽거나 TV를 보는 것과 같은 일상적인 일에 집중하기 어렵다."
+            android:text="7. 마치 끔직한 일이 생길 것처럼 두렵게 느껴진다."
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -682,7 +681,7 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <!-- 좀처럼 아니다 -->
+            <!-- 전혀 아니다 -->
             <LinearLayout
                 android:id="@+id/btnG6_0"
                 android:layout_width="0dp"
@@ -700,7 +699,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="좀처럼 아니다"
+                    android:text="전혀 아니다"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -722,7 +721,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="때때로 그렇다"
+                    android:text="며칠동안"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -744,7 +743,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="자주 그렇다"
+                    android:text="절반 이상"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -766,7 +765,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="거의 언제나\n그렇다"
+                    android:text="거의 매일"
                     android:textAlignment="center"
                     android:textSize="12sp" />
             </LinearLayout>

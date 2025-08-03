@@ -281,6 +281,12 @@ class WeeklyActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            phq9Selections.forEachIndexed { questionIndex, selectedIndex ->
+                if (selectedIndex != -1) {
+                    updatePHQ9ButtonStates(questionIndex)
+                }
+            }
         } else if (currentPage == 1) {
             // GAD-7 버튼 그룹 수집
             gad7ButtonGroups = List(7) { questionIndex ->
@@ -301,6 +307,12 @@ class WeeklyActivity : AppCompatActivity() {
                         gad7Selections[questionIndex] = optionIndex
                         updateGAD7ButtonStates(questionIndex)
                     }
+                }
+            }
+
+            gad7Selections.forEachIndexed { questionIndex, selectedIndex ->
+                if (selectedIndex != -1) {
+                    updateGAD7ButtonStates(questionIndex)
                 }
             }
         } else if (currentPage == 2) {
@@ -325,6 +337,12 @@ class WeeklyActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            panasSelections.forEachIndexed { questionIndex, selectedIndex ->
+                if (selectedIndex != -1) {
+                    updatePanasButtonStates(questionIndex)
+                }
+            }
         } else if (currentPage == 3) {
             findViewById<TextView>(R.id.phq9Score).text = "점수: ${phq9Sum}점"
             findViewById<TextView>(R.id.phq9Interpretation).text = interpretPhq9(phq9Sum)
@@ -342,13 +360,13 @@ class WeeklyActivity : AppCompatActivity() {
         }
 
         // 이전 버튼 상태
-        btnPrev.isEnabled = false
-        btnPrev.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
-//        btnPrev.isEnabled = currentPage != 0
-//        btnPrev.backgroundTintList = if (currentPage == 0)
-//            ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
-//        else
-//            ColorStateList.valueOf(Color.parseColor("#3CB371"))
+//        btnPrev.isEnabled = false
+//        btnPrev.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
+        btnPrev.isEnabled = currentPage != 0 && currentPage != 3
+        btnPrev.backgroundTintList = if (currentPage == 0 || currentPage == 3)
+            ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
+        else
+            ColorStateList.valueOf(Color.parseColor("#3CB371"))
 
         // 다음 버튼 텍스트
         btnNext.text = if (currentPage == totalPages - 1) "완료 →" else "다음 →"

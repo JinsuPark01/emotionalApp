@@ -30,7 +30,7 @@ android:padding="16dp">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="최근 내가 자주 사용하는 회피 행동을 체크해보세요."
+                android:text="1. 최근 내가 자주 사용하는 회피 행동을 체크해보세요. (택 1)"
                 android:layout_marginBottom="12dp"
                 android:textSize="16sp"/>
 
@@ -57,7 +57,7 @@ android:padding="16dp">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="이 행동은 나에게 어떤 영향을 주나요?"
+                android:text="2. 이 행동은 나에게 어떤 영향을 주나요?"
                 android:layout_marginBottom="12dp"
                 android:textSize="16sp"/>
             <EditText

@@ -279,9 +279,6 @@ class AllTrainingPageActivity : BottomNavActivity() {
 
     }
 
-
-
-
     private fun setupTabListeners() {
         // 뷰 바인딩을 사용하여 뷰에 접근
         binding.tabAll.setOnClickListener {
@@ -292,6 +289,7 @@ class AllTrainingPageActivity : BottomNavActivity() {
             Log.d("AllTrainingPage", "금일 훈련 탭 클릭됨 - DailyTrainingPageActivity로 이동")
             val intent = Intent(this, DailyTrainingPageActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(0, 0)
             finish()
         }
     }

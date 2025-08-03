@@ -44,6 +44,7 @@ class StayActivity : AppCompatActivity() {
     private var currentPage = 0
 
     // 0페이지 감정 선택 및 타이머 분 선택 관련
+    private var isFirstTraining: Boolean = false
     private var selectedEmotion: String? = null
     private var selectedEmotionView: View? = null
     private var selectedTimerMillis: Long = 120 * 1000L // 기본 2분
@@ -78,6 +79,7 @@ class StayActivity : AppCompatActivity() {
                 .show()
         }
 
+        checkFirstTraining()
         setupIndicators()
         updatePage()
 
@@ -197,6 +199,24 @@ class StayActivity : AppCompatActivity() {
             indicatorContainer.addView(dot)
         }
     }
+    private fun checkFirstTraining() {
+        val user = FirebaseAuth.getInstance().currentUser ?: return
+        val email = user.email ?: return
+
+        FirebaseFirestore.getInstance()
+            .collection("user")
+            .document(email)
+            .collection("expressionStay")
+            .limit(1)
+            .get()
+            .addOnSuccessListener { documents ->
+                isFirstTraining = documents.isEmpty
+                // 페이지 로딩 후 버튼 제어 가능하도록 다시 setupPage0 호출
+                if (currentPage == 0) {
+                    updatePage() // setupPage0 내부에서 라디오버튼 제어됨
+                }
+            }
+    }
 
     private fun updatePage() {
         val inflater = LayoutInflater.from(this)
@@ -273,10 +293,27 @@ class StayActivity : AppCompatActivity() {
 
         // 타이머 라디오 버튼 초기화 및 리스너
         val rgTimer = view.findViewById<RadioGroup>(R.id.rg_timer_duration)
-        when (selectedTimerMillis) {
-            60_000L -> rgTimer.check(R.id.rb_1_min)
-            180_000L -> rgTimer.check(R.id.rb_3_min)
-            else -> rgTimer.check(R.id.rb_2_min)
+        val rb1 = view.findViewById<RadioButton>(R.id.rb_1_min)
+        val rb2 = view.findViewById<RadioButton>(R.id.rb_2_min)
+        val rb3 = view.findViewById<RadioButton>(R.id.rb_3_min)
+
+        // 기록이 없는 첫 훈련이라면 1분만 활성화
+        if (isFirstTraining) {
+            rb1.isEnabled = true
+            rb2.isEnabled = false
+            rb3.isEnabled = false
+            rgTimer.check(R.id.rb_1_min)
+            selectedTimerMillis = 60 * 1000L
+        } else {
+            rb1.isEnabled = true
+            rb2.isEnabled = true
+            rb3.isEnabled = true
+            // 이전 값 복원
+            when (selectedTimerMillis) {
+                60_000L -> rgTimer.check(R.id.rb_1_min)
+                180_000L -> rgTimer.check(R.id.rb_3_min)
+                else -> rgTimer.check(R.id.rb_2_min)
+            }
         }
         rgTimer.setOnCheckedChangeListener { _, checkedId ->
             selectedTimerMillis = when (checkedId) {
@@ -347,6 +384,7 @@ class StayActivity : AppCompatActivity() {
         progressCircular.max = totalSeconds
         progressCircular.progress = totalSeconds
 
+        hasShownRandomMessage = false
         countDownTimer?.cancel()
         countDownTimer = object : CountDownTimer(selectedTimerMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -360,20 +398,39 @@ class StayActivity : AppCompatActivity() {
 
             override fun onFinish() {
                 tvTimer.text = "00:00"
-                tvGuidance.text = "수고하셨어요."
                 progressCircular.progress = 0
+                updateGuidanceText(tvGuidance, 0L)
             }
         }.start()
     }
 
+    private var hasShownRandomMessage = false
+
     private fun updateGuidanceText(tvGuidance: TextView, secondsRemaining: Long) {
+        val totalSeconds = (selectedTimerMillis / 1000).toInt()
+        val positiveEmotions = listOf("행복", "즐거움", "자신감")
+        val isPositive = selectedEmotion?.let { it in positiveEmotions } ?: false
+
+        val currentText = tvGuidance.text.toString()
         val guidanceText = when {
-            secondsRemaining <= 90 && secondsRemaining > 60 -> "지금 느껴지는 감정에 집중해볼까요?"
-            secondsRemaining <= 60 && secondsRemaining > 30 -> "이 감정을 느껴도 괜찮아요."
-            secondsRemaining <= 30 && secondsRemaining > 0 -> "숨을 천천히 쉬면서, 감정을 그냥 거기에 두세요."
-            else -> "그 감정을 억누르지 말고, 지금 이 순간 그대로 느껴보세요."
+            secondsRemaining == 0L -> "수고하셨어요. 감정을 없애려 하지 않고 잠시 바라본 것만으로도 충분합니다."
+            secondsRemaining == totalSeconds.toLong() -> "그 감정을 억누르지 말고, 지금 이 순간 그대로 느껴보세요."
+            secondsRemaining == totalSeconds - 30L -> if (isPositive) "이 순간의 따뜻함을 온전히 느껴보세요." else "이 감정을 느껴도 괜찮아요."
+            secondsRemaining <= totalSeconds - 60 && !hasShownRandomMessage -> {
+                hasShownRandomMessage = true
+                listOf(
+                    "지금 느껴지는 감정에 집중해볼까요?",
+                    "그 감정은 어디에서 시작되었나요?",
+                    "지금 이 감정이 몸의 어떤 부위에서 느껴지는지 살펴볼까요?",
+                    "숨은 천천히 쉬면서, 감정을 그냥 거기에 두세요."
+                ).random()
+            }
+            else -> currentText
         }
-        tvGuidance.text = guidanceText
+
+        if (tvGuidance.text != guidanceText) {
+            tvGuidance.text = guidanceText
+        }
     }
 
     private fun setupMusic() {

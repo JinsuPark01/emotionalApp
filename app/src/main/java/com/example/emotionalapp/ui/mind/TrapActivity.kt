@@ -294,7 +294,7 @@ class TrapActivity : AppCompatActivity() {
                                 runOnUiThread {
                                     AlertDialog.Builder(this@TrapActivity)
                                         .setTitle("생각의 덫 통계 잠금해제!")
-                                        .setMessage("기록보기에서 다른 사람의 생각의 덫 통계를 확인하세요!")
+                                        .setMessage("기록보기에서 생각의 덫 통계를 확인할 수 있습니다!")
                                         .setPositiveButton("확인") { dialog, _ ->
                                             dialog.dismiss()
                                             continuation.resume(true) // 저장 성공 처리

@@ -99,6 +99,9 @@
             android:name=".ui.expression.AlternativeReportActivity"
             android:exported="false" />
 
+        <activity android:name=".ui.chat.ChatActivity" android:exported="false" />
+
+
 <!--        <activity android:name=".AddTester"-->
 <!--            android:exported="true">-->
 <!--        <intent-filter>-->

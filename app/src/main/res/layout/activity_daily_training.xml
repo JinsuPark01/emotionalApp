@@ -293,7 +293,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="\n&lt;4주차 - 인지재구성 훈련&gt;"
+                android:text="\n&lt;4주차 - 정서 표현 및 행동 변화 훈련&gt;"
                 android:textSize="18sp"
                 android:paddingBottom="8dp" />
 

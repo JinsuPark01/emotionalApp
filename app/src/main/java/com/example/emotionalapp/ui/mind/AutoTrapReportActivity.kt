@@ -27,7 +27,7 @@ class AutoTrapReportActivity : AppCompatActivity() {
         "독심술",
         "정서적 추리",
         "꼬리표 붙이기",
-        "\"해야만 한다\"는 진술문",
+        "“해야만 한다“는 진술문",
         "마술적 사고"
     )
 
@@ -47,22 +47,16 @@ class AutoTrapReportActivity : AppCompatActivity() {
 
     private fun loadTrapStatistics() {
         val db = FirebaseFirestore.getInstance()
+        val userEmail = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.email
 
-        db.collection("user").get().addOnSuccessListener { users ->
-            val allTasks = mutableListOf<com.google.android.gms.tasks.Task<*>>()
+        if (userEmail != null) {
+            val trapTask = db.collection("user").document(userEmail).collection("mindTrap").get()
+            val autoTask = db.collection("user").document(userEmail).collection("mindAuto").get()
 
-            for (userDoc in users) {
-                val email = userDoc.id
-                val trapTask = db.collection("user").document(email).collection("mindTrap").get()
-                val autoTask = db.collection("user").document(email).collection("mindAuto").get()
-
-                allTasks.add(trapTask)
-                allTasks.add(autoTask)
-            }
-
-            com.google.android.gms.tasks.Tasks.whenAllSuccess<Any>(allTasks)
+            com.google.android.gms.tasks.Tasks.whenAllSuccess<Any>(trapTask, autoTask)
                 .addOnSuccessListener { results ->
-                    // 원래 trapOptions 키로 매핑
+                    trapCountMap.keys.forEach { trapCountMap[it] = 0 }
+
                     val originalTrapOptions = listOf(
                         "성급하게 결론짓기",
                         "최악을 생각하기",
@@ -72,11 +66,9 @@ class AutoTrapReportActivity : AppCompatActivity() {
                         "독심술",
                         "정서적 추리",
                         "꼬리표 붙이기",
-                        "\"해야만 한다\"는 진술문",
+                        "“해야만 한다“는 진술문",
                         "마술적 사고"
                     )
-
-                    trapCountMap.keys.forEach { trapCountMap[it] = 0 }
 
                     for (result in results) {
                         if (result is com.google.firebase.firestore.QuerySnapshot) {
@@ -93,6 +85,7 @@ class AutoTrapReportActivity : AppCompatActivity() {
                             }
                         }
                     }
+
                     drawChart()
                 }
                 .addOnFailureListener { e -> e.printStackTrace() }
@@ -128,7 +121,7 @@ class AutoTrapReportActivity : AppCompatActivity() {
             // 값 표시 포맷터
             valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
-                    return if (value > 0) "${value.toInt()}회" else ""
+                    return "${value.toInt()}회"
                 }
             }
         }

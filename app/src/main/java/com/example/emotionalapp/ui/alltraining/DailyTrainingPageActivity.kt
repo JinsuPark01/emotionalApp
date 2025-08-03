@@ -29,6 +29,7 @@ class DailyTrainingPageActivity : BottomNavActivity() {
         tabAll.setOnClickListener {
             val intent = Intent(this, AllTrainingPageActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(0, 0)
             finish()
         }
 

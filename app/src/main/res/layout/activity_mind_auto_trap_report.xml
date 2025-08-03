@@ -23,9 +23,9 @@
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="다른 사용자의 생각의 덫"
-            android:textSize="18sp"
             android:layout_marginStart="8dp"
+            android:text="생각의 덫 기록"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -39,14 +39,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="12dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="통계"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:text="옆으로 스크롤 →"
+                android:textSize="16sp"
                 android:paddingBottom="8dp" />
 
             <com.github.mikephil.charting.charts.BarChart

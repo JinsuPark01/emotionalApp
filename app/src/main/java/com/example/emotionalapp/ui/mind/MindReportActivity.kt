@@ -108,7 +108,7 @@ class MindReportActivity : BottomNavActivity() {
                     reportList.add(
                         0,
                         ReportItem(
-                            date = "다른 사용자들의 생각의 덫 기록",
+                            date = "생각의 덫 기록",
                             name = "생각의 덫 통계",
                             timeStamp = null,
                             backgroundColorResId = R.color.button_color_mind

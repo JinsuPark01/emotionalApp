@@ -413,10 +413,11 @@ class StayActivity : AppCompatActivity() {
 
         val currentText = tvGuidance.text.toString()
         val guidanceText = when {
-            secondsRemaining == 0L -> "수고하셨어요. 감정을 없애려 하지 않고 잠시 바라본 것만으로도 충분합니다."
+            secondsRemaining == 0L -> "수고하셨어요.\n감정을 없애려 하지 않고 잠시 바라본 것만으로도 충분합니다."
             secondsRemaining == totalSeconds.toLong() -> "그 감정을 억누르지 말고, 지금 이 순간 그대로 느껴보세요."
             secondsRemaining == totalSeconds - 30L -> if (isPositive) "이 순간의 따뜻함을 온전히 느껴보세요." else "이 감정을 느껴도 괜찮아요."
-            secondsRemaining <= totalSeconds - 60 && !hasShownRandomMessage -> {
+            secondsRemaining == totalSeconds - 60L -> "감정을 더 느껴보고 싶다면 계속 머물러도 좋고,\n힘들다면 여기서 마무리해도 괜찮아요."
+            secondsRemaining <= totalSeconds - 90L && !hasShownRandomMessage -> {
                 hasShownRandomMessage = true
                 listOf(
                     "지금 느껴지는 감정에 집중해볼까요?",

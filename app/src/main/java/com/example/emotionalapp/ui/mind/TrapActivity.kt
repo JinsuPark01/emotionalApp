@@ -226,6 +226,7 @@ class TrapActivity : AppCompatActivity() {
             updatePage()
         } else {
             // 마지막 페이지에서 완료 시 다른 액티비티 이동
+            Toast.makeText(this@TrapActivity, "생각의 덫이 기록되었습니다.", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, AllTrainingPageActivity::class.java)
             startActivity(intent)
             finish()

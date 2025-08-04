@@ -60,11 +60,17 @@ class ArcReportActivity : AppCompatActivity() {
                 val response = doc.get("response") as? String ?: ""
                 val antecedent = doc.get("antecedent") as? String ?: ""
 
+                val evaluation = doc.get("evaluation") as? Map<*, *>
+                val change = evaluation?.get("change") as? String ?: ""
+                val effect = evaluation?.get("effect") as? String ?: ""
+
                 findViewById<TextView>(R.id.arcReportTitleText).text = dateString
                 findViewById<TextView>(R.id.reportTextA).text = antecedent
                 findViewById<TextView>(R.id.reportTextR).text = response
                 findViewById<TextView>(R.id.reportTextSC).text = shortConsequence
                 findViewById<TextView>(R.id.reportTextLC).text = longConsequence
+                findViewById<TextView>(R.id.reportTextEC).text = change
+                findViewById<TextView>(R.id.reportTextEE).text = effect
             }
             .addOnFailureListener { e ->
                 Log.e("FirestoreError", "가져오기 실패: ${e.message}")

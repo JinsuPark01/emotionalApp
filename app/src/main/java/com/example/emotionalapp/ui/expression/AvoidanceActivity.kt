@@ -88,7 +88,7 @@ class AvoidanceActivity : AppCompatActivity() {
 
 
                 if ((checkedText.isEmpty() && customText.isEmpty()) || effectText.isEmpty()) {
-                    Toast.makeText(this, "모든 질문에 답해주세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AvoidanceActivity, "회피 일지가 작성 되었습니다.", Toast.LENGTH_SHORT).show()
                     return@setSingleListener
                 }
 

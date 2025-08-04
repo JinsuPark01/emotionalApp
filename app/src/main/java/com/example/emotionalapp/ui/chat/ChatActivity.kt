@@ -25,7 +25,7 @@ class ChatActivity : BottomNavActivity() {
         mail.setOnClickListener {
             val emailIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "message/rfc822" // 이메일 전용 MIME 타입
-                putExtra(Intent.EXTRA_EMAIL, arrayOf("support@example.com"))
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("sy_un@naver.com"))
                 putExtra(Intent.EXTRA_SUBJECT, "문의 사항")
                 putExtra(Intent.EXTRA_TEXT, "여기에 내용을 입력하세요.")
             }

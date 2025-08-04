@@ -71,7 +71,7 @@ class OppositeActionActivity : AppCompatActivity() {
                     binding.navPage.btnNext.isEnabled = false // 버튼 비활성화
                     try {
                         saveToFirestoreSuspend() // suspend 함수 호출
-                        Toast.makeText(this@OppositeActionActivity, "훈련 기록이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@OppositeActionActivity, "반대 행동 하기 기록이 저장되었습니다.", Toast.LENGTH_SHORT).show()
 
                         val intent = Intent(this@OppositeActionActivity, AllTrainingPageActivity::class.java)
                         startActivity(intent)

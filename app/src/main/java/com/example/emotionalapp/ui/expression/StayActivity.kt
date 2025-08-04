@@ -134,7 +134,7 @@ class StayActivity : AppCompatActivity() {
                         btnNext.isEnabled = true
 
                         if (success) {
-                            Toast.makeText(this@StayActivity, "기록이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@StayActivity, "정서 머무르기 기록이 저장되었습니다.", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this@StayActivity, AllTrainingPageActivity::class.java))
                             finish()
                         } else {

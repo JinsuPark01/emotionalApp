@@ -157,6 +157,7 @@ class WeeklyActivity : AppCompatActivity() {
             updatePage()
         } else {
             // 마지막 페이지에서 완료 시 다른 액티비티 이동
+            Toast.makeText(this@WeeklyActivity, "주차별 점검이 기록되었습니다.", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, AllTrainingPageActivity::class.java)
             startActivity(intent)
             finish()

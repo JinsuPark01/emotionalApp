@@ -82,12 +82,24 @@ class AlternativeReportActivity : AppCompatActivity() {
      * Firestore 문서의 데이터로 UI를 채우는 함수
      */
     private fun populateUI(document: DocumentSnapshot) {
-
-        answer1.text = document.getString("answer1") ?: "기록된 내용이 없습니다."
-        answer2.text = document.getString("answer2") ?: "기록된 내용이 없습니다."
-        answer3.text = document.getString("answer3") ?: "기록된 내용이 없습니다."
-        answer4.text = document.getString("answer4") ?: "기록된 내용이 없습니다."
-        answer5.text = document.getString("answer5") ?: "기록된 내용이 없습니다."
-        answer6.text = document.getString("answer6") ?: "기록된 내용이 없습니다."
+        val input1 = document.getString("answer1") ?: "기록된 내용이 없습니다."
+        val input2 = document.getString("answer2") ?: "기록된 내용이 없습니다."
+        val input3 = document.getString("answer3") ?: "기록된 내용이 없습니다."
+        val input4 = document.getString("answer4") ?: "기록된 내용이 없습니다."
+        val input5 = document.getString("answer5") ?: "기록된 내용이 없습니다."
+        val input6 = document.getString("answer6") ?: "기록된 내용이 없습니다."
+        if(input2 == "직접 입력"){
+            answer2.text = input3
+            answer3.text = "세부 감정이 없습니다."
+            answer4.text = "기록된 내용이 없습니다"
+            answer5.text = input5
+        }else{
+            answer2.text = input2
+            answer3.text = input3
+            answer4.text = input4
+            answer5.text = input5
+        }
+        answer1.text = input1
+        answer6.text = input6
     }
 }

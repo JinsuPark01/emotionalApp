@@ -115,11 +115,11 @@ class SelectActivity : AppCompatActivity() {
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
                     btnSelect.isEnabled = false
-                    btnSelect.text = "감정 기록이 완료되었습니다"
+                    btnSelect.text = "해당 시간 상태 기록이 완료되었습니다."
                     btnSelect.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
                 } else {
                     btnSelect.isEnabled = true
-                    btnSelect.text = "감정 기록하기"
+                    btnSelect.text = "상태 기록하기"
                     btnSelect.setOnClickListener {
                         if (selectedMind == -1 || selectedBody == -1) {
                             Toast.makeText(this, "마음과 몸의 감정을 선택해주세요", Toast.LENGTH_SHORT).show()
@@ -258,7 +258,7 @@ class SelectActivity : AppCompatActivity() {
                         .document(email)
                         .update("countComplete.select", FieldValue.increment(1))
                         .addOnSuccessListener {
-                            Toast.makeText(this, "감정이 기록되었습니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "상태 기록이 완료되었습니다", Toast.LENGTH_SHORT).show()
                             // 마지막 페이지에서 완료 시 다른 액티비티 이동
                             val intent = Intent(this, AllTrainingPageActivity::class.java)
                             startActivity(intent)

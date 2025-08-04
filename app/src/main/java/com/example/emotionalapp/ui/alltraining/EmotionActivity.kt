@@ -205,7 +205,7 @@ class EmotionActivity : BottomNavActivity() {
             ),
             DetailTrainingItem(
                 id = "emotion_detail_001",
-                title = "정서 선택하기",
+                title = "상태 기록하기",
                 subtitle = "정서와 관련된 신체 감각 찾기",
                 trainingType = TrainingType.EMOTION_TRAINING,
                 progressNumerator = countCompleteMap["select"]?.toString() ?: "0",

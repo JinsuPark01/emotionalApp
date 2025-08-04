@@ -1,9 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <!-- '세부 감정' 부분을 삭제했습니다. -->
 
@@ -21,3 +24,4 @@
     <TextView android:text="나만의 대안 행동" style="@style/FormLabelStyle"/>
     <EditText android:id="@+id/edit_custom_action" style="@style/FormInputStyle" android:hint="자유롭게 적어주세요."/>
 </LinearLayout>
+</ScrollView>

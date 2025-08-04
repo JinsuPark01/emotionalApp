@@ -125,6 +125,9 @@
     지금부터 감정에 끌려가기보단, 직접 선택한 대안 행동을 해보고, 그 결과가 어땠는지 돌아볼 시간을 가질거예요.\n\n
     감정을 \'없애는\'게 아니라, 감정을 다루는 자신만의 방법을 만들어보는 시간이에요.
 </string>
+    <string name="alternative_action_final_text">
+    지금 이 순간, 감정에 바로 끌려가지 않고 행동을 선택했어요.\n\n이게 바로 정서조절이에요. 이 기록은 스스로 감정을 다루는 방법을 하나씩 쌓아가는 노트예요.\n\n오늘의 한 걸음을 스스로에게 칭찬해주세요.
+</string>
     <!-- Alternative Action - Detailed Emotions and Actions -->
     <string-array name="detailed_emotions_anger">
         <item>짜증</item>

@@ -41,14 +41,18 @@ class AlternativeActionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAlternativeActionBinding
     private var currentPage = 0
-    private val totalPages = 4
+    private val totalPages = 5
 
+    // 저장되는 6개
     private var situation: String = ""
     private var selectedEmotion: String = ""
     private var selectedDetailedEmotion: String = ""
     private var selectedAlternative: String = ""
     private var customAlternative: String = ""
     private var finalActionTaken: String = ""
+
+    private var customEmotion: String = ""
+
 
     private var selectedDetailedEmotionPosition: Int = -1
     private var selectedAlternativePosition: Int = -1
@@ -87,7 +91,7 @@ class AlternativeActionActivity : AppCompatActivity() {
             if (isSaving) return@setSingleListener
             if (!validateAndSaveCurrentPage()) return@setSingleListener
 
-            val nextPage = if (currentPage == 1 && selectedEmotion == "직접 입력") 2 else currentPage + 1
+            val nextPage = currentPage + 1
 
             if (nextPage < totalPages) {
                 currentPage = nextPage
@@ -116,11 +120,7 @@ class AlternativeActionActivity : AppCompatActivity() {
         binding.navPage.btnPrev.setOnClickListener {
             saveCurrentPageData()
             if (currentPage > 0) {
-                if (currentPage == 3 && selectedEmotion == "직접 입력") {
-                    currentPage = 1
-                } else {
                     currentPage--
-                }
                 updatePage()
             }
         }
@@ -134,6 +134,7 @@ class AlternativeActionActivity : AppCompatActivity() {
             1 -> inflater.inflate(R.layout.page_alternative_action_1_emotion, binding.pageContainer, false)
             2 -> inflater.inflate(R.layout.page_alternative_action_2_suggestion, binding.pageContainer, false)
             3 -> inflater.inflate(R.layout.page_alternative_action_3_action, binding.pageContainer, false)
+            4 -> inflater.inflate(R.layout.page_alternative_action_4, binding.pageContainer, false)
             else -> throw IllegalStateException("Invalid page")
         }
         binding.pageContainer.addView(pageView)
@@ -141,8 +142,6 @@ class AlternativeActionActivity : AppCompatActivity() {
         updateNavButtons()
         updateIndicators()
     }
-
-    // In AlternativeActionActivity.kt
 
     private fun loadPageContent(view: View) {
         when (currentPage) {
@@ -152,10 +151,11 @@ class AlternativeActionActivity : AppCompatActivity() {
             }
             2 -> {
                 if (selectedEmotion != "직접 입력") {
+                    view.findViewById<TextView>(R.id.alternativeQ).visibility = View.VISIBLE
                     setupSuggestionPage(view)
+                }else{
+                    view.findViewById<TextView>(R.id.alternativeQ).visibility = View.GONE
                 }
-                // --- 여기가 핵심 수정 부분입니다 ---
-                // 2페이지가 로드될 때, 저장된 '나만의 대안 행동' 텍스트를 다시 채워줍니다.
                 view.findViewById<EditText>(R.id.edit_custom_action).setText(customAlternative)
             }
             3 -> {
@@ -182,40 +182,31 @@ class AlternativeActionActivity : AppCompatActivity() {
 
     private fun setupSuggestionPage(view: View) {
         emotionDetailsMap[selectedEmotion]?.let { details ->
-            // --- 여기가 핵심 수정 부분입니다 ---
-            // 더 이상 존재하지 않는 'recycler_detailed_emotions' 관련 코드를 모두 삭제했습니다.
-
-            // 대안 행동 목록 설정
             val alternativeActions = resources.getStringArray(details.alternativeActionsResId).toList().map { AlternativeActionItem(it) }
             val recyclerAlternative = view.findViewById<RecyclerView>(R.id.recycler_alternative_actions)
             recyclerAlternative.layoutManager = LinearLayoutManager(this)
             recyclerAlternative.adapter = AlternativeActionAdapter(alternativeActions, selectedAlternativePosition) { position, item ->
                 selectedAlternative = item.actionText
                 selectedAlternativePosition = position
-                // 대안 행동 선택 시, '나만의 대안 행동' 입력창은 비워줍니다.
-                view.findViewById<EditText>(R.id.edit_custom_action).text.clear()
             }
         }
     }
 
-    // In AlternativeActionActivity.kt
 
     private fun saveCurrentPageData() {
         val pageView = binding.pageContainer.getChildAt(0) ?: return
         when (currentPage) {
-            1 -> situation = pageView.findViewById<EditText>(R.id.edit_situation).text.toString().trim()
+            1 -> {
+                situation = pageView.findViewById<EditText>(R.id.edit_situation).text.toString().trim()
+                customEmotion = pageView.findViewById<EditText>(R.id.tv_direct_input_hint).text.toString().trim()
+            }
             2 -> {
-                // --- 여기가 핵심 수정 부분입니다 (1) ---
-                // '나만의 대안 행동'은 항상 저장합니다.
-                // '대안 행동 예시' 선택 여부와는 독립적입니다.
                 customAlternative = pageView.findViewById<EditText>(R.id.edit_custom_action).text.toString().trim()
             }
             3 -> finalActionTaken = pageView.findViewById<EditText>(R.id.edit_action_taken).text.toString().trim()
         }
     }
-
-    // In AlternativeActionActivity.kt
-
+    
     private fun validateAndSaveCurrentPage(): Boolean {
         saveCurrentPageData()
         return when (currentPage) {
@@ -223,6 +214,7 @@ class AlternativeActionActivity : AppCompatActivity() {
                 if (situation.isBlank()) { Toast.makeText(this, "상황을 입력해주세요.", Toast.LENGTH_SHORT).show(); return false }
                 if (selectedEmotion.isBlank()) { Toast.makeText(this, "감정을 선택해주세요.", Toast.LENGTH_SHORT).show(); return false }
                 if (selectedEmotion != "직접 입력" && selectedDetailedEmotion.isBlank()) { Toast.makeText(this, "세부 감정을 선택해주세요.", Toast.LENGTH_SHORT).show(); return false }
+                if (selectedEmotion == "직접 입력" && customEmotion.isBlank()) { Toast.makeText(this, "직접 입력 해주세요.", Toast.LENGTH_SHORT).show(); return false }
                 true
             }
             2 -> {
@@ -241,8 +233,6 @@ class AlternativeActionActivity : AppCompatActivity() {
         }
     }
 
-    // In AlternativeActionActivity.kt
-
     private suspend fun saveToFirestore() {
         val user = FirebaseAuth.getInstance().currentUser ?: throw Exception("User not logged in")
         val db = FirebaseFirestore.getInstance()
@@ -256,7 +246,7 @@ class AlternativeActionActivity : AppCompatActivity() {
         val data = hashMapOf(
             "answer1" to situation,
             "answer2" to selectedEmotion,
-            "answer3" to if (selectedEmotion == "직접 입력") "" else selectedDetailedEmotion,
+            "answer3" to if (selectedEmotion == "직접 입력") customEmotion else selectedDetailedEmotion,
             "answer4" to selectedAlternative, // 선택한 예시
             "answer5" to customAlternative,   // 직접 입력한 내용
             "answer6" to finalActionTaken,
@@ -289,6 +279,7 @@ class AlternativeActionActivity : AppCompatActivity() {
         val detailedContainer = pageView.findViewById<LinearLayout>(R.id.detailed_emotion_container)
         if (emotion == "직접 입력") {
             detailedContainer.visibility = View.GONE
+            tvDirectInputHint.text = customEmotion
             tvDirectInputHint.visibility = View.VISIBLE  // 직접 입력일 때 텍스트 표시
         } else {
             detailedContainer.visibility = View.VISIBLE
@@ -300,6 +291,7 @@ class AlternativeActionActivity : AppCompatActivity() {
                 recyclerDetailed.adapter = DetailedEmotionAdapter(detailedEmotions, selectedDetailedEmotionPosition) { position, item ->
                     selectedDetailedEmotion = item
                     selectedDetailedEmotionPosition = position
+                    customEmotion = ""
                 }
             }
         }

@@ -86,7 +86,7 @@
             android:id="@+id/textStepCDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="예: 단기적 결과 - 발표를 취소해서 마음이 안정되요.
+            android:text="예: 단기적 결과 - 발표를 취소해서 마음이 안정돼요.
             \n예: 장기적 결과 - 똑같은 상황이 반복되고 점점 무기력해져요."
             android:textSize="16sp"
             android:textColor="#555555"

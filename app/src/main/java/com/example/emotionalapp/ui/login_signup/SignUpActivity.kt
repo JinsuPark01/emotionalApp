@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
+import com.example.emotionalapp.util.setSingleListener
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -45,7 +46,7 @@ class SignUpActivity : AppCompatActivity() {
 
         findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
 
-        btnSignup.setOnClickListener {
+        btnSignup.setSingleListener {
             clearErrors()
 
             val email = etEmail.text.toString().trim()
@@ -90,62 +91,82 @@ class SignUpActivity : AppCompatActivity() {
                 hasError = true
             }
 
-            if (hasError) return@setOnClickListener
+            if (hasError) return@setSingleListener
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val userId = email
-                        val signUpDate = Timestamp.now()
-
-                        val userData = hashMapOf(
-                            "email" to email,
-                            "password" to password, // 실제 서비스에서는 평문 저장 금지
-                            "signupDate" to signUpDate,
-                            "countComplete" to hashMapOf(
-                                "weekly" to 0,
-                                "select" to 0,
-                                "anchor" to 0,
-                                "arc" to 0,
-                                "art" to 0,
-                                "trap" to 0,
-                                "auto" to 0,
-                                "bt_detail_002" to 0,
-                                "bt_detail_003" to 0,
-                                "bt_detail_004" to 0,
-                                "bt_detail_005" to 0,
-                                "bt_detail_006" to 0,
-                                "bt_detail_007" to 0,
-                                "bt_detail_008" to 0,
-                                "alternative" to 0,
-                                "avoidance" to 0,
-                                "opposite" to 0,
-                                "stay" to 0
-                            )
-                        )
-
-                        db.collection("user").document(userId)
-                            .set(userData)
-                            .addOnSuccessListener {
-                                showToast("회원가입 완료!")
-                                finish()
-                            }
-                            .addOnFailureListener {
-                                auth.currentUser?.delete()
-                                showToast("회원가입 실패: 데이터 저장 오류 발생")
-                            }
+            // ✅ Firestore에서 허용된 이메일인지 먼저 체크
+            db.collection("allowed_emails").document(email)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        // 허용된 이메일일 경우 회원가입 진행
+                        registerUser(email, password)
                     } else {
-                        val exception = task.exception
-                        if (exception is FirebaseAuthUserCollisionException) {
-                            tvEmailError.text = "이미 가입된 이메일입니다."
-                            tvEmailError.visibility = View.VISIBLE
-                        } else {
-                            showToast(exception?.message ?: "회원가입 실패")
-                        }
+                        tvEmailError.text = "가입이 허용되지 않은 이메일입니다."
+                        tvEmailError.visibility = View.VISIBLE
                     }
                 }
+                .addOnFailureListener {
+                    showToast("이메일 확인 중 오류가 발생했습니다.")
+                }
+
+            registerUser(email, password)
         }
 
+    }
+
+    private fun registerUser(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val userId = email
+                    val signUpDate = Timestamp.now()
+
+                    val userData = hashMapOf(
+                        "email" to email,
+                        "password" to password, // 실제 서비스에서는 평문 저장 금지
+                        "signupDate" to signUpDate,
+                        "countComplete" to hashMapOf(
+                            "weekly" to 0,
+                            "select" to 0,
+                            "anchor" to 0,
+                            "arc" to 0,
+                            "art" to 0,
+                            "trap" to 0,
+                            "auto" to 0,
+                            "bt_detail_002" to 0,
+                            "bt_detail_003" to 0,
+                            "bt_detail_004" to 0,
+                            "bt_detail_005" to 0,
+                            "bt_detail_006" to 0,
+                            "bt_detail_007" to 0,
+                            "bt_detail_008" to 0,
+                            "alternative" to 0,
+                            "avoidance" to 0,
+                            "opposite" to 0,
+                            "stay" to 0
+                        )
+                    )
+
+                    db.collection("user").document(userId)
+                        .set(userData)
+                        .addOnSuccessListener {
+                            showToast("회원가입 완료!")
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            auth.currentUser?.delete()
+                            showToast("회원가입 실패: 데이터 저장 오류 발생")
+                        }
+                } else {
+                    val exception = task.exception
+                    if (exception is FirebaseAuthUserCollisionException) {
+                        tvEmailError.text = "이미 가입된 이메일입니다."
+                        tvEmailError.visibility = View.VISIBLE
+                    } else {
+                        showToast(exception?.message ?: "회원가입 실패")
+                    }
+                }
+            }
     }
 
     private fun clearErrors() {

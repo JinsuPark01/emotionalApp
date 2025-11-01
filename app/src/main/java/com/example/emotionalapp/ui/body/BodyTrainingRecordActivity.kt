@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emotionalapp.R
@@ -68,7 +69,7 @@ class BodyTrainingRecordActivity : AppCompatActivity() {
         val trainingId = intent.getStringExtra("TRAINING_ID") ?: return
 
         val etFeedback = findViewById<EditText>(R.id.etFeedback1)
-        val btnSave = findViewById<Button>(R.id.btnSaveFeedback)
+        val btnSave = findViewById<TextView>(R.id.btnSaveFeedback)
 
 
 

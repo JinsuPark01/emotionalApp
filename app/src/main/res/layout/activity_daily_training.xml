@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
     <!-- 제목 영역 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,12 +85,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="#F5F5F5"
         android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="24dp">
 
             <TextView
                 android:id="@+id/tvTrainingLogTitle"
@@ -106,6 +109,8 @@
                 android:layout_height="wrap_content"
                 android:text="\n&lt;1주차 - 정서 인식 훈련&gt;"
                 android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/button_color_emotion"
                 android:paddingBottom="8dp" />
 
             <TextView
@@ -170,6 +175,8 @@
                 android:layout_height="wrap_content"
                 android:text="\n&lt;2주차 - 신체자각 훈련&gt;"
                 android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/button_color_body"
                 android:paddingBottom="8dp" />
 
             <TextView
@@ -233,6 +240,8 @@
                 android:layout_height="wrap_content"
                 android:text="\n&lt;3주차 - 인지재구성 훈련&gt;"
                 android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/button_color_mind"
                 android:paddingBottom="8dp" />
 
             <TextView
@@ -295,6 +304,8 @@
                 android:layout_height="wrap_content"
                 android:text="\n&lt;4주차 - 정서 표현 및 행동 변화 훈련&gt;"
                 android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/button_color_expression"
                 android:paddingBottom="8dp" />
 
             <TextView

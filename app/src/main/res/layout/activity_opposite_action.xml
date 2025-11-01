@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <!-- 상단 바 -->
     <LinearLayout
@@ -27,13 +28,18 @@
             android:textStyle="bold"
             android:layout_marginStart="12dp"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD" />
 
     <!-- 1~3단계의 페이지 내용이 여기에 표시됩니다 -->
     <FrameLayout
         android:id="@+id/pageContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:background="#0D00897B"/>
 
     <!-- '이전/다음' 버튼이 있는 네비게이션 바 -->
     <include layout="@layout/nav_page"

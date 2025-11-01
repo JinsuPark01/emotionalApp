@@ -249,7 +249,7 @@ class StayActivity : AppCompatActivity() {
 
         btnPrev.isEnabled = currentPage != 0 && currentPage != 2
         btnPrev.backgroundTintList = ColorStateList.valueOf(
-            Color.parseColor(if (btnPrev.isEnabled) "#3CB371" else "#D9D9D9")
+            Color.parseColor(if (btnPrev.isEnabled) "#00897B" else "#D9D9D9")
         )
 
         btnNext.text = if (currentPage == totalPages - 1) "완료 →" else "다음 →"

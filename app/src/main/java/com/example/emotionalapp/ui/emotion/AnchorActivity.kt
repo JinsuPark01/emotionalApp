@@ -287,9 +287,9 @@ class AnchorActivity : AppCompatActivity() {
             descriptionText2.text = """
                 단서를 통해 현재에 초점이 맞춰졌다면 스스로에게 다음의 세 가지 질문을 해보세요.
                 
-                    ‘지금 나의 생각은 무엇인가?(인지)’ 
-                    ‘지금 내가 경험하는 정서와 신체감각은 무엇인가? (신체감각)’
-                    ‘나는 지금 무엇을 하고 있나? (행동)’
+                ‘지금 나의 생각은 무엇인가?(인지)’ 
+                ‘지금 내가 경험하는 정서와 신체감각은 무엇인가? (신체감각)’
+                ‘나는 지금 무엇을 하고 있나? (행동)’
                     
                 생각, 행동이나 반응을 되돌아보며 이들을 더 적응적인 반응들로 대체해보세요. 앞으로 우리는 이 세 가지를 살펴보고 변화시키는 연습을 해 볼 거에요.
             """.trimIndent()
@@ -420,7 +420,7 @@ class AnchorActivity : AppCompatActivity() {
         btnPrev.backgroundTintList = if (currentPage == 0)
             ColorStateList.valueOf(Color.parseColor("#D9D9D9")) // 비활성화 색상
         else
-            ColorStateList.valueOf(Color.parseColor("#3CB371")) // 활성화 색상
+            ColorStateList.valueOf(Color.parseColor("#00897B")) // 활성화 색상
 
         // 다음 버튼 텍스트
         btnNext.text = if (currentPage == totalPages - 1) "완료 →" else "다음 →"

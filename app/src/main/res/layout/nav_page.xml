@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:gravity="center_vertical">
 
         <!-- ◀ 이전 버튼 -->
@@ -36,7 +36,7 @@
                 android:text="← 이전"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
-                android:backgroundTint="#3CB371"
+                android:backgroundTint="#00897B"
                 android:background="@drawable/bg_round_green_button" />
         </LinearLayout>
 
@@ -67,7 +67,7 @@
                 android:text="다음 →"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
-                android:backgroundTint="#3CB371"
+                android:backgroundTint="#00897B"
                 android:background="@drawable/bg_round_green_button" />
         </LinearLayout>
     </LinearLayout>

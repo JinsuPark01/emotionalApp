@@ -527,13 +527,13 @@ class TrapActivity : AppCompatActivity() {
         btnPrev.backgroundTintList = if (currentPage == 0 || currentPage == 5)
             ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
         else
-            ColorStateList.valueOf(Color.parseColor("#3CB371"))
+            ColorStateList.valueOf(Color.parseColor("#00897B"))
 
         btnNext.isEnabled = currentPage != 5
         btnNext.backgroundTintList = if (currentPage == 5)
             ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
         else
-            ColorStateList.valueOf(Color.parseColor("#3CB371"))
+            ColorStateList.valueOf(Color.parseColor("#00897B"))
 
 
         // 다음 버튼 텍스트

@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <!-- 실제 내용 영역 -->
     <LinearLayout
@@ -46,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:padding="16dp">
+            android:padding="24dp"
+            android:background="#0D00897B">
 
             <LinearLayout
                 android:id="@+id/containerRecord"
@@ -67,15 +69,32 @@
                     android:layout_marginBottom="24dp" />
             </LinearLayout>
         </ScrollView>
-
-        <!-- 하단 고정된 기록 저장 버튼 -->
-        <Button
-            android:id="@+id/btnSaveFeedback"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:backgroundTint="@color/button_color_body"
-            android:text="기록 저장" />
+            android:layout_height="1dp"
+            android:background="#DDDDDD" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <TextView
+                android:id="@+id/btnSaveFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:drawablePadding="4dp"
+                android:text="기록 저장"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:background="@drawable/bg_round_green_button" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <!-- 겹쳐진 폭죽 효과 View (Konfetti) -->

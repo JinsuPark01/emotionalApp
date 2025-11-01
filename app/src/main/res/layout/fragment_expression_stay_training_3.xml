@@ -15,12 +15,12 @@ android:padding="24dp">
             android:gravity="center"
             android:padding="24dp">
 
-            <TextView style="@style/FeedbackTextStyle" android:text="감정이 꼭 달라지지 않아도 괜찮아요."/>
-            <TextView style="@style/FeedbackTextStyle" android:text="중요한 건 있는 그대로 바라보는 거예요.\n"/>
-            <TextView style="@style/FeedbackTextStyle" android:text="감정은 없애야 할 대상이 아니에요."/>
-            <TextView style="@style/FeedbackTextStyle" android:text="옆에 두고 지켜볼 수 있는 존재예요.\n"/>
-            <TextView style="@style/FeedbackTextStyle" android:text="이 시간을 끝까지 해본 것만으로도 충분해요."/>
-            <TextView style="@style/FeedbackTextStyle" android:text="불편했더라도, 그건 잘하고 있다는 뜻이에요."/>
+            <TextView style="@style/FeedbackTextStyle" android:text="감정이 꼭 달라지지 않아도 괜찮아요." android:textStyle="bold"/>
+            <TextView style="@style/FeedbackTextStyle" android:text="중요한 건 있는 그대로 바라보는 거예요.\n" android:textStyle="bold"/>
+            <TextView style="@style/FeedbackTextStyle" android:text="감정은 없애야 할 대상이 아니에요." android:textStyle="bold"/>
+            <TextView style="@style/FeedbackTextStyle" android:text="옆에 두고 지켜볼 수 있는 존재예요.\n" android:textStyle="bold"/>
+            <TextView style="@style/FeedbackTextStyle" android:text="이 시간을 끝까지 해본 것만으로도 충분해요." android:textStyle="bold"/>
+            <TextView style="@style/FeedbackTextStyle" android:text="불편했더라도, 그건 잘하고 있다는 뜻이에요." android:textStyle="bold"/>
 
         </LinearLayout>
     </ScrollView>

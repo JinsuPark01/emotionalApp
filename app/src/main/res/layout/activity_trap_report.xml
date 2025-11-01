@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <!-- 제목 영역 -->
     <LinearLayout
@@ -28,6 +29,10 @@
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD" />
 
     <!-- 페이지별 콘텐츠 영역 -->
     <FrameLayout
@@ -35,7 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="#0D00897B">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -63,20 +69,13 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="#DDDDDD" />
-
                 <!-- 설문 결과 카드 (반복적으로 사용) -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:background="#FFFFFF"
-                    card_view:cardCornerRadius="12dp"
-                    card_view:cardElevation="6dp">
+                    card_view:cardCornerRadius="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -109,8 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:background="#FFFFFF"
-                    card_view:cardCornerRadius="12dp"
-                    card_view:cardElevation="6dp">
+                    card_view:cardCornerRadius="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -142,8 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:background="#FFFFFF"
-                    card_view:cardCornerRadius="12dp"
-                    card_view:cardElevation="6dp">
+                    card_view:cardCornerRadius="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -192,21 +189,12 @@
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="#DDDDDD" />
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="#FFFFFF"
-
-                        card_view:cardCornerRadius="12dp"
-                        card_view:cardElevation="6dp">
+                        card_view:cardCornerRadius="12dp">
 
                         <LinearLayout
                             android:id="@+id/validityContainer1"
@@ -239,9 +227,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="#FFFFFF"
-
-                        card_view:cardCornerRadius="12dp"
-                        card_view:cardElevation="6dp">
+                        card_view:cardCornerRadius="12dp">
 
                         <LinearLayout
                             android:id="@+id/validityContainer2"
@@ -274,9 +260,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="#FFFFFF"
-
-                        card_view:cardCornerRadius="12dp"
-                        card_view:cardElevation="6dp">
+                        card_view:cardCornerRadius="12dp">
 
                         <LinearLayout
                             android:id="@+id/validityContainer3"
@@ -309,9 +293,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="#FFFFFF"
-
-                        card_view:cardCornerRadius="12dp"
-                        card_view:cardElevation="6dp">
+                        card_view:cardCornerRadius="12dp">
 
                         <LinearLayout
                             android:id="@+id/validityContainer4"
@@ -362,21 +344,12 @@
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="#DDDDDD" />
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="#FFFFFF"
-
-                        card_view:cardCornerRadius="12dp"
-                        card_view:cardElevation="6dp">
+                        card_view:cardCornerRadius="12dp">
 
                         <LinearLayout
                             android:id="@+id/assumptionContainer1"
@@ -409,9 +382,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="#FFFFFF"
-
-                        card_view:cardCornerRadius="12dp"
-                        card_view:cardElevation="6dp">
+                        card_view:cardCornerRadius="12dp">
 
                         <LinearLayout
                             android:id="@+id/assumptionContainer2"
@@ -444,9 +415,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="#FFFFFF"
-
-                        card_view:cardCornerRadius="12dp"
-                        card_view:cardElevation="6dp">
+                        card_view:cardCornerRadius="12dp">
 
                         <LinearLayout
                             android:id="@+id/assumptionContainer3"
@@ -479,9 +448,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="#FFFFFF"
-
-                        card_view:cardCornerRadius="12dp"
-                        card_view:cardElevation="6dp">
+                        card_view:cardCornerRadius="12dp">
 
                         <LinearLayout
                             android:id="@+id/assumptionContainer4"
@@ -532,21 +499,13 @@
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="#DDDDDD" />
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="#FFFFFF"
 
-                        card_view:cardCornerRadius="12dp"
-                        card_view:cardElevation="6dp">
+                        card_view:cardCornerRadius="12dp">
 
                         <LinearLayout
                             android:id="@+id/perspectiveContainer1"
@@ -579,10 +538,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="#FFFFFF"
-
-                        card_view:cardCornerRadius="12dp"
-                        card_view:cardElevation="6dp">
-
+                        card_view:cardCornerRadius="12dp">
                         <LinearLayout
                             android:id="@+id/perspectiveContainer2"
                             android:layout_width="match_parent"
@@ -614,9 +570,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="#FFFFFF"
-
-                        card_view:cardCornerRadius="12dp"
-                        card_view:cardElevation="6dp">
+                        card_view:cardCornerRadius="12dp">
 
                         <LinearLayout
                             android:id="@+id/perspectiveContainer3"
@@ -660,28 +614,17 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="#DDDDDD" />
-
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:background="#FFFFFF"
-
-                    card_view:cardCornerRadius="12dp"
-                    card_view:cardElevation="6dp">
-
+                    card_view:cardCornerRadius="12dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:padding="20dp">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -689,7 +632,6 @@
                             android:textColor="#333333"
                             android:textSize="16sp"
                             android:textStyle="bold" />
-
                         <TextView
                             android:id="@+id/reportAlternative"
                             android:layout_width="wrap_content"
@@ -700,7 +642,6 @@
                             android:textSize="16sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-
             </LinearLayout>
         </ScrollView>
     </FrameLayout>

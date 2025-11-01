@@ -36,14 +36,13 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#DDDDDD" />
-
-
     <!-- 연습 콘텐츠 -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="16dp">
+        android:padding="24dp"
+        android:background="#0D00897B">
 
         <TextView
             android:id="@+id/tvPracticeContent"
@@ -55,8 +54,11 @@
             android:textColor="@color/black"
             android:textIsSelectable="true"
             android:autoLink="none" />
-
     </ScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD" />
 
     <!-- Training Start 버튼 -->
     <LinearLayout
@@ -78,5 +80,6 @@
             android:textSize="14sp"
             android:background="@drawable/bg_round_green_button" />
     </LinearLayout>
+
 
 </LinearLayout>

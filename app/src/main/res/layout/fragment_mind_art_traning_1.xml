@@ -28,7 +28,8 @@
             android:scaleType="fitCenter"
             android:src="@drawable/art0"
             android:layout_marginBottom="16dp"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            />
 
         <!-- 설명 -->
         <TextView

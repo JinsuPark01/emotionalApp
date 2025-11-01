@@ -247,7 +247,7 @@ class AvoidanceActivity : AppCompatActivity() {
         btnPrev.backgroundTintList = if (currentPage == 0)
             ColorStateList.valueOf(Color.parseColor("#D9D9D9"))
         else
-            ColorStateList.valueOf(Color.parseColor("#3CB371"))
+            ColorStateList.valueOf(Color.parseColor("#00897B"))
 
         btnNext.text = if (currentPage == totalPages - 1) "완료 →" else "다음 →"
 

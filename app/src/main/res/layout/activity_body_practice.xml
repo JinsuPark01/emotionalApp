@@ -38,24 +38,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#DDDDDD" />
-
-    <!-- 연습 상세 -->
-    <ScrollView
+    <TextView
+        android:id="@+id/tv_practice_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginHorizontal="16dp">
-
-        <TextView
-            android:id="@+id/tv_practice_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="시작 버튼 눌러 훈련을 시작하세요."
-            android:textSize="14sp"
-            android:gravity="center"
-            android:lineSpacingExtra="4dp" />
-    </ScrollView>
+        android:padding="24dp"
+        android:text="시작 버튼 눌러 훈련을 시작하세요."
+        android:textSize="14sp"
+        android:gravity="center"/>
 
     <!-- 비디오 -->
     <VideoView
@@ -64,6 +54,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginHorizontal="16dp"
+        android:layout_gravity="center"
         android:visibility="gone" />
 
     <!-- 오디오 진행도 표시 -->
@@ -122,7 +113,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="48dp"
-            android:backgroundTint="@color/button_color_body"
+            android:backgroundTint="#00897B"
             android:text="시작" />
 
         <Button
@@ -132,7 +123,7 @@
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:backgroundTint="@color/button_color_body"
+            android:backgroundTint="#00897B"
             android:text="정지" />
 
         <Button
@@ -140,7 +131,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="48dp"
-            android:backgroundTint="@color/button_color_body"
+            android:backgroundTint="#00897B"
             android:text="기록" />
     </LinearLayout>
 

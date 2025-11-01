@@ -22,11 +22,6 @@ class IntroTrainingActivity : AppCompatActivity() {
     private lateinit var btnPrev: TextView
     private lateinit var btnNext: TextView
     private lateinit var indicatorContainer: LinearLayout
-    private lateinit var btnStart: Button
-    private lateinit var btnStopPractice: Button
-    private lateinit var progressBar: ProgressBar
-    private lateinit var tvCurrentTime: TextView
-    private lateinit var tvTotalTime: TextView
     private lateinit var videoView: VideoView
     private lateinit var accordion: LinearLayout
 
@@ -46,17 +41,6 @@ class IntroTrainingActivity : AppCompatActivity() {
 
     private var currentPage = 0
 
-    private val updateProgressRunnable = object : Runnable {
-        override fun run() {
-            if (videoView.isPlaying) {
-                val position = videoView.currentPosition
-                progressBar.progress = position
-                tvCurrentTime.text = formatTime(position)
-                handler.postDelayed(this, 500)
-            }
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro_training)
@@ -68,12 +52,12 @@ class IntroTrainingActivity : AppCompatActivity() {
         btnNext = findViewById(R.id.btnNext)
         indicatorContainer = findViewById(R.id.indicatorContainer)
         accordion = findViewById(R.id.accordion)
-        btnStart = findViewById(R.id.btnStart)
-        btnStopPractice = findViewById(R.id.btnStopPractice)
-        progressBar = findViewById(R.id.progressBar)
-        tvCurrentTime = findViewById(R.id.tvCurrentTime)
-        tvTotalTime = findViewById(R.id.tvTotalTime)
         videoView = findViewById(R.id.videoView)
+
+        // 🔹 VideoView 안에 컨트롤러 넣기
+        val mediaController = MediaController(this)
+        mediaController.setAnchorView(videoView)   // 컨트롤러가 어디에 붙을지
+        videoView.setMediaController(mediaController)
 
         val btnBack = findViewById<View>(R.id.btnBack)
         btnBack.setOnClickListener { finish() }
@@ -131,7 +115,7 @@ class IntroTrainingActivity : AppCompatActivity() {
 
         btnPrev.isEnabled = currentPage != 0
         btnPrev.backgroundTintList = ColorStateList.valueOf(
-            if (currentPage == 0) Color.parseColor("#D9D9D9") else Color.parseColor("#3CB371")
+            if (currentPage == 0) Color.parseColor("#D9D9D9") else Color.parseColor("#00897B")
         )
 
         btnNext.text = if (currentPage == pages.lastIndex) "완료 →" else "다음 →"
@@ -148,37 +132,17 @@ class IntroTrainingActivity : AppCompatActivity() {
             val uri = Uri.parse("android.resource://$packageName/$videoResId")
             videoView.setVideoURI(uri)
             videoView.visibility = View.VISIBLE
+            // 🔹 준비되면 자동재생
             videoView.setOnPreparedListener { mp ->
-                progressBar.max = mp.duration
-                tvTotalTime.text = formatTime(mp.duration)
-            }
-            videoView.setOnCompletionListener {
-                handler.removeCallbacks(updateProgressRunnable)
-                progressBar.progress = progressBar.max
-                tvCurrentTime.text = formatTime(progressBar.max)
+                videoView.start()
             }
         } else {
             videoView.visibility = View.GONE
-        }
-
-        btnStart.setOnClickListener {
-            if (!videoView.isPlaying) {
-                videoView.start()
-                handler.post(updateProgressRunnable)
-            }
-        }
-
-        btnStopPractice.setOnClickListener {
-            if (videoView.isPlaying) {
-                videoView.pause()
-                handler.removeCallbacks(updateProgressRunnable)
-            }
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacks(updateProgressRunnable)
         if (::videoView.isInitialized) {
             videoView.stopPlayback()
         }

@@ -64,7 +64,8 @@
             android:id="@+id/answer4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="지금 해볼게요!" />
+            android:text="지금 해볼게요!"
+            android:layout_marginBottom="12dp"/>
 
         <TextView
             style="@style/FormLabelStyle"

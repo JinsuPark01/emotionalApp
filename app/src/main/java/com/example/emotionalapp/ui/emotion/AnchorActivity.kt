@@ -271,19 +271,18 @@ class AnchorActivity : AppCompatActivity() {
             val titleText2 = pageView.findViewById<TextView>(R.id.textTitleAnchor2)
             val descriptionText2 = pageView.findViewById<TextView>(R.id.textDescriptionAnchor2)
 
-            titleText0.text = "현재에 닻 내리기란?"
+            titleText0.text = "⚓ 현재에 닻 내리기란?"
             descriptionText0.text = """
                 현재에 초점을 둔 알아차림 활동이에요. 과거에 발생했던 것이나 미래에 일어날지 모를 일에 초점을 맞추는 것이 아니라 현재 맥락에서 정서반응을 일어나고 있는 그대로 관찰하는 활동입니다.
                 
                 강한 감정에 휩쓸릴 때, 멈추고 돌아보는 힘을 기를 수 있으며, 감정을 억누르지 않고, 있는 그대로 관찰하는 연습을 할 수 있습니다.
                 """.trimIndent()
-
-            titleText1.text = "1. 단서 선택하기"
+            titleText1.text = "1. 단서 선택하기 🧩"
             descriptionText1.text = """
                 고통스러운 시기 동안에 현재의 순간으로 재빨리 주의를 이동하는 데 사용할 수 있는 ‘단서’를 만들어 보세요. 그 단서를 사용해 현재에 주의를 집중합니다.
-            """.trimIndent()
+                """.trimIndent()
 
-            titleText2.text = "2. 정서의 3요소 입력하기"
+            titleText2.text = "2. 정서의 3요소 입력하기 ✍️"
             descriptionText2.text = """
                 단서를 통해 현재에 초점이 맞춰졌다면 스스로에게 다음의 세 가지 질문을 해보세요.
                 
@@ -292,8 +291,7 @@ class AnchorActivity : AppCompatActivity() {
                 ‘나는 지금 무엇을 하고 있나? (행동)’
                     
                 생각, 행동이나 반응을 되돌아보며 이들을 더 적응적인 반응들로 대체해보세요. 앞으로 우리는 이 세 가지를 살펴보고 변화시키는 연습을 해 볼 거에요.
-            """.trimIndent()
-
+                """.trimIndent()
         } else if (currentPage == 1) {
             val optionContainer = pageView.findViewById<LinearLayout>(R.id.optionContainerCustom)
             val editCustomAnswer = pageView.findViewById<EditText>(R.id.editCustomAnswer)
@@ -318,18 +316,23 @@ class AnchorActivity : AppCompatActivity() {
 
                 if (index == selectedCueIndex) {
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                    textView.setTextColor(Color.WHITE)
                 } else {
                     card.setCardBackgroundColor(Color.WHITE)
+                    textView.setTextColor(Color.BLACK)
                 }
 
                 card.setOnClickListener {
                     // 카드 배경 초기화
                     for (i in 0 until optionContainer.childCount) {
                         val childCard = optionContainer.getChildAt(i) as CardView
+                        val childText = childCard.findViewById<TextView>(R.id.textOption)
                         childCard.setCardBackgroundColor(Color.WHITE)
+                        childText.setTextColor(Color.BLACK)
                     }
                     editCustomAnswer.text.clear() // 입력창 초기화
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                    textView.setTextColor(Color.WHITE)
 
                     selectedCueIndex = index
                     customCueInput = ""
@@ -387,9 +390,12 @@ class AnchorActivity : AppCompatActivity() {
                 card.setOnClickListener {
                     for (i in 0 until optionContainerQ1.childCount) {
                         val child = optionContainerQ1.getChildAt(i) as CardView
+                        val childText = child.findViewById<TextView>(R.id.textOption)
                         child.setCardBackgroundColor(Color.WHITE)
+                        childText.setTextColor(Color.BLACK)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                    textView.setTextColor(Color.WHITE)
                     selectedQ1Index = index
                 }
 
@@ -404,9 +410,12 @@ class AnchorActivity : AppCompatActivity() {
                 card.setOnClickListener {
                     for (i in 0 until optionContainerQ2.childCount) {
                         val child = optionContainerQ2.getChildAt(i) as CardView
+                        val childText = child.findViewById<TextView>(R.id.textOption)
                         child.setCardBackgroundColor(Color.WHITE)
+                        childText.setTextColor(Color.BLACK)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                    textView.setTextColor(Color.WHITE)
                     selectedQ2Index = index
                 }
 

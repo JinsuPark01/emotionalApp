@@ -89,8 +89,8 @@ class SelectActivity : AppCompatActivity() {
         }.format(calendar.time)
 
         val timeSlot = when (hour) {
-            in 11..12 -> "morning"
-            in 19..20 -> "evening"
+            in 5..13 -> "morning"
+            in 14..22 -> "evening"
             else -> null
         }
 
@@ -142,9 +142,9 @@ class SelectActivity : AppCompatActivity() {
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
             if (slot == "morning") {
-                set(Calendar.HOUR_OF_DAY, 10)
+                set(Calendar.HOUR_OF_DAY, 5)
             } else {
-                set(Calendar.HOUR_OF_DAY, 18)
+                set(Calendar.HOUR_OF_DAY, 14)
             }
         }
         return Timestamp(calendar.time)
@@ -156,9 +156,9 @@ class SelectActivity : AppCompatActivity() {
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
             if (slot == "morning") {
-                set(Calendar.HOUR_OF_DAY, 13)  // 18시 미만까지 포함
+                set(Calendar.HOUR_OF_DAY, 13)  // 13시 미만까지 포함
             } else {
-                set(Calendar.HOUR_OF_DAY, 21)  // 21시 미만까지 포함
+                set(Calendar.HOUR_OF_DAY, 22)  // 22시 미만까지 포함
             }
         }
         return Timestamp(calendar.time)

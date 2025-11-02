@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="40dp">
 
             <!-- 마음의 느낌 그래프 -->
             <TextView

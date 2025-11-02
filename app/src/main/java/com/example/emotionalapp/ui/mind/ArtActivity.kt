@@ -153,7 +153,13 @@ class ArtActivity : AppCompatActivity() {
                     if (success) {
                         AlertDialog.Builder(this@ArtActivity)
                             .setTitle("훌륭합니다!")
-                            .setMessage("다른 시각에서 상황을 바라보는 연습은 처음엔 조금 어색할 수 있어요. 하지만 꾸준히 해보면 점차 익숙해져 나중에는 자연스럽게 여러 관점으로 생각할 수 있게 됩니다.\n\n이 연습에서 정해진 정답은 없다는 점을 기억하세요. 우리가 이렇게 다양한 시각을 연습하는 이유는 '더 맞는', ‘옳은’ 해석을 찾기 위해서가 아닙니다. 단지 우리가 처음에 떠올린 생각 외에도 다른 해석이 얼마든지 가능하다는 사실을 알아내기 위함입니다.")
+                            .setMessage(
+                                "⭐ 다른 시각에서 상황을 바라보는 연습은 처음엔 조금 어색할 수 있어요. " +
+                                        "하지만 꾸준히 해보면 점차 익숙해져 나중에는 자연스럽게 여러 관점으로 생각할 수 있게 됩니다.\n\n" +
+                                        "📝 이 연습에서 정해진 정답은 없다는 점을 기억하세요. " +
+                                        "우리가 이렇게 다양한 시각을 연습하는 이유는 '더 맞는', ‘옳은’ 해석을 찾기 위해서가 아닙니다. " +
+                                        "단지 우리가 처음에 떠올린 생각 외에도 다른 해석이 얼마든지 가능하다는 사실을 알아내기 위함입니다."
+                            )
                             .setPositiveButton("확인") { _, _ ->
                                 startActivity(Intent(this@ArtActivity, AllTrainingPageActivity::class.java))
                                 finish()

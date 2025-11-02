@@ -129,21 +129,14 @@ class BodyReportActivity : BottomNavActivity() {
                 }
 
                 // ✅ 2. weekly3 로드 (2주차 주간 점검용)
-                val nthDoc = getNthOldestDoc(userEmail = userEmail, collectionName = "weekly3", n = 2, db)
-                nthDoc?.let {
-                    reportList.add(
-                        ReportItem(
-                            date = it.getTimestamp("date")?.let { ts -> formatDate(ts) } ?: "날짜 없음",
-                            name = "주간 점검 기록 보기",
-                            timeStamp = it.getTimestamp("date"),
-                            backgroundColorResId = R.color.button_color_body // ✅ 추가
-                        )
-                    )
+                val weeklyDocs = db.collection("user").document(userEmail).collection("weekly3").get().await()
+                weeklyDocs.documents.forEach { doc ->
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "주간 점검 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.button_color_body))
                 }
 
 
                 // 최신순 정렬
-                reportList.sortBy { it.timeStamp }
+                reportList.sortByDescending { it.timeStamp }
                 adapter.notifyDataSetChanged()
 
             } catch (e: Exception) {

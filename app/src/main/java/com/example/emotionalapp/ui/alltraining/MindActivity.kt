@@ -173,16 +173,8 @@ class MindActivity : BottomNavActivity() {
                 .show()
         }
 
-        val denominatorArr: Array<String> = when (userDiffDays) {
-            15L -> arrayOf("3", "1", "잠김", "잠김")
-            16L -> arrayOf("3", "2", "잠김", "잠김")
-            17L -> arrayOf("3", "2", "1", "잠김")
-            18L -> arrayOf("3", "2", "2", "잠김")
-            19L -> arrayOf("3", "2", "3", "잠김")
-            20L -> arrayOf("3", "2", "3", "1")
-            21L -> arrayOf("3", "2", "3", "2")
-            else -> arrayOf("잠김", "잠김", "잠김", "잠김")
-        }
+        //val denominatorArr = arrayOf("4", "2", "3", "2")
+        val denominatorArr = arrayOf("99", "99", "99", "99")
 
         // 헬퍼 함수: 분모가 잠김이면 currentProgress를 "잠김"으로 반환
         fun getCurrentProgress(key: String, denominator: String): String {

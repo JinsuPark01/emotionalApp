@@ -286,17 +286,15 @@ class ArcActivity : AppCompatActivity() {
                 val textView = card.findViewById<TextView>(R.id.textOption)
                 textView.text = text
 
-                // ✅ 선택 복원
-                if (selectedQ1Index == index) {
-                    card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
-                }
-
                 card.setOnClickListener {
                     for (i in 0 until optionContainerQ1.childCount) {
                         val child = optionContainerQ1.getChildAt(i) as CardView
+                        val childText = child.findViewById<TextView>(R.id.textOption)
                         child.setCardBackgroundColor(Color.WHITE)
+                        childText.setTextColor(Color.BLACK)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                    textView.setTextColor(Color.WHITE)
                     selectedQ1Index = index
                 }
 
@@ -308,17 +306,15 @@ class ArcActivity : AppCompatActivity() {
                 val textView = card.findViewById<TextView>(R.id.textOption)
                 textView.text = text
 
-                // ✅ 선택 복원
-                if (selectedQ2Index == index) {
-                    card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
-                }
-
                 card.setOnClickListener {
                     for (i in 0 until optionContainerQ2.childCount) {
                         val child = optionContainerQ2.getChildAt(i) as CardView
+                        val childText = child.findViewById<TextView>(R.id.textOption)
                         child.setCardBackgroundColor(Color.WHITE)
+                        childText.setTextColor(Color.BLACK)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                    textView.setTextColor(Color.WHITE)
                     selectedQ2Index = index
                 }
 

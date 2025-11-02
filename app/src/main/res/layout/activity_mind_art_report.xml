@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
@@ -36,7 +36,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="24dp"
+        android:padding="16dp"
         android:background="#0D00897B">
         <LinearLayout
             android:orientation="vertical"
@@ -55,14 +55,22 @@
                 android:layout_marginBottom="12dp" />
 
             <!-- 이미지 추가 -->
-            <ImageView
-                android:id="@+id/firstImage"
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
+                android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:layout_gravity="center"/>
+                app:cardCornerRadius="16dp"
+                app:cardUseCompatPadding="false"
+                app:cardPreventCornerOverlap="true">
+
+                <ImageView
+                    android:id="@+id/firstImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
+            </androidx.cardview.widget.CardView>
 
             <!-- 질문 1 -->
             <TextView
@@ -181,14 +189,22 @@
                 android:layout_marginBottom="12dp" />
 
             <!-- 이미지 추가 -->
-            <ImageView
-                android:id="@+id/secondImage"
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
+                android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:layout_gravity="center"/>
+                app:cardCornerRadius="16dp"
+                app:cardUseCompatPadding="false"
+                app:cardPreventCornerOverlap="true">
+
+                <ImageView
+                    android:id="@+id/secondImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
+            </androidx.cardview.widget.CardView>
 
             <!-- 질문 6 -->
             <TextView

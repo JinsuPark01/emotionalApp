@@ -39,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:padding="16dp"
         android:background="#0D00897B"/>
 
     <!-- '이전/다음' 버튼이 있는 네비게이션 바 -->

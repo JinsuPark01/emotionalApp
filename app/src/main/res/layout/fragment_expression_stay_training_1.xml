@@ -3,65 +3,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
         android:fillViewport="true">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="24dp">
 
-        <!-- 시계를 화면 중앙에 고정 -->
-        <FrameLayout
-            android:id="@+id/frame_timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
 
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/progress_circular"
+            <!-- 시계 가운데 -->
+            <FrameLayout
+                android:id="@+id/frame_timer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:indicatorSize="250dp"
-                app:trackThickness="12dp"
-                app:trackCornerRadius="6dp"
-                app:indicatorColor="@color/purple_500"
-                app:trackColor="#DDDDDD"
-                app:indicatorDirectionCircular="counterclockwise" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progress_circular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:indicatorSize="250dp"
+                    app:trackThickness="12dp"
+                    app:trackCornerRadius="6dp"
+                    app:indicatorColor="@color/purple_500"
+                    app:trackColor="#DDDDDD"
+                    app:indicatorDirectionCircular="counterclockwise" />
+
+                <TextView
+                    android:id="@+id/tv_timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="02:00"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black" />
+            </FrameLayout>
+
+            <!-- 타이머 아래 안내문 -->
             <TextView
-                android:id="@+id/tv_timer"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_guidance"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="02:00"
-                android:textSize="48sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
-        </FrameLayout>
+                android:gravity="center"
+                android:text="그 감정을 억누르지 말고,\n지금 이 순간 그대로 느껴보세요."
+                android:textSize="16sp"
+                android:lineSpacingExtra="6dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/frame_timer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- 가이드 텍스트를 시계 아래 고정 위치에 배치 -->
-        <TextView
-            android:id="@+id/tv_guidance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="그 감정을 억누르지 말고,\n지금 이 순간 그대로 느껴보세요."
-            android:textSize="16sp"
-            android:lineSpacingExtra="6dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@id/frame_timer"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-    <!-- 사운드 버튼 (오른쪽 상단 고정) -->
+
+    <!-- 오른쪽 위 고정 버튼 -->
     <ImageView
         android:id="@+id/btn_volume_toggle"
         android:layout_width="48dp"
@@ -74,4 +76,5 @@
         android:clickable="true"
         android:focusable="true"
         android:elevation="8dp"/>
+
 </FrameLayout>

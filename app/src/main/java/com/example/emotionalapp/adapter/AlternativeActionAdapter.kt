@@ -25,23 +25,32 @@ class AlternativeActionAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val ctx = holder.itemView.context
         val item = items[position]
         holder.textView.text = item.actionText
 
+        // 항상 새로 세팅
+        holder.textView.setBackgroundResource(R.drawable.edit_text_background)
+        val bg = holder.textView.background.mutate()
+
         if (position == selectedPosition) {
-            holder.textView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.purple_200))
+            bg.setTint(ContextCompat.getColor(ctx, R.color.purple_500))
+            holder.textView.setTextColor(ContextCompat.getColor(ctx, android.R.color.white))
         } else {
-            holder.textView.setBackgroundResource(R.drawable.edit_text_background)
+            bg.setTint(ContextCompat.getColor(ctx, R.color.white)) // 기본
+            holder.textView.setTextColor(ContextCompat.getColor(ctx, android.R.color.black))
         }
 
         holder.itemView.setOnClickListener {
-            val previousPosition = selectedPosition
+            val prev = selectedPosition
             selectedPosition = holder.adapterPosition
-            notifyItemChanged(previousPosition)
+            notifyItemChanged(prev)
             notifyItemChanged(selectedPosition)
             onItemClick(selectedPosition, item)
         }
     }
+
+
 
     override fun getItemCount() = items.size
 }

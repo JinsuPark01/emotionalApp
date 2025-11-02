@@ -89,14 +89,14 @@ class ExpressionReportActivity : BottomNavActivity() {
                 reportList.clear()
 
                 // weekly3 컬렉션에서 가장 오래된 2번째 문서만 가져오기
-                val nthDoc = getNthOldestDoc(userEmail = userEmail, collectionName = "weekly3", n = 4)
+                val weeklyDocs = db.collection("user").document(userEmail).collection("weekly3").get().await()
                 val avoidanceDocs = db.collection("user").document(userEmail).collection("expressionAvoidance").get().await()
                 val stayDocs = db.collection("user").document(userEmail).collection("expressionStay").get().await()
                 val oppositeDocs = db.collection("user").document(userEmail).collection("expressionOpposite").get().await()
                 val alternativeDocs = db.collection("user").document(userEmail).collection("expressionAlternative").get().await()
 
-                nthDoc?.let {
-                    reportList.add(ReportItem(it.id.substringBefore('_'), "주간 점검 기록 보기", it.getTimestamp("date"), backgroundColorResId = R.color.button_color_expression))
+                weeklyDocs.documents.forEach { doc ->
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "주간 점검 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.button_color_expression))
                 }
                 avoidanceDocs.documents.forEach { doc ->
                     reportList.add(ReportItem(doc.id.substringBefore('_'), "회피 일지 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.button_color_expression))
@@ -112,7 +112,7 @@ class ExpressionReportActivity : BottomNavActivity() {
                 }
 
                 // 최신 날짜가 위로 오게 정렬
-                reportList.sortBy { it.timeStamp }
+                reportList.sortByDescending { it.timeStamp }
                 adapter.notifyDataSetChanged()
 
             } catch (e: Exception) {

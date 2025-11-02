@@ -95,7 +95,18 @@ class AutoActivity : AppCompatActivity() {
                     if (success) {
                         AlertDialog.Builder(this@AutoActivity)
                             .setTitle("수고 많으셨습니다.")
-                            .setMessage("우리는 누구나 익숙한 방식으로 세상을 바라보며 살아갑니다. 여러분은 그 익숙함을 잠시 멈추고, 다른 시선과 해석의 가능성을 연습하셨습니다. 물론 훈련이 끝났다고 해서 완벽하게 새로운 해석이 바로 떠오르지 않을 수 있어요. 중요한 것은 해석을 바꿀 수 있다는 가능성을 기억하는 것입니다.\n\n앞으로도 감정을 흔들리게 하는 생각이 떠오를 때, “내가 지금 어떻게 해석하고 있는 걸까?”, “혹시 다른 해석도 가능하지 않을까?”라는 질문을 마음속에 떠올려보세요. 감정은 우리가 세상을 어떻게 해석하는지에 따라 달라집니다. 그리고 해석은 언제든지 다시 바라보고, 선택할 수 있는 것입니다. 앞으로도 연습을 통해 생각의 범위를 더욱 늘려가봅시다.")
+                            .setMessage(
+                                "🌿 우리는 누구나 익숙한 방식으로 세상을 바라보며 살아갑니다. " +
+                                        "여러분은 그 익숙함을 잠시 멈추고, 다른 시선과 해석의 가능성을 연습하셨습니다. " +
+                                        "물론 훈련이 끝났다고 해서 완벽하게 새로운 해석이 바로 떠오르지 않을 수 있어요. " +
+                                        "중요한 것은 해석을 바꿀 수 있다는 ‘가능성’을 기억하는 것입니다.\n\n" +
+                                        "🪞 앞으로도 감정을 흔들리게 하는 생각이 떠오를 때,\n" +
+                                        "“내가 지금 어떻게 해석하고 있는 걸까?”,\n" +
+                                        "“혹시 다른 해석도 가능하지 않을까?” 라는 질문을 마음속에 떠올려보세요.\n\n" +
+                                        "💡 감정은 우리가 세상을 어떻게 해석하는지에 따라 달라집니다. " +
+                                        "그리고 해석은 언제든지 다시 바라보고, 선택할 수 있는 것입니다. " +
+                                        "앞으로도 연습을 통해 생각의 범위를 더욱 늘려가봅시다. 🌱"
+                            )
                             .setPositiveButton("확인") { _, _ ->
                                 startActivity(Intent(this@AutoActivity, AllTrainingPageActivity::class.java))
                                 finish()
@@ -182,14 +193,21 @@ class AutoActivity : AppCompatActivity() {
 
                     if (index == selectedTrapIndex) {
                         card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                        textView.setTextColor(Color.WHITE)
+                    } else {
+                        card.setCardBackgroundColor(Color.WHITE)
+                        textView.setTextColor(Color.BLACK)
                     }
 
                     card.setOnClickListener {
                         for (i in 0 until optionContainer.childCount) {
                             val child = optionContainer.getChildAt(i) as CardView
+                            val childText = child.findViewById<TextView>(R.id.textOption)
                             child.setCardBackgroundColor(Color.WHITE)
+                            childText.setTextColor(Color.BLACK)
                         }
                         card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                        textView.setTextColor(Color.WHITE)
                         selectedTrapIndex = index
                         selectedTrapText = text
                     }

@@ -38,8 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:padding="40dp"
         android:fillViewport="true">
 
         <!-- 첫 번째 콘텐츠 영역 -->
@@ -49,7 +48,6 @@
             android:layout_height="605dp"
             android:gravity="top"
             android:orientation="vertical"
-            android:padding="8dp"
             android:visibility="visible">
 
             <!-- 마음의 느낌 제목 -->
@@ -57,7 +55,6 @@
                 android:id="@+id/tvMindTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
                 android:paddingBottom="8dp"
                 android:text="마음의 느낌"
                 android:textSize="18sp"
@@ -348,7 +345,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="하루 두 번, 지금 이 순간 나의 마음과 몸의 상태를 기록하는 활동이에요. 내가 지금 느끼는 마음과 신체에 대한 반응을 기록하면서, 나의 정서 패턴을 스스로 인식할 수 있도록 돕는 훈련이에요."
+                android:text="하루 두 번, 지금 이 순간 나의 마음과 몸의 상태를 기록하는 활동이에요.\n내가 지금 느끼는 마음과 신체에 대한 반응을 기록하면서, 나의 정서 패턴을 스스로 인식할 수 있도록 돕는 훈련이에요."
                 android:textSize="14sp"
                 android:visibility="gone" />
 
@@ -406,7 +403,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="우리는 하루에도 여러 번 감정을 느껴요. 기쁠 수도 있고, 속상하거나 불편할 수도, 아무 감정이 느껴지지 않을 수도 있어요. 이 활동에서는 지금 이 순간 내 마음의 상태가 어떤지 살펴보는 것이 목적이에요.\n\n예를 들어\n무기력하거나 우울할 때는 ‘나쁨’에 가까울 수 있어요.\n마음이 편안하거나 기쁠 때는 ‘좋음’에 가까울 수 있겠죠.\n어떤 감정도 뚜렷하게 느껴지지 않을 때는 ‘보통’을 선택해도 괜찮아요.\n\n이처럼 감정의 분위기를 느끼고 표현해 보는 것이 마음 느낌 선택 활동입니다."
+                    android:text="🌤 우리는 하루에도 여러 번 감정을 느껴요. 기쁠 수도 있고, 속상하거나 불편할 수도, 아무 감정이 느껴지지 않을 수도 있어요. 이 활동에서는 지금 이 순간 내 마음의 상태가 어떤지 살펴보는 것이 목적이에요.\n\n📌 예를 들어\n- 무기력하거나 우울할 때는 ‘나쁨’에 가까울 수 있어요.\n- 마음이 편안하거나 기쁠 때는 ‘좋음’에 가까울 수 있겠죠.\n- 어떤 감정도 뚜렷하게 느껴지지 않을 때는 ‘보통’을 선택해도 괜찮아요.\n\n이처럼 감정의 분위기를 느끼고 표현해 보는 것이 👉 ‘마음 느낌 선택’ 활동입니다."
                     android:textSize="14sp"
                     android:paddingBottom="8dp"/>
 
@@ -421,7 +418,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="감정을 느낄 때, 우리 몸도 함께 반응해요.\n가슴이 뛰거나, 기운이 빠지거나, 어깨가 굳어지는 것처럼요.\n그런데 이런 몸의 반응은 감정의 좋고 나쁨과는 꼭 일치하지 않을 수도 있어요.\n\n예를 들어,\n우울과 분노는 모두 부정적인 감정이지만,\n우울할 때는 몸이 이완되고 에너지가 낮은 상태일 수 있고,\n분노할 때는 몸이 각성되고 에너지가 높은 상태일 수 있어요.\n\n또한,\n기쁨과 편안함은 모두 긍정적인 감정이지만,\n기쁠 때는 몸이 활기차고 에너지가 높은 상태일 수 있고,\n편안할 때는 몸이 차분하고 에너지가 낮은 상태일 수 있어요.\n\n이처럼 감정의 방향과 몸의 각성 정도는 항상 함께 움직이지는 않아요.\n이처럼 활동에서는 감정과는 별도로, 지금 내 몸이 얼마나 깨어 있는지,\n즉 몸의 각성 수준을 체크해 봅니다."
+                    android:text="💗 감정을 느낄 때 우리 몸도 함께 반응해요.\n가슴이 두근거리거나, 기운이 빠지거나, 어깨가 굳어지는 것처럼요.\n그런데 이런 몸의 반응은 감정의 좋고 나쁨과는 꼭 일치하지 않을 수도 있어요.\n\n📌 예를 들어,\n부정적인 감정이라도\n- 우울할 때는 몸이 이완되고 에너지가 낮을 수 있고,\n- 분노할 때는 몸이 각성되고 에너지가 높을 수 있어요.\n\n또 긍정적인 감정이라도\n- 기쁠 때는 몸이 활기차고 에너지가 높을 수 있고,\n- 편안할 때는 몸이 차분하고 에너지가 낮을 수 있어요.\n\n👉 즉, 감정의 방향(좋음/나쁨)과 몸의 각성 정도(높음/낮음)는 항상 같이 움직이지 않아요.\n이 활동에서는 감정과는 별도로, 지금 내 몸이 얼마나 깨어 있는지,\n즉 ‘몸의 각성 수준’을 체크해 봅니다."
                     android:textSize="14sp"/>
             </LinearLayout>
 
@@ -472,14 +469,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="상태 기록하기는 오전 11~12시 오후 7~8시에 기록 가능하고 해당 시간 이후에는 기록할 수 없으니 꼭 시간 내에 실시해 주세요!"
+                    android:text="⚠️ 상태 기록하기는 오전 11~12시 오후 7~8시에 기록 가능하고\n해당 시간 이후에는 기록할 수 없으니 꼭 시간 내에 실시해 주세요!"
                     android:textSize="14sp"
                     android:paddingBottom="8dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="상태 기록하기는 밀린 기록에 대해 다시 작성할 수 없습니다.(다른 훈련은 깜빡해서 밀렸더라도 해당 주차에는 기록이 가능합니다.)"
+                    android:text="⚠️ 상태 기록하기는 밀린 기록에 대해 다시 작성할 수 없습니다.\n(다른 훈련은 깜빡해서 밀렸더라도 해당 주차에는 기록이 가능합니다.)"
                     android:textSize="14sp"
                     android:paddingBottom="8dp"/>
             </LinearLayout>

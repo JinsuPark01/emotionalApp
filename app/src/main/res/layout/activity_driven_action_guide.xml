@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="40dp">
 
             <TextView style="@style/GuideTitleStyle" android:text="정서-주도 행동이란?"/>
             <TextView style="@style/GuideContentStyle" android:text="감정이 너무 세서, 나도 모르게 툭 튀어나온 행동이에요.\n생각은 안 하고, 감정이 시키는 대로 해버리는 거예요.\n\n예시\n- 화가 나서 갑자기 친구한테 짜증내기\n- 불안해서 아예 공부 안 해버리기\n- 창피해서 “그냥 안 해!” 하고 포기해버리기\n\n“감정에 끌려서 하는 행동은 나한테 도움이 안 되는 경우가 많아요.\n화난 건 괜찮지만, 화내는 방식이 문제일 수 있죠”\n\n그래서 구분해볼게요!"/>

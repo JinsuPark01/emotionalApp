@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="40dp">
 
             <!-- 1. 정서 회피란? -->
             <TextView style="@style/GuideTitleStyle" android:text="정서 회피란?"/>

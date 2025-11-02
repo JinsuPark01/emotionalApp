@@ -143,16 +143,8 @@ class ExpressionActivity : BottomNavActivity() {
                 .show()
         }
 
-        val denominatorArr: Array<String> = when (userDiffDays) {
-            22L -> arrayOf("4", "잠김", "잠김", "잠김", "잠김", "잠김")
-            23L -> arrayOf("4", "1", "1", "잠김", "잠김", "잠김")
-            24L -> arrayOf("4", "2", "2", "잠김", "잠김", "잠김")
-            25L -> arrayOf("4", "2", "2", "GO", "잠김", "잠김")
-            26L -> arrayOf("4", "2", "2", "GO", "1", "1")
-            27L -> arrayOf("4", "2", "2", "GO", "2", "2")
-            28L -> arrayOf("4", "2", "2", "GO", "3", "3")
-            else -> arrayOf("잠김", "잠김", "잠김", "잠김", "잠김", "잠김")
-        }
+        //val denominatorArr = arrayOf("4", "2", "2", "GO", "3", "3")
+        val denominatorArr = arrayOf("99", "99", "99", "GO", "99", "99")
 
         // 헬퍼 함수: 분모가 잠김이면 currentProgress를 "잠김"으로 반환
         fun getCurrentProgress(key: String, denominator: String): String {

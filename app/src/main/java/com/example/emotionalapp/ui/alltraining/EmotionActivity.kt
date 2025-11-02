@@ -170,16 +170,8 @@ class EmotionActivity : BottomNavActivity() {
                 .setCancelable(false)
                 .show()
         }
-        val denominatorArr: Array<String> = when (userDiffDays) {
-            1L -> arrayOf("1", "2", "1", "잠김")
-            2L -> arrayOf("1", "4", "2", "잠김")
-            3L -> arrayOf("1", "6", "3", "잠김")
-            4L -> arrayOf("1", "8", "3", "1")
-            5L -> arrayOf("1", "10", "3", "2")
-            6L -> arrayOf("1", "12", "3", "3")
-            7L -> arrayOf("1", "14", "4", "4")
-            else -> arrayOf("잠김", "잠김", "잠김", "잠김")
-        }
+        //val denominatorArr = arrayOf("4", "14", "4", "4")
+        val denominatorArr = arrayOf("99", "99", "99", "99")
 
         // 헬퍼 함수: 분모가 잠김이면 currentProgress를 "잠김"으로 반환
         fun getCurrentProgress(key: String, denominator: String): String {

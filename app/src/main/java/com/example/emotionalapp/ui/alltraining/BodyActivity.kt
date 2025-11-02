@@ -43,8 +43,7 @@ class BodyActivity : BottomNavActivity() {
         setContentView(R.layout.activity_detail_training)  // 공통 레이아웃 재사용
 
         // 타이틀(“2주차 – 신체자각 훈련”) 설정
-        findViewById<TextView>(R.id.tv_page_title).text =
-            intent.getStringExtra("TRAINING_TITLE") ?: "신체자각 훈련"
+        findViewById<TextView>(R.id.tv_page_title).text = "나의 훈련"
 
         // 뒤로가기
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
@@ -163,16 +162,8 @@ class BodyActivity : BottomNavActivity() {
                 .show()
         }
 
-        val denominatorArr: Array<String> = when (userDiffDays) {
-            8L -> arrayOf("2", "1", "잠김", "잠김", "잠김", "잠김", "잠김", "잠김")
-            9L -> arrayOf("2", "1", "1", "잠김", "잠김", "잠김", "잠김", "잠김")
-            10L -> arrayOf("2", "1", "1", "1", "잠김", "잠김", "잠김", "잠김")
-            11L -> arrayOf("2", "1", "1", "1", "1", "잠김", "잠김", "잠김")
-            12L -> arrayOf("2", "1", "1", "1", "1", "1", "잠김", "잠김")
-            13L -> arrayOf("2", "1", "1", "1", "1", "1", "1", "잠김")
-            14L -> arrayOf("2", "1", "1", "1", "1", "1", "1", "1")
-            else -> arrayOf("잠김", "잠김", "잠김", "잠김", "잠김", "잠김", "잠김", "잠김")
-        }
+        //val denominatorArr = arrayOf("4", "1", "1", "1", "1", "1", "1", "1")
+        val denominatorArr = arrayOf("99", "99", "99", "99", "99", "99", "99", "99")
 
         // 헬퍼 함수: 분모가 잠김이면 currentProgress를 "잠김"으로 반환
         fun getCurrentProgress(key: String, denominator: String): String {

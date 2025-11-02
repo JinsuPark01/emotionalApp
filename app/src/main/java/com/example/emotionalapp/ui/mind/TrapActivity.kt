@@ -285,41 +285,27 @@ class TrapActivity : AppCompatActivity() {
                 // 2. countComplete.trap 증가
                 userRef.update("countComplete.trap", FieldValue.increment(1))
                     .addOnSuccessListener {
-                        // 3. 카운트 값 확인
+                        // 3. (선택) 로그만 남기기
                         userRef.get().addOnSuccessListener { document ->
                             val trapCount = document.get("countComplete.trap") as? Long ?: 0L
                             Log.d("TrapActivity", "현재 trap 기록 수: $trapCount")
-
-                            // 조건 만족 시 팝업 표시
-                            if (trapCount >= 3) {
-                                runOnUiThread {
-                                    AlertDialog.Builder(this@TrapActivity)
-                                        .setTitle("생각의 덫 통계 잠금해제!")
-                                        .setMessage("기록보기에서 생각의 덫 통계를 확인할 수 있습니다!")
-                                        .setPositiveButton("확인") { dialog, _ ->
-                                            dialog.dismiss()
-                                            continuation.resume(true) // 저장 성공 처리
-                                        }
-                                        .setCancelable(false)
-                                        .show()
-                                }
-                            } else {
-                                continuation.resume(true)
-                            }
+                            // ✅ 팝업 없음, 바로 성공 처리
+                            if (continuation.isActive) continuation.resume(true)
                         }.addOnFailureListener {
                             Log.w("Firestore", "카운트 가져오기 실패", it)
-                            continuation.resume(false)
+                            if (continuation.isActive) continuation.resume(false)
                         }
                     }
                     .addOnFailureListener { e ->
                         Log.w("Firestore", "카운트 증가 실패", e)
-                        continuation.resume(false)
+                        if (continuation.isActive) continuation.resume(false)
                     }
             }
             .addOnFailureListener { e ->
                 Log.w("Firestore", "저장 실패", e)
-                continuation.resume(false)
+                if (continuation.isActive) continuation.resume(false)
             }
+
     }
 
     private fun setupIndicators(count: Int) {
@@ -382,14 +368,24 @@ class TrapActivity : AppCompatActivity() {
 
             titleText.text = "오늘의 훈련"
             descriptionText.text = """
-                우리가 어떤 사건이나 상황을 경험할 때 자동적으로 떠오르는 생각이 있는데, 이를 '자동적 평가', 혹은 ‘자동적 사고’라고 합니다.
+                🧠 자동적으로 떠오르는 생각이 있어요
+                우리가 어떤 사건이나 상황을 겪을 때, 아주 빠르게 스쳐 지나가는 생각들이 있는데
+                이걸 ‘자동적 평가’ 혹은 ‘자동적 사고’라고 해요.
                 
-                시간이 지나면서 사람들은 상황을 평가하는 특정 방식이나 스타일을 개발하게 됩니다.
-                자동적 사고는 우리가 받아들이는 정보를 신속하고 효율적으로 처리하도록 도울 수 있지만, 종종 비합리적이거나 왜곡된 '생각의 덫(thinking traps)'이 포함될 수 있어요.
+                ⏳ 시간이 지나면서
+                사람마다 상황을 해석하는 고유한 방식(스타일)이 만들어져요.
+                이 덕분에 우리는 정보를 빠르고 효율적으로 처리할 수 있지만,
+                그 안에 가끔은 비합리적이거나 왜곡된 ‘생각의 덫(thinking traps)’이 섞여 있을 수 있어요.
                 
-                이러한 자동적 평가들이 문제가 되는 것은 이런 평가들이 ‘나쁘거나’ ‘잘못된’ 사고방식이기 때문이 아니라, 주어진 상황에 관한 해석을 제한하기 때문이에요.
+                ⚠️ 중요한 건
+                이런 생각들이 “나쁘다/틀렸다”는 게 아니라,
+                그 생각이 우리 시야를 좁혀서
+                다른 해석 가능성을 보지 못하게 만들 때 문제가 된다는 거예요.
                 
-                이번 모듈 훈련에서는 이러한 흔한 사고의 함정들을 배우고, 자신에게 어떤 함정이 자주 나타나는지 알아차리는 연습을 할 것입니다.
+                🛠 그래서 이번 모듈에서는
+                대표적인 생각의 덫들을 배우고,
+                그중에서 내가 특히 자주 빠지는 패턴이 무엇인지
+                ‘알아차리는 연습’을 해볼 거예요.
                 """.trimIndent()
         } else if (currentPage == 1) {
             val answer1 = pageView.findViewById<EditText>(R.id.answer1)
@@ -421,17 +417,22 @@ class TrapActivity : AppCompatActivity() {
 
                 if (index == selectedPage2Index) {
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                    textView.setTextColor(Color.WHITE)
                 } else {
                     card.setCardBackgroundColor(Color.WHITE)
+                    textView.setTextColor(Color.BLACK)
                 }
 
                 card.setOnClickListener {
                     // 선택한 카드 강조
                     for (i in 0 until optionContainer.childCount) {
                         val childCard = optionContainer.getChildAt(i) as CardView
+                        val childText = childCard.findViewById<TextView>(R.id.textOption)
                         childCard.setCardBackgroundColor(Color.WHITE)
+                        childText.setTextColor(Color.BLACK)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                    textView.setTextColor(Color.WHITE)
                     selectedPage2Index = index
                 }
 
@@ -453,17 +454,22 @@ class TrapActivity : AppCompatActivity() {
 
                 if (index == selectedTrapIndex) {
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                    textView.setTextColor(Color.WHITE)
                 } else {
                     card.setCardBackgroundColor(Color.WHITE)
+                    textView.setTextColor(Color.BLACK)
                 }
 
                 card.setOnClickListener {
                     // 선택한 카드 강조
                     for (i in 0 until optionContainer.childCount) {
                         val childCard = optionContainer.getChildAt(i) as CardView
+                        val childText = childCard.findViewById<TextView>(R.id.textOption)
                         childCard.setCardBackgroundColor(Color.WHITE)
+                        childText.setTextColor(Color.BLACK)
                     }
                     card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+                    textView.setTextColor(Color.WHITE)
                     selectedTrapIndex = index
                 }
 
@@ -517,8 +523,14 @@ class TrapActivity : AppCompatActivity() {
             val descriptionText = pageView.findViewById<TextView>(R.id.textDescriptionTrap0)
 
             titleText.text = "대단해요!"
-            descriptionText.text = "생각의 덫은 유연성을 낮추고, 여러 가지 다양한 해석을 못하게 할 수 있어요. 자동적 평가는 ‘나쁘거나’ ‘잘못된’ 사고방식이기 때문이 아니라, 주어진 상황에 관한 해석을 제한하기 때문에 문제가 됩니다. 따라서 우리의 목표는 상황을 평가하는 데 있어 나쁜 생각을 대체하거나 잘못된 사고방식을 ‘고치는’ 것이 아니라, 유연성을 키우는 것입니다.\n" +
-                    "\n이러한 생각의 덫에서 벗어나기 위해서는 자동적 평가를 ‘객관적 사실‘이 아니라, 그 상황에 관한 가능한 해석으로 고려해야 합니다. 최악의 시나리오는 여전히 떠오를 수 있지만, 그 상황에 대해 할 수 있는 다른 평가들과 ‘공존’할 수 있어요. 우리의 목표는 생각을 유연하게 하고 정서를 유발하는 상황에서 여러 대안적 평가를 내릴 수 있도록 하는 것입니다."
+            descriptionText.text =
+                "🧠 생각의 덫은 유연성을 낮추고, 여러 가지 다양한 해석을 못하게 할 수 있어요. " +
+                        "자동적 평가는 ‘나쁘거나’ ‘잘못된’ 사고방식이기 때문이 아니라, 주어진 상황에 관한 해석을 제한하기 때문에 문제가 됩니다. " +
+                        "따라서 우리의 목표는 상황을 평가하는 데 있어 나쁜 생각을 대체하거나 잘못된 사고방식을 ‘고치는’ 것이 아니라, 유연성을 키우는 것입니다.\n" +
+                        "\n" +
+                        "🔓 이러한 생각의 덫에서 벗어나기 위해서는 자동적 평가를 ‘객관적 사실‘이 아니라, 그 상황에 관한 가능한 해석으로 고려해야 합니다. " +
+                        "최악의 시나리오는 여전히 떠오를 수 있지만, 그 상황에 대해 할 수 있는 다른 평가들과 ‘공존’할 수 있어요. " +
+                        "우리의 목표는 생각을 유연하게 하고 정서를 유발하는 상황에서 여러 대안적 평가를 내릴 수 있도록 하는 것입니다."
         }
 
 

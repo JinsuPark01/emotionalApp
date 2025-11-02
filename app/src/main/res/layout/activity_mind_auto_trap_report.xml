@@ -43,20 +43,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:padding="40dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="옆으로 스크롤 →"
                 android:textSize="16sp"
-                android:paddingBottom="8dp" />
+                />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/barChart"
                 android:layout_width="1200dp"
                 android:layout_height="550dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginBottom="16dp" />
         </LinearLayout>
     </HorizontalScrollView>

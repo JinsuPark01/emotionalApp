@@ -15,6 +15,7 @@
         android:text="@string/alternative_action_final_text"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:gravity="center"
         android:textColor="@android:color/black"
         android:lineSpacingExtra="6dp"/>
     </LinearLayout></ScrollView>

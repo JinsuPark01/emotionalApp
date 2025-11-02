@@ -80,17 +80,10 @@ class EmotionReportActivity : BottomNavActivity() {
             try {
                 reportList.clear()
 
-                // 감정 기록을 가장 위에 추가
-                reportList.add(
-                    0,
-                    ReportItem("감정 기록", "감정 기록 보기", null, backgroundColorResId = R.color.button_color_emotion)
-                )
-
                 val tempList = mutableListOf<ReportItem>()
 
                 // weekly3 컬렉션에서 가장 오래된 1개 문서만 가져오기
-                val weekly3Docs = db.collection("user").document(userEmail)
-                    .collection("weekly3").orderBy("date", Query.Direction.ASCENDING).limit(1).get().await()
+                val weeklyDocs = db.collection("user").document(userEmail).collection("weekly3").get().await()
 
                 val emotionArcDocs = db.collection("user").document(userEmail)
                     .collection("emotionArc").get().await()
@@ -98,16 +91,8 @@ class EmotionReportActivity : BottomNavActivity() {
                 val emotionAnchorDocs = db.collection("user").document(userEmail)
                     .collection("emotionAnchor").get().await()
 
-                if (!weekly3Docs.isEmpty) {
-                    val oldestDoc = weekly3Docs.documents[0]
-                    tempList.add(
-                        ReportItem(
-                            oldestDoc.id.substringBefore('_'),
-                            "주간 점검 기록 보기",
-                            oldestDoc.getTimestamp("date"),
-                            backgroundColorResId = R.color.button_color_emotion
-                        )
-                    )
+                weeklyDocs.documents.forEach { doc ->
+                    reportList.add(ReportItem(doc.id.substringBefore('_'), "주간 점검 기록 보기", doc.getTimestamp("date"), backgroundColorResId = R.color.button_color_emotion))
                 }
 
                 emotionArcDocs.documents.forEach { doc ->
@@ -131,11 +116,14 @@ class EmotionReportActivity : BottomNavActivity() {
                         )
                     )
                 }
-
-                // 날짜 기준 오름차순 정렬 후 reportList에 추가
-                tempList.sortBy { it.timeStamp }
                 reportList.addAll(tempList)
-
+                // 날짜 기준 오름차순 정렬 후 reportList에 추가
+                reportList.sortByDescending { it.timeStamp }
+                // 감정 기록을 가장 위에 추가
+                reportList.add(
+                    0,
+                    ReportItem("감정 기록", "감정 기록 보기", null, backgroundColorResId = R.color.button_color_emotion)
+                )
                 adapter.notifyDataSetChanged()
 
             } catch (e: Exception) {

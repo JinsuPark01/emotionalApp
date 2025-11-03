@@ -14,12 +14,18 @@
         android:padding="16dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginStart="8dp"
             android:text="나의 훈련"
             android:textSize="18sp"
             android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/ic_logout"
+            android:src="@drawable/ic_logout"
+            android:layout_width="26dp"
+            android:layout_height="26dp" />
     </LinearLayout>
 
     <LinearLayout

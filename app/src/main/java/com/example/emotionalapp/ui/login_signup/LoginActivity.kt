@@ -42,9 +42,7 @@ class LoginActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            // 로그인 성공 → 다음 액티비티로 이동
-                            startActivity(Intent(this, AllTrainingPageActivity::class.java))
-                            finish()
+                            goToHome()
                         } else {
                             Toast.makeText(this, "이메일 또는 비밀번호가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
                         }
@@ -55,6 +53,19 @@ class LoginActivity : AppCompatActivity() {
         btnSignup.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
+    }
+
+    // ✅ 자동 로그인: 앱 화면이 보여지기 직전에 세션 있는지 확인
+    override fun onStart() {
+        super.onStart()
+        auth.currentUser?.let {
+            goToHome()
+        }
+    }
+
+    private fun goToHome() {
+        startActivity(Intent(this, AllTrainingPageActivity::class.java))
+        finish() // 로그인 화면을 스택에서 제거
     }
 
     private fun validateInputs(): Boolean {

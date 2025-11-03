@@ -3,13 +3,16 @@ package com.example.emotionalapp.ui.alltraining
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.emotionalapp.R
 import com.example.emotionalapp.adapter.AllTrainingAdapter
 import com.example.emotionalapp.data.TrainingItem
 import com.example.emotionalapp.data.TrainingType
 import com.example.emotionalapp.databinding.ActivityAllTrainingBinding
+import com.example.emotionalapp.ui.login_signup.LoginActivity
 import com.example.emotionalapp.ui.open.BottomNavActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class AllTrainingPageActivity : BottomNavActivity() {
 
@@ -27,6 +30,29 @@ class AllTrainingPageActivity : BottomNavActivity() {
         setupRecyclerView()
         loadTrainingData()   // 🔹 바로 로드 (날짜 의존 X)
         setupTabListeners()
+
+        // ✅ 로그아웃 아이콘 클릭
+        binding.icLogout.setOnClickListener {
+            showLogoutDialog()
+        }
+    }
+
+    private fun showLogoutDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("로그아웃")
+            .setMessage("정말 로그아웃하시겠어요?")
+            .setPositiveButton("로그아웃") { _, _ ->
+                FirebaseAuth.getInstance().signOut()
+
+                // 혹시 모를 이중 실행 방지
+                binding.icLogout.isEnabled = false
+
+                // 로그인 화면으로 이동 & 백스택 제거
+                startActivity(Intent(this, LoginActivity::class.java))
+                finishAffinity()
+            }
+            .setNegativeButton("취소", null)
+            .show()
     }
 
     private fun setupRecyclerView() {

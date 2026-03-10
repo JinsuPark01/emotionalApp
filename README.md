@@ -42,6 +42,18 @@ MPAndroidChart
 
 ---
 ## 📂 Project Structure
+
+### 간략 구조
+```
+emotionalApp/
+└─ app/src/main/java/com/example/emotionalapp/
+   ├─ MyApplication.kt
+   ├─ data/            # Training, Report 모델 정의
+   ├─ ui/              # 기능별 화면 (emotion, body, mind, expression, weekly, chat)
+   └─ util/            # 공통 확장 함수 및 유틸
+```
+<details>
+<summary>자세히</summary>
 ```
 emotionalApp/
 ├─ app/

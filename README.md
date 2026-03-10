@@ -6,8 +6,8 @@
 
 ## 🎥 Demo / 📷 App Screenshots
 
-🎥 **Demo Video**(1분 40초 이후)
-https://github.com/user-attachments/assets/08486867-2274-4b0b-b429-77569ffa7e3c
+🎥 **Demo Video**
+https://github.com/user-attachments/assets/08486867-2274-4b0b-b429-77569ffa7e3c (1분 40초 이후)
 
 | 로그인 | 회원가입 | 메인 | 마이 |
 |---|---|---|---|

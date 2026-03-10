@@ -41,7 +41,7 @@ Firebase Authentication · Cloud Firestore
 MPAndroidChart
 
 ---
-## 📂 Project Structure(수정필요)
+## 📂 Project Structure
 ```
 emotionalApp/
 ├─ app/

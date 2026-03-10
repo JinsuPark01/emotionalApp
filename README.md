@@ -53,8 +53,8 @@ emotionalApp/
    └─ util/            # 공통 확장 함수 및 유틸
 ```
 <details>
-<summary>상세 구조</summary>
-```
+  <summary>상세 구조</summary>
+  <pre><code>
 emotionalApp/
 ├─ app/
 │  └─ src/main/
@@ -83,7 +83,7 @@ emotionalApp/
 │        ├─ layout/
 │        ├─ drawable/
 │        └─ values/
-```
+  </code></pre>
 </details>
 
 ### Layer Overview

@@ -12,11 +12,7 @@ https://github.com/user-attachments/assets/08486867-2274-4b0b-b429-77569ffa7e3c 
 
 | 로그인 | 회원가입 | 메인 | 마이 |
 |---|---|---|---|
-| <img width="1080" height="2400" alt="로그인" src="https://github.com/user-attachments/assets/cd9ef095-58d5-416c-8e33-38c061969e9c" />
- | <img width="1080" height="2400" alt="회원가입" src="https://github.com/user-attachments/assets/33bdc9dc-3314-4dd9-aad3-6c885d4491a2" />
- | <img width="1080" height="2400" alt="메인" src="https://github.com/user-attachments/assets/7d351c51-1c1e-45bb-9d99-16f0191b557e" />
- | <img width="1080" height="2400" alt="세부훈련(1주차)" src="https://github.com/user-attachments/assets/7855e46d-664b-41a9-94e0-cbfb75b84796" />
- |
+| <img width="1080" height="2400" alt="로그인" src="https://github.com/user-attachments/assets/cd9ef095-58d5-416c-8e33-38c061969e9c" /> | <img width="1080" height="2400" alt="회원가입" src="https://github.com/user-attachments/assets/33bdc9dc-3314-4dd9-aad3-6c885d4491a2" /> | <img width="1080" height="2400" alt="메인" src="https://github.com/user-attachments/assets/7d351c51-1c1e-45bb-9d99-16f0191b557e" /> | <img width="1080" height="2400" alt="세부훈련(1주차)" src="https://github.com/user-attachments/assets/7855e46d-664b-41a9-94e0-cbfb75b84796" /> |
 | 졸음 | 담배 | 휴대폰 | 미벨트 |
 | ![](images/drowsy.jpg) | ![](images/smoking.jpg) | ![](images/phone.jpg) | ![](images/seatbelt.jpg) |
 | 알람 | 결과 | 통계 | 날씨 |

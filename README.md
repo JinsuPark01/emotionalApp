@@ -43,20 +43,52 @@ MPAndroidChart
 ---
 ## 📂 Project Structure(수정필요)
 ```
-app
-├ ai
-│   ├ model
-│   └ inference
-├ network
-│   ├ retrofit
-│   └ websocket
-├ socket
-│   └ tcp
-├ ui
-│   ├ activity
-│   └ viewmodel
-└ util
+emotionalApp/
+├─ app/
+│  └─ src/main/
+│     ├─ java/com/example/emotionalapp/
+│     │  ├─ MyApplication.kt
+│     │  ├─ AddTester.kt
+│     │  ├─ data/
+│     │  │  ├─ TrainingType.kt
+│     │  │  ├─ TrainingItem.kt
+│     │  │  ├─ DetailTrainingItem.kt
+│     │  │  ├─ ReportItem.kt
+│     │  │  └─ DrivenActionQuizItem.kt
+│     │  ├─ ui/
+│     │  │  ├─ open/ (BottomNavActivity.kt)
+│     │  │  ├─ login_signup/
+│     │  │  ├─ intro/
+│     │  │  ├─ alltraining/
+│     │  │  ├─ emotion/
+│     │  │  ├─ body/
+│     │  │  ├─ mind/
+│     │  │  ├─ expression/
+│     │  │  ├─ weekly/
+│     │  │  └─ chat/
+│     │  └─ util/
+│     └─ res/
+│        ├─ layout/
+│        ├─ drawable/
+│        └─ values/
 ```
+### Layer Overview
+
+- **App Layer**  
+  `MyApplication`에서 Firebase 초기화 및 전역 설정 관리
+
+- **Data Layer**  
+  훈련 및 리포트 도메인 모델 정의 (`Training*`, `ReportItem`)
+
+- **UI Layer**  
+  기능 단위 패키지 구조 (emotion, body, mind, expression, weekly)
+
+- **Util Layer**  
+  공통 확장 함수 및 재사용 로직 (예: Click Debounce)
+
+- **Backend Integration**  
+  Firebase Authentication + Cloud Firestore 기반 사용자 인증 및 데이터 저장
+
 ---
 ## ⚙️ Key Features
 
